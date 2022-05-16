@@ -21,6 +21,7 @@ vim.cmd([[
 -- Configurations of Neovim
 --------------------------------------------------------------------
 require('settings')
+require('color-themes')
 
 --------------------------------------------------------------------
 -- Set key bindings

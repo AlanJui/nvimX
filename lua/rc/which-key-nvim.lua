@@ -9,11 +9,11 @@ end
 
 local mappings = {
 	-- Top Menu
-	-- [' '] = { ':Telescope find_files<CR>', 'Find files' },
-	-- [','] = { ':Telescope buffers<CR>', 'Show buffers' },
+	[' '] = { ':Telescope find_files<CR>', 'Find files' },
+	[','] = { ':Telescope buffers<CR>', 'Show buffers' },
 	[';'] = { ':FloatermNew --wintype=normal --height=10<CR>', 'Open Terminal' },
 	['/'] = { 'gcc', 'Comment out (Toggle)' },
-	-- ['e'] = { ':NvimTreeToggle<CR>', 'File explorer' },
+	['e'] = { ':NvimTreeToggle<CR>', 'File explorer' },
 	['g'] = { ':Neogit<CR>', 'Git' },
 	['r'] = { ':FloatermNew ranger<CR>', 'Ranger' },
 	['v'] = { ':FloatermNew vifm<CR>', 'ViFm' },

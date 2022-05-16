@@ -22,15 +22,27 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use 'tomasr/molokai'
 
-		-- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
-		use({
-			'TimUntersberger/neogit',
-			requires = {
-				'nvim-lua/plenary.nvim',
-				'sindrets/diffview.nvim',
-			},
-			config = function() require('rc.neogit') end,
-		})
+	-- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
+	use({
+		'TimUntersberger/neogit',
+		requires = {
+			'nvim-lua/plenary.nvim',
+			'sindrets/diffview.nvim',
+		},
+		config = function() require('rc.neogit') end,
+	})
+	-- Floatting terminal
+	use 'voldikss/vim-floaterm'
+
+	-- Toggle comments in Neovim
+	use { 'tpope/vim-commentary' }
+
+	-- Screen Navigation
+	use { 'folke/which-key.nvim' }
+
+	-- colorscheme for neovim written in lua specially made for roshnvim
+	use('folke/tokyonight.nvim')
+
 	-- Fuzzy files finder
 	use({
 		'nvim-telescope/telescope.nvim',
@@ -40,15 +52,19 @@ return require('packer').startup(function(use)
 		},
 		config = function() require('rc.telescope-nvim') end,
 	})
-	
-	-- Floatting terminal
-	use 'voldikss/vim-floaterm'
 
-	-- Toggle comments in Neovim
-	use { 'tpope/vim-commentary' }
+	-- Icons
+	use({
+		'kyazdani42/nvim-web-devicons',
+		config = function() require('rc.nvim-web-devicons') end,
+	})
 
-	-- Screen Navigation
-	use { 'folke/which-key.nvim' }
+	-- File/Flolders explorer:nvim-tree
+	use({
+		'kyazdani42/nvim-tree.lua',
+		requires = 'kyazdani42/nvim-web-devicons',
+		config = function() require('rc.nvim-tree') end,
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
