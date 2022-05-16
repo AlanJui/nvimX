@@ -1,6 +1,7 @@
 -----------------------------------------------------------
 -- Global Functions
 -----------------------------------------------------------
+-- Get OS Name :lua print(vim.loop.os_uname().sysname)
 
 function _G.is_empty(str)
     return str == nil or str == ''
