@@ -22,6 +22,18 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'tomasr/molokai'
 
+  -----------------------------------------------------------
+  -- Treesitter: for better syntax
+  -----------------------------------------------------------
+
+  -- Nvim Treesitter configurations and abstraction layer
+  use({
+    'nvim-treesitter/nvim-treesitter',
+  })
+  use({
+    'JoosepAlviste/nvim-ts-context-commentstring',
+  })  
+
   -- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
   use({
     'TimUntersberger/neogit',

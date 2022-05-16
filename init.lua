@@ -22,9 +22,21 @@ augroup end
 --------------------------------------------------------------------
 require('settings')
 require('color-themes')
+require('rc/nvim-treesitter')
 
 --------------------------------------------------------------------
 -- Set key bindings
 --------------------------------------------------------------------
 require('keybindings')
 require('rc/which-key-nvim')
+
+
+local function blah()
+  print "hello world\n"
+end
+--------------------------------------------------------------------
+-- Experiment
+--------------------------------------------------------------------
+-- For folding
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
