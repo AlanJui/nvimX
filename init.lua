@@ -2,6 +2,7 @@
 -- Initial environment
 --------------------------------------------------------------------
 require('globals')
+require('init-env')
 require('essential')
 
 --------------------------------------------------------------------
@@ -10,12 +11,12 @@ require('essential')
 -- Install plugins
 require('plugins')
 -- Auto install plugin after plugins.lua file is upated and saved
-vim.cmd([[
+vim.cmd [[
 augroup packer_user_config
 autocmd!
 autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 augroup end
-]])
+]]
 
 --------------------------------------------------------------------
 -- Configurations of Neovim
@@ -23,6 +24,7 @@ augroup end
 require('settings')
 require('color-themes')
 require('rc/nvim-treesitter')
+require('lsp')
 
 --------------------------------------------------------------------
 -- Set key bindings
@@ -30,13 +32,17 @@ require('rc/nvim-treesitter')
 require('keybindings')
 require('rc/which-key-nvim')
 
-
-local function blah()
-  print "hello world\n"
-end
 --------------------------------------------------------------------
 -- Experiment
 --------------------------------------------------------------------
+
+-- Say hello
+local function blah()
+  print "hello world\n"
+end
 -- For folding
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+blah()
+

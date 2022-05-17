@@ -54,14 +54,6 @@ keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
 keymap('n', '<M-l>', '0d$', opts)
 keymap('i', '<M-l>', '<ESC>0d$', opts)
 
------------------------------------------------------------------------------
--- Find workds and Replace
-keymap('n', 'fr', ':%s/', { noremap = true })
-
--- Find files
--- keymap('n', '\\', ":Lexplore<CR> :vertical resize 30<CR>", { noremap = true })
-keymap('n', '<Leader>f', ':Telescope find_files<CR>', opts)
-
 --------------------------------------------------------------------
 -- Windows navigation
 --------------------------------------------------------------------
@@ -112,19 +104,19 @@ keymap('n', '<LocalLeader>wo', '<C-w>=', opts)
 -- Buffers
 --------------------------------------------------------------------
 -- Tab operations
-keymap('n', 'tn', ':tabnew<CR>', { noremap = true })
-keymap('n', 'tk', ':tabnext<CR>', { noremap = true })
-keymap('n', 'tj', ':tabprev<CR>', { noremap = true })
-keymap('n', 'to', ':tabo<CR>', { noremap = true })
+-- keymap('n', 'tn', ':tabnew<CR>', { noremap = true })
+-- keymap('n', 'tk', ':tabnext<CR>', { noremap = true })
+-- keymap('n', 'tj', ':tabprev<CR>', { noremap = true })
+-- keymap('n', 'to', ':tabo<CR>', { noremap = true })
 
 -- Tab navigation
-keymap('n', 'gT', ':TablineBufferPrevious<CR>', opts)
-keymap('n', 'gt', ':TablineBufferNext<CR>', opts)
+-- keymap('n', 'gT', ':TablineBufferPrevious<CR>', opts)
+-- keymap('n', 'gt', ':TablineBufferNext<CR>', opts)
 
 -- Buffers
 keymap('n', '<Tab>', '<cmd>bn<CR>', opts)
 keymap('n', '<S-Tab>', '<cmd>bp<CR>', opts)
-keymap('n', '<LocalLeader>bd', '<cmd>bd<CR>', opts)
+-- keymap('n', '<LocalLeader>bd', '<cmd>bd<CR>', opts)
 
 --------------------------------------------------------------------
 -- Clear highlighting on escale in normal mode.
@@ -145,21 +137,13 @@ keymap('t', '<Esc>', '<C-\\><C-n>', opts)
 -- keymap('n', '<C-_>', ':Commentary<CR>', opts)
 -- keymap('v', '<C-_>', ":'<,'>Commentary<CR>", opts)
 
--- Copy relative filepath eg: from nvim folder this would look like: "lua/core/keymaps.lua" copied to clipboard
-keymap(
-	'n',
-	'<LocalLeader>fp',
-	'<cmd>let @*=fnamemodify(expand("%"), ":~:.") | echo( \'"\' . (fnamemodify(expand("%"), ":~:.")) . \'" copied to clipboard\')<CR>',
-	{ noremap = true }
-)
-
--- vim-surround
-keymap('n', 'ds', '<Plug>Dsurround', { noremap = false })
-keymap('n', 'cs', '<Plug>Csurround', { noremap = false })
-keymap('n', 'cS', '<Plug>CSurround', { noremap = false })
--- keymap('n', 's', '<Plug>Ysurround', { noremap = false })
--- keymap('n', 'S', '<Plug>YSurround', { noremap = false })
-keymap('n', 'ss', '<Plug>Yssurround', { noremap = false })
-keymap('n', 'SS', '<Plug>YSsurround', { noremap = false })
-keymap('x', 's', '<Plug>VSurround', { noremap = false })
-keymap('x', 'S', '<Plug>VgSurround', { noremap = false })
+-- -- vim-surround
+-- keymap('n', 'ds', '<Plug>Dsurround', { noremap = false })
+-- keymap('n', 'cs', '<Plug>Csurround', { noremap = false })
+-- keymap('n', 'cS', '<Plug>CSurround', { noremap = false })
+-- -- keymap('n', 's', '<Plug>Ysurround', { noremap = false })
+-- -- keymap('n', 'S', '<Plug>YSurround', { noremap = false })
+-- keymap('n', 'ss', '<Plug>Yssurround', { noremap = false })
+-- keymap('n', 'SS', '<Plug>YSsurround', { noremap = false })
+-- keymap('x', 's', '<Plug>VSurround', { noremap = false })
+-- keymap('x', 'S', '<Plug>VgSurround', { noremap = false })
