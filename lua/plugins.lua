@@ -4,23 +4,32 @@
 -----------------------------------------------------------
 
 local plugins_list = {
-  -- { 'wbthomason/packer.nvim' },
+  -- 'wbthomason/packer.nvim',
   -- colorscheme for neovim written in lua specially made for roshnvim
-  { 'tomasr/molokai' },
-  { 'folke/tokyonight.nvim' },
+  'tomasr/molokai',
+  'folke/tokyonight.nvim',
   -----------------------------------------------------------
   -- LSP
   -----------------------------------------------------------
-  {
-    "williamboman/nvim-lsp-installer",
-    "neovim/nvim-lspconfig",
-  },
+  -- LSP configurations
+  'williamboman/nvim-lsp-installer',
+  'neovim/nvim-lspconfig',
+  -- auto completion
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  -- snippets enginee
+  'L3MON4D3/LuaSnip',
+  'saadparwaiz1/cmp_luasnip',
+  'rafamadriz/friendly-snippets',
   -----------------------------------------------------------
   -- Treesitter: for better syntax
   -----------------------------------------------------------
   -- Nvim Treesitter configurations and abstraction layer
-  { 'nvim-treesitter/nvim-treesitter' },
-  { 'JoosepAlviste/nvim-ts-context-commentstring' },
+  'nvim-treesitter/nvim-treesitter',
+  'JoosepAlviste/nvim-ts-context-commentstring',
   -- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
   {
     'TimUntersberger/neogit',
@@ -31,11 +40,11 @@ local plugins_list = {
     config = function() require('rc/neogit') end,
   },
   -- Floatting terminal
-  { 'voldikss/vim-floaterm' },
+  'voldikss/vim-floaterm',
   -- Toggle comments in Neovim
-  { 'tpope/vim-commentary' },
+  'tpope/vim-commentary',
   -- Screen Navigation
-  { 'folke/which-key.nvim' },
+  'folke/which-key.nvim',
   -- Fuzzy files finder
   {
     'nvim-telescope/telescope.nvim',

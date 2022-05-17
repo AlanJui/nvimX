@@ -65,16 +65,16 @@ keymap('n', '<C-w>_', ':vsplit<CR>', opts)
 keymap('n', '<C-w>|', ':vsplit<CR>', opts)
 
 -- Move focus on window
-keymap('n', '<ESC>h', '<cmd>wincmd h<CR>', opts)
-keymap('n', '<ESC>l', '<cmd>wincmd l<CR>', opts)
 keymap('n', '<ESC>k', '<cmd>wincmd k<CR>', opts)
 keymap('n', '<ESC>j', '<cmd>wincmd j<CR>', opts)
+keymap('n', '<ESC>h', '<cmd>wincmd h<CR>', opts)
+keymap('n', '<ESC>l', '<cmd>wincmd l<CR>', opts)
 
 -- Split windows nagviation
-keymap('n', '<C-H>', '<C-W>h', opts)
-keymap('n', '<C-L>', '<C-W>l', opts)
-keymap('n', '<C-K>', '<C-W>k', opts)
-keymap('n', '<C-J>', '<C-W>j', opts)
+-- keymap('n', '<C-k>', '<C-w><Up>', {})
+-- keymap('n', '<C-j>', '<C-w><Down>', {})
+-- keymap('n', '<C-h>', '<C-w><Left>', {})
+-- keymap('n', '<C-l>', '<C-w><Right>', {})
 
 -- Window Resize
 keymap('n', '<M-Up>', '<cmd>wincmd -<CR>', opts)

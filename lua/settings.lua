@@ -1,1 +1,4 @@
 -- Configurations of Neovim
+-- vim.cmd [[
+-- set completeopt=menu,menuone,noselect
+-- ]]
