@@ -57,3 +57,16 @@ vim.g.python3_host_prog = PYTHON_BINARY
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
+
+-----------------------------------------------------------
+
+LSP_SERVERS = {
+  'sumneko_lua',
+  'texlab',
+  'pyright',
+  'emmet_ls',
+  'html',
+  'jsonls',
+  'rust_analyzer',
+  'tsserver',
+}

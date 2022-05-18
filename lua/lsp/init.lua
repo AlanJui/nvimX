@@ -25,6 +25,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+-----------------------------------------------------------------------------------------------
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -46,42 +47,74 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+-- Capabilities
+--------------------------------------------------------------------
+require('lsp/auto-cmp')
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+--------------------------------------------------------------------
+-- Main Process
+--------------------------------------------------------------------
+local servers = LSP_SERVERS
+
+-- Settings for servers
+local servers_settings = require('lsp/server-settings')
+
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
+  local setup_opts = {
     on_attach = on_attach,
+    capabilities = capabilities,
     flags = {
-      -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
-    }
+    },
   }
+
+  -- Get configuration of specific server
+  local custom_opts = servers_settings[lsp] or {}
+  if custom_opts then
+    setup_opts = vim.tbl_deep_extend('force', custom_opts, setup_opts)
+  end
+
+  require('lspconfig')[lsp].setup(setup_opts)
 end
 
+---- Use a loop to conveniently call 'setup' on multiple servers and
+---- map buffer local keybindings when the language server attaches
+-------------------------------------------------------------------------------------------------
+--local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+--for _, lsp in pairs(servers) do
+--  require('lspconfig')[lsp].setup {
+  --    on_attach = on_attach,
+  --    flags = {
+    --      -- This will be the default in neovim 0.7+
+    --      debounce_text_changes = 150,
+    --    }
+    --  }
+    --end
 
-require('lspconfig').sumneko_lua.setup({
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
-      completion = { keywordSnippet = 'Disable' },
-      diagnostics = {
-        enable = true,
-        globals = {
-          'vim',
-          'describe',
-          'it',
-          'before_each',
-          'after_each',
-        },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
-      },
-    },
-  },
-})
+
+    --require('lspconfig').sumneko_lua.setup({
+      --  on_attach = on_attach,
+      --  settings = {
+        --    Lua = {
+          --      runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
+          --      completion = { keywordSnippet = 'Disable' },
+          --      diagnostics = {
+            --        enable = true,
+            --        globals = {
+              --          'vim',
+              --          'describe',
+              --          'it',
+              --          'before_each',
+              --          'after_each',
+              --        },
+              --      },
+              --      workspace = {
+                --        library = {
+                  --          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  --          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                  --        },
+                  --      },
+                  --    },
+                  --  },
+                  --})

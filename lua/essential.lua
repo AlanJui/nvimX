@@ -32,8 +32,10 @@ vim.wo.relativenumber = true
 -- Tabs
 -- vim.bo.expandtab = true
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.smartindent = true
 
 set.list = false -- show whitespace
 set.listchars = {

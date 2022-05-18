@@ -1,4 +1,4 @@
 -- Configurations of Neovim
--- vim.cmd [[
--- set completeopt=menu,menuone,noselect
--- ]]
+vim.cmd [[
+let g:tex_flavor = "latex"
+]]

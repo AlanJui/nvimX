@@ -70,10 +70,15 @@ keymap('n', '<ESC>j', '<cmd>wincmd j<CR>', opts)
 keymap('n', '<ESC>h', '<cmd>wincmd h<CR>', opts)
 keymap('n', '<ESC>l', '<cmd>wincmd l<CR>', opts)
 
+keymap('n', '<C-Up>',    '<cmd>wincmd k<CR>', opts)
+keymap('n', '<C-Down>',  '<cmd>wincmd j<CR>', opts)
+keymap('n', '<C-Left>',  '<cmd>wincmd h<CR>', opts)
+keymap('n', '<C-Right>', '<cmd>wincmd l<CR>', opts)
+
 -- Split windows nagviation
--- keymap('n', '<C-k>', '<C-w><Up>', {})
--- keymap('n', '<C-j>', '<C-w><Down>', {})
--- keymap('n', '<C-h>', '<C-w><Left>', {})
+-- keymap('n', '<C-k>', '<C-w><Up>',    {})
+-- keymap('n', '<C-j>', '<C-w><Down>',  {})
+-- keymap('n', '<C-h>', '<C-w><Left>',  {})
 -- keymap('n', '<C-l>', '<C-w><Right>', {})
 
 -- Window Resize

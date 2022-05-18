@@ -39,6 +39,25 @@ local plugins_list = {
     },
     config = function() require('rc/neogit') end,
   },
+  -- Status Line
+  {
+    'nvim-lualine/lualine.nvim',
+    requires = {
+      { 'kyazdani42/nvim-web-devicons', opt = true },
+      'arkav/lualine-lsp-progress',
+    },
+    config = function() require('rc.lualine-material') end,
+  },
+  {
+    'kdheepak/tabline.nvim',
+    require = {
+      'hoob3rt/lualine.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+    config = function()
+      require('tabline').setup({ enable = false })
+    end,
+  },
   -- Floatting terminal
   'voldikss/vim-floaterm',
   -- Toggle comments in Neovim

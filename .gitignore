@@ -1,4 +1,14 @@
 _archived/
+
 test/.vscode/
+test/**/*.aux
+test/**/*.aux
+test/**/*.fdb_latexmk
+test/**/*.fls
+test/**/*.log
+
+**/temp*
+
 plugin/packer_compiled.lua
 tags
+

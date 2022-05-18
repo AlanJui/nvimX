@@ -24,8 +24,8 @@ augroup end
 require('settings')
 require('color-themes')
 require('rc/nvim-treesitter')
-require('lsp/auto-cmp')
 require('lsp/luasnip')
+-- require('lsp/auto-cmp')
 require('lsp')
 
 --------------------------------------------------------------------

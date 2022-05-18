@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Setup nvim-cmp
+-- Setup LuaSnip integrate with nvim-cmp
 ------------------------------------------------------------
 
 local function prequire(...)
