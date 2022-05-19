@@ -20,6 +20,7 @@ local mappings = {
   n = {
     name = 'Neovim',
     i = { ':e ~/.config/nvim/init.lua<CR>', 'nvim/init.lua' },
+    a = { ':e ~/.config/nvim/lua/add-on-plugins.lua<CR>', 'configure packer.nvim' },
     p = { ':e ~/.config/nvim/lua/plugins.lua<CR>', 'specifying plugins' },
     k = { ':e ~/.config/nvim/lua/keybindings.lua<CR>', 'keybindings' },
     w = { ':e ~/.config/nvim/lua/rc/which-key-nvim.lua<CR>', 'which-key' },
@@ -60,6 +61,35 @@ local mappings = {
     l = { ':set wrap!<CR>', 'on/off line wrap' },
     n = { ':set nonumber!<CR>', 'on/off line-numbers' },
     N = { ':set norelativenumber!<CR>', 'on/off relative line-numbers' },
+  },
+  -- utilities
+  u = {
+    name = 'utilities',
+    t = {
+      name = 'terminal',
+      d = { ':FloatermNew python manage.py shell<CR>', 'Django-admin Shell' },
+      p = { ':FloatermNew python<CR>', 'Python shell' },
+      n = { ':FloatermNew node<CR>', 'Node.js shell' },
+      v = { ":FloatermNew --wintype='vsplit' --position='right'<CR>", 'Debug Term...' },
+    },
+    l = {
+      name = 'LiveServer',
+      l = { ':Bracey<CR>', 'start live server' },
+      L = { ':BraceyStop<CR>', 'stop live server' },
+      r = { ':BraceyReload<CR>', 'web page to be reloaded' },
+    },
+    m = {
+      name = 'Markdown',
+      m = { ':MarkdownPreview<CR>', 'start markdown preview' },
+      M = { ':MarkdownPreviewStop<CR>', 'stop markdown preview' },
+    },
+    u = {
+      name = 'UML',
+      v = { ':PlantumlOpen<CR>', 'start PlantUML preview' },
+      o = { ':PlantumlSave docs/diagrams/out.png<CR>', 'export PlantUML diagram' },
+    },
+    f = { ':FloatermNew vifm<CR>', 'ViFm' },
+    p = { ':FloatermNew ranger<CR>', 'Picture Viewer' },
   },
 }
 

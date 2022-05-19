@@ -8,15 +8,17 @@ require('essential')
 --------------------------------------------------------------------
 -- Neovim's plugins
 --------------------------------------------------------------------
--- Install plugins
-require('plugins')
--- Auto install plugin after plugins.lua file is upated and saved
-vim.cmd [[
-augroup packer_user_config
-autocmd!
-autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-augroup end
-]]
+-- configure packer.nvim
+require('add-on-plugins')
+
+-- configure Neovim to automatically run :PackerCompile whenever 
+-- plugin-list.lua is updated with an autocommand:
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
 
 --------------------------------------------------------------------
 -- Configurations of Neovim
