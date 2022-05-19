@@ -20,25 +20,19 @@ local plugins_list = {
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
+  'saadparwaiz1/cmp_luasnip',
   -- snippets enginee
   'L3MON4D3/LuaSnip',
-  'saadparwaiz1/cmp_luasnip',
   'rafamadriz/friendly-snippets',
   -----------------------------------------------------------
-  -- Treesitter: for better syntax
+  -- User Interface
   -----------------------------------------------------------
-  -- Nvim Treesitter configurations and abstraction layer
+  -- Nvim Treesitter configurations and abstraction layer:
+  -- for better syntax
   'nvim-treesitter/nvim-treesitter',
   'JoosepAlviste/nvim-ts-context-commentstring',
-  -- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
-  {
-    'TimUntersberger/neogit',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
-    },
-    config = function() require('rc/neogit') end,
-  },
+  -- Indent Line
+  "lukas-reineke/indent-blankline.nvim",
   -- Status Line
   {
     'nvim-lualine/lualine.nvim',
@@ -58,10 +52,6 @@ local plugins_list = {
       require('tabline').setup({ enable = false })
     end,
   },
-  -- Floatting terminal
-  'voldikss/vim-floaterm',
-  -- Toggle comments in Neovim
-  'tpope/vim-commentary',
   -- Screen Navigation
   'folke/which-key.nvim',
   -- Fuzzy files finder
@@ -84,6 +74,27 @@ local plugins_list = {
     requires = 'kyazdani42/nvim-web-devicons',
     config = function() require('rc/nvim-tree') end,
   },
+  -----------------------------------------------------------
+  -- Editting
+  -----------------------------------------------------------
+  -- Toggle comments in Neovim
+  'tpope/vim-commentary',
+  -- Auto pairs, integrates with both cmp and treesitter
+  "windwp/nvim-autopairs",
+  -----------------------------------------------------------
+  -- Utilitiies
+  -----------------------------------------------------------
+  -- Git: version control
+  {
+    'TimUntersberger/neogit',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+    },
+    config = function() require('rc/neogit') end,
+  },
+  -- Floatting terminal
+  'voldikss/vim-floaterm',
 }
 
 local package_root = PACKAGE_ROOT

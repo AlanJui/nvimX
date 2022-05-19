@@ -27,6 +27,7 @@ require('rc/nvim-treesitter')
 require('lsp/luasnip')
 -- require('lsp/auto-cmp')
 require('lsp')
+require('rc/autopairs')
 
 --------------------------------------------------------------------
 -- Set key bindings
