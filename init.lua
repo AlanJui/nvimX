@@ -11,7 +11,7 @@ require('essential')
 -- configure packer.nvim
 require('add-on-plugins')
 
--- configure Neovim to automatically run :PackerCompile whenever 
+-- configure Neovim to automatically run :PackerCompile whenever
 -- plugin-list.lua is updated with an autocommand:
 vim.cmd([[
   augroup packer_user_config
@@ -27,8 +27,7 @@ require('settings')
 require('color-themes')
 require('rc/nvim-treesitter')
 require('lsp/luasnip')
--- require('lsp/auto-cmp')
-require('lsp')
+require('lsp')  -- integrate with auto cmp
 require('rc/autopairs')
 
 --------------------------------------------------------------------
@@ -41,12 +40,12 @@ require('rc/which-key-nvim')
 -- Experiment
 --------------------------------------------------------------------
 
--- Say hello
-local function blah()
-  print "hello world\n"
-end
 -- For folding
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
+-- Say hello
+local function blah()
+  print "hello world\n"
+end
 blah()

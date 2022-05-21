@@ -1,9 +1,12 @@
-local ok, cmp = pcall(require, 'cmp')
-if not ok then
+local cmp = safe_require('cmp')
+if not cmp then
     return
 end
 
-local luasnip = require('luasnip')
+local luasnip = safe_require('luasnip')
+if not luasnip then
+  return
+end
 
 -- Require function for tab to work with LUA-SNIP
 local has_words_before = function()

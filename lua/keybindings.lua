@@ -3,6 +3,9 @@ local opts = { noremap = true }
 
 keymap('i', 'jj', '<Esc>', opts)
 
+-- On/Off File explorer
+keymap('n',  '\\', ':NvimTreeToggle<CR>', {})
+
 -- Ctrl-s: to save
 keymap('n',  '<c-s>', ':w<CR>', {})
 keymap('i',  '<c-s>', '<Esc>:w<CR>a', {})

@@ -71,5 +71,5 @@ if ( g:is_win || g:is_mac ) && executable('latex')
   endif
 endif
 
-
+noremap <space>ll :VimtexCompile<cr>
 "echo "vimtex.vim is loaded! "
