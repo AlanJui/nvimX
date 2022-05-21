@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
+  ["gv.vim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/gv.vim",
+    url = "https://github.com/junegunn/gv.vim"
+  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
@@ -240,10 +245,25 @@ _G.packer_plugins = {
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-floaterm",
     url = "https://github.com/voldikss/vim-floaterm"
   },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
   ["vim-instant-markdown"] = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-instant-markdown",
     url = "https://github.com/instant-markdown/vim-instant-markdown"
+  },
+  ["vim-rhubarb"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+    url = "https://github.com/tpope/vim-rhubarb"
+  },
+  ["vim-signify"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-signify",
+    url = "https://github.com/mhinz/vim-signify"
   },
   vimtex = {
     loaded = true,
@@ -258,10 +278,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-try_loadstring("\27LJ\2\n)\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\14rc/neogit\frequire\0", "config", "neogit")
-time([[Config for neogit]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rc.lualine-material\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
 -- Config for: nvim-web-devicons
 time([[Config for nvim-web-devicons]], true)
 try_loadstring("\27LJ\2\n4\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\25rc/nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
@@ -270,6 +290,10 @@ time([[Config for nvim-web-devicons]], false)
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22rc/telescope-nvim\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
+-- Config for: neogit
+time([[Config for neogit]], true)
+try_loadstring("\27LJ\2\n)\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\14rc/neogit\frequire\0", "config", "neogit")
+time([[Config for neogit]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17rc/nvim-tree\frequire\0", "config", "nvim-tree.lua")
@@ -278,10 +302,6 @@ time([[Config for nvim-tree.lua]], false)
 time([[Config for tabline.nvim]], true)
 try_loadstring("\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\venable\1\nsetup\ftabline\frequire\0", "config", "tabline.nvim")
 time([[Config for tabline.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rc.lualine-material\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

@@ -88,6 +88,14 @@ local plugins_list = {
     },
     config = function() require('rc/neogit') end,
   },
+  -- Show chage status of lines: add, remove, modified
+  'mhinz/vim-signify',
+  -- Run git commands from Neovim command line
+  'tpope/vim-fugitive',
+  -- Integrated with "GBrowse" command: help use to browse GitHub Repo
+  'tpope/vim-rhubarb',
+  -- Git commit browser
+  'junegunn/gv.vim',
   -- Floatting terminal
   'voldikss/vim-floaterm',
   -- Live server

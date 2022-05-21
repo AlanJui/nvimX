@@ -1,6 +1,9 @@
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
+-- Map <Space> as <leader>
+vim.g.mapleader = " "
+
 keymap('i', 'jj', '<Esc>', opts)
 
 -- On/Off File explorer
@@ -20,9 +23,9 @@ keymap('n',  '<c-r>', ':source ~/.config/nvim/init.lua<CR>', {})
 keymap('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O', opts)
 
 -- Insert line
-keymap('i', '<LocalLeader>O', '<Esc>O', opts)
-keymap('i', '<LocalLeader>o', '<Esc>jO', opts)
-keymap('i', '<LocalLeader>G', '<Esc>Go', opts)
+-- keymap('i', '<LocalLeader>O', '<Esc>O', opts)
+-- keymap('i', '<LocalLeader>o', '<Esc>jO', opts)
+-- keymap('i', '<LocalLeader>G', '<Esc>Go', opts)
 
 -- Move line
 keymap('n', '<S-Down>', ':m .+1<CR>', opts)

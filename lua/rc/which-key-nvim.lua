@@ -12,9 +12,22 @@ local mappings = {
   [' '] = { ':Telescope find_files<CR>', 'Find files' },
   [','] = { ':Telescope buffers<CR>', 'Show buffers' },
   [';'] = { ':FloatermNew --wintype=normal --height=10<CR>', 'Open Terminal' },
-  ['g'] = { ':Neogit<CR>', 'Git' },
   ['r'] = { ':FloatermNew ranger<CR>', 'Ranger' },
   ['v'] = { ':FloatermNew --height=0.7 --width=0.9 --wintype=float  vifm<CR>', 'ViFm' },
+  -- git
+  g = { 
+    name = 'Git',
+    g = { ':Neogit<CR>', 'Neogit' },
+    j = { '<plug>(signify-next-hunk)', 'Jump to next changed' },
+    k = { '<plug>(signify-prev-hunk)', 'Jump to prev changed' },
+    b = { ':GV<CR>', 'Browse git commit records' },
+    d = {
+      name = 'diff',
+      d = { ':Gdiffsplit<CR>',  'Show gitdiff' },
+      h = { ':Ghdiffsplit<CR>', 'Show gitdiff with Up/Down panel' },
+      v = { ':Gvdiffsplit<CR>', 'Show gitdiff with Left/Right panel' },
+    },
+  },
   -- Configure Neovim
   n = {
     name = 'Neovim',
