@@ -20,6 +20,22 @@ local plugins_list = {
   'L3MON4D3/LuaSnip',
   'rafamadriz/friendly-snippets',
   -----------------------------------------------------------
+  -- Programming
+  -----------------------------------------------------------
+  -- Yet Another Build System
+  {
+    'pianocomposer321/yabs.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+  },
+  -- terminal
+  {
+    "akinsho/toggleterm.nvim", 
+    tag = 'v1.*', 
+    config = function()
+      require("toggleterm").setup()
+    end
+  },
+  -----------------------------------------------------------
   -- User Interface
   -----------------------------------------------------------
   -- Nvim Treesitter configurations and abstraction layer:

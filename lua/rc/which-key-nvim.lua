@@ -12,10 +12,26 @@ local mappings = {
   [' '] = { ':Telescope find_files<CR>', 'Find files' },
   [','] = { ':Telescope buffers<CR>', 'Show buffers' },
   [';'] = { ':FloatermNew --wintype=normal --height=10<CR>', 'Open Terminal' },
-  ['r'] = { ':FloatermNew ranger<CR>', 'Ranger' },
   ['v'] = { ':FloatermNew --height=0.7 --width=0.9 --wintype=float  vifm<CR>', 'ViFm' },
+  -- Code Runner
+  r = {
+    name = 'Code Runner',
+    y = { ':Telescope yabs tasks<CR>', 'List tasks of YABS' },
+    p = {
+      name = 'Python',
+      r = { ':update<CR>:exec "!python3" shellescape(@%,1)<CR>', 'Run Python file' },
+      d = { ':update<CR>:sp term://python3 -m pdb %<CR>', 'Debug Python file' },
+      n = { ':update<CR>:sp term://nodemon -e py %<CR>', 'Monitor the file' },
+      t = {
+        name = 'TermExec',
+        r = {':TermExec cmd="python %"<CR>', 'Run python file'},
+        d = {':TermExec cmd="python -m pdb %"<CR>', 'Debug python file'},
+        m = {':TermExec cmd="nodemon -e py %"<CR>', 'Monitor python file'},
+      },
+    }
+  },
   -- git
-  g = { 
+  g = {
     name = 'Git',
     g = { ':Neogit<CR>', 'Neogit' },
     j = { '<plug>(signify-next-hunk)', 'Jump to next changed' },
@@ -101,7 +117,7 @@ local mappings = {
       o = { ':PlantumlSave docs/diagrams/out.png<CR>', 'export PlantUML diagram' },
     },
     f = { ':FloatermNew vifm<CR>', 'ViFm' },
-    p = { ':FloatermNew ranger<CR>', 'Picture Viewer' },
+    r = { ':FloatermNew ranger<CR>', 'Ranger' },
   },
 }
 

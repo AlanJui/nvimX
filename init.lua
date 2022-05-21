@@ -29,6 +29,8 @@ require('rc/nvim-treesitter')
 require('lsp/luasnip')
 require('lsp')  -- integrate with auto cmp
 require('rc/autopairs')
+-- code runner
+require('rc/yabs').setup()
 
 --------------------------------------------------------------------
 -- Set key bindings
