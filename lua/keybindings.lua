@@ -2,7 +2,8 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
 -- Map <Space> as <leader>
-vim.g.mapleader = " "
+-- vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 keymap('i', 'jj', '<Esc>', opts)
 
@@ -13,19 +14,44 @@ keymap('n',  '\\', ':NvimTreeToggle<CR>', {})
 keymap('n',  '<c-s>', ':w<CR>', {})
 keymap('i',  '<c-s>', '<Esc>:w<CR>a', {})
 
--- Load init.lua
-keymap('n',  '<c-r>', ':source ~/.config/nvim/init.lua<CR>', {})
+--------------------------------------------------------------------
+-- Windows navigation
+--------------------------------------------------------------------
+-- Window Resize
+keymap('n', '<M-Up>', '<cmd>wincmd -<CR>', opts)
+keymap('n', '<LocalLeader>w<', '30<C-w><', opts )
+keymap('n', '<LocalLeader>w>', '30<C-w>>', opts )
+keymap('n', '<LocalLeader>w+', '10<C-w>+', opts )
+keymap('n', '<LocalLeader>w-', '10<C-w>-', opts )
+keymap('n', '<LocalLeader>w_', '<C-w>_', opts )
+keymap('n', '<LocalLeader>w=', '<C-w>=', opts )
+keymap('n', '<LocalLeader>w|', '<C-w>|', opts )
+keymap('n', '<LocalLeader>wo', '<C-w>|<C-w>_', opts )
+-- Window Zoom In/Out
+keymap('n', '<LocalLeader>wi', '<C-w>| <C-w>_', opts)
+keymap('n', '<LocalLeader>wo', '<C-w>=', opts)
 
 --------------------------------------------------------------------
 -- Line editting
 --------------------------------------------------------------------
 -- Insert a item in table
 keymap('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O', opts)
-
 -- Insert line
--- keymap('i', '<LocalLeader>O', '<Esc>O', opts)
--- keymap('i', '<LocalLeader>o', '<Esc>jO', opts)
--- keymap('i', '<LocalLeader>G', '<Esc>Go', opts)
+keymap('i', '<LocalLeader>O', '<Esc>O', opts)
+keymap('i', '<LocalLeader>o', '<Esc>jO', opts)
+keymap('i', '<LocalLeader>G', '<Esc>Go', opts)
+-- Remove Line
+keymap('i', '<C-CR>', '<Esc>kdd', opts)
+keymap('n', '<LocalLeader>d', 'k1dd', opts)
+-- Editting in line
+keymap('i', '<LocalLeader>l', '<Esc>la', opts)
+keymap('i', '<LocalLeader>a', '<Esc>A', opts)
+keymap('i', '<LocalLeader>,', '<Esc>la,', opts)
+keymap('i', '<LocalLeader><LocalLeader>,', '<Esc>A,', opts)
+keymap('i', '<LocalLeader>:', '<Esc>la:', opts)
+keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
+keymap('i', '<M-Down>', '<Esc>jA', opts)
+
 
 -- Move line
 keymap('n', '<S-Down>', ':m .+1<CR>', opts)
@@ -39,22 +65,11 @@ keymap('v', '<S-Up>', ":move '<-2<CR>gv-gv", opts)
 keymap('v', '<', '<gv', opts)
 keymap('v', '>', '>gv', opts)
 
--- Remove Line
-keymap('n', '<LocalLeader>d', 'k1dd', opts)
-keymap('i', '<C-CR>', '<Esc>kdd', opts)
-
 -- Editting in line
 keymap('n', 'H', '0', opts)
 keymap('n', 'L', '$', opts)
 keymap('n', 'X', 'd$', opts)
 keymap('n', 'Y', 'y$', opts)
-
-keymap('i', '<LocalLeader>l', '<Esc>la', opts)
-keymap('i', '<LocalLeader>a', '<Esc>A', opts)
-keymap('i', '<LocalLeader>,', '<Esc>la,', opts)
-keymap('i', '<LocalLeader><LocalLeader>,', '<Esc>A,', opts)
-keymap('i', '<LocalLeader>:', '<Esc>la:', opts)
-keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
 
 -- Blank whole line
 keymap('n', '<M-l>', '0d$', opts)
@@ -97,19 +112,6 @@ keymap('n', '<F1>', '<cmd>wincmd -<CR>', opts)
 keymap('n', '<F2>', '<cmd>wincmd +<CR>', opts)
 keymap('n', '<F3>', '<cmd>wincmd <<CR>', opts)
 keymap('n', '<F4>', '<cmd>wincmd ><CR>', opts)
-
--- keymap('n', '<LocalLeader>w<', '30<C-w><', opts )
--- keymap('n', '<LocalLeader>w>', '30<C-w>>', opts )
--- keymap('n', '<LocalLeader>w+', '10<C-w>+', opts )
--- keymap('n', '<LocalLeader>w-', '10<C-w>-', opts )
--- keymap('n', '<LocalLeader>w_', '<C-w>_', opts )
--- keymap('n', '<LocalLeader>w=', '<C-w>=', opts )
--- keymap('n', '<LocalLeader>w|', '<C-w>|', opts )
--- keymap('n', '<LocalLeader>wo', '<C-w>|<C-w>_', opts )
-
--- Window Zoom In/Out
-keymap('n', '<LocalLeader>wi', '<C-w>| <C-w>_', opts)
-keymap('n', '<LocalLeader>wo', '<C-w>=', opts)
 
 --------------------------------------------------------------------
 -- Buffers

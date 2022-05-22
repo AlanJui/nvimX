@@ -116,8 +116,8 @@ local mappings = {
       v = { ':PlantumlOpen<CR>', 'start PlantUML preview' },
       o = { ':PlantumlSave docs/diagrams/out.png<CR>', 'export PlantUML diagram' },
     },
-    f = { ':FloatermNew vifm<CR>', 'ViFm' },
-    r = { ':FloatermNew ranger<CR>', 'Ranger' },
+    f = { ':FloatermNew --height=0.7 --width=0.9 --wintype=float vifm<CR>', 'ViFm' },
+    r = { ':FloatermNew --height=0.7 --width=0.9 --wintype=float ranger<CR>', 'Ranger' },
   },
 }
 
