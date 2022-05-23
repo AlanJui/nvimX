@@ -18,21 +18,21 @@ local formatting_callback = function(client, bufnr)
   end, { buffer = bufnr })
 end
 
--- Sync Formatting on save
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local formatting_on_save = function(client, bufnr)
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-				vim.lsp.buf.formatting_sync()
-			end,
-		})
-	end
-end
+-- -- Sync Formatting on save
+-- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+-- local formatting_on_save = function(client, bufnr)
+-- 	if client.supports_method("textDocument/formatting") then
+-- 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+-- 			group = augroup,
+-- 			buffer = bufnr,
+-- 			callback = function()
+-- 				-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+-- 				vim.lsp.buf.formatting_sync()
+-- 			end,
+-- 		})
+-- 	end
+-- end
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
@@ -42,9 +42,9 @@ local on_attach = function(client, bufnr)
   -- recommended to avoid this if possible. Each server attached to a buffer carries a small
   -- amount of performance overhead, and the response to each request is overwritten by the
   -- previous server's response.
-  if client.name ~= 'sumneko_lua' then
-    formatting_callback(client, bufnr)
-  end
+  -- if client.name ~= 'sumneko_lua' then
+  --   formatting_callback(client, bufnr)
+  -- end
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions

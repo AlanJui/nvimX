@@ -1,0 +1,19 @@
+{
+    "venvPath": "/Users/alanjui/.pyenv/versions/3.10.0/envs",
+    "venv": "venv-3.10.0",
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__"
+    ],
+    "reportUnusedVariable": false,
+    "reportUnusedFunction": false,
+    "reportUnusedImport": true,
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": "warning",
+    "reportOptionalMemberAccess": false,
+    "reportGeneralTypeIssues": "warning",
+    "stubPath": "typings",
+    "typeshedPaths": [],
+    "typeCheckingMode": "basic",
+    "useLibraryCodeForTypes": true
+}
