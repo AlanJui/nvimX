@@ -9,9 +9,42 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 -----------------------------------------------------------------------------------------------
+local util = require 'vim.lsp.util'
+
+local formatting_callback = function(client, bufnr)
+  vim.keymap.set('n', '<leader>f', function()
+    local params = util.make_formatting_params({})
+    client.request('textDocument/formatting', params, nil, bufnr)
+  end, { buffer = bufnr })
+end
+
+-- Sync Formatting on save
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local formatting_on_save = function(client, bufnr)
+	if client.supports_method("textDocument/formatting") then
+		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = augroup,
+			buffer = bufnr,
+			callback = function()
+				-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+				vim.lsp.buf.formatting_sync()
+			end,
+		})
+	end
+end
+
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Multiple language servers with the built-in client are supported, however, it is highly
+  -- recommended to avoid this if possible. Each server attached to a buffer carries a small
+  -- amount of performance overhead, and the response to each request is overwritten by the
+  -- previous server's response.
+  if client.name ~= 'sumneko_lua' then
+    formatting_callback(client, bufnr)
+  end
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions

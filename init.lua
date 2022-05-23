@@ -28,6 +28,7 @@ require('color-themes')
 require('rc/nvim-treesitter')
 require('lsp/luasnip')
 require('lsp')  -- integrate with auto cmp
+require('lsp/null-langserver').setup()
 require('rc/autopairs')
 -- code runner
 require('rc/yabs').setup()

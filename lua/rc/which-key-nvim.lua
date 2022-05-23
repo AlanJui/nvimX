@@ -14,19 +14,19 @@ local mappings = {
   [';'] = { ':FloatermNew --wintype=normal --height=10<CR>', 'Open Terminal' },
   ['v'] = { ':FloatermNew --height=0.7 --width=0.9 --wintype=float  vifm<CR>', 'ViFm' },
   -- Code Runner
+  y = { ':Telescope yabs tasks<CR>', 'List tasks of YABS' },
   r = {
     name = 'Code Runner',
-    y = { ':Telescope yabs tasks<CR>', 'List tasks of YABS' },
+    -- name = 'TermExec',
+    r = {':TermExec cmd="python %"<CR>', 'Run python file'},
+    d = {':TermExec cmd="python -m pdb %"<CR>', 'Debug python file'},
+    m = {':TermExec cmd="nodemon -e py %"<CR>', 'Monitor python file'},
     p = {
       name = 'Python',
       r = { ':update<CR>:exec "!python3" shellescape(@%,1)<CR>', 'Run Python file' },
       d = { ':update<CR>:sp term://python3 -m pdb %<CR>', 'Debug Python file' },
       n = { ':update<CR>:sp term://nodemon -e py %<CR>', 'Monitor the file' },
       t = {
-        name = 'TermExec',
-        r = {':TermExec cmd="python %"<CR>', 'Run python file'},
-        d = {':TermExec cmd="python -m pdb %"<CR>', 'Debug python file'},
-        m = {':TermExec cmd="nodemon -e py %"<CR>', 'Monitor python file'},
       },
     }
   },

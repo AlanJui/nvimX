@@ -9,6 +9,15 @@ local plugins_list = {
   -- LSP configurations
   'williamboman/nvim-lsp-installer',
   'neovim/nvim-lspconfig',
+  -- Null-LS: for formatter and linters
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      -- stylua-nvim is a mini Lua code formatter
+      'ckipp01/stylua-nvim',
+    },
+  },
   -- auto completion
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
@@ -29,8 +38,8 @@ local plugins_list = {
   },
   -- terminal
   {
-    "akinsho/toggleterm.nvim", 
-    tag = 'v1.*', 
+    "akinsho/toggleterm.nvim",
+    tag = 'v1.*',
     config = function()
       require("toggleterm").setup()
     end

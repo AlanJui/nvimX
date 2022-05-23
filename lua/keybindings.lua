@@ -37,20 +37,21 @@ keymap('n', '<LocalLeader>wo', '<C-w>=', opts)
 -- Insert a item in table
 keymap('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O', opts)
 -- Insert line
-keymap('i', '<LocalLeader>O', '<Esc>O', opts)
-keymap('i', '<LocalLeader>o', '<Esc>jO', opts)
-keymap('i', '<LocalLeader>G', '<Esc>Go', opts)
+keymap('i', '<M-Enter>',      '<Esc>o<Esc>A', {})
+keymap('i', '<M-Down>',       '<Esc>jA', opts)
+keymap('i', '<LocalLeader>O', '<Esc>O', {})
+keymap('i', '<LocalLeader>o', '<Esc>o', {})
+keymap('i', '<LocalLeader>G', '<Esc>Go', {})
 -- Remove Line
 keymap('i', '<C-CR>', '<Esc>kdd', opts)
 keymap('n', '<LocalLeader>d', 'k1dd', opts)
 -- Editting in line
+keymap('i', '<LocalLeader>,', ',', opts)
+keymap('i', '<LocalLeader><LocalLeader>,', '<Esc>A,', opts)
+keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
 keymap('i', '<LocalLeader>l', '<Esc>la', opts)
 keymap('i', '<LocalLeader>a', '<Esc>A', opts)
-keymap('i', '<LocalLeader>,', '<Esc>la,', opts)
-keymap('i', '<LocalLeader><LocalLeader>,', '<Esc>A,', opts)
 keymap('i', '<LocalLeader>:', '<Esc>la:', opts)
-keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
-keymap('i', '<M-Down>', '<Esc>jA', opts)
 
 
 -- Move line
