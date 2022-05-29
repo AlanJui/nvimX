@@ -49,7 +49,7 @@ require("rc/which-key-nvim")
 
 -- Say hello
 local function blah()
-	print("hello world\n")
+	print("init.lua loaded/reloaded!\n")
 end
 
 blah()
