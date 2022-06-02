@@ -42,4 +42,6 @@ function M.setup()
   telescope.load_extension "yabs"
 end
 
-return M
+-- return M
+
+M.setup()

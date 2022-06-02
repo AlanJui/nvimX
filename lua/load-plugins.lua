@@ -22,8 +22,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     'https://github.com/wbthomason/packer.nvim',
     install_path
   }
-  -- execute packadd for packer.nvim
-  vim.api.nvim_command('packadd packer.nvim')
 end
 
 -- 確認套件 packer.nvim 已被安裝，且已被載入 nvim

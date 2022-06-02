@@ -40,9 +40,7 @@ local plugins_list = {
   {
     "akinsho/toggleterm.nvim",
     tag = 'v1.*',
-    config = function()
-      require("toggleterm").setup()
-    end
+    config = function() require('plugins-rc.toggleterm') end,
   },
   -----------------------------------------------------------
   -- User Interface
@@ -60,7 +58,7 @@ local plugins_list = {
       { 'kyazdani42/nvim-web-devicons', opt = true },
       'arkav/lualine-lsp-progress',
     },
-    config = function() require('rc.lualine-material') end,
+    config = function() require('plugins-rc.lualine-material') end,
   },
   {
     'kdheepak/tabline.nvim',
@@ -81,18 +79,18 @@ local plugins_list = {
       { 'nvim-lua/plenary.nvim' },
       { 'nvim-telescope/telescope-live-grep-raw.nvim' },
     },
-    config = function() require('rc/telescope-nvim') end,
+    config = function() require('plugins-rc.telescope-nvim') end,
   },
   -- Icons
   {
     'kyazdani42/nvim-web-devicons',
-    config = function() require('rc/nvim-web-devicons') end,
+    config = function() require('plugins-rc.nvim-web-devicons') end,
   },
   -- File/Flolders explorer:nvim-tree
   {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
-    config = function() require('rc/nvim-tree') end,
+    config = function() require('plugins-rc.nvim-tree') end,
   },
   -----------------------------------------------------------
   -- Editting
@@ -111,7 +109,7 @@ local plugins_list = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
     },
-    config = function() require('rc/neogit') end,
+    config = function() require('plugins-rc.neogit') end,
   },
   -- Show chage status of lines: add, remove, modified
   'mhinz/vim-signify',

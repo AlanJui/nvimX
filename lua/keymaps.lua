@@ -1,14 +1,12 @@
 local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true }
+local opts = { silent = true, noremap = true }
 
--- Map <Space> as <leader>
--- vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 keymap('i', 'jj', '<Esc>', opts)
 
 -- On/Off File explorer
-keymap('n',  '\\', ':NvimTreeToggle<CR>', {})
+keymap('n', '<LocalLeader>e', ':NvimTreeToggle<CR>', opts )
 
 -- Ctrl-s: to save
 keymap('n',  '<c-s>', ':w<CR>', {})
@@ -145,13 +143,3 @@ keymap('t', '<Esc>', '<C-\\><C-n>', opts)
 -- keymap('n', '<C-_>', ':Commentary<CR>', opts)
 -- keymap('v', '<C-_>', ":'<,'>Commentary<CR>", opts)
 
--- -- vim-surround
--- keymap('n', 'ds', '<Plug>Dsurround', { noremap = false })
--- keymap('n', 'cs', '<Plug>Csurround', { noremap = false })
--- keymap('n', 'cS', '<Plug>CSurround', { noremap = false })
--- -- keymap('n', 's', '<Plug>Ysurround', { noremap = false })
--- -- keymap('n', 'S', '<Plug>YSurround', { noremap = false })
--- keymap('n', 'ss', '<Plug>Yssurround', { noremap = false })
--- keymap('n', 'SS', '<Plug>YSsurround', { noremap = false })
--- keymap('x', 's', '<Plug>VSurround', { noremap = false })
--- keymap('x', 'S', '<Plug>VgSurround', { noremap = false })
