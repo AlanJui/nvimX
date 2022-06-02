@@ -105,6 +105,16 @@ local mappings = {
             'Use widgets to display the variables',
         },
     },
+    -- Files
+    F = {
+        name = 'files',
+        w = { ':w<CR>', 'Save' },
+        c = { ':bdelete<CR>', 'Close' },
+        C = { ':q!<CR>', 'Quit withou save' },
+        e = { ':qa<CR>', 'Exit Neovim' },
+        E = { ':qa!<CR>', 'Exit Neovim without save' },
+        q = { ':q<CR>', 'Quit' },
+    },
     -- Git
     g = {
         name = 'git',
