@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["DAPInstall.nvim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/DAPInstall.nvim",
+    url = "https://github.com/Pocco81/DAPInstall.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -109,10 +114,20 @@ _G.packer_plugins = {
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/diffview.nvim",
     url = "https://github.com/sindrets/diffview.nvim"
   },
+  ["emmet-vim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/emmet-vim",
+    url = "https://github.com/mattn/emmet-vim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
+  },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["gv.vim"] = {
     loaded = true,
@@ -130,7 +145,6 @@ _G.packer_plugins = {
     url = "https://github.com/arkav/lualine-lsp-progress"
   },
   ["lualine.nvim"] = {
-    config = { "\27LJ\2\n;\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0 plugins-rc.lualine-material\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
@@ -141,7 +155,6 @@ _G.packer_plugins = {
     url = "https://github.com/tomasr/molokai"
   },
   neogit = {
-    config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins-rc.neogit\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/neogit",
     url = "https://github.com/TimUntersberger/neogit"
@@ -161,6 +174,26 @@ _G.packer_plugins = {
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-python"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-dap-python",
+    url = "https://github.com/mfussenegger/nvim-dap-python"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
+  },
   ["nvim-lsp-installer"] = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
@@ -172,7 +205,6 @@ _G.packer_plugins = {
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\n4\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\25plugins-rc.nvim-tree\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/kyazdani42/nvim-tree.lua"
@@ -188,10 +220,14 @@ _G.packer_plugins = {
     url = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
-    config = { "\27LJ\2\n<\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0!plugins-rc.nvim-web-devicons\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
+  },
+  ["one-small-step-for-vimkind"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/one-small-step-for-vimkind",
+    url = "https://github.com/jbyuki/one-small-step-for-vimkind"
   },
   ["open-browser.vim"] = {
     loaded = true,
@@ -224,10 +260,19 @@ _G.packer_plugins = {
     url = "https://github.com/ckipp01/stylua-nvim"
   },
   ["tabline.nvim"] = {
-    config = { "\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\venable\1\nsetup\ftabline\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/tabline.nvim",
     url = "https://github.com/kdheepak/tabline.nvim"
+  },
+  ["tagalong.vim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/tagalong.vim",
+    url = "https://github.com/AndrewRadev/tagalong.vim"
+  },
+  ["telescope-dap.nvim"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",
+    url = "https://github.com/nvim-telescope/telescope-dap.nvim"
   },
   ["telescope-live-grep-raw.nvim"] = {
     loaded = true,
@@ -235,13 +280,11 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-telescope/telescope-live-grep-raw.nvim"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\30plugins-rc.telescope-nvim\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["toggleterm.nvim"] = {
-    config = { "\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26plugins-rc.toggleterm\frequire\0" },
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
@@ -250,6 +293,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
+  },
+  undotree = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/undotree",
+    url = "https://github.com/mbbill/undotree"
+  },
+  ["vim-better-whitespace"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-better-whitespace",
+    url = "https://github.com/ntpeters/vim-better-whitespace"
+  },
+  ["vim-closetag"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-closetag",
+    url = "https://github.com/alvan/vim-closetag"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -281,6 +339,16 @@ _G.packer_plugins = {
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-signify",
     url = "https://github.com/mhinz/vim-signify"
   },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-test",
+    url = "https://github.com/vim-test/vim-test"
+  },
+  ["vim-ultest"] = {
+    loaded = true,
+    path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vim-ultest",
+    url = "https://github.com/rcarriga/vim-ultest"
+  },
   vimtex = {
     loaded = true,
     path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/vimtex",
@@ -299,34 +367,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins-rc.neogit\frequire\0", "config", "neogit")
-time([[Config for neogit]], false)
--- Config for: tabline.nvim
-time([[Config for tabline.nvim]], true)
-try_loadstring("\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\venable\1\nsetup\ftabline\frequire\0", "config", "tabline.nvim")
-time([[Config for tabline.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\30plugins-rc.telescope-nvim\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\2\n4\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\25plugins-rc.nvim-tree\frequire\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
--- Config for: toggleterm.nvim
-time([[Config for toggleterm.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26plugins-rc.toggleterm\frequire\0", "config", "toggleterm.nvim")
-time([[Config for toggleterm.nvim]], false)
--- Config for: nvim-web-devicons
-time([[Config for nvim-web-devicons]], true)
-try_loadstring("\27LJ\2\n<\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0!plugins-rc.nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
-time([[Config for nvim-web-devicons]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0 plugins-rc.lualine-material\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

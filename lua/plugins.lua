@@ -1,141 +1,193 @@
 local plugins_list = {
-  -- 'wbthomason/packer.nvim',
-  -- colorscheme for neovim written in lua specially made for roshnvim
-  'tomasr/molokai',
-  'folke/tokyonight.nvim',
-  -----------------------------------------------------------
-  -- LSP
-  -----------------------------------------------------------
-  -- LSP configurations
-  'williamboman/nvim-lsp-installer',
-  'neovim/nvim-lspconfig',
-  -- Null-LS: for formatter and linters
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      -- stylua-nvim is a mini Lua code formatter
-      'ckipp01/stylua-nvim',
+    -----------------------------------------------------------
+    -- Neovim Kernels
+    -----------------------------------------------------------
+    -- Nvim Treesitter configurations and abstraction layer:
+    -- for better syntax
+    'nvim-treesitter/nvim-treesitter',
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    -- snippets enginee
+    'L3MON4D3/LuaSnip',
+    'rafamadriz/friendly-snippets',
+    -----------------------------------------------------------
+    -- LSP
+    -----------------------------------------------------------
+    -- LSP configurations
+    'williamboman/nvim-lsp-installer',
+    'neovim/nvim-lspconfig',
+    -- Null-LS: for formatter and linters
+    {
+        'jose-elias-alvarez/null-ls.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            -- stylua-nvim is a mini Lua code formatter
+            'ckipp01/stylua-nvim',
+        },
     },
-  },
-  -- auto completion
-  'hrsh7th/nvim-cmp',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
-  'saadparwaiz1/cmp_luasnip',
-  -- snippets enginee
-  'L3MON4D3/LuaSnip',
-  'rafamadriz/friendly-snippets',
-  -----------------------------------------------------------
-  -- Programming
-  -----------------------------------------------------------
-  -- Yet Another Build System
-  {
-    'pianocomposer321/yabs.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-  },
-  -- terminal
-  {
-    "akinsho/toggleterm.nvim",
-    tag = 'v1.*',
-    config = function() require('plugins-rc.toggleterm') end,
-  },
-  -----------------------------------------------------------
-  -- User Interface
-  -----------------------------------------------------------
-  -- Nvim Treesitter configurations and abstraction layer:
-  -- for better syntax
-  'nvim-treesitter/nvim-treesitter',
-  'JoosepAlviste/nvim-ts-context-commentstring',
-  -- Indent Line
-  "lukas-reineke/indent-blankline.nvim",
-  -- Status Line
-  {
-    'nvim-lualine/lualine.nvim',
-    requires = {
-      { 'kyazdani42/nvim-web-devicons', opt = true },
-      'arkav/lualine-lsp-progress',
+    -- auto completion
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'saadparwaiz1/cmp_luasnip',
+    -----------------------------------------------------------
+    -- User Interface
+    -----------------------------------------------------------
+    -- colorscheme for neovim written in lua specially made for roshnvim
+    'tomasr/molokai',
+    'folke/tokyonight.nvim',
+    -- Indent Line
+    "lukas-reineke/indent-blankline.nvim",
+    -- Status Line
+    {
+        'nvim-lualine/lualine.nvim',
+        requires = {
+            { 'kyazdani42/nvim-web-devicons', opt = true },
+            'arkav/lualine-lsp-progress',
+        },
+        -- config = function() require('plugins-rc.lualine-material') end,
     },
-    config = function() require('plugins-rc.lualine-material') end,
-  },
-  {
-    'kdheepak/tabline.nvim',
-    require = {
-      'hoob3rt/lualine.nvim',
-      'kyazdani42/nvim-web-devicons',
+    {
+        'kdheepak/tabline.nvim',
+        require = {
+            'hoob3rt/lualine.nvim',
+            'kyazdani42/nvim-web-devicons',
+        },
+        -- config = function()
+        --   require('tabline').setup({ enable = false })
+        -- end,
     },
-    config = function()
-      require('tabline').setup({ enable = false })
-    end,
-  },
-  -- Screen Navigation
-  'folke/which-key.nvim',
-  -- Fuzzy files finder
-  {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope-live-grep-raw.nvim' },
+    -- Screen Navigation
+    'folke/which-key.nvim',
+    -- Icons
+    {
+        'kyazdani42/nvim-web-devicons',
+        -- config = function() require('plugins-rc.nvim-web-devicons') end,
     },
-    config = function() require('plugins-rc.telescope-nvim') end,
-  },
-  -- Icons
-  {
-    'kyazdani42/nvim-web-devicons',
-    config = function() require('plugins-rc.nvim-web-devicons') end,
-  },
-  -- File/Flolders explorer:nvim-tree
-  {
-    'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons',
-    config = function() require('plugins-rc.nvim-tree') end,
-  },
-  -----------------------------------------------------------
-  -- Editting
-  -----------------------------------------------------------
-  -- Toggle comments in Neovim
-  'tpope/vim-commentary',
-  -- Auto pairs, integrates with both cmp and treesitter
-  "windwp/nvim-autopairs",
-  -----------------------------------------------------------
-  -- Utilitiies
-  -----------------------------------------------------------
-  -- Git: version control
-  {
-    'TimUntersberger/neogit',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
+    -- Fuzzy files finder
+    {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-live-grep-raw.nvim' },
+        },
+        -- config = function() require('plugins-rc.telescope-nvim') end,
     },
-    config = function() require('plugins-rc.neogit') end,
-  },
-  -- Show chage status of lines: add, remove, modified
-  'mhinz/vim-signify',
-  -- Run git commands from Neovim command line
-  'tpope/vim-fugitive',
-  -- Integrated with "GBrowse" command: help use to browse GitHub Repo
-  'tpope/vim-rhubarb',
-  -- Git commit browser
-  'junegunn/gv.vim',
-  -- Floatting terminal
-  'voldikss/vim-floaterm',
-  -- Live server
-  {
-    'turbio/bracey.vim',
-    run = 'npm install --prefix server',
-  },
-  -- Markdown preview
-  'instant-markdown/vim-instant-markdown',
-  -- PlantUML
-  'weirongxu/plantuml-previewer.vim',
-  -- PlantUML syntax highlighting
-  'aklt/plantuml-syntax',
-  -- Open URI with your favorite browser from your most favorite editor
-  'tyru/open-browser.vim',
-  -- LaTeX
-  'lervag/vimtex'
+    -- File/Flolders explorer:nvim-tree
+    {
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        -- config = function() require('plugins-rc.nvim-tree') end,
+    },
+    -----------------------------------------------------------
+    -- Editting
+    -----------------------------------------------------------
+    -- visualizes undo history and makes it easier to browse and switch between different undo branches
+    'mbbill/undotree',
+    -- Toggle comments in Neovim
+    'tpope/vim-commentary',
+    -- Auto pairs, integrates with both cmp and treesitter
+    "windwp/nvim-autopairs",
+    -- Causes all trailing whitespace characters to be highlighted
+    'ntpeters/vim-better-whitespace',
+    -- Multiple cursor editting
+    -- use({'mg979/vim-visual-multi'})
+    ---------------------------------------------------------------
+    -- HTML
+    ---------------------------------------------------------------
+    -- provides support for expanding abbreviations similar to emmet
+    'mattn/emmet-vim',
+    -- Auto close tag
+    'alvan/vim-closetag',
+    -- Auto change html tags
+    'AndrewRadev/tagalong.vim',
+    -----------------------------------------------------------
+    -- Programming
+    -----------------------------------------------------------
+    -- Yet Another Build System
+    {
+        'pianocomposer321/yabs.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+    },
+    -----------------------------------------------------------
+    -- Debugging
+    -----------------------------------------------------------
+    -- DAP (Debug Adapter Protocols)
+    { 'mfussenegger/nvim-dap' },
+    -- nvim-dap’s functionality for managing various debuggers.
+    { 'Pocco81/DAPInstall.nvim' },
+    -- nvim-dap tools and UIs
+    { 'nvim-telescope/telescope-dap.nvim' },
+    { 'theHamsta/nvim-dap-virtual-text' },
+    {
+        'rcarriga/nvim-dap-ui',
+        requires = { 'mfussenegger/nvim-dap' },
+    },
+    -- nvim-dap unit test tools
+    {
+        'rcarriga/vim-ultest',
+        requires = { 'vim-test/vim-test' },
+        run = ':UpdateRemotePlugins',
+    },
+    -- DAP adapter for Python
+    { 'mfussenegger/nvim-dap-python' },
+    -- DAP adapter for the Neovim lua language
+    {
+        'jbyuki/one-small-step-for-vimkind',
+        -- config = [[ require('plugins.one-small-step-for-vimkind') ]],
+    },
+    -----------------------------------------------------------
+    -- Version Control
+    -----------------------------------------------------------
+    -- Git: version control
+    {
+        'TimUntersberger/neogit',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim',
+        },
+        -- config = function() require('plugins-rc.neogit') end,
+    },
+    -- Add git related info in the signs columns and popups
+    {
+        'lewis6991/gitsigns.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+    },
+    -- Show chage status of lines: add, remove, modified
+    'mhinz/vim-signify',
+    -- Run git commands from Neovim command line
+    'tpope/vim-fugitive',
+    -- Git commit browser
+    'junegunn/gv.vim',
+    -- Integrated with "GBrowse" command: help use to browse GitHub Repo
+    'tpope/vim-rhubarb',
+    -----------------------------------------------------------
+    -- Utilitiies
+    -----------------------------------------------------------
+    -- terminal
+    {
+        "akinsho/toggleterm.nvim",
+        tag = 'v1.*',
+        -- config = function() require('plugins-rc.toggleterm') end,
+    },
+    -- Floatting terminal
+    'voldikss/vim-floaterm',
+    -- Live server
+    {
+        'turbio/bracey.vim',
+        run = 'npm install --prefix server',
+    },
+    -- Open URI with your favorite browser from your most favorite editor
+    'tyru/open-browser.vim',
+    -- Markdown preview
+    'instant-markdown/vim-instant-markdown',
+    -- PlantUML
+    'weirongxu/plantuml-previewer.vim',
+    -- PlantUML syntax highlighting
+    'aklt/plantuml-syntax',
+    -- LaTeX
+    'lervag/vimtex'
 }
 
 return plugins_list
