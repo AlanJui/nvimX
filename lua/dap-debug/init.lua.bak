@@ -11,12 +11,22 @@ end
 -----------------------------------------------------------
 
 -- configure dap-python Adapter
-local python_path = HOME .. '/.pyenv/versions/3.10.0/envs/venv-3.10.0/bin/python'
-require('dbg.django').setup(python_path)
--- require('dbg.python').setup(python_path)
+-- local python_path = HOME .. '/.pyenv/versions/3.10.0/envs/venv-3.10.0/bin/python'
+local venv = os.getenv('VIRTUAL_ENV')
+local python_path = vim.fn.getcwd() .. string.format("%s/bin/python",venv)
+
+require('debug.django').setup(python_path)
+
+-- configure python debug adapter
+-- require('debug.python').setup(python_path)
+dap.adapters.python = {
+    type = 'executable',
+    command = python_path,
+    args = { '-m', 'debugpy.adapter' },
+}
 
 -- configure Neovim Lua Adapter
-require('dbg.lua')
+require('debug.lua')
 
 -----------------------------------------------------------
 -- Setup UI for Nvim DAP
@@ -114,12 +124,12 @@ end
 -----------------------------------------------------------
 -- Configuration of DAP Unit Testing Tool: vim-ultest
 -----------------------------------------------------------
-require('dbg.dap-unit-test')
+require('debug.dap-unit-test')
 
 -----------------------------------------------------------
 -- Key mapping for nvim-dap
 -----------------------------------------------------------
-require('dbg.dap-keymaps')
+require('debug.dap-keymaps')
 
 -----------------------------------------------------------
 -- provides queries of commands supported from nvim-dap

@@ -14,7 +14,8 @@ null_ls.setup({
         -- Built-in sources have access to a special method, with(),
         -- which modifies a subset of the source's default options.
         null_ls.builtins.formatting.prettier.with({
-            filetypes = { "html", "json", "yaml", "markdown" },
+            filetypes = { "html", "css", "scss", "less", "javascript", "typescript", "vue", "json", "jsonc", "yaml", "markdown", "handlebars" },
+            extra_filetypes = { "json" },
         }),
         -- Snippet engine for Neovim
         null_ls.builtins.completion.luasnip,
@@ -44,7 +45,7 @@ null_ls.setup({
         -- Python utility / library to sort imports alphabetically and
         -- automatically separate them into sections and by type.
         null_ls.builtins.formatting.isort,
-        -- HTML Template Linter and Formatter.
+        -- Django HTML Template Linter and Formatter.
         null_ls.builtins.diagnostics.djlint,
         null_ls.builtins.formatting.djlint,
         -- A pure-Python Django/Jinja template indenter without dependencies.

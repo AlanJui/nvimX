@@ -1,12 +1,17 @@
+--------------------------------------------------------------------
+-- keymap.lua
+--------------------------------------------------------------------
+if DEBUG then
+	print('<< DEBUG: Loading keymaps.lua >>')
+end
+
+-- local keymap = require('utils.set_keymap')
 local keymap = vim.api.nvim_set_keymap
 local opts = { silent = true, noremap = true }
 
 vim.g.maplocalleader = ","
 
 keymap('i', 'jj', '<Esc>', opts)
-
--- On/Off File explorer
-keymap('n', '<LocalLeader>e', ':NvimTreeToggle<CR>', opts )
 
 -- Ctrl-s: to save
 keymap('n',  '<c-s>', ':w<CR>', {})
@@ -32,10 +37,22 @@ keymap('n', '<M-Up>', '<cmd>wincmd -<CR>', opts)
 --------------------------------------------------------------------
 -- Line editting
 --------------------------------------------------------------------
--- Blank whole line
-keymap('n', '<M-l>', '0d$', opts)
+-- Editting on Insert Mode
 keymap('i', '<M-l>', '<Esc>A', opts)
 keymap('i', '<M-j>', '<Esc>la', opts)
+-- keymap('i', '<LocalLeader>l', '<Esc>A', opts)
+-- keymap('i', '<LocalLeader>j', '<Esc>la', opts)
+keymap('i', '<M-,>', '<Esc>A,', opts)
+keymap('i', '<M-.>', '<Esc>A:', opts)
+keymap('i', '<M-:>', '<Esc>A:<CR>', opts)
+-- keymap('i', '<LocalLeader>,', '<Esc>A,', opts)
+-- keymap('i', '<LocalLeader>.', '<Esc>A:', opts)
+-- Blank whole line
+keymap('n', '<M-l>', '0d$', opts)
+keymap('n', '<M-p>', 'pdd', opts)
+-- Indent / Unident a line
+keymap('n', '<M->>', 'V><Esc>', opts)
+keymap('n', '<M-<>', 'V<<Esc>', opts)
 -- Remove Line
 keymap('i', '<C-Enter>',    '<Esc>kA', opts)
 -- Insert line
@@ -96,15 +113,10 @@ keymap('n', '<C-Right>', '<cmd>wincmd l<CR>', opts)
 -- keymap('n', '<C-l>', '<C-w><Right>', {})
 
 -- Window Resize
-keymap('n', '<M-Up>', '<cmd>wincmd -<CR>', opts)
-keymap('n', '<M-Down>', '<cmd>wincmd +<CR>', opts)
-keymap('n', '<M-Left>', '<cmd>wincmd <<CR>', opts)
+keymap('n', '<M-Up>',    '<cmd>wincmd -<CR>', opts)
+keymap('n', '<M-Down>',  '<cmd>wincmd +<CR>', opts)
+keymap('n', '<M-Left>',  '<cmd>wincmd <<CR>', opts)
 keymap('n', '<M-Right>', '<cmd>wincmd ><CR>', opts)
-
-keymap('n', '<F1>', '<cmd>wincmd -<CR>', opts)
-keymap('n', '<F2>', '<cmd>wincmd +<CR>', opts)
-keymap('n', '<F3>', '<cmd>wincmd <<CR>', opts)
-keymap('n', '<F4>', '<cmd>wincmd ><CR>', opts)
 
 --------------------------------------------------------------------
 -- Buffers
@@ -132,7 +144,7 @@ keymap('n', '<S-Tab>', '<cmd>bp<CR>', opts)
 --------------------------------------------------------------------
 -- Terminal mode
 --------------------------------------------------------------------
-keymap('t', '<Esc>', '<C-\\><C-n>', opts)
+-- keymap('t', '<Esc>', '<C-\\><C-n>', opts)
 
 --------------------------------------------------------------
 -- Nonbuild-in commands

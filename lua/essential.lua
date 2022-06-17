@@ -1,4 +1,13 @@
 -----------------------------------------------------------
+-- Python environment
+-----------------------------------------------------------
+PYENV_ROOT_PATH = HOME .. '/.pyenv/versions/'
+PYTHON_VERSION = '3.10.0'
+PYTHON_VENV = 'venv-3.10.0'
+PYENV_GLOBAL_PATH = PYENV_ROOT_PATH .. '/' .. PYTHON_VERSION .. '/bin/python'
+PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. '/envs/' .. PYTHON_VENV .. '/bin/python'
+
+-----------------------------------------------------------
 -- Neovim global options
 -----------------------------------------------------------
 vim.g.python3_host_prog = PYTHON_BINARY

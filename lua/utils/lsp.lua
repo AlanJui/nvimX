@@ -1,6 +1,6 @@
 local M = {}
 
-local get_venv = require('utils/python').getVirtualEnv
+local get_venv = require('utils.python').getVirtualEnv
 
 M.lsp_provider = function ()
     local clients = {}

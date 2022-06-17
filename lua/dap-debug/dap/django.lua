@@ -2,20 +2,19 @@
 -- nvim-dap-python
 -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
 -----------------------------------------------------------
+local dap_python = safe_require('dap-python')
+if not dap_python then
+    return
+end
+
 M = {}
 
-M.setup = function (python_path)
-    local dap_python = safe_require('dap-python')
-    if not dap_python then
-        return
-    end
-
+M.setup = function (dap)
     -- configure DAP Adapter
-    local dap = require('dap')
     dap.adapters.python = {
-        type = 'executable';
-        command = python_path;
-        args = { '-m', 'debugpy.adapter' };
+        type = 'executable',
+        command = 'python',
+        args = { '-m', 'debugpy.adapter' },
     }
 
     -- configure configurations of DAP Adapter
@@ -33,7 +32,7 @@ M.setup = function (python_path)
             console = 'integratedTerminal',
             justMyCode = true,
             pythonPath = function ()
-                return python_path
+                return DEBUGPY
             end,
         },
     }

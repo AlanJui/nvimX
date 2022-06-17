@@ -1,12 +1,9 @@
-local cmp = safe_require('cmp')
-if not cmp then
+local ok, cmp = pcall(require, 'cmp')
+if not ok then
     return
 end
 
-local luasnip = safe_require('luasnip')
-if not luasnip then
-  return
-end
+local luasnip = require('luasnip')
 
 -- Require function for tab to work with LUA-SNIP
 local has_words_before = function()
@@ -45,7 +42,8 @@ local kind_icons = {
 
 cmp.setup({
     cmpletion = {
-        completeopt = "menu, menuone, noinsert",
+        -- completeopt = "menu, menuone, noinsert",
+        completeopt = "menu, menuone, noselect",
     },
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -54,7 +52,7 @@ cmp.setup({
         end,
     },
     window = {
-        -- completion = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
     },
     sources = cmp.config.sources({
@@ -99,22 +97,15 @@ cmp.setup({
         format = function(entry, vim_item)
             -- fancy icons and a name of kind
             vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-            -- vim_item.kind = require('lspkind').presets.default[vim_item.kind]
-            -- vim_item.kind = string.format(
-            --     '%s %s',
-            --     lspkind.presets.default[vim_item.kind],
-            --     vim_item.kind
-            -- )
             -- set a name for each source
             vim_item.menu = ({
-                buffer = "[Buff]",
                 nvim_lsp = "[LSP]",
-                nvim_lua = "[Lua]",
+                buffer = "[Buff]",
                 luasnip = "[LuaSnip]",
+                nvim_lua = "[Lua]",
                 latex_symbols = "[Latex]",
                 spell = "[Spell]",
                 treesitter = "[TreeSitter]",
-                vsnip = "[VsSnip]",
                 zsh = "[Zsh]",
                 path = "[Path]",
             })[entry.source.name]
@@ -141,3 +132,4 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+

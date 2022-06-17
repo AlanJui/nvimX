@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo 'Install nvim.packer and all plugins for Neovim'
+nvim --headless  -c "autocmd User PackerComplete quitall" -c "PackerSync"

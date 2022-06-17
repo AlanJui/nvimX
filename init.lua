@@ -1,9 +1,17 @@
 -----------------------------------------------------------
+-- Global Functions
+-- 載入 my-nvim 作業時，所需之各種 Global Functions 。
+-----------------------------------------------------------
+require("globals")
+
+-----------------------------------------------------------
 -- Initial environments for Neovim
 -- 設定 my-nvim 作業時，所需之「全域常數」。
 -----------------------------------------------------------
 DEBUG = false
+
 MY_VIM = 'nvim'
+OS_SYS = which_os()
 HOME = os.getenv('HOME')
 
 CONFIG_DIR = HOME .. '/.config/' .. MY_VIM
@@ -20,20 +28,24 @@ end
 
 LSP_SERVERS = {
 	'sumneko_lua',
+    'diagnosticls',
 	'texlab',
 	'pyright',
 	'emmet_ls',
 	'html',
+	'cssls',
+    'stylelint_lsp',
 	'jsonls',
 	'rust_analyzer',
 	'tsserver',
 }
 
------------------------------------------------------------
--- Global Functions
--- 載入 my-nvim 作業時，所需之各種 Global Functions 。
------------------------------------------------------------
-require("globals")
+DEBUGPY = '~/.virtualenvs/debugpy/bin/python'
+
+-- Your own custom vscode style snippets
+SNIPPETS_PATH = {
+    CONFIG_DIR .. '/my-snippets/snippets',
+}
 
 ---------------------------------------------------------------
 -- Install Plugin Manager & Plugins / Load Plugins
@@ -72,37 +84,40 @@ elseif INSTALLED then
 	-- lsp
     require("lsp") -- integrate with auto cmp
 	require('lsp.null-langserver')
-	-- User Interface
-	require('plugins-rc.nvim-web-devicons')
-	require('plugins-rc.indent-blankline')
 	-- status line
 	require('plugins-rc.lualine-material')
     require('plugins-rc.tabline')
+	-- User Interface
+	require('plugins-rc.nvim-lightbulb')
+	require('plugins-rc.nvim-web-devicons')
+	require('plugins-rc.indent-blankline')
     -- files management
     require('plugins-rc.telescope-nvim')
 	require('plugins-rc.nvim-tree')
 	-- editting tools
 	require('plugins-rc.autopairs')
+	require('plugins-rc.nvim-ts-autotag')
 	require('plugins-rc.undotree')
-	vim.cmd([[ runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim ]])
+	vim.cmd([[runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim]])
 	vim.cmd([[runtime ./lua/plugins-rc/emmet-vim.rc.vim]])
 	vim.cmd([[runtime ./lua/plugins-rc/vim-closetag.rc.vim]])
 	vim.cmd([[runtime ./lua/plugins-rc/tagalong-vim.rc.vim]])
 	-- programming
+    require('plugins-rc.toggleterm')
 	require('plugins-rc.yabs')
 	-- debug
+	require('dap-debug')
 	require('plugins-rc.ultest')
-	require('debug')
     -- versional control
 	require('plugins-rc.neogit')
 	require('plugins-rc.gitsigns')
-	vim.cmd([[ runtime ./lua/plugins-rc/vim-signify.rc.vim]])
+	require('plugins-rc.vim-gist')
+	-- vim.cmd([[ runtime ./lua/plugins-rc/vim-signify.rc.vim]])
 	-- Utilities
-    require('plugins-rc.toggleterm')
-	vim.cmd([[ runtime ./lua/plugins-rc/bracey.rc.vim]])
-	vim.cmd([[ runtime ./lua/plugins-rc/vim-instant-markdown.rc.vim ]])
-	vim.cmd([[ runtime ./lua/plugins-rc/plantuml-previewer.rc.vim ]])
-	vim.cmd([[ runtime ./lua/plugins-rc/vimtex.rc.vim ]])
+	vim.cmd([[runtime ./lua/plugins-rc/bracey.rc.vim]])
+	vim.cmd([[runtime ./lua/plugins-rc/vim-instant-markdown.rc.vim]])
+	vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
+	vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
 end
 
 
@@ -126,7 +141,13 @@ require('settings')
 -- Color Themes
 -- Neovim 畫面的色彩設定
 -----------------------------------------------------------
-require('color-themes')
+if not INSTALLED or DEBUG then
+    print('<< Load default colorscheme >>')
+    -- Use solarized8_flat color scheme when first time start my-nvim
+    vim.cmd([[ colorscheme solarized8_flat ]])
+else
+    require('color-themes')
+end
 
 -----------------------------------------------------------
 -- Key bindings
@@ -138,7 +159,9 @@ require('keymaps')
 
 -- Load Which-key
 -- 提供【選單】式的指令操作
-require('plugins-rc.which-key')
+if INSTALLED then
+    require('plugins-rc.which-key')
+end
 
 -----------------------------------------------------------
 -- Experiments
@@ -151,7 +174,17 @@ require('plugins-rc.which-key')
 
 -- Say hello
 local function blah()
-    print("init.lua is loaded!\n")
+	print('init.lua is loaded!')
+    print('====================================================================')
+    print(string.format('OS = %s', which_os()))
+    print(string.format('${workspaceFolder} = %s', vim.fn.getcwd()))
+    print(string.format('DEBUGPY = %s', DEBUGPY))
+
+    -- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
+    local util = require('utils.python')
+    local venv_python = util.get_python_path_in_venv()
+    print(string.format('$VIRTUAL_ENV = %s', venv_python))
+    print('====================================================================')
 end
 
 blah()

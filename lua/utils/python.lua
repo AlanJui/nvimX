@@ -28,4 +28,14 @@ M.getVirtualEnv = function ()
     return ""
 end
 
+function M.get_python_path_in_venv()
+    local venv = os.getenv("VIRTUAL_ENV")
+    if venv == nil then
+        -- return value = nil
+        return
+    else
+        return vim.fn.getcwd() .. string.format("%s/bin/python", venv)
+    end
+end
+
 return M

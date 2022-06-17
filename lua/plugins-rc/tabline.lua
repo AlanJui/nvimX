@@ -4,5 +4,5 @@ if not tabline then
 end
 
 tabline.setup({
-    enable = false,
+    enable = false
 })
