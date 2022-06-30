@@ -59,7 +59,7 @@ local function configure_debug_ui()
 
     -- 設定「除錯器」的「使用者介面」在「右側」顯示
     dapui.setup({
-        sidebar = { position = 'right' }
+        layouts = { position = 'right' }
     })
 
     -- 完成「初始作業」後，便顯示使用者介面

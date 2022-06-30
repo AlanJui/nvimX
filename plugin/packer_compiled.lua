@@ -231,7 +231,7 @@ _G.packer_plugins = {
   },
   ["nvim-texlabconfig"] = {
     commands = { "TexlabInverseSearch" },
-    config = { "\27LJ\2\nà\1\0\0\6\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0026\3\6\0009\3\a\0039\3\b\3'\5\t\0B\3\2\2=\3\n\2B\0\2\1K\0\1\0\15cache_root\ncache\fstdpath\afn\bvim\20cache_filetypes\1\3\0\0\btex\bbib\1\0\3\17cache_active\2\25file_permission_mode\3¶\3\28reverse_search_edit_cmd\tedit\nsetup\17texlabconfig\frequire\0" },
+    config = { "\27LJ\2\nà\1\0\0\6\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0026\3\6\0009\3\a\0039\3\b\3'\5\t\0B\3\2\2=\3\n\2B\0\2\1K\0\1\0\15cache_root\ncache\fstdpath\afn\bvim\20cache_filetypes\1\3\0\0\btex\bbib\1\0\3\28reverse_search_edit_cmd\tedit\17cache_active\2\25file_permission_mode\3¶\3\nsetup\17texlabconfig\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,

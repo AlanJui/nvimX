@@ -4,13 +4,34 @@ return {
     filetypes = { 'tex', 'bib' },
     settings = {
         texlab = {
-            rootDirectory = nil,
-            --      ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-            build = _G.TeXMagicBuildConfig,
-            --      ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+            -- rootDirectory = nil,
+            -- --      ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+            -- build = _G.TeXMagicBuildConfig,
+            -- --      ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+            -- forwardSearch = {
+            --     executable = 'evince',
+            --     args = { '%p' },
+            -- },
+            auxDirectory = ".",
+            bibtexFormatter = "texlab",
+            build = {
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                executable = "latexmk",
+                forwardSearchAfter = false,
+                onSave = false
+            },
+            chktex = {
+                onEdit = false,
+                onOpenAndSave = false
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 80,
             forwardSearch = {
-                executable = 'evince',
-                args = { '%p' },
+                args = {}
+            },
+            latexFormatter = "latexindent",
+            latexindent = {
+                modifyLineBreaks = false
             },
         },
     },
