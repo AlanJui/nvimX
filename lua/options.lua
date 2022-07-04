@@ -28,7 +28,7 @@ set.laststatus = 2 -- always show status line
 
 set.hidden = true -- allows you to hide buffers with unsaved changes without being prompted
 set.inccommand = 'split' -- live preview of :s results
-set.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
+-- set.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
 
 -- patterns to ignore during file-navigation
 set.wildignore = set.wildignore + '*.o,*.rej,*.so'
