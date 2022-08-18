@@ -10,7 +10,8 @@ PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. '/envs/' .. PYTHON_VENV .. 
 -----------------------------------------------------------
 -- Neovim global options
 -----------------------------------------------------------
-vim.g.python3_host_prog = PYTHON_BINARY
+-- vim.g.python3_host_prog = PYTHON_BINARY
+vim.g.python3_host_prog = '/home/alanjui/.pyenv/versions/3.10.6/bin/python3.10'
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0

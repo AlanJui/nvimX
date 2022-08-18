@@ -18,7 +18,7 @@ null_ls.setup({
             extra_filetypes = { "json" },
         }),
         -- Snippet engine for Neovim
-        null_ls.builtins.completion.luasnip,
+        -- null_ls.builtins.completion.luasnip,
         ---------------------------------------------------------------
         -- Python
         ---------------------------------------------------------------
@@ -54,7 +54,7 @@ null_ls.setup({
         -- Lua
         ---------------------------------------------------------------
         -- Snippet engine for Neovim, written in Lua.
-        null_ls.builtins.completion.luasnip,
+        -- null_ls.builtins.completion.luasnip,
         -- for linting and static analysis of Lua code
         -- null_ls.builtins.diagnostics.luacheck,
         -- Reformats your Lua source code.
@@ -63,10 +63,10 @@ null_ls.setup({
         -- Web
         ---------------------------------------------------------------
         -- Tags completion source.
-        null_ls.builtins.completion.tags,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.completion.spell,
+        -- null_ls.builtins.completion.tags,
+        -- null_ls.builtins.completion.spell,
         -- Find and fix problems in your JavaScript code.
         null_ls.builtins.formatting.eslint,
         ---------------------------------------------------------------
@@ -76,6 +76,6 @@ null_ls.setup({
         -- files.
         null_ls.builtins.formatting.markdownlint,
         -- A linter for YAML files
-        null_ls.builtins.diagnostics.zsh,
+        -- null_ls.builtins.diagnostics.zsh,
     },
 })
