@@ -91,16 +91,19 @@ end
 
 ---- Customizing how diagnostics are displayed
 vim.diagnostic.config({
-	-- disable virtual text
-	virtual_text = false,
-	-- virtual_text = {
-	-- prefix = 'x',
-	-- },
-	-- show signs
-	signs = true,
-	underline = true,
 	update_in_insert = false,
 	severity_sort = true,
+	-- disable virtual text
+	-- virtual_text = false,
+	-- underline = false,
+    underline = {
+        severity = { max = vim.diagnostic.severity.INFO }
+    },
+	virtual_text = {
+        severity = { min = vim.diagnostic.severity.WARN }
+	},
+	-- show signs
+	signs = true,
 })
 
 -- Change diagnostic symbols in the sign column (gutter)
