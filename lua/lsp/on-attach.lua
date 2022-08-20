@@ -10,14 +10,14 @@ local formatting_callback = function(client, bufnr)
 	end, { buffer = bufnr })
 end
 
-local function lsp_highlight_document(client)
-   -- Set autocommands conditional on server_capabilities
-    local illuminate = safe_require('illuminate')
-    if not illuminate then
-        return
-    end
-    illuminate.on_attach(client)
-end
+-- local function lsp_highlight_document(client)
+--    -- Set autocommands conditional on server_capabilities
+--     local illuminate = safe_require('illuminate')
+--     if not illuminate then
+--         return
+--     end
+--     illuminate.on_attach(client)
+-- end
 
 local function lsp_keymaps(bufnr)
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -99,7 +99,7 @@ local on_attach = function(client, bufnr)
     })
 
     lsp_keymaps(bufnr)
-    lsp_highlight_document(client)
+    -- lsp_highlight_document(client)
 end
 
 return on_attach
