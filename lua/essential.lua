@@ -2,16 +2,16 @@
 -- Python environment
 -----------------------------------------------------------
 PYENV_ROOT_PATH = HOME .. '/.pyenv/versions/'
-PYTHON_VERSION = '3.10.0'
-PYTHON_VENV = 'venv-3.10.0'
+PYTHON_VERSION = '3.10.6'
+PYTHON_VENV = 'venv-' .. PYTHON_VERSION
 PYENV_GLOBAL_PATH = PYENV_ROOT_PATH .. '/' .. PYTHON_VERSION .. '/bin/python'
 PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. '/envs/' .. PYTHON_VENV .. '/bin/python'
 
 -----------------------------------------------------------
 -- Neovim global options
 -----------------------------------------------------------
--- vim.g.python3_host_prog = PYTHON_BINARY
-vim.g.python3_host_prog = '/home/alanjui/.pyenv/versions/3.10.6/bin/python3.10'
+-- vim.g.python3_host_prog = '/home/alanjui/.pyenv/versions/3.10.6/bin/python3.10'
+vim.g.python3_host_prog = PYTHON_BINARY
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
