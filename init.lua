@@ -18,6 +18,7 @@ CONFIG_DIR = HOME .. '/.config/' .. MY_VIM
 RUNTIME_DIR = HOME .. '/.local/share/' .. MY_VIM
 SNIPPETS_PATH = {
     CONFIG_DIR .. '/my-snippets',
+    RUNTIME_DIR .. '/site/pack/packer/start/friendly-snippets',
 }
 
 PACKAGE_ROOT = RUNTIME_DIR .. '/site/pack'

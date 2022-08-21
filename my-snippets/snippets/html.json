@@ -1,4 +1,13 @@
 {
+  "doctype": {
+    "prefix": "doctype",
+    "body": [
+      "<!DOCTYPE>",
+      "$1"
+    ],
+    "description": "HTML - Defines the document type",
+    "scope": "text.html"
+  },
   "myCommentLine": {
     "prefix": "myCommentLine",
     "body": ["{# comment-out a line #}"],
