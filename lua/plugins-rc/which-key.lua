@@ -72,7 +72,7 @@ local mappings = {
 	["z"] = { "UndotreeToggle<CR>", "Undo tree" },
 	-- Actions
 	a = {
-		name = "actions",
+		name = "Actions",
 		h = { ':let @/ = ""<CR>', "remove search highlight" },
 		t = { ":set filetype=htmldjango<CR>", "set file type to django template" },
 		T = { ":set filetype=html<CR>", "set file type to HTML" },
@@ -82,7 +82,7 @@ local mappings = {
 	},
 	-- Buffer
 	b = {
-		name = "buffer",
+		name = "Buffers",
 		c = { ":bdelete<CR>", "Close buffer" },
 		C = { '%bdelete|edit #|normal `"<CR>', "Close all but current" },
 		I = { "gg=G", "Formate indent of line" },
@@ -105,27 +105,6 @@ local mappings = {
 		k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
 		r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
 		s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
-		d = {
-			name = "diagnostics",
-			e = {
-				"<cmd>lua vim.diagnostic.open_float()<CR>",
-				"Open diagnostics floating",
-			},
-			p = {
-				"<cmd>lua vim.diagnostic.goto_prev()<CR>",
-				"Goto prev diagnostics",
-			},
-			n = {
-				"<cmd>lua vim.diagnostic.goto_next()<CR>",
-				"Goto next diagnostics",
-			},
-			s = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Set loclist" },
-			D = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
-			d = {
-				":Telescope diagnostics bufnr=0<CR>",
-				"List diagnostics current file",
-			},
-		},
 		g = {
 			name = "goto",
 			D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
@@ -166,7 +145,7 @@ local mappings = {
 	},
 	-- Debug
 	d = {
-		name = "debug",
+		name = "Debug",
 		b = {
 			"<cmd>lua require'dap'.toggle_breakpoint()<CR>",
 			"Toggle breakpoint",
@@ -202,63 +181,85 @@ local mappings = {
 		-- REPEL
 		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
 	},
-	-- Running code
-	r = {
-		name = "Code Runner",
-		l = {
+    -- LSP diagnostics
+    D = {
+        name = "Diagnostics",
+        f = {
+            "<cmd>lua vim.diagnostic.open_float()<CR>",
+            "Open diagnostics floating",
+        },
+        p = {
+            "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+            "Goto prev diagnostics",
+        },
+        n = {
+            "<cmd>lua vim.diagnostic.goto_next()<CR>",
+            "Goto next diagnostics",
+        },
+        l = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Set loclist" },
+        w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+        c = {
+            ":Telescope diagnostics bufnr=0<CR>",
+            "List diagnostics current file",
+        },
+    },
+    -- Running code
+    r = {
+        name = "Run",
+        l = {
             r = { ':TermExec cmd="lua %"<CR>', "Run lua file" },
         },
-		d = {
-			name = "Django",
-			r = {
-				':TermExec cmd="python manage.py runserver"<CR>',
-				"Django runserver",
-			},
-			R = {
-				':TermExec cmd="python manage.py runserver --noreload"<CR>',
-				"Django runserver --noreload",
-			},
-			c = {
-				':TermExec cmd="python manage.py collectstatic"<CR>',
-				"Collect all static files",
-			},
-			s = {
-				':TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
-				"manage.py shell",
-			},
-			S = {
-				':TermExec go_back=0 cmd="python manage.py createsuperuser"<CR>',
-				"Create super user",
-			},
-			m = {
-				':TermExec go_back=0 cmd="python manage.py makemigrations"<CR>',
-				"Update DB",
-			},
-			M = {
-				':TermExec go_back=0 cmd="python manage.py migrate"<CR>',
-				"Migrate DB",
-			},
-		},
-		p = {
-			-- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
-			-- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
-			-- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
-			name = "Python",
-			r = {
-				':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
-				"Run Python file",
-			},
-			d = {
-				":update<CR>:sp term://python3 -m pdb %<CR>",
-				"Debug Python file",
-			},
-			n = {
-				":update<CR>:sp term://nodemon -e py %<CR>",
-				"Monitor the file",
-			},
-		},
-		-- yabs
-		y = {
+        d = {
+            name = "Django",
+            r = {
+                ':TermExec cmd="python manage.py runserver"<CR>',
+                "Django runserver",
+            },
+            R = {
+                ':TermExec cmd="python manage.py runserver --noreload"<CR>',
+                "Django runserver --noreload",
+            },
+            c = {
+                ':TermExec cmd="python manage.py collectstatic"<CR>',
+                "Collect all static files",
+            },
+            s = {
+                ':TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
+                "manage.py shell",
+            },
+            S = {
+                ':TermExec go_back=0 cmd="python manage.py createsuperuser"<CR>',
+                "Create super user",
+            },
+            m = {
+                ':TermExec go_back=0 cmd="python manage.py makemigrations"<CR>',
+                "Update DB",
+            },
+            M = {
+                ':TermExec go_back=0 cmd="python manage.py migrate"<CR>',
+                "Migrate DB",
+            },
+        },
+        p = {
+            -- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
+            -- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
+            -- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
+            name = "Python",
+            r = {
+                ':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
+                "Run Python file",
+            },
+            d = {
+                ":update<CR>:sp term://python3 -m pdb %<CR>",
+                "Debug Python file",
+            },
+            n = {
+                ":update<CR>:sp term://nodemon -e py %<CR>",
+                "Monitor the file",
+            },
+        },
+        -- yabs
+        y = {
             name = 'yabs',
             t = {
                 ":Telescope yabs tasks<CR>",
@@ -276,7 +277,7 @@ local mappings = {
     },
     -- Search files
     s = {
-        name = "search",
+        name = "Search",
         a = { ":Telescope live_grep<CR>", "Live grep" },
         b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
         f = { ":Telescope find_files<CR>", "Find files" },
@@ -290,7 +291,7 @@ local mappings = {
     },
     -- Files
     F = {
-        name = "files",
+        name = "Files",
         w = { ":w<CR>", "Save" },
         c = { ":bdelete<CR>", "Close" },
         C = { ":q!<CR>", "Quit withou save" },
@@ -300,7 +301,7 @@ local mappings = {
     },
     -- Git
     g = {
-        name = "git",
+        name = "Git",
         g = { ":Neogit<CR>", "Neogit" },
         a = { ":Git add .<CR>", "add all" },
         b = { ":Git blame<CR>", "blame" },
@@ -340,7 +341,7 @@ local mappings = {
     },
     -- utilities
     u = {
-        name = "utilities",
+        name = "Utilities",
         t = {
             name = "terminal",
             d = {
@@ -384,7 +385,7 @@ local mappings = {
     },
     -- Window
     w = {
-        name = "window",
+        name = "Windows",
         ["-"] = { ":split<CR>", "Horiz. window" },
         ["|"] = { ":vsplit<CR>", "Vert. window" },
         z = { "<C-W>_", "Zoom-in" },
