@@ -66,4 +66,4 @@ yabs:setup({
     },
 })
 
-telescope.load_extension "yabs"
+telescope.load_extension('yabs') 

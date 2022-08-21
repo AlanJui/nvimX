@@ -205,11 +205,10 @@ local mappings = {
 	-- Running code
 	r = {
 		name = "Code Runner",
-		l = { ':TermExec cmd="lua %"<CR>', "Run lua file" },
-		p = { ':TermExec cmd="python %"<CR>', "Run python file" },
-		d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
-		m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
-		D = {
+		l = {
+            r = { ':TermExec cmd="lua %"<CR>', "Run lua file" },
+        },
+		d = {
 			name = "Django",
 			r = {
 				':TermExec cmd="python manage.py runserver"<CR>',
@@ -240,8 +239,10 @@ local mappings = {
 				"Migrate DB",
 			},
 		},
-		L = { name = "Lua", r = { ':TermExec cmd="lua %"<CR>', "Run lua file" } },
-		P = {
+		p = {
+			-- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
+			-- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
+			-- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
 			name = "Python",
 			r = {
 				':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
@@ -256,143 +257,159 @@ local mappings = {
 				"Monitor the file",
 			},
 		},
-	},
-	-- Search files
-	s = {
-		name = "search",
-		a = { ":Telescope live_grep<CR>", "Live grep" },
-		b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
-		f = { ":Telescope find_files<CR>", "Find files" },
-		g = { ":Telescope git_files<CR>", "Git files" },
-		m = { ":Telescope marks<CR>", "Bookmarks" },
-		r = { ":Telescope oldfiles<CR>", "Recently open files" },
-		h = { ":Telescope help_tags<CR>", "Help Tags" },
-		p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
-		w = { ":Telescope live_grep<CR>", "Find word" },
-		v = { ":FloatermNew vifm<CR>", "ViFm" },
-	},
-	-- Files
-	F = {
-		name = "files",
-		w = { ":w<CR>", "Save" },
-		c = { ":bdelete<CR>", "Close" },
-		C = { ":q!<CR>", "Quit withou save" },
-		e = { ":qa<CR>", "Exit Neovim" },
-		E = { ":qa!<CR>", "Exit Neovim without save" },
-		q = { ":q<CR>", "Quit" },
-	},
-	-- Git
-	g = {
-		name = "git",
-		g = { ":Neogit<CR>", "Neogit" },
-		a = { ":Git add .<CR>", "add all" },
-		b = { ":Git blame<CR>", "blame" },
-		B = { ":GBrowse<CR>", "Browse GitHub repo" },
-		c = { ":Git commit<CR>", "commit" },
-		d = {
-			name = "+Diff",
-			h = { ":Gdiffsplit<CR>", "diff split" },
-			v = { ":Gvdiffsplit<CR>", "diff vsplit" },
-			n = { ":Git diff<CR>", "Normal diff" },
-		},
-		l = { ":Git log<CR>", "List log with details" },
-		L = { ":Git log --oneline<CR>", "List log within one line" },
-		p = { ":Git push<CR>", "push" },
-		P = { ":Git pull<CR>", "pull" },
-		r = { ":GRemove<CR>", "remove" },
-		s = { ":Git<CR>", "status" },
-		S = { ":GitGutterSignsToggle<CR>", "toggle signs" },
-		T = {
-			':Git log --no-walk --tags --pretty="%h %d %s" --decorate=full<CR>',
-			"List all tags in log",
-		},
-		z = { ":FloatermNew lazygit<CR>", "Lazygit" },
-		-- Gist
-		G = {
-			name = "gist",
-			-- a    = {':Gist -a', 'post a gist anonymously' },
-			-- b    = {':Gist -b', 'post gist browser' },
-			d = { ":Gist -d<CR>", "delete gist" },
-			e = { ":Gist -e<CR>", "edit gist" },
-			l = { ":Gist -l<CR>", "list public gists" },
-			s = { ":Gist -ls<CR>", "list starred gists" },
-			m = { ":Gist -m<CR>", "post a gist with all open buffers" },
-			p = { ":Gist -p<CR>", "post public gist" },
-			P = { ":Gist -P<CR>", "post private gist" },
-		},
-	},
-	-- utilities
-	u = {
-		name = "utilities",
-		t = {
-			name = "terminal",
-			d = {
-				":FloatermNew python manage.py shell<CR>",
-				"Django-admin Shell",
-			},
-			p = { ":FloatermNew python<CR>", "Python shell" },
-			n = { ":FloatermNew node<CR>", "Node.js shell" },
-			v = {
-				":FloatermNew --wintype='vsplit' --position='right'<CR>",
-				"Debug Term...",
-			},
-		},
-		l = {
-			name = "LiveServer",
-			l = { ":Bracey<CR>", "start live server" },
-			L = { ":BraceyStop<CR>", "stop live server" },
-			r = { ":BraceyReload<CR>", "web page to be reloaded" },
-		},
-		m = {
-			name = "Markdown",
-			m = { ":MarkdownPreview<CR>", "start markdown preview" },
-			M = { ":MarkdownPreviewStop<CR>", "stop markdown preview" },
-		},
-		u = {
-			name = "UML",
-			v = { ":PlantumlOpen<CR>", "start PlantUML preview" },
-			o = {
-				":PlantumlSave docs/diagrams/out.png<CR>",
-				"export PlantUML diagram",
-			},
-		},
-		f = {
-			":FloatermNew --height=0.7 --width=0.9 --wintype=float vifm<CR>",
-			"ViFm",
-		},
-		r = {
-			":FloatermNew --height=0.7 --width=0.9 --wintype=float ranger<CR>",
-			"Ranger",
-		},
-	},
-	-- Window
-	w = {
-		name = "window",
-		["-"] = { ":split<CR>", "Horiz. window" },
-		["|"] = { ":vsplit<CR>", "Vert. window" },
-		z = { "<C-W>_", "Zoom-in" },
-		Z = { "<C-W>|", "Zoom-in (Vertical)" },
-		o = { "<C-W>=", "Zoom-out" },
-		c = { ":close<CR>", "Close window" },
-		k = { "<C-w>k", "Up window" },
-		j = { "<C-w>j", "Down window" },
-		h = { "<C-w>h", "Left window" },
-		l = { "<C-w>l", "Right window" },
-		["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
-		["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
-		["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
-		["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
-		w = { ':exe "resize" . (winwidth(0) * 3/2)<CR>', "Increase weight" },
-		W = { ':exe "resize" . (winwidth(0) * 2/3)<CR>', "Increase weight" },
-		v = {
-			':exe "vertical resize" . (winheight(0) * 3/2)<CR>',
-			"Increase height",
-		},
-		V = {
-			':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
-			"Increase height",
-		},
-	},
+		-- yabs
+		y = {
+            name = 'yabs',
+            t = {
+                ":Telescope yabs tasks<CR>",
+                "List yabs tasks",
+            },
+            g = {
+                ":Telescope yabs globals_tasks<CR>",
+                "List all yabs tasks",
+            },
+            l = {
+                ":Telescope yabs current_language_tasks<CR>",
+                "List yabs tasks for language",
+            },
+        },
+    },
+    -- Search files
+    s = {
+        name = "search",
+        a = { ":Telescope live_grep<CR>", "Live grep" },
+        b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
+        f = { ":Telescope find_files<CR>", "Find files" },
+        g = { ":Telescope git_files<CR>", "Git files" },
+        m = { ":Telescope marks<CR>", "Bookmarks" },
+        r = { ":Telescope oldfiles<CR>", "Recently open files" },
+        h = { ":Telescope help_tags<CR>", "Help Tags" },
+        p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
+        w = { ":Telescope live_grep<CR>", "Find word" },
+        v = { ":FloatermNew vifm<CR>", "ViFm" },
+    },
+    -- Files
+    F = {
+        name = "files",
+        w = { ":w<CR>", "Save" },
+        c = { ":bdelete<CR>", "Close" },
+        C = { ":q!<CR>", "Quit withou save" },
+        e = { ":qa<CR>", "Exit Neovim" },
+        E = { ":qa!<CR>", "Exit Neovim without save" },
+        q = { ":q<CR>", "Quit" },
+    },
+    -- Git
+    g = {
+        name = "git",
+        g = { ":Neogit<CR>", "Neogit" },
+        a = { ":Git add .<CR>", "add all" },
+        b = { ":Git blame<CR>", "blame" },
+        B = { ":GBrowse<CR>", "Browse GitHub repo" },
+        c = { ":Git commit<CR>", "commit" },
+        d = {
+            name = "+Diff",
+            h = { ":Gdiffsplit<CR>", "diff split" },
+            v = { ":Gvdiffsplit<CR>", "diff vsplit" },
+            n = { ":Git diff<CR>", "Normal diff" },
+        },
+        l = { ":Git log<CR>", "List log with details" },
+        L = { ":Git log --oneline<CR>", "List log within one line" },
+        p = { ":Git push<CR>", "push" },
+        P = { ":Git pull<CR>", "pull" },
+        r = { ":GRemove<CR>", "remove" },
+        s = { ":Git<CR>", "status" },
+        S = { ":GitGutterSignsToggle<CR>", "toggle signs" },
+        T = {
+            ':Git log --no-walk --tags --pretty="%h %d %s" --decorate=full<CR>',
+            "List all tags in log",
+        },
+        z = { ":FloatermNew lazygit<CR>", "Lazygit" },
+        -- Gist
+        G = {
+            name = "gist",
+            -- a    = {':Gist -a', 'post a gist anonymously' },
+            -- b    = {':Gist -b', 'post gist browser' },
+            d = { ":Gist -d<CR>", "delete gist" },
+            e = { ":Gist -e<CR>", "edit gist" },
+            l = { ":Gist -l<CR>", "list public gists" },
+            s = { ":Gist -ls<CR>", "list starred gists" },
+            m = { ":Gist -m<CR>", "post a gist with all open buffers" },
+            p = { ":Gist -p<CR>", "post public gist" },
+            P = { ":Gist -P<CR>", "post private gist" },
+        },
+    },
+    -- utilities
+    u = {
+        name = "utilities",
+        t = {
+            name = "terminal",
+            d = {
+                ":FloatermNew python manage.py shell<CR>",
+                "Django-admin Shell",
+            },
+            p = { ":FloatermNew python<CR>", "Python shell" },
+            n = { ":FloatermNew node<CR>", "Node.js shell" },
+            v = {
+                ":FloatermNew --wintype='vsplit' --position='right'<CR>",
+                "Debug Term...",
+            },
+        },
+        l = {
+            name = "LiveServer",
+            l = { ":Bracey<CR>", "start live server" },
+            L = { ":BraceyStop<CR>", "stop live server" },
+            r = { ":BraceyReload<CR>", "web page to be reloaded" },
+        },
+        m = {
+            name = "Markdown",
+            m = { ":MarkdownPreview<CR>", "start markdown preview" },
+            M = { ":MarkdownPreviewStop<CR>", "stop markdown preview" },
+        },
+        u = {
+            name = "UML",
+            v = { ":PlantumlOpen<CR>", "start PlantUML preview" },
+            o = {
+                ":PlantumlSave docs/diagrams/out.png<CR>",
+                "export PlantUML diagram",
+            },
+        },
+        f = {
+            ":FloatermNew --height=0.7 --width=0.9 --wintype=float vifm<CR>",
+            "ViFm",
+        },
+        r = {
+            ":FloatermNew --height=0.7 --width=0.9 --wintype=float ranger<CR>",
+            "Ranger",
+        },
+    },
+    -- Window
+    w = {
+        name = "window",
+        ["-"] = { ":split<CR>", "Horiz. window" },
+        ["|"] = { ":vsplit<CR>", "Vert. window" },
+        z = { "<C-W>_", "Zoom-in" },
+        Z = { "<C-W>|", "Zoom-in (Vertical)" },
+        o = { "<C-W>=", "Zoom-out" },
+        c = { ":close<CR>", "Close window" },
+        k = { "<C-w>k", "Up window" },
+        j = { "<C-w>j", "Down window" },
+        h = { "<C-w>h", "Left window" },
+        l = { "<C-w>l", "Right window" },
+        ["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
+        ["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
+        ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
+        ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
+        w = { ':exe "resize" . (winwidth(0) * 3/2)<CR>', "Increase weight" },
+        W = { ':exe "resize" . (winwidth(0) * 2/3)<CR>', "Increase weight" },
+        v = {
+            ':exe "vertical resize" . (winheight(0) * 3/2)<CR>',
+            "Increase height",
+        },
+        V = {
+            ':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
+            "Increase height",
+        },
+    },
 }
 
 local opts = { prefix = "<leader>" }
@@ -400,14 +417,14 @@ local opts = { prefix = "<leader>" }
 which_key.register(mappings, opts)
 
 local keymap_v = {
-	name = "Debug",
-	e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
+    name = "Debug",
+    e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
 }
 which_key.register(keymap_v, {
-	mode = "v",
-	prefix = "<Leader>",
-	buffer = nil,
-	silent = true,
-	noremap = true,
-	nowait = false,
+    mode = "v",
+    prefix = "<Leader>",
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = false,
 })
