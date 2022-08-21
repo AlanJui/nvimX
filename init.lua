@@ -16,6 +16,9 @@ HOME = os.getenv('HOME')
 
 CONFIG_DIR = HOME .. '/.config/' .. MY_VIM
 RUNTIME_DIR = HOME .. '/.local/share/' .. MY_VIM
+SNIPPETS_PATH = {
+    CONFIG_DIR .. '/my-snippets',
+}
 
 PACKAGE_ROOT = RUNTIME_DIR .. '/site/pack'
 INSTALL_PATH = PACKAGE_ROOT .. '/packer/start/packer.nvim'
