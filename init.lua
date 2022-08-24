@@ -109,6 +109,7 @@ elseif INSTALLED then
 	-- programming
     require('plugins-rc.toggleterm')
 	require('plugins-rc.yabs')
+	-- require('plugins-rc.consolation-nvim')
 	-- debug
 	require('dap-debug')
 	require('plugins-rc.ultest')

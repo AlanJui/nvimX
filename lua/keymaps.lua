@@ -45,8 +45,6 @@ keymap('i', '<M-j>', '<Esc>la', opts)
 keymap('i', '<M-,>', '<Esc>A,', opts)
 keymap('i', '<M-.>', '<Esc>A:', opts)
 keymap('i', '<M-:>', '<Esc>A:<CR>', opts)
--- keymap('i', '<LocalLeader>,', '<Esc>A,', opts)
--- keymap('i', '<LocalLeader>.', '<Esc>A:', opts)
 -- Blank whole line
 keymap('n', '<M-l>', '0d$', opts)
 keymap('n', '<M-p>', 'pdd', opts)
@@ -59,16 +57,12 @@ keymap('i', '<C-Enter>',    '<Esc>kA', opts)
 keymap('i', '<M-Enter>',    '<Esc>o<Esc>A', {})
 keymap('i', '<M-Down>',     '<Esc>jA', opts)
 keymap('i', '<M-k>',        '<Esc>ddO', {})
+keymap('i', '<C-o>',        '<Esc>jO', {})
 -- Editting in line
 keymap('n', 'H', '0', opts)
 keymap('n', 'L', '$', opts)
 keymap('n', 'X', 'd$', opts)
 keymap('n', 'Y', 'y$', opts)
-
--- keymap('i', '<LocalLeader>,', ',', opts)
--- keymap('i', '<LocalLeader><LocalLeader>,', '<Esc>A,', opts)
--- keymap('i', '<LocalLeader><LocalLeader>:', '<Esc>A:', opts)
--- keymap('i', '<LocalLeader>l', '<Esc>la', opts)
 -- Insert a item in table
 -- keymap('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O', opts)
 
@@ -117,6 +111,10 @@ keymap('n', '<M-Up>',    '<cmd>wincmd -<CR>', opts)
 keymap('n', '<M-Down>',  '<cmd>wincmd +<CR>', opts)
 keymap('n', '<M-Left>',  '<cmd>wincmd <<CR>', opts)
 keymap('n', '<M-Right>', '<cmd>wincmd ><CR>', opts)
+keymap('n', '<A-Left>',  '<cmd>wincmd <<CR>', opts)
+keymap('n', '<A-Right>', '<cmd>wincmd ><CR>', opts)
+keymap('n', '<D-Left>',  '<cmd>wincmd <<CR>', opts)
+keymap('n', '<D-Right>', '<cmd>wincmd ><CR>', opts)
 
 --------------------------------------------------------------------
 -- Buffers

@@ -207,36 +207,40 @@ local mappings = {
     r = {
         name = "Run",
         l = {
-            r = { ':TermExec cmd="lua %"<CR>', "Run lua file" },
+            r = { ':ToggleTerm cmd="lua %"<CR>', "Run lua file" },
         },
         d = {
             name = "Django",
             r = {
                 ':TermExec cmd="python manage.py runserver"<CR>',
-                "Django runserver",
+                "Runserver",
             },
             R = {
                 ':TermExec cmd="python manage.py runserver --noreload"<CR>',
-                "Django runserver --noreload",
-            },
-            c = {
-                ':TermExec cmd="python manage.py collectstatic"<CR>',
-                "Collect all static files",
+                "Runserver --noreload",
             },
             s = {
                 ':TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
-                "manage.py shell",
+                "Django Shell",
             },
             S = {
-                ':TermExec go_back=0 cmd="python manage.py createsuperuser"<CR>',
+                ':FloatermNew python manage.py createsuperuser<CR>',
                 "Create super user",
             },
+            c = {
+                ':FloatermNew python manage.py collectstatic<CR>',
+                "Collect all static files",
+            },
+            k = {
+                ':FloatermNew npx kill-port 8000<CR>',
+                "Kill Port",
+            },
             m = {
-                ':TermExec go_back=0 cmd="python manage.py makemigrations"<CR>',
-                "Update DB",
+                ':FloatermSend --name=DjangoCommand python manage.py makemigrations<CR>',
+                "Update DB schema",
             },
             M = {
-                ':TermExec go_back=0 cmd="python manage.py migrate"<CR>',
+                ':FloatermNew python manage.py migrate<CR>',
                 "Migrate DB",
             },
         },
@@ -345,13 +349,13 @@ local mappings = {
         t = {
             name = "terminal",
             d = {
-                ":FloatermNew python manage.py shell<CR>",
+                "TermExec python manage.py shell<CR>",
                 "Django-admin Shell",
             },
-            p = { ":FloatermNew python<CR>", "Python shell" },
-            n = { ":FloatermNew node<CR>", "Node.js shell" },
+            p = { "TermExec python<CR>", "Python shell" },
+            n = { "TermExec node<CR>", "Node.js shell" },
             v = {
-                ":FloatermNew --wintype='vsplit' --position='right'<CR>",
+                "TermExec --wintype='vsplit' --position='right'<CR>",
                 "Debug Term...",
             },
         },
@@ -375,11 +379,11 @@ local mappings = {
             },
         },
         f = {
-            ":FloatermNew --height=0.7 --width=0.9 --wintype=float vifm<CR>",
+            "TermExec --height=0.7 --width=0.9 --wintype=float vifm<CR>",
             "ViFm",
         },
         r = {
-            ":FloatermNew --height=0.7 --width=0.9 --wintype=float ranger<CR>",
+            "TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
             "Ranger",
         },
     },

@@ -168,7 +168,7 @@ M.load = function(use)
 	--     },
 	-- })
 	-- Multiple cursor editting
-	-- use({'mg979/vim-visual-multi'})
+	use({ "mg979/vim-visual-multi" })
 	-- visualizes undo history and makes it easier to browse and switch between different undo branches
 	use({ "mbbill/undotree" })
 	---------------------------------------------------------------
@@ -206,6 +206,7 @@ M.load = function(use)
 	-- Yet Another Build System
 	use({ "pianocomposer321/yabs.nvim", requires = { "nvim-lua/plenary.nvim" } })
 	-- terminal
+	use({ "pianocomposer321/consolation.nvim" })
 	use({ "akinsho/toggleterm.nvim", tag = "v1.*" })
 	-----------------------------------------------------------
 	-- DAP
