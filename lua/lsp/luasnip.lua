@@ -63,20 +63,6 @@ require("luasnip").filetype_extend("vimwik", { "markdown" })
 require("luasnip").filetype_extend("html", { "htmldjango" })
 
 -- Key map
-vim.cmd([[
-" press <Tab> to expand or jump in a snippet. These can also be mapped separately
-" via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
-imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
-" -1 for jumping backwards.
-inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>
-
-snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
-snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
-
-" For changing choices in choiceNodes (not strictly necessary for a basic setup).
-imap <silent><expr> <C-m> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-m>'
-smap <silent><expr> <C-m> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-m>'
-]])
 -- vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.tab_complete()', { expr = true })
 -- vim.api.nvim_set_keymap('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
 -- vim.api.nvim_set_keymap('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
@@ -85,3 +71,7 @@ smap <silent><expr> <C-m> luasnip#choice_active() ? '<Plug>luasnip-next-choice' 
 -- vim.api.nvim_set_keymap('s', '<C-j>', '<Plug>luasnip-next-choice', {})
 -- vim.api.nvim_set_keymap('i', '<C-k>', '<Plug>luasnip-prev-choice', {})
 -- vim.api.nvim_set_keymap('s', '<C-k>', '<Plug>luasnip-prev-choice', {})
+
+local keymap = vim.api.nvim_set_keymap
+local opts = { silent = true, noremap = true }
+keymap('i', '<M-m>', '<Plug>compe#close("<C-e>")', opts)

@@ -220,27 +220,27 @@ local mappings = {
                 "Runserver --noreload",
             },
             s = {
-                ':TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
+                ':3TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
                 "Django Shell",
             },
             S = {
-                ':FloatermNew python manage.py createsuperuser<CR>',
+                ':2TermExec go_back=0 cmd="python manage.py createsuperuser"<CR>',
                 "Create super user",
             },
             c = {
-                ':FloatermNew python manage.py collectstatic<CR>',
+                ':2TermExec go_back=0 cmd="python manage.py collectstatic"<CR>',
                 "Collect all static files",
             },
             k = {
-                ':FloatermNew npx kill-port 8000<CR>',
+                ':2TermExec go_back=0 cmd="npx kill-port 8000"<CR>',
                 "Kill Port",
             },
             m = {
-                ':FloatermSend --name=DjangoCommand python manage.py makemigrations<CR>',
+                ':2TermExec go_back=0 cmd="python manage.py makemigrations"<CR>',
                 "Update DB schema",
             },
             M = {
-                ':FloatermNew python manage.py migrate<CR>',
+                ':2TermExec go_back=0 cmd="python manage.py migrate"<CR>',
                 "Migrate DB",
             },
         },
