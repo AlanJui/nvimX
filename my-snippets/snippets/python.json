@@ -558,7 +558,7 @@
   },
   "dj-listview": {
     "prefix": "dj-listview",
-    "body": "class ${1:MODEL_NAME}ListView(ListView):\n\tmodel = $1\n\ttemplate_name = \"${2:TEMPLATE_NAME}\"\n\n\tdef get_context_data(self, **kwargs):\n\t\t\tcontext = super(${1}ListView, self).get_context_data(**kwargs)\n\t\t\treturn context",
+    "body": "class ${1:MODEL_NAME}ListView(ListView):\n\tmodel = $1\n\ttemplate_name = \"${2:TEMPLATE_NAME}\"\n\n\tdef get_context_data(self, **kwargs):\n\t\t\tcontext = super().get_context_data(**kwargs)\n\t\t\treturn context",
     "description": "Django List View"
   },
   "stackedinline": {
