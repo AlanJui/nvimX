@@ -1,10 +1,8 @@
 [MASTER]
-profile=no
 persistent=yes
 ignore=tests.py, urls.py, migrations
-cache-size=500
 load-plugins=pylint_django
-django-settings-module=web_project.settings
+django-settings-module=myapp.settings
 
 [MESSAGES CONTROL]
 # C0111 Missing docstring
@@ -25,11 +23,10 @@ django-settings-module=web_project.settings
 # R0901 Used when class has too many parent classes, try to reduce this to get a simpler (and so easier to use) class.
 # E501(flake8): line too long ( > 79 characters )
 # disable=C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,C1001,C0103,R0901,E501
-disable=C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,C1001,C0103,R0901,C0114,R1710
+disable=C0111,I0011,W0212,W0613,W0702,C0103,R0901,C0114,R1710
 
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
-include-ids=yes
 
 
 [BASIC]
@@ -49,10 +46,6 @@ ignore-mixin-members=yes
 # List of classes names for which member attributes should not be checked
 # (useful for classes with attributes dynamically set).
 ignored-classes=SQLObject,WSGIRequest
-
-# When zope mode is activated, add a predefined set of Zope acquired attributes
-# to generated-members.
-zope=no
 
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E0201 when accessed.

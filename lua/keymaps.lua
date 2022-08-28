@@ -21,9 +21,12 @@ keymap('i',  '<c-s>', '<Esc>:w<CR>a', {})
 -- Line editting
 --------------------------------------------------------------------
 -- Editting on Insert Mode
-keymap('i', '<M-,>', '<Esc>A,', opts)
-keymap('i', '<M-.>', '<Esc>A.', opts)
-keymap('i', '<M-:>', '<Esc>A:', opts)
+keymap('i', '<M-,>', '<Esc>lli,', opts)
+keymap('i', '<M-.>', '<Esc>lli.', opts)
+keymap('i', '<M-:>', '<Esc>lli:', opts)
+keymap('i', '<M-,><M-,>', '<Esc>A,', opts)
+keymap('i', '<M-.><M-.>', '<Esc>A.', opts)
+keymap('i', '<M-:><M-:>', '<Esc>A:', opts)
 -- Blank whole line
 -- keymap('n', '<M-l>', '0d$', opts)
 -- keymap('n', '<M-p>', 'pdd', opts)
@@ -65,27 +68,31 @@ keymap('v', '>', '>gv', opts)
 -- Windows navigation
 --------------------------------------------------------------------
 -- Split window
-keymap('n', 'sp', ':sp<CR>', opts)
-keymap('n', 'vs', ':vs<CR>', opts)
+keymap('n', 'sp', ':split<CR>', opts)
+keymap('n', 'vs', ':vsplit<CR>', opts)
 keymap('n', '<C-w>-', ':split<CR>', opts)
-keymap('n', '<C-w>_', ':vsplit<CR>', opts)
 keymap('n', '<C-w>|', ':vsplit<CR>', opts)
 
 -- Move focus on window
+keymap('n', '<C-Up>',    '<cmd>wincmd k<CR>', opts)
+keymap('n', '<C-Down>',  '<cmd>wincmd j<CR>', opts)
+keymap('n', '<C-Left>',  '<cmd>wincmd h<CR>', opts)
+keymap('n', '<C-Right>', '<cmd>wincmd l<CR>', opts)
+
 keymap('n', '<ESC>k', '<cmd>wincmd k<CR>', opts)
 keymap('n', '<ESC>j', '<cmd>wincmd j<CR>', opts)
 keymap('n', '<ESC>h', '<cmd>wincmd h<CR>', opts)
 keymap('n', '<ESC>l', '<cmd>wincmd l<CR>', opts)
 
 -- Window Resize
-keymap('n', '<C-Up>',    '<cmd>wincmd -<CR>', opts)
-keymap('n', '<C-Down>',  '<cmd>wincmd +<CR>', opts)
-keymap('n', '<C-Left>',  '<cmd>wincmd <<CR>', opts)
-keymap('n', '<C-Right>', '<cmd>wincmd ><CR>', opts)
+keymap('n', '<M-Up>',    '<cmd>wincmd -<CR>', opts)
+keymap('n', '<M-Down>',  '<cmd>wincmd +<CR>', opts)
+keymap('n', '<M-Left>',  '<cmd>wincmd <<CR>', opts)
+keymap('n', '<M-Right>', '<cmd>wincmd ><CR>', opts)
 
--- -- Window Zoom In/Out
--- keymap('n', '<LocalLeader>wi', '<C-w>| <C-w>_', opts)
--- keymap('n', '<LocalLeader>wo', '<C-w>=', opts)
+-- Window Zoom In/Out
+keymap('n', '<C-w>i', ':tabnew %<CR>', opts)
+keymap('n', '<C-w>o', ':tabclose<CR>', opts)
 
 --------------------------------------------------------------------
 -- Buffers
