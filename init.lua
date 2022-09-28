@@ -51,6 +51,19 @@ SNIPPETS_PATH = {
     CONFIG_DIR .. '/my-snippets/snippets',
 }
 
+if vim.fn.exists('g:vscode') then
+    -- VSCode extension"
+    -----------------------------------------------------------
+    -- Key bindings
+    -- 操作時的按鍵設定
+    -----------------------------------------------------------
+    -- Load Shortcut Key
+    -- 「快捷鍵」設定
+    require('keymaps')
+
+else
+    -- ordinary Neovim
+
 ---------------------------------------------------------------
 -- Install Plugin Manager & Plugins / Load Plugins
 -- 當 packer.nvim 尚未安裝，可自動執行下載及安裝作業；
@@ -193,3 +206,4 @@ local function blah()
 end
 
 -- blah()
+end
