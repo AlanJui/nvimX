@@ -21,9 +21,9 @@ keymap('i',  '<c-s>', '<Esc>:w<CR>a', {})
 -- Line editting
 --------------------------------------------------------------------
 -- Editting on Insert Mode
-keymap('i', '<M-,>', '<Esc>lli,', opts)
-keymap('i', '<M-.>', '<Esc>lli.', opts)
-keymap('i', '<M-:>', '<Esc>lli:', opts)
+keymap('i', '<M-,>', '<Right>,', opts)
+keymap('i', '<M-.>', '<Right>.', opts)
+keymap('i', '<M-:>', '<Right>:', opts)
 keymap('i', '<M-,><M-,>', '<Esc>A,', opts)
 keymap('i', '<M-.><M-.>', '<Esc>A.', opts)
 keymap('i', '<M-:><M-:>', '<Esc>A:', opts)
