@@ -1,70 +1,83 @@
-if vim.g.vscode ~= nil then
-    -- 使用以下方法，皆不能正確運作：
-    --   if vim.fn.exists('g:vscode') then
-    --   if vim.fn.exists('g:vscode') == 0 then
+-----------------------------------------------------------
+-- Global Functions
+-- 載入 my-nvim 作業時，所需之各種 Global Functions 。
+-----------------------------------------------------------
+require("globals")
 
+-----------------------------------------------------------
+-- Initial environments for Neovim
+-- 設定 my-nvim 作業時，所需之「全域常數」。
+-----------------------------------------------------------
+DEBUG = false
+
+MY_VIM = 'nvim'
+OS_SYS = which_os()
+HOME = os.getenv('HOME')
+
+CONFIG_DIR = HOME .. '/.config/' .. MY_VIM
+RUNTIME_DIR = HOME .. '/.local/share/' .. MY_VIM
+SNIPPETS_PATH = {
+    CONFIG_DIR .. '/my-snippets',
+    RUNTIME_DIR .. '/site/pack/packer/start/friendly-snippets',
+}
+
+PACKAGE_ROOT = RUNTIME_DIR .. '/site/pack'
+INSTALL_PATH = PACKAGE_ROOT .. '/packer/start/packer.nvim'
+COMPILE_PATH = CONFIG_DIR .. '/plugin/packer_compiled.lua'
+
+INSTALLED = false
+if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
+    INSTALLED = true
+end
+
+LSP_SERVERS = {
+    'sumneko_lua',
+    'diagnosticls',
+    'texlab',
+    'pyright',
+    'emmet_ls',
+    'html',
+    'cssls',
+    'stylelint_lsp',
+    'jsonls',
+    'rust_analyzer',
+    'tsserver',
+}
+
+DEBUGPY = '~/.virtualenvs/debugpy/bin/python'
+
+-- Your own custom vscode style snippets
+SNIPPETS_PATH = {
+    CONFIG_DIR .. '/my-snippets/snippets',
+}
+
+-- 使用以下方法，皆不能正確運作：
+--   if vim.fn.exists('g:vscode') then
+--   if vim.fn.exists('g:vscode') == 0 then
+if vim.g.vscode ~= nil then
+    -----------------------------------------------------------
     -- VSCode extension"
     -----------------------------------------------------------
+    -- Load plugins
+    require("packer").startup(function (use)
+        -- Screen Navigation
+        use("folke/which-key.nvim")
+    end)
+    -- load configurations for plugins
+    require('plugins-rc.which-key')
+    -- Must have options of Neovim when under development of init.lua
+    require('essential')
+    -- General options of Neovim
+    require('options')
+    -- User's specific options of Neovim
+    require('settings')
     -- Key bindings
-    -- 操作時的按鍵設定
-    -----------------------------------------------------------
     require('keymaps')
 
 else
+    -----------------------------------------------------------
     -- ordinary Neovim
-
     -----------------------------------------------------------
-    -- Global Functions
-    -- 載入 my-nvim 作業時，所需之各種 Global Functions 。
-    -----------------------------------------------------------
-    require("globals")
-
-    -----------------------------------------------------------
-    -- Initial environments for Neovim
-    -- 設定 my-nvim 作業時，所需之「全域常數」。
-    -----------------------------------------------------------
-    DEBUG = false
-
-    MY_VIM = 'nvim'
-    OS_SYS = which_os()
-    HOME = os.getenv('HOME')
-
-    CONFIG_DIR = HOME .. '/.config/' .. MY_VIM
-    RUNTIME_DIR = HOME .. '/.local/share/' .. MY_VIM
-    SNIPPETS_PATH = {
-        CONFIG_DIR .. '/my-snippets',
-        RUNTIME_DIR .. '/site/pack/packer/start/friendly-snippets',
-    }
-
-    PACKAGE_ROOT = RUNTIME_DIR .. '/site/pack'
-    INSTALL_PATH = PACKAGE_ROOT .. '/packer/start/packer.nvim'
-    COMPILE_PATH = CONFIG_DIR .. '/plugin/packer_compiled.lua'
-
-    INSTALLED = false
-    if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
-        INSTALLED = true
-    end
-
-    LSP_SERVERS = {
-        'sumneko_lua',
-        'diagnosticls',
-        'texlab',
-        'pyright',
-        'emmet_ls',
-        'html',
-        'cssls',
-        'stylelint_lsp',
-        'jsonls',
-        'rust_analyzer',
-        'tsserver',
-    }
-
-    DEBUGPY = '~/.virtualenvs/debugpy/bin/python'
-
-    -- Your own custom vscode style snippets
-    SNIPPETS_PATH = {
-        CONFIG_DIR .. '/my-snippets/snippets',
-    }
 
     ---------------------------------------------------------------
     -- Install Plugin Manager & Plugins / Load Plugins
