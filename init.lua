@@ -61,10 +61,10 @@ if vim.g.vscode ~= nil then
     -- Load plugins
     require("packer").startup(function (use)
         -- Screen Navigation
-        use("folke/which-key.nvim")
+        -- use("folke/which-key.nvim")
     end)
     -- load configurations for plugins
-    require('plugins-rc.which-key')
+    -- require('plugins-rc.which-key')
     -- Must have options of Neovim when under development of init.lua
     require('essential')
     -- General options of Neovim
