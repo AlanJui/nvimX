@@ -3,7 +3,8 @@ if not toggle_term then
     return
 end
 
-toggle_term.setup()
+-- Chage for upgrade to nvim 0.8: 2022/10/24 10:48
+-- toggle_term.setup()
 
 vim.cmd [[
 " set
