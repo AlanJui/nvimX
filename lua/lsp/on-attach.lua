@@ -63,7 +63,9 @@ local on_attach = function(client, bufnr)
 
     if client.name == 'tsserver' or client.name == 'html'
         or client.name == 'diagnosticls' or client.name == 'sumneko_lua' then
-        client.resolved_capabilities.document_formatting = false
+        -- Change for upgrade to Nvim 0.8 2022/10/24 11:58
+        -- client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.document_formatting = false
     end
 
     -- Neovim 0.7: highlight symbol under cursor
