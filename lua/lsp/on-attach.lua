@@ -10,14 +10,14 @@ local formatting_callback = function(client, bufnr)
 	end, { buffer = bufnr })
 end
 
--- local function lsp_highlight_document(client)
---    -- Set autocommands conditional on server_capabilities
---     local illuminate = safe_require('illuminate')
---     if not illuminate then
---         return
---     end
---     illuminate.on_attach(client)
--- end
+local function lsp_highlight_document(client)
+   -- Set autocommands conditional on server_capabilities
+    local illuminate = safe_require('illuminate')
+    if not illuminate then
+        return
+    end
+    illuminate.on_attach(client)
+end
 
 local function lsp_keymaps(bufnr)
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -65,24 +65,24 @@ local on_attach = function(client, bufnr)
         or client.name == 'diagnosticls' or client.name == 'sumneko_lua' then
         -- Change for upgrade to Nvim 0.8 2022/10/24 11:58
         -- client.resolved_capabilities.document_formatting = false
-        client.server_capabilities.document_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
     end
 
     -- Neovim 0.7: highlight symbol under cursor
-    -- if client.name ~= 'texlab' and
-    --    client.resolved_capabilities.document_highlight then
-    --     vim.cmd [[
-    --         hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-    --         hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-    --         hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    --         augroup lsp_document_highlight
-    --         autocmd! * <buffer>
-    --         autocmd! CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    --         autocmd! CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-    --         autocmd! CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    --         augroup END
-    --     ]]
-    -- end
+    if client.name ~= 'texlab' and
+       client.server_capabilities.documentHighlightProvider then
+        vim.cmd [[
+            hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+            hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+            hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+            augroup lsp_document_highlight
+            autocmd! * <buffer>
+            autocmd! CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+            autocmd! CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+            autocmd! CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+        ]]
+    end
 
     -- Neovim v0.7: Show line diagnostics automatically in hover window
     vim.api.nvim_create_autocmd("CursorHold", {
