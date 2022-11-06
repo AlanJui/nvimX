@@ -127,6 +127,7 @@ else
         require('plugins-rc.telescope-nvim')
         require('plugins-rc.nvim-tree')
         -- editting tools
+        require('plugins-rc.Comment_nvim')
         require('plugins-rc.autopairs')
         require('plugins-rc.nvim-ts-autotag')
         require('plugins-rc.undotree')

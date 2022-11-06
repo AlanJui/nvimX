@@ -1,5 +1,5 @@
-local toggle_term = safe_require('toggleterm')
-if not toggle_term then
+local nvim_treesitter = safe_require('nvim-treesitter')
+if not nvim_treesitter then
     return
 end
 

@@ -152,7 +152,11 @@ M.load = function(use)
 	-- surroundings: parentheses, brackets, quotes, XML tags, and more
 	use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
 	-- Toggle comments in Neovim
-	use({ "tpope/vim-commentary" })
+	-- use({ "tpope/vim-commentary" })
+    use({ 'numToStr/Comment.nvim' })
+    -- A Neovim plugin for setting the commentstring option based on the cursor
+    -- location in the file. The location is checked via treesitter queries.
+    use('JoosepAlviste/nvim-ts-context-commentstring')
 	-- Causes all trailing whitespace characters to be highlighted
 	use({ "ntpeters/vim-better-whitespace" })
 	-- Auto close parentheses and repeat by dot dot dot ...
