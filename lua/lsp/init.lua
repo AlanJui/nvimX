@@ -1,13 +1,14 @@
 --------------------------------------------------------------------
 -- Main Process
+-- Note that restarting Neovim will be required after installing a 
+-- new server for it to be set up!
 --------------------------------------------------------------------
 -- (1) Setup lsp-installer
 -- (2) Setup LSP Client
 -- (3) Setup UI for Diagnostic
 -----------------------------------------------------------
 local lsp_installer = safe_require("nvim-lsp-installer")
-local lsp_config = safe_require("lspconfig")
-if not lsp_installer or not lsp_config then
+if not lsp_installer then
 	return
 end
 
@@ -34,6 +35,10 @@ lsp_installer.setup({
 -----------------------------------------------------------------------------------------------
 -- (2) Setup LSP client for connectting to LSP server
 -----------------------------------------------------------------------------------------------
+local lsp_config = safe_require("lspconfig")
+if not lsp_installer or not lsp_config then
+	return
+end
 
 -----------------------------------------------------------------------------------------------
 -- on_attach: to map keys after the languate server attaches to the current buffer
@@ -41,51 +46,73 @@ lsp_installer.setup({
 -- local on_attach = require('lsp/on-attach') or {}
 local on_attach = safe_require("lsp/on-attach")
 if not on_attach then
-	on_attach = nil
+	return
 end
 
 -----------------------------------------------------------------------------------------------
 -- Capabilities
+-- Initial capabilities option for LSP client
 -----------------------------------------------------------------------------------------------
 
--- Setup nvim-cmp plugin
-require("lsp/auto-cmp")
-
--- Initial capabilities option for LSP client
-local capabilities = vim.lsp.protocol.make_client_capabilities()
--- Chage for upgrade to nvim 0.8: 2022/10/24 10:48
--- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- Add additional capabliities supported by nvim-cmp
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -----------------------------------------------------------------------------------------------
 -- Get extra setup options and setup for LSP server
 -----------------------------------------------------------------------------------------------
-local servers = LSP_SERVERS
-
-for _, lsp in pairs(servers) do
-	if lsp == "cssls" then
-		-- Enable (broadcasting) snippet capability for completion
-		capabilities.textDocument.completion.completionItem.snippetSupport = true
-	end
-
-	local setup_opts = {
-		on_attach = on_attach,
-		capabilities = capabilities,
-		flags = { debounce_text_changes = 150 },
-	}
-
-	-- Get configuration of specific server
-	-- local custom_opts = servers_settings[lsp] or {}
-	-- if custom_opts then
-	-- 	setup_opts = vim.tbl_deep_extend("force", custom_opts, setup_opts)
-	-- end
-	local has_custom_opts, lsp_custom_opts = pcall(require, "lsp.settings." .. lsp)
+local lsp_flags = {
+  -- This is the default in Nvim 0.7+
+  debounce_text_changes = 150,
+}
+local setup_opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = lsp_flags,
+}
+lsp_config.util.default_config = vim.tbl_extend(
+    "force",
+    lsp_config.util.default_config,
+    setup_opts
+)
+for _, server in ipairs(lsp_installer.get_installed_servers()) do
+	local has_custom_opts, lsp_custom_opts = pcall(require, "lsp.settings." .. server.name)
 	if has_custom_opts then
 		setup_opts = vim.tbl_deep_extend("force", lsp_custom_opts, setup_opts)
+	    lsp_config[server.name].setup(setup_opts)
+    else
+        lsp_config[server.name].setup({})
 	end
-
-	lsp_config[lsp].setup(setup_opts)
 end
+
+-- nvim-cmp setup
+require("lsp/auto-cmp")
+
+-- local servers = LSP_SERVERS
+--
+-- for _, lsp in ipairs(servers) do
+-- 	if lsp == "cssls" then
+-- 		-- Enable (broadcasting) snippet capability for completion
+-- 		capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- 	end
+--
+-- 	-- Get configuration of specific server
+-- 	-- local custom_opts = servers_settings[lsp] or {}
+-- 	-- if custom_opts then
+-- 	-- 	setup_opts = vim.tbl_deep_extend("force", custom_opts, setup_opts)
+-- 	-- end
+-- 	local setup_opts = {
+-- 		on_attach = on_attach,
+-- 		capabilities = capabilities,
+-- 		flags = lsp_flags,
+-- 	}
+--
+-- 	local has_custom_opts, lsp_custom_opts = pcall(require, "lsp.settings." .. lsp)
+-- 	if has_custom_opts then
+-- 		setup_opts = vim.tbl_deep_extend("force", lsp_custom_opts, setup_opts)
+-- 	end
+--
+-- 	lsp_config[lsp].setup(setup_opts)
+-- end
 
 -----------------------------------------------------------------------------------------------
 ---- (3) Setup UI for Diannostics (Lint)

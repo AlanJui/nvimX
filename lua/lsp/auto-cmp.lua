@@ -55,22 +55,15 @@ cmp.setup({
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
     },
-    sources = cmp.config.sources({
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "path" },
-        { name = "emoji" },
-        { name = "spell" },
-    }, {
-        { name = 'buffer' },
-    }),
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-m>'] = cmp.mapping.complete(),
         ['<M-m>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ 
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+        }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -92,6 +85,25 @@ cmp.setup({
             end
         end, { "i", "s" }),
     }),
+    sources = {
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        { name = "emoji" },
+        { name = "spell" },
+        { name = "buffer" },
+    },
+    -- sources = cmp.config.sources({
+    --     { name = "luasnip" },
+    --     { name = "nvim_lsp" },
+    --     { name = "nvim_lua" },
+    --     { name = "path" },
+    --     { name = "emoji" },
+    --     { name = "spell" },
+    -- }, {
+    --     { name = 'buffer' },
+    -- }),
     formatting = {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)

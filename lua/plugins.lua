@@ -47,9 +47,10 @@ M.load = function(use)
 		},
 	})
 	-- Snippet Engine for Neovim written in Lua.
+            -- tag = "v<CurrentMajor>.*",
 	use({
             "L3MON4D3/LuaSnip",
-            tag = "v<CurrentMajor>.*",
+            tag = "v1.1.*",
 	})
 	-- Snippets collection for a set of different programming languages for faster development
         use("rafamadriz/friendly-snippets")

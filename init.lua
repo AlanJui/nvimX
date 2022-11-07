@@ -112,10 +112,10 @@ else
 
         -- Neovim kernel
         require('plugins-rc.nvim-treesitter')
-        require('lsp.luasnip')
         -- lsp
         require("lsp") -- integrate with auto cmp
         require('lsp.null-langserver')
+        require('lsp.luasnip')
         -- status line
         require('plugins-rc.lualine-material')
         require('plugins-rc.tabline')
