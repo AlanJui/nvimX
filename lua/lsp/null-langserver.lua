@@ -74,8 +74,8 @@ null_ls.setup({
         null_ls.builtins.diagnostics.markdownlint,
         -- A Node.js style checker and lint tool for Markdown/CommonMark
         -- files.
-        null_ls.builtins.formatting.markdownlint,
+        null_ls.builtins.formatting.markdownlint
         -- A linter for YAML files
         -- null_ls.builtins.diagnostics.zsh,
-    },
+    }
 })

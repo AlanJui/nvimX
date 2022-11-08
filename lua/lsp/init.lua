@@ -1,192 +1,249 @@
 --------------------------------------------------------------------
--- Main Process
--- Note that restarting Neovim will be required after installing a 
--- new server for it to be set up!
---------------------------------------------------------------------
--- (1) Setup lsp-installer
--- (2) Setup LSP Client
--- (3) Setup UI for Diagnostic
+-- (1) LSP config
+-- (2) Autocomplete
 -----------------------------------------------------------
-local lsp_installer = safe_require("nvim-lsp-installer")
-if not lsp_installer then
+
+---
+-- Keybindings
+---
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function()
+    local bufmap = function(mode, lhs, rhs)
+      local opts = {buffer = true}
+      vim.keymap.set(mode, lhs, rhs, opts)
+    end
+
+    bufmap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
+    bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+    bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
+    bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
+    bufmap('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+    bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
+    bufmap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+    bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>')
+    bufmap('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+    bufmap('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
+    bufmap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+    bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+    bufmap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+  end
+})
+
+---
+-- Diagnostics
+---
+
+local sign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+sign({name = 'DiagnosticSignError', text = '✘'})
+sign({name = 'DiagnosticSignWarn', text = ' '})
+sign({name = 'DiagnosticSignHint', text = ''})
+sign({name = 'DiagnosticSignInfo', text = ''})
+
+vim.diagnostic.config({
+  virtual_text = false,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'always',
+    header = '',
+    prefix = '',
+  },
+})
+
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {border = 'rounded'}
+)
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {border = 'rounded'}
+)
+
+-----------------------------------------------------------------------------------------------
+-- Setup mason
+-----------------------------------------------------------------------------------------------
+local mason = safe_require("mason")
+if not mason then
 	return
 end
 
------------------------------------------------------------------------------------------------
--- (1) Start and setup nvim-lsp-installer
------------------------------------------------------------------------------------------------
-lsp_installer.setup({
-	-- automatically detect which servers to install
-	-- (based on which servers are set up via lspconfig)
-	automatic_installation = true,
+mason.setup({
 	ui = {
 		icons = {
 			server_installed = "✓",
 			server_pending = "➜",
 			server_uninstalled = "✗",
 		},
-	},
-	-- The directory in which to installl servers.
-	-- install_root_dir = RUNTIME_DIR .. '/lsp_servers',
-	-- install_root_dir = '/Users/alanjui/.local/share/my-nvim' .. '/lsp_servers',
-	install_root_dir = RUNTIME_DIR .. "/lsp_servers",
+	}
 })
 
 -----------------------------------------------------------------------------------------------
--- (2) Setup LSP client for connectting to LSP server
+-- Auto-install LSP Servers
+-----------------------------------------------------------------------------------------------
+require('mason-lspconfig').setup({
+    ensure_installed = LSP_SERVERS,
+    automatic_installation = true,
+})
+
+-----------------------------------------------------------------------------------------------
+-- Setup LSP client for connectting to LSP server
 -----------------------------------------------------------------------------------------------
 local lsp_config = safe_require("lspconfig")
-if not lsp_installer or not lsp_config then
+if not lsp_config then
 	return
 end
+local lsp_defaults = lsp_config.util.default_config
 
------------------------------------------------------------------------------------------------
--- on_attach: to map keys after the languate server attaches to the current buffer
------------------------------------------------------------------------------------------------
--- local on_attach = require('lsp/on-attach') or {}
-local on_attach = safe_require("lsp/on-attach")
-if not on_attach then
-	return
-end
-
------------------------------------------------------------------------------------------------
--- Capabilities
--- Initial capabilities option for LSP client
------------------------------------------------------------------------------------------------
-
--- Add additional capabliities supported by nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
------------------------------------------------------------------------------------------------
--- Get extra setup options and setup for LSP server
------------------------------------------------------------------------------------------------
-local lsp_flags = {
-  -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
-}
-local setup_opts = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = lsp_flags,
-}
-lsp_config.util.default_config = vim.tbl_extend(
-    "force",
-    lsp_config.util.default_config,
-    setup_opts
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+    'force',
+    lsp_defaults.capabilities,
+    -- Add additional capabliities supported by nvim-cmp
+    require('cmp_nvim_lsp').default_capabilities()
 )
-for _, server in ipairs(lsp_installer.get_installed_servers()) do
-	local has_custom_opts, lsp_custom_opts = pcall(require, "lsp.settings." .. server.name)
-	if has_custom_opts then
-		setup_opts = vim.tbl_deep_extend("force", lsp_custom_opts, setup_opts)
-	    lsp_config[server.name].setup(setup_opts)
-    else
-        lsp_config[server.name].setup({})
-	end
-end
 
--- nvim-cmp setup
-require("lsp/auto-cmp")
+---
+-- LSP servers
+---
 
--- local servers = LSP_SERVERS
---
--- for _, lsp in ipairs(servers) do
--- 	if lsp == "cssls" then
--- 		-- Enable (broadcasting) snippet capability for completion
--- 		capabilities.textDocument.completion.completionItem.snippetSupport = true
--- 	end
---
--- 	-- Get configuration of specific server
--- 	-- local custom_opts = servers_settings[lsp] or {}
--- 	-- if custom_opts then
--- 	-- 	setup_opts = vim.tbl_deep_extend("force", custom_opts, setup_opts)
--- 	-- end
--- 	local setup_opts = {
--- 		on_attach = on_attach,
--- 		capabilities = capabilities,
--- 		flags = lsp_flags,
--- 	}
---
--- 	local has_custom_opts, lsp_custom_opts = pcall(require, "lsp.settings." .. lsp)
--- 	if has_custom_opts then
--- 		setup_opts = vim.tbl_deep_extend("force", lsp_custom_opts, setup_opts)
--- 	end
---
--- 	lsp_config[lsp].setup(setup_opts)
--- end
-
------------------------------------------------------------------------------------------------
----- (3) Setup UI for Diannostics (Lint)
------------------------------------------------------------------------------------------------
-
----- Customizing how diagnostics are displayed
-vim.diagnostic.config({
-	update_in_insert = false,
-	severity_sort = true,
-	-- disable virtual text
-	-- virtual_text = false,
-	-- underline = false,
-    underline = {
-        severity = { max = vim.diagnostic.severity.INFO }
-    },
-	virtual_text = {
-        severity = { min = vim.diagnostic.severity.WARN }
-	},
-	-- show signs
-	signs = true,
+require("mason-lspconfig").setup_handlers({
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function (server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup({})
+    end,
+    -- Next, you can provide a dedicated handler for specific servers.
+    -- For example, a handler override for the `rust_analyzer`:
+    -- ["rust_analyzer"] = function ()
+    --     require("rust-tools").setup {}
+    -- end,
+    ["sumneko_lua"] = function()
+        lsp_config.sumneko_lua.setup({
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' }
+                    }
+                }
+            }
+        })
+    end,
 })
 
--- Change diagnostic symbols in the sign column (gutter)
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
+---
+-- Autocomplete
+---
+-- nvim-cmp setup
+-- require("lsp/auto-cmp")
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
--- Filter by severity in sign column
-local orig_set_signs = vim.lsp.diagnostic.set_signs
-local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
-	opts = opts or {}
-	opts.severity_limit = "Error"
-	orig_set_signs(diagnostics, bufnr, client_id, sign_ns, opts)
-end
-vim.lsp.diagnostic.set_signs = set_signs_limited
+------------------------------------------------------------
+-- Add Snippets
+------------------------------------------------------------
 
--- -- Print diagnostics to message area
--- function PrintDiagnostics(opts, bufnr, line_nr, client_id)
---   bufnr = bufnr or 0
---   line_nr = line_nr or (vim.api.nvim_win_get_cursor(0)[1] - 1)
---   opts = opts or {['lnum'] = line_nr}
+-- Load your own custom vscode style snippets
+require("luasnip.loaders.from_vscode").lazy_load({
+	paths = {
+		CONFIG_DIR .. "/my-snippets",
+		RUNTIME_DIR .. "/site/pack/packer/start/friendly-snippets",
+	},
+})
+-- extends filetypes supported by snippets
+require("luasnip").filetype_extend("vimwik", { "markdown" })
+require("luasnip").filetype_extend("html", { "htmldjango" })
 
---   local line_diagnostics = vim.diagnostic.get(bufnr, opts)
---   if vim.tbl_isempty(line_diagnostics) then return end
 
---   local diagnostic_message = ""
---   for i, diagnostic in ipairs(line_diagnostics) do
---     diagnostic_message = diagnostic_message .. string.format("%d: %s", i, diagnostic.message or "")
---     print(diagnostic_message)
---     if i ~= #line_diagnostics then
---       diagnostic_message = diagnostic_message .. "\n"
---     end
---   end
---   vim.api.nvim_echo({{diagnostic_message, "Normal"}}, false, {})
--- end
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
--- vim.cmd [[ autocmd! CursorHold * lua PrintDiagnostics() ]]
+local select_opts = {behavior = cmp.SelectBehavior.Select}
 
--- -- Highlight line number instead of having icons in sign column
--- vim.cmd([[
---   highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
---   highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
---   highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
---   highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end
+  },
+  sources = {
+    {name = 'path'},
+    {name = 'nvim_lsp', keyword_length = 3},
+    {name = 'buffer', keyword_length = 3},
+    {name = 'luasnip', keyword_length = 2},
+  },
+  window = {
+    documentation = cmp.config.window.bordered()
+  },
+  formatting = {
+    fields = {'menu', 'abbr', 'kind'},
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        luasnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
 
---   sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
---   sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
---   sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
---   sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
--- ]])
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
+  },
+  mapping = {
+    ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<Down>'] = cmp.mapping.select_next_item(select_opts),
 
----- Setup UI: hover and popup dispalyed contents
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+    ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+
+    ['<C-d>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+
+    ['<C-b>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      local col = vim.fn.col('.') - 1
+
+      if cmp.visible() then
+        cmp.select_next_item(select_opts)
+      elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        fallback()
+      else
+        cmp.complete()
+      end
+    end, {'i', 's'}),
+
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item(select_opts)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+  },
+})

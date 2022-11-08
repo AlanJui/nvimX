@@ -1,6 +1,6 @@
 " Tabs
-set ts=4
-set sw=4
+set ts=2
+set sw=2
 
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"

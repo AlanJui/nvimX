@@ -3,7 +3,25 @@ if not ok then
     return
 end
 
-local luasnip = require('luasnip')
+local LuaSnip = require('luasnip')
+if not LuaSnip then
+    return
+end
+
+------------------------------------------------------------
+-- Add Snippets
+------------------------------------------------------------
+
+-- Load your own custom vscode style snippets
+require("luasnip.loaders.from_vscode").lazy_load({
+	paths = {
+		CONFIG_DIR .. "/my-snippets",
+		RUNTIME_DIR .. "/site/pack/packer/start/friendly-snippets",
+	},
+})
+
+require("luasnip").filetype_extend("vimwik", { "markdown" })
+require("luasnip").filetype_extend("html", { "htmldjango" })
 
 -- Require function for tab to work with LUA-SNIP
 local has_words_before = function()
@@ -38,7 +56,7 @@ local kind_icons = {
     Operator = "",
     TypeParameter = "",
 }
-
+local select_opts = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup({
     cmpletion = {
@@ -48,7 +66,7 @@ cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            LuaSnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
     window = {
@@ -56,19 +74,15 @@ cmp.setup({
         documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-m>'] = cmp.mapping.complete(),
         ['<M-m>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ 
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            elseif LuaSnip.expand_or_jumpable() then
+                LuaSnip.expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -78,21 +92,45 @@ cmp.setup({
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif LuaSnip.jumpable(-1) then
+                LuaSnip.jump(-1)
             else
                 fallback()
             end
         end, { "i", "s" }),
+        -- Jump to the next placeholder in the snippet
+        ['<C-d>'] = cmp.mapping(function(fallback)
+            if LuaSnip.jumpable(1) then
+                LuaSnip.jump(1)
+            else
+                fallback()
+            end
+        end, {'i', 's'}),
+        -- Jump to the previous placeholder in the snippet
+        ['<C-b>'] = cmp.mapping(function(fallback)
+            if LuaSnip.jumpable(-1) then
+                LuaSnip.jump(-1)
+            else
+                fallback()
+            end
+        end, {'i', 's'}),
+        ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+        ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = {
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
+        -- Shows available snippets and expands them if they are chosen
+        { name = "luasnip", keyword_length = 2 },
+        -- Shows suggestions based on the response of a language server
+        { name = "nvim_lsp", keyword_length = 3 },
         { name = "nvim_lua" },
+        -- Autocomplete file paths
         { name = "path" },
         { name = "emoji" },
         { name = "spell" },
-        { name = "buffer" },
+        -- Suggests words found in the current buffer
+        { name = "buffer", keyword_length = 3 },
     },
     -- sources = cmp.config.sources({
     --     { name = "luasnip" },

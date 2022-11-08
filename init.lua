@@ -33,15 +33,17 @@ end
 LSP_SERVERS = {
     'sumneko_lua',
     'diagnosticls',
-    'texlab',
+    'dockerls',
     'pyright',
-    'emmet_ls',
     'html',
+    'emmet_ls',
+    'tsserver',
+    'eslint',
     'cssls',
     'stylelint_lsp',
     'jsonls',
-    'rust_analyzer',
     'tsserver',
+    'texlab',
 }
 
 DEBUGPY = '~/.virtualenvs/debugpy/bin/python'
@@ -115,7 +117,7 @@ else
         -- lsp
         require("lsp") -- integrate with auto cmp
         require('lsp.null-langserver')
-        require('lsp.luasnip')
+        -- require('lsp.luasnip')
         -- status line
         require('plugins-rc.lualine-material')
         require('plugins-rc.tabline')
@@ -132,7 +134,7 @@ else
         require('plugins-rc.nvim-ts-autotag')
         require('plugins-rc.undotree')
         -- vim.cmd([[runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim]])
-        vim.cmd([[runtime ./lua/plugins-rc/emmet-vim.rc.vim]])
+        -- vim.cmd([[runtime ./lua/plugins-rc/emmet-vim.rc.vim]])
         vim.cmd([[runtime ./lua/plugins-rc/vim-closetag.rc.vim]])
         vim.cmd([[runtime ./lua/plugins-rc/tagalong-vim.rc.vim]])
         -- programming

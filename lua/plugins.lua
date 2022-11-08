@@ -13,7 +13,9 @@ M.load = function(use)
 	-----------------------------------------------------------
 	-- companion plugin for nvim-lspconfig that allows you to seamlessly
 	-- install LSP servers locally
-	use({ "williamboman/nvim-lsp-installer" })
+	-- use({ "williamboman/nvim-lsp-installer" })
+	use({ "williamboman/mason.nvim" })
+	use({ "williamboman/mason-lspconfig.nvim" })
 	-- A collection of common configurations for Neovim's built-in language
 	-- server client
 	use({ "neovim/nvim-lspconfig" })
