@@ -45,6 +45,14 @@ LSP_SERVERS = {
     'tsserver',
     'texlab',
 }
+-- Mason LS List
+    -- 'djlint',
+    -- 'flake8',
+    -- 'pylint',
+    -- 'mypy',
+    -- 'autopep8',
+    -- 'black',
+    -- 'isort',
 
 DEBUGPY = '~/.virtualenvs/debugpy/bin/python'
 
@@ -117,7 +125,6 @@ else
         -- lsp
         require("lsp") -- integrate with auto cmp
         require('lsp.null-langserver')
-        -- require('lsp.luasnip')
         -- status line
         require('plugins-rc.lualine-material')
         require('plugins-rc.tabline')
@@ -129,12 +136,12 @@ else
         require('plugins-rc.telescope-nvim')
         require('plugins-rc.nvim-tree')
         -- editting tools
+        require('plugins-rc.indent-blankline')
         require('plugins-rc.Comment_nvim')
         require('plugins-rc.autopairs')
         require('plugins-rc.nvim-ts-autotag')
         require('plugins-rc.undotree')
-        -- vim.cmd([[runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim]])
-        -- vim.cmd([[runtime ./lua/plugins-rc/emmet-vim.rc.vim]])
+        vim.cmd([[runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim]])
         vim.cmd([[runtime ./lua/plugins-rc/vim-closetag.rc.vim]])
         vim.cmd([[runtime ./lua/plugins-rc/tagalong-vim.rc.vim]])
         -- programming

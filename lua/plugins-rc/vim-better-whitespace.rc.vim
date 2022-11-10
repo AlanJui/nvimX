@@ -23,8 +23,8 @@ let g:better_whitespace_filetypes_blacklist = [ 'diff', 'gitcommit', 'qf', 'help
 let g:strip_whitespace_confirm = 0
 let g:show_spaces_that_precede_tabs = 1
 
-augroup mystuff | au!
-    autocmd VimEnter,WinNew 2match Todo /\s\+$\|\t/
-    autocmd TermOpen,TerminalWinOpen * 2match none
-    "       ^-- Nvim ^-- Vim
-augroup end
+" augroup mystuff | au!
+"     autocmd VimEnter,WinNew 2match Todo /\s\+$\|\t/
+"     autocmd TermOpen,TerminalWinOpen * 2match none
+"     "       ^-- Nvim ^-- Vim
+" augroup end

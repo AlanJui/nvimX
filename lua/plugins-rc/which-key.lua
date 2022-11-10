@@ -101,7 +101,7 @@ local mappings = {
 			"<cmd>lua vim.lsp.buf.range_code_action()<CR>",
 			"Do Range CodeAction",
 		},
-		f = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "LSP formatting code" },
+		f = { "<cmd>lua vim.lsp.buf.format()<CR>", "LSP formatting code" },
 		k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
 		r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
 		s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },

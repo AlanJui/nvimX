@@ -102,8 +102,8 @@ local lsp_config = safe_require("lspconfig")
 if not lsp_config then
 	return
 end
-local lsp_defaults = lsp_config.util.default_config
 
+local lsp_defaults = lsp_config.util.default_config
 lsp_defaults.capabilities = vim.tbl_deep_extend(
     'force',
     lsp_defaults.capabilities,
@@ -114,6 +114,7 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 ---
 -- LSP servers
 ---
+require('mason-lspconfig').setup()
 
 require("mason-lspconfig").setup_handlers({
     -- The first entry (without a key) will be the default handler
@@ -124,9 +125,6 @@ require("mason-lspconfig").setup_handlers({
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    -- ["rust_analyzer"] = function ()
-    --     require("rust-tools").setup {}
-    -- end,
     ["sumneko_lua"] = function()
         lsp_config.sumneko_lua.setup({
             settings = {
@@ -138,18 +136,64 @@ require("mason-lspconfig").setup_handlers({
             }
         })
     end,
+    ["pyright"] = function ()
+        lsp_config.pyright.setup({
+            cmd = { "pyright-langserver", "--stdio" },
+            filetypes = { 'python' },
+            settings = {
+                python = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        diagnosticMode = 'workspace',
+                        useLibraryCodeForTypes = true,
+                        typeCheckingMode = 'off',
+                        logLevel = 'Error',
+                    },
+                    -- linting = {
+                    --     pylintArgs = {
+                    --         '--load-plugins=pylint_django',
+                    --         '--load-plugins=pylint_dango.checkers.migrations',
+                    --         '--errors-only',
+                    --     },
+                    -- },
+                },
+            },
+            single_file_support = true,
+        })
+    end,
+    ["jsonls"] = function ()
+        lsp_config.jsonls.setup({
+            filetypes = { 'json', 'jsonc' },
+            settings = {
+                json = {
+                    schemas = require('lsp/json-schemas'),
+                },
+            },
+            setup = {
+                commands = {
+                    Format = {
+                        function()
+                            vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line('$'), 0 })
+                        end,
+                    },
+                },
+            },
+            init_options = {
+                provideFormatter = true,
+            },
+            single_file_support = true,
+        })
+    end,
 })
 
----
+------------------------------------------------------------
 -- Autocomplete
----
--- nvim-cmp setup
--- require("lsp/auto-cmp")
+------------------------------------------------------------
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-------------------------------------------------------------
+--
 -- Add Snippets
-------------------------------------------------------------
+--
 
 -- Load your own custom vscode style snippets
 require("luasnip.loaders.from_vscode").lazy_load({
@@ -162,6 +206,9 @@ require("luasnip.loaders.from_vscode").lazy_load({
 require("luasnip").filetype_extend("vimwik", { "markdown" })
 require("luasnip").filetype_extend("html", { "htmldjango" })
 
+--
+-- Setup cmp.nvim
+--
 
 local cmp = require('cmp')
 local luasnip = require('luasnip')
