@@ -58,19 +58,26 @@ local sources = {
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.autopep8,
     -- A pure-Python Django/Jinja template indenter without dependencies.
-    -- null_ls.builtins.formatting.djhtml,
-    -- null_ls.builtins.formatting.djlint,
+    null_ls.builtins.formatting.djhtml,
+    null_ls.builtins.formatting.djlint,
+
+    -- mypy is an optional static type checker for Python that aims to 
+    -- combine the benefits fo dynamic (or "dock") typing and static typings.
+    null_ls.builtins.diagnostics.mypy,
+
     -- pydocstyle is a static analysis tool for checking compliance
     -- with Python docstring conventions.
     -- null_ls.builtins.diagnostics.pydocstyle,
+
     -- flake8 is a python tool that glues together pycodestyle,
     -- pyflakes, mccabe, and third-party plugins to check the style
     -- and quality of Python code.
-    -- null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.flake8,
+
     -- A tool that automatically formats Python code to conform to
     -- the PEP 8 style guide.
     -- Django HTML Template Linter and Formatter.
-    -- null_ls.builtins.diagnostics.djlint,
+    null_ls.builtins.diagnostics.djlint,
     ---------------------------------------------------------------
     -- Lua
     ---------------------------------------------------------------

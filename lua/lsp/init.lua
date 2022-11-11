@@ -139,6 +139,9 @@ require("mason-lspconfig").setup_handlers({
     ["pyright"] = function ()
         lsp_config.pyright.setup({
             cmd = { "pyright-langserver", "--stdio" },
+            root_dir = function ()
+                return vim.loop.cwd()
+            end,
             filetypes = { 'python' },
             settings = {
                 python = {
@@ -223,9 +226,9 @@ cmp.setup({
   },
   sources = {
     {name = 'path'},
-    {name = 'nvim_lsp', keyword_length = 3},
-    {name = 'buffer', keyword_length = 3},
-    {name = 'luasnip', keyword_length = 2},
+    {name = 'nvim_lsp', keyword_length = 1},
+    {name = 'buffer', keyword_length = 1},
+    {name = 'luasnip', keyword_length = 1},
   },
   window = {
     documentation = cmp.config.window.bordered()
