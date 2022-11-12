@@ -304,7 +304,7 @@ local mappings = {
         q = { ":q<CR>", "Quit" },
     },
     -- Git
-    g = {
+    G = {
         name = "Git",
         g = { ":Neogit<CR>", "Neogit" },
         a = { ":Git add .<CR>", "add all" },

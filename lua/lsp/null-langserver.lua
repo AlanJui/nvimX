@@ -55,13 +55,13 @@ local sources = {
         end,
     }),
     null_ls.builtins.formatting.isort,
-    null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.autopep8,
+    -- null_ls.builtins.formatting.black,
     -- A pure-Python Django/Jinja template indenter without dependencies.
     null_ls.builtins.formatting.djhtml,
     null_ls.builtins.formatting.djlint,
 
-    -- mypy is an optional static type checker for Python that aims to 
+    -- mypy is an optional static type checker for Python that aims to
     -- combine the benefits fo dynamic (or "dock") typing and static typings.
     null_ls.builtins.diagnostics.mypy,
 

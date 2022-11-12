@@ -141,7 +141,7 @@ else
         require('plugins-rc.autopairs')
         require('plugins-rc.nvim-ts-autotag')
         require('plugins-rc.undotree')
-        vim.cmd([[runtime ./lua/plugins-rc/vim-better-whitespace.rc.vim]])
+        require('plugins-rc.trim-nvim')
         vim.cmd([[runtime ./lua/plugins-rc/vim-closetag.rc.vim]])
         vim.cmd([[runtime ./lua/plugins-rc/tagalong-vim.rc.vim]])
         -- programming

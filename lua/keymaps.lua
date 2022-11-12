@@ -127,8 +127,7 @@ keymap('t', '<Esc>', '<C-\\><C-n>', opts)
 -- Nonbuild-in commands
 --------------------------------------------------------------
 -- Comment
-keymap('n', '<C-_>', ':CommentToggle<CR>',      opts)
-keymap('v', '<C-_>', ":'<,'>CommentToggle<CR>", opts)
-keymap('n', '<C-_>', ':Commentary<CR>', opts)
-keymap('v', '<C-_>', ":'<,'>Commentary<CR>", opts)
-
+-- keymap('n', '<C-_>', ':CommentToggle<CR>',      opts)
+-- keymap('v', '<C-_>', ":'<,'>CommentToggle<CR>", opts)
+-- keymap('n', '<C-_>', ':Commentary<CR>', opts)
+-- keymap('v', '<C-_>', ":'<,'>Commentary<CR>", opts)

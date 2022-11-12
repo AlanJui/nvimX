@@ -161,7 +161,7 @@ M.load = function(use)
     -- location in the file. The location is checked via treesitter queries.
     use('JoosepAlviste/nvim-ts-context-commentstring')
 	-- Causes all trailing whitespace characters to be highlighted
-	use({ "ntpeters/vim-better-whitespace" })
+	use({ "cappyzawa/trim.nvim" })
 	-- Auto close parentheses and repeat by dot dot dot ...
 	use({ "windwp/nvim-autopairs" })
 	-- use({
@@ -212,8 +212,8 @@ M.load = function(use)
 	use({ "pianocomposer321/yabs.nvim", requires = { "nvim-lua/plenary.nvim" } })
 	-- terminal
 	use({ "pianocomposer321/consolation.nvim" })
-	use({ 
-        "akinsho/toggleterm.nvim", 
+	use({
+        "akinsho/toggleterm.nvim",
         tag = "*",
         config = function ()
             require("toggleterm").setup()
