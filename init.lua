@@ -94,17 +94,7 @@ else
     -- 當 packer.nvim 尚未安裝，可自動執行下載及安裝作業；
     -- 若 packer.nvim 已安裝，則執行擴充套件 (plugins) 的載入作業。
     ---------------------------------------------------------------
-    -- configure packer.nvim
     require("load-plugins")
-
-    -- configure Neovim to automatically run :PackerCompile whenever
-    -- plugin-list.lua is updated with an autocommand:
-    vim.cmd([[
-    augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    augroup end
-    ]])
 
     -----------------------------------------------------------
     -- configuration of plugins

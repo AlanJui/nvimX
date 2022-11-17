@@ -63,7 +63,7 @@ local sources = {
 
     -- mypy is an optional static type checker for Python that aims to
     -- combine the benefits fo dynamic (or "dock") typing and static typings.
-    null_ls.builtins.diagnostics.mypy,
+    -- null_ls.builtins.diagnostics.mypy,
 
     -- pydocstyle is a static analysis tool for checking compliance
     -- with Python docstring conventions.
