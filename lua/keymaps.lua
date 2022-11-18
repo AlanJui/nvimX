@@ -5,129 +5,136 @@ if DEBUG then
 	print('<< DEBUG: Loading keymaps.lua >>')
 end
 
--- local keymap = require('utils.set_keymap')
-local keymap = vim.api.nvim_set_keymap
-local opts = { silent = true, noremap = true }
-
+-- set leader key to space
+vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-keymap('i', 'jj', '<Esc>', opts)
+local keymap = vim.keymap -- for conciseness
+
+keymap.set("i", "jj", "<Esc>")
 
 -- Ctrl-s: to save
-keymap('n',  '<c-s>', ':w<CR>', {})
-keymap('i',  '<c-s>', '<Esc>:w<CR>a', {})
+keymap.set("n", "<c-s>", ":w<CR>", {})
+keymap.set("i", "<c-s>", "<Esc>:w<CR>a", {})
 
 --------------------------------------------------------------------
 -- Line editting
 --------------------------------------------------------------------
 -- Editting on Insert Mode
-keymap('i', '<M-,>', '<Right>,', opts)
-keymap('i', '<M-.>', '<Right>.', opts)
-keymap('i', '<M-:>', '<Right>:', opts)
-keymap('i', '<M-,><M-,>', '<Esc>A,', opts)
-keymap('i', '<M-.><M-.>', '<Esc>A.', opts)
-keymap('i', '<M-:><M-:>', '<Esc>A:', opts)
+keymap.set("i", "<M-,>", "<Right>,")
+keymap.set("i", "<M-.>", "<Right>.")
+keymap.set("i", "<M-:>", "<Right>:")
+keymap.set("i", "<M-,><M-,>", "<Esc>A,")
+keymap.set("i", "<M-.><M-.>", "<Esc>A.")
+keymap.set("i", "<M-:><M-:>", "<Esc>A:")
 -- Blank whole line
--- keymap('n', '<M-l>', '0d$', opts)
--- keymap('n', '<M-p>', 'pdd', opts)
+-- keymap.set('n', '<M-l>', '0d$')
+-- keymap.set('n', '<M-p>', 'pdd')
 -- Indent / Unident a line
-keymap('n', '<M->>', 'V><Esc>', opts)
-keymap('n', '<M-<>', 'V<<Esc>', opts)
+keymap.set("n", "<M->>", "V><Esc>")
+keymap.set("n", "<M-<>", "V<<Esc>")
 -- Remove Line
-keymap('i', '<C-CR>',   '<Esc>A<Esc>jddO', opts)
+keymap.set("i", "<C-CR>", "<Esc>A<Esc>jddO")
 
 -- Insert line
-keymap('i', '<M-n>',    '<Esc>o', opts)
-keymap('i', '<M-i>',    '<Esc>o<Esc>jddkA', opts)
-keymap('n', '<M-i>',    '^i<Tab>', opts)
+keymap.set("i", "<M-n>", "<Esc>o")
+keymap.set("i", "<M-i>", "<Esc>o<Esc>jddkA")
+keymap.set("n", "<M-i>", "^i<Tab>")
 -- Insert text in HTML Tags
-keymap('i', '<M-lt>',    '<CR><Esc>O', opts)
+keymap.set("i", "<M-lt>", "<CR><Esc>O")
 
 -- Editting in line
-keymap('n', 'I', '^d$i', opts)
-keymap('n', 'H', '0', opts)
-keymap('n', 'L', '$', opts)
-keymap('n', 'X', 'd$', opts)
-keymap('n', 'Y', 'y$', opts)
+keymap.set("n", "I", "^d$i")
+keymap.set("n", "H", "0")
+keymap.set("n", "L", "$")
+keymap.set("n", "X", "d$")
+keymap.set("n", "Y", "y$")
 -- Insert a item in table
--- keymap('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O', opts)
+-- keymap.set('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O')
 
 -- Move line
-keymap('n', '<S-Down>', ':m .+1<CR>', opts)
-keymap('n', '<S-Up>', ':m .-2<CR>', opts)
-keymap('i', '<S-Down>', '<Esc>:m .+1<CR>', opts)
-keymap('i', '<S-Up>', '<Esc>:m .-2<CR>', opts)
-keymap('v', '<S-Down>', ":move '>+1<CR>gv-gv", opts)
-keymap('v', '<S-Up>', ":move '<-2<CR>gv-gv", opts)
+keymap.set("n", "<S-Down>", ":m .+1<CR>")
+keymap.set("n", "<S-Up>", ":m .-2<CR>")
+keymap.set("i", "<S-Down>", "<Esc>:m .+1<CR>")
+keymap.set("i", "<S-Up>", "<Esc>:m .-2<CR>")
+keymap.set("v", "<S-Down>", ":move '>+1<CR>gv-gv")
+keymap.set("v", "<S-Up>", ":move '<-2<CR>gv-gv")
 
 -- Indent/Unident
-keymap('v', '<', '<gv', opts)
-keymap('v', '>', '>gv', opts)
+keymap.set("v", "<", "<gv")
+keymap.set("v", ">", ">gv")
 
 --------------------------------------------------------------------
 -- Windows navigation
 --------------------------------------------------------------------
 -- Split window
-keymap('n', 'sp', ':split<CR>', opts)
-keymap('n', 'vs', ':vsplit<CR>', opts)
-keymap('n', '<C-w>-', ':split<CR>', opts)
-keymap('n', '<C-w>|', ':vsplit<CR>', opts)
+keymap.set("n", "<localleader>sh", ":split<CR>")
+keymap.set("n", "<localleader>sv", ":vsplit<CR>")
+keymap.set("n", "<localleader>se", "<C-w>=") -- make split windows equal width & height
+keymap.set("n", "<localleader>sx", ":close<CR>") -- close current split window
 
 -- Move focus on window
-keymap('n', '<C-Up>',    '<cmd>wincmd k<CR>', opts)
-keymap('n', '<C-Down>',  '<cmd>wincmd j<CR>', opts)
-keymap('n', '<C-Left>',  '<cmd>wincmd h<CR>', opts)
-keymap('n', '<C-Right>', '<cmd>wincmd l<CR>', opts)
-
-keymap('n', '<ESC>k', '<cmd>wincmd k<CR>', opts)
-keymap('n', '<ESC>j', '<cmd>wincmd j<CR>', opts)
-keymap('n', '<ESC>h', '<cmd>wincmd h<CR>', opts)
-keymap('n', '<ESC>l', '<cmd>wincmd l<CR>', opts)
+keymap.set("n", "<ESC>k", "<cmd>wincmd k<CR>")
+keymap.set("n", "<ESC>j", "<cmd>wincmd j<CR>")
+keymap.set("n", "<ESC>h", "<cmd>wincmd h<CR>")
+keymap.set("n", "<ESC>l", "<cmd>wincmd l<CR>")
 
 -- Window Resize
-keymap('n', '<M-Up>',    '<cmd>wincmd -<CR>', opts)
-keymap('n', '<M-Down>',  '<cmd>wincmd +<CR>', opts)
-keymap('n', '<M-Left>',  '<cmd>wincmd <<CR>', opts)
-keymap('n', '<M-Right>', '<cmd>wincmd ><CR>', opts)
+keymap.set("n", "<M-Up>", "<cmd>wincmd -<CR>")
+keymap.set("n", "<M-Down>", "<cmd>wincmd +<CR>")
+keymap.set("n", "<M-Left>", "<cmd>wincmd <<CR>")
+keymap.set("n", "<M-Right>", "<cmd>wincmd ><CR>")
 
 -- Window Zoom In/Out
-keymap('n', '<C-w>i', ':tabnew %<CR>', opts)
-keymap('n', '<C-w>o', ':tabclose<CR>', opts)
+keymap.set("n", "<C-w>i", ":tabnew %<CR>")
+keymap.set("n", "<C-w>o", ":tabclose<CR>")
+
+-- maximizer window
+keymap.set("n", "<localleader>sm", ":MaximizerToggle<CR>") -- close current split window
 
 --------------------------------------------------------------------
 -- Buffers
 --------------------------------------------------------------------
--- Tab operations
-keymap('n', 'gt', '<cmd>bn<CR>', opts)
-keymap('n', 'gT', '<cmd>bp<CR>', opts)
--- keymap('n', 'tn', ':tabnew<CR>', { noremap = true })
--- keymap('n', 'tk', ':tabnext<CR>', { noremap = true })
--- keymap('n', 'tj', ':tabprev<CR>', { noremap = true })
--- keymap('n', 'to', ':tabo<CR>', { noremap = true })
 
 -- Tab navigation
--- keymap('n', 'gT', ':TablineBufferPrevious<CR>', opts)
--- keymap('n', 'gt', ':TablineBufferNext<CR>', opts)
+keymap.set("n", "<localleader>to", ":tabnew<CR>") -- open new tab
+keymap.set("n", "<localleader>tx", ":tabclose<CR>") -- close current tab
+keymap.set("n", "<localleader>tn", ":tabn<CR>") --  go to next tab
+keymap.set("n", "<localleader>tp", ":tabp<CR>") --  go to previous tab
 
--- Buffers
--- keymap('n', '<Tab>', '<cmd>bn<CR>', opts)
--- keymap('n', '<S-Tab>', '<cmd>bp<CR>', opts)
+-- Tab operations
+keymap.set('n', 'gt', '<cmd>bn<CR>')
+keymap.set('n', 'gT', '<cmd>bp<CR>')
 
 --------------------------------------------------------------------
 -- Clear highlighting on escale in normal mode.
 --------------------------------------------------------------------
--- keymap('n', '<Esc>', ':noh<CR><Esc>', opts)
+keymap.set("n", "<localleader>nh", ":nohl<CR>")
 
 --------------------------------------------------------------------
 -- Terminal mode
 --------------------------------------------------------------------
-keymap('t', '<Esc>', '<C-\\><C-n>', opts)
+keymap.set("t", "<Esc>", "<C-\\><C-n>")
 
 --------------------------------------------------------------
 -- Nonbuild-in commands
 --------------------------------------------------------------
--- Comment
--- keymap('n', '<C-_>', ':CommentToggle<CR>',      opts)
--- keymap('v', '<C-_>', ":'<,'>CommentToggle<CR>", opts)
--- keymap('n', '<C-_>', ':Commentary<CR>', opts)
--- keymap('v', '<C-_>', ":'<,'>Commentary<CR>", opts)
+
+-- nvim-tree
+keymap.set("n", "<localleader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
+
+-- telescope
+keymap.set("n", "<localleader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
+keymap.set("n", "<localleader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
+keymap.set("n", "<localleader>fc", "<cmd>Telescope grep_string<cr>") -- find string under cursor in current working directory
+keymap.set("n", "<localleader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
+keymap.set("n", "<localleader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
+
+-- telescope git commands
+keymap.set("n", "<localleader>gc", "<cmd>Telescope git_commits<cr>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
+keymap.set("n", "<localleader>gfc", "<cmd>Telescope git_bcommits<cr>") -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
+keymap.set("n", "<localleader>gb", "<cmd>Telescope git_branches<cr>") -- list git branches (use <cr> to checkout) ["gb" for git branch]
+keymap.set("n", "<localleader>gs", "<cmd>Telescope git_status<cr>") -- list current changes per file with diff preview ["gs" for git status]
+
+-- restart lsp server
+keymap.set("n", "<localleader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary

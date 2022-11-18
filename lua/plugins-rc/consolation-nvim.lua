@@ -6,7 +6,7 @@ end
 local Wrapper = require("consolation").Wrapper
 
 BuiltinTerminalWrapper = Wrapper:new()
-BuiltinTerminalWraper:setup({
+BuiltinTerminalWrapper:setup({
 	create = function()
 		vim.cmd("vnew | term")
 	end,
@@ -30,8 +30,8 @@ BuiltinTerminalWraper:setup({
 
 -- Try:
 
--- BuiltinTerminalWraper:open {cmd = "echo hi"}
--- BuiltinTerminalWraper:send_command {cmd = "echo hi again"}
--- BuiltinTerminalWraper:close()
--- BuiltinTerminalWraper:toggle()
--- BuiltinTerminalWraper:kill()
+-- BuiltinTerminalWrapper:open {cmd = "echo hi"}
+-- BuiltinTerminalWrapper:send_command {cmd = "echo hi again"}
+-- BuiltinTerminalWrapper:close()
+-- BuiltinTerminalWrapper:toggle()
+-- BuiltinTerminalWrapper:kill()

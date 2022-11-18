@@ -1,4 +1,5 @@
 -- options.lua
+local opt = vim.opt
 local exec = vim.api.nvim_exec -- execute Vimscript
 local set = vim.opt -- global options
 local cmd = vim.cmd -- execute Vim commands
@@ -16,50 +17,43 @@ set.ignorecase = true -- ignore case sensetive while searching
 set.smartcase = true
 set.scrolloff = 1 -- when scrolling, keep cursor 1 lines away from screen border
 set.sidescrolloff = 2 -- keep 30 columns visible left and right of the cursor at all times
-set.backspace = 'indent,start,eol' -- make backspace behave like normal again
-set.mouse = 'a' -- turn on mouse interaction
+set.backspace = "indent,start,eol" -- make backspace behave like normal again
+set.mouse = "a" -- turn on mouse interaction
 set.updatetime = 500 -- CursorHold interval
 set.autoindent = true -- maintain indent of current line
 set.shiftround = true
 set.splitbelow = true -- open horizontal splits below current window
 set.splitright = true -- open vertical splits to the right of the current window
 set.laststatus = 2 -- always show status line
---set.colorcolumn = "79"        -- vertical word limit line
+-- set.colorcolumn = "79"        -- vertical word limit line
 
 set.hidden = true -- allows you to hide buffers with unsaved changes without being prompted
-set.inccommand = 'split' -- live preview of :s results
+set.inccommand = "split" -- live preview of :s results
 -- set.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
 
 -- patterns to ignore during file-navigation
-set.wildignore = set.wildignore + '*.o,*.rej,*.so'
+set.wildignore = set.wildignore + "*.o,*.rej,*.so"
 -- faster scrolling
 set.lazyredraw = true
---Save undo history
+-- Save undo history
 vim.cmd([[set undofile]])
 
 -- Disable swap file
-vim.opt.swapfile = false
-vim.opt.writebackup = false
+opt.swapfile = false
+opt.writebackup = false
 
 -- make buffer modifiable
-vim.opt.modifiable = true
-
--- remove whitespace on save
--- cmd([[au BufWritePre * :%s/\s\+$//e]])
--- don't auto commenting new lines
--- cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
--- completion options
--- set.completeopt = 'menuone,noselect,noinsert'
+opt.modifiable = true
 
 -- highlight on yank
 exec(
-    [[
+	[[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500, on_visual=true}
   augroup end
-]]   ,
-    false
+]],
+	false
 )
 
 -- jump to the last position when reopening a file
@@ -69,17 +63,42 @@ if has("autocmd")
 endif
 ]])
 
--- -- 4 spaces for selected filetypes
--- cmd([[ autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4 smartindent ]])
--- cmd([[ autocmd FileType python set foldmethod=indent foldlevel=99 ]])
--- cmd([[ autocmd FileType lua setlocal shiftwidth=4 tabstop=4 ]])
--- -- 2 spaces for selected filetypes
--- cmd([[ autocmd FileType xml, html, xhtml, css, scss, javascript, dart setlocal shiftwidth=2 tabstop=2 ]])
--- -- json
--- cmd([[ au BufEnter *.json set ai expandtab shiftwidth=2 tabstop=2 sta fo=croql ]])
+-- line numbers
+opt.relativenumber = true -- show relative line numbers
+opt.number = true -- shows absolute line number on cursor line (when relative number is on)
 
--- Reformat indent line
--- gg=G
--- vim.cmd([[
--- command! -range=% Format :<line1>,<line2>s/^\s*/&&
--- ]])
+-- tabs & indentation
+opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
+opt.shiftwidth = 2 -- 2 spaces for indent width
+opt.expandtab = true -- expand tab to spaces
+opt.autoindent = true -- copy indent from current line when starting new one
+
+-- line wrapping
+opt.wrap = false -- disable line wrapping
+
+-- search settings
+opt.ignorecase = true -- ignore case when searching
+opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
+
+-- cursor line
+opt.cursorline = true -- highlight the current cursor line
+
+-- appearance
+
+-- turn on termguicolors for nightfly colorscheme to work
+-- (have to use iterm2 or any other true color terminal)
+opt.termguicolors = true
+opt.background = "dark" -- colorschemes that can be light or dark will be made dark
+opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+
+-- backspace
+opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+
+-- clipboard
+opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+
+-- split windows
+opt.splitright = true -- split vertical window to the right
+opt.splitbelow = true -- split horizontal window to the bottom
+
+opt.iskeyword:append("-") -- consider string-string as whole word

@@ -19,7 +19,7 @@ M.load = function(use)
     -- A collection of common configurations for Neovim's built-in language
     -- server client
     use({ "neovim/nvim-lspconfig" })
-    -- Null-LS: for formatters and linters
+	-- formatting & linting
     use({
         "jose-elias-alvarez/null-ls.nvim",
         requires = {
@@ -27,8 +27,13 @@ M.load = function(use)
             "ckipp01/stylua-nvim",
         },
     })
+	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
     -- automatically highlighting other uses of the current word under the cursor
     use({ "RRethy/vim-illuminate" })
+	-- additional functionality for typescript server
+	-- (e.g. rename file & update imports)
+	use({"jose-elias-alvarez/typescript.nvim"})
+
     -----------------------------------------------------------
     -- Completion: for auto-completion/suggestion/snippets
     -----------------------------------------------------------
@@ -70,8 +75,20 @@ M.load = function(use)
     -- Additional textobjects for treesitter
     use("nvim-treesitter/nvim-treesitter-textobjects")
     -----------------------------------------------------------
+    -- colorscheme for neovim written in lua specially made for roshnvim
+    -----------------------------------------------------------
+	use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
+    use("bluz71/vim-moonfly-colors")
+    use("shaeinst/roshnivim-cs")
+    use("mhartington/oceanic-next")
+    use("folke/tokyonight.nvim")
+    -----------------------------------------------------------
     -- User Interface
     -----------------------------------------------------------
+	-- maximizes and restores current window
+	use("szw/vim-maximizer")
+	-- tmux & split window navigation
+	use("christoomey/vim-tmux-navigator")
     -- Add indentation guides even on blank lines
     use({ "lukas-reineke/indent-blankline.nvim" })
     -- Status Line
@@ -95,25 +112,23 @@ M.load = function(use)
     --     config = [[ require('plugins.lspkind') ]],
     -- })
     -- LSP plugin based on Neovim build-in LSP with highly a performant UI
-    -- use {
-    --     'glepnir/lspsaga.nvim',
-    --     requires = { 'neovim/nvim-lspconfig' },
-    --     config = [[ require('plugins.lspsaga-nvim') ]]
-    -- }
+    use {
+        'glepnir/lspsaga.nvim',
+		branch = "main",
+        requires = { 'neovim/nvim-lspconfig' },
+    }
     -- Icons
     use({ "kyazdani42/nvim-web-devicons" })
-    -- use({
-    --     'yamatsum/nvim-nonicons',
-    --     requires = { 'kyazdani42/nvim-web-devicons' }
-    -- )}
     -- Fuzzy files finder
-    use({
-        "nvim-telescope/telescope.nvim",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope-live-grep-raw.nvim",
-        },
-    })
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
+	use({
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-live-grep-raw.nvim",
+		},
+	})
     -- File/Flolders explorer:nvim-tree
     use({
         "kyazdani42/nvim-tree.lua",
@@ -123,14 +138,6 @@ M.load = function(use)
     })
     -- Screen Navigation
     use("folke/which-key.nvim")
-    -----------------------------------------------------------
-    -- colorscheme for neovim written in lua specially made for roshnvim
-    -----------------------------------------------------------
-    use("shaeinst/roshnivim-cs")
-    use("mhartington/oceanic-next")
-    use("bluz71/vim-moonfly-colors")
-    use("bluz71/vim-nightfly-guicolors")
-    use("folke/tokyonight.nvim")
     -----------------------------------------------------------
     -- Git Tools
     -----------------------------------------------------------
@@ -162,26 +169,15 @@ M.load = function(use)
     use('JoosepAlviste/nvim-ts-context-commentstring')
     -- Causes all trailing whitespace characters to be highlighted
     use({ "cappyzawa/trim.nvim" })
-    -- Auto close parentheses and repeat by dot dot dot ...
-    use({ "windwp/nvim-autopairs" })
-    -- use({
-    --     'windwp/nvim-autopairs',
-    --     wants = 'nvim-treesitter',
-    --     module = {
-    --         'nvim-autopairs.completion.cmp',
-    --         'nvim-autopairs',
-    --     },
-    -- })
     -- Multiple cursor editting
     use({ "mg979/vim-visual-multi" })
     -- visualizes undo history and makes it easier to browse and switch between different undo branches
     use({ "mbbill/undotree" })
+    -- Auto close parentheses and repeat by dot dot dot ...
+    use({ "windwp/nvim-autopairs" })
     ---------------------------------------------------------------
     -- HTML
     ---------------------------------------------------------------
-    -- provides support for expanding abbreviations similar to emmet
-    use({ "mattn/emmet-vim" })
-    -- Auto tag
     use({ "windwp/nvim-ts-autotag" })
     -- Auto close tag
     -- use({ 'alvan/vim-closetag', })
@@ -206,8 +202,15 @@ M.load = function(use)
     -- functions and doc strings
     use("jeetsukumaran/vim-pythonsense")
     -----------------------------------------------------------
-    -- Programming
+    -- Language specific exensions
     -----------------------------------------------------------
+    -- DAP adapter for Python
+    use({ "mfussenegger/nvim-dap-python" })
+    -- DAP adapter for the Neovim lua language
+    use({ "jbyuki/one-small-step-for-vimkind" })
+	-----------------------------------------------------------
+	-- Coding Tools
+	-----------------------------------------------------------
     -- Yet Another Build System
     use({ "pianocomposer321/yabs.nvim", requires = { "nvim-lua/plenary.nvim" } })
     -- terminal
@@ -215,9 +218,6 @@ M.load = function(use)
     use({
         "akinsho/toggleterm.nvim",
         tag = "*",
-        config = function ()
-            require("toggleterm").setup()
-        end
     })
     -----------------------------------------------------------
     -- DAP
@@ -228,7 +228,7 @@ M.load = function(use)
     -- Manage debuggers provided by nvim-dap.
     use({ "Pocco81/dap-buddy.nvim" })
     -----------------------------------------------------------
-    -- UI Extensions
+    -- DAP UI Extensions
     -----------------------------------------------------------
     -- Experimental UI for nvim-dap
     use({ "rcarriga/nvim-dap-ui" })
@@ -241,28 +241,20 @@ M.load = function(use)
     -- nvim-cmp source for using DAP completions inside the REPL.
     use({ "rcarriga/cmp-dap" })
     -----------------------------------------------------------
-    -- Language specific exensions
-    -----------------------------------------------------------
-    -- DAP adapter for Python
-    use({ "mfussenegger/nvim-dap-python" })
-    -- DAP adapter for the Neovim lua language
-    use({ "jbyuki/one-small-step-for-vimkind" })
-    -----------------------------------------------------------
-    -- Polyglot language extensions
-    -----------------------------------------------------------
-    -- -- A Vim wrapper for running tests on different granularities.
-    -- use({ 'vim-test/vim-test' })
-    -- -- Test runner building upon vim-test with nvim-dap support.
-    -- use({
-    --     'rcarriga/vim-ultest',
-    --     requires = { 'vim-test/vim-test' },
-    --     run = ':UpdateRemotePlugins',
-    -- })
-    -----------------------------------------------------------
     -- Utility
     -----------------------------------------------------------
     -- Floater Terminal
     use("voldikss/vim-floaterm")
+    -- Live server
+    use({ "turbio/bracey.vim", run = "npm install --prefix server" })
+    -- Markdown preview
+    use({ "instant-markdown/vim-instant-markdown" })
+    -- PlantUML
+    use({ "weirongxu/plantuml-previewer.vim" })
+    -- PlantUML syntax highlighting
+    use("aklt/plantuml-syntax")
+    -- Open URI with your favorite browser from your most favorite editor
+    use("tyru/open-browser.vim")
     -- highlight your todo comments in different styles
     -- use({
     -- 	'folke/todo-comments.nvim',
@@ -274,16 +266,6 @@ M.load = function(use)
     -- 	    })
     -- 	end,
     -- })
-    -- Live server
-    use({ "turbio/bracey.vim", run = "npm install --prefix server" })
-    -- Markdown preview
-    use({ "instant-markdown/vim-instant-markdown" })
-    -- PlantUML
-    use({ "weirongxu/plantuml-previewer.vim" })
-    -- PlantUML syntax highlighting
-    use("aklt/plantuml-syntax")
-    -- Open URI with your favorite browser from your most favorite editor
-    use("tyru/open-browser.vim")
     -----------------------------------------------------------
     -- LaTeX
     -----------------------------------------------------------
