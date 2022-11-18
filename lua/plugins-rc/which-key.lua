@@ -181,239 +181,230 @@ local mappings = {
 		-- REPEL
 		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
 	},
-    -- LSP diagnostics
-    D = {
-        name = "Diagnostics",
-        f = {
-            "<cmd>lua vim.diagnostic.open_float()<CR>",
-            "Open diagnostics floating",
-        },
-        p = {
-            "<cmd>lua vim.diagnostic.goto_prev()<CR>",
-            "Goto prev diagnostics",
-        },
-        n = {
-            "<cmd>lua vim.diagnostic.goto_next()<CR>",
-            "Goto next diagnostics",
-        },
-        l = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Set loclist" },
-        w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
-        c = {
-            ":Telescope diagnostics bufnr=0<CR>",
-            "List diagnostics current file",
-        },
-    },
-    -- Running code
-    r = {
-        name = "Run",
-        l = {
-            r = { ':ToggleTerm cmd="lua %"<CR>', "Run lua file" },
-        },
-        d = {
-            name = "Django",
-            r = {
-                ':TermExec cmd="python manage.py runserver"<CR>',
-                "Runserver",
-            },
-            R = {
-                ':TermExec cmd="python manage.py runserver --noreload"<CR>',
-                "Runserver --noreload",
-            },
-            s = {
-                ':3TermExec go_back=0 size=20 cmd="python manage.py shell"<CR>',
-                "Django Shell",
-            },
-            S = {
-                ':2TermExec go_back=0 cmd="python manage.py createsuperuser"<CR>',
-                "Create super user",
-            },
-            c = {
-                ':2TermExec go_back=0 cmd="python manage.py collectstatic"<CR>',
-                "Collect all static files",
-            },
-            k = {
-                ':2TermExec go_back=0 cmd="npx kill-port 8000"<CR>',
-                "Kill Port",
-            },
-            m = {
-                ':2TermExec go_back=0 cmd="python manage.py makemigrations"<CR>',
-                "Update DB schema",
-            },
-            M = {
-                ':2TermExec go_back=0 cmd="python manage.py migrate"<CR>',
-                "Migrate DB",
-            },
-        },
-        p = {
-            -- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
-            -- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
-            -- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
-            name = "Python",
-            r = {
-                ':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
-                "Run Python file",
-            },
-            d = {
-                ":update<CR>:sp term://python3 -m pdb %<CR>",
-                "Debug Python file",
-            },
-            n = {
-                ":update<CR>:sp term://nodemon -e py %<CR>",
-                "Monitor the file",
-            },
-        },
-        -- yabs
-        y = {
-            name = 'yabs',
-            t = {
-                ":Telescope yabs tasks<CR>",
-                "List yabs tasks",
-            },
-            g = {
-                ":Telescope yabs globals_tasks<CR>",
-                "List all yabs tasks",
-            },
-            l = {
-                ":Telescope yabs current_language_tasks<CR>",
-                "List yabs tasks for language",
-            },
-        },
-    },
-    -- Search files
-    s = {
-        name = "Search",
-        a = { ":Telescope live_grep<CR>", "Live grep" },
-        b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
-        f = { ":Telescope find_files<CR>", "Find files" },
-        g = { ":Telescope git_files<CR>", "Git files" },
-        m = { ":Telescope marks<CR>", "Bookmarks" },
-        r = { ":Telescope oldfiles<CR>", "Recently open files" },
-        h = { ":Telescope help_tags<CR>", "Help Tags" },
-        p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
-        w = { ":Telescope live_grep<CR>", "Find word" },
-        v = { ":FloatermNew vifm<CR>", "ViFm" },
-    },
-    -- Files
-    F = {
-        name = "Files",
-        w = { ":w<CR>", "Save" },
-        c = { ":bdelete<CR>", "Close" },
-        C = { ":q!<CR>", "Quit withou save" },
-        e = { ":qa<CR>", "Exit Neovim" },
-        E = { ":qa!<CR>", "Exit Neovim without save" },
-        q = { ":q<CR>", "Quit" },
-    },
-    -- Git
-    G = {
-        name = "Git",
-        g = { ":Neogit<CR>", "Neogit" },
-        a = { ":Git add .<CR>", "add all" },
-        b = { ":Git blame<CR>", "blame" },
-        B = { ":GBrowse<CR>", "Browse GitHub repo" },
-        c = { ":Git commit<CR>", "commit" },
-        d = {
-            name = "+Diff",
-            h = { ":Gdiffsplit<CR>", "diff split" },
-            v = { ":Gvdiffsplit<CR>", "diff vsplit" },
-            n = { ":Git diff<CR>", "Normal diff" },
-        },
-        l = { ":Git log<CR>", "List log with details" },
-        L = { ":Git log --oneline<CR>", "List log within one line" },
-        p = { ":Git push<CR>", "push" },
-        P = { ":Git pull<CR>", "pull" },
-        r = { ":GRemove<CR>", "remove" },
-        s = { ":Git<CR>", "status" },
-        S = { ":GitGutterSignsToggle<CR>", "toggle signs" },
-        T = {
-            ':Git log --no-walk --tags --pretty="%h %d %s" --decorate=full<CR>',
-            "List all tags in log",
-        },
-        z = { ":FloatermNew lazygit<CR>", "Lazygit" },
-        -- Gist
-        G = {
-            name = "gist",
-            -- a    = {':Gist -a', 'post a gist anonymously' },
-            -- b    = {':Gist -b', 'post gist browser' },
-            d = { ":Gist -d<CR>", "delete gist" },
-            e = { ":Gist -e<CR>", "edit gist" },
-            l = { ":Gist -l<CR>", "list public gists" },
-            s = { ":Gist -ls<CR>", "list starred gists" },
-            m = { ":Gist -m<CR>", "post a gist with all open buffers" },
-            p = { ":Gist -p<CR>", "post public gist" },
-            P = { ":Gist -P<CR>", "post private gist" },
-        },
-    },
-    -- utilities
-    u = {
-        name = "Utilities",
-        t = {
-            name = "terminal",
-            d = {
-                "TermExec python manage.py shell<CR>",
-                "Django-admin Shell",
-            },
-            p = { "TermExec python<CR>", "Python shell" },
-            n = { "TermExec node<CR>", "Node.js shell" },
-            v = {
-                "TermExec --wintype='vsplit' --position='right'<CR>",
-                "Debug Term...",
-            },
-        },
-        l = {
-            name = "LiveServer",
-            l = { ":Bracey<CR>", "start live server" },
-            L = { ":BraceyStop<CR>", "stop live server" },
-            r = { ":BraceyReload<CR>", "web page to be reloaded" },
-        },
-        m = {
-            name = "Markdown",
-            m = { ":MarkdownPreview<CR>", "start markdown preview" },
-            M = { ":MarkdownPreviewStop<CR>", "stop markdown preview" },
-        },
-        u = {
-            name = "UML",
-            v = { ":PlantumlOpen<CR>", "start PlantUML preview" },
-            o = {
-                ":PlantumlSave docs/diagrams/out.png<CR>",
-                "export PlantUML diagram",
-            },
-        },
-        f = {
-            "TermExec --height=0.7 --width=0.9 --wintype=float vifm<CR>",
-            "ViFm",
-        },
-        r = {
-            "TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
-            "Ranger",
-        },
-    },
-    -- Window
-    w = {
-        name = "Windows",
-        ["-"] = { ":split<CR>", "Horiz. window" },
-        ["|"] = { ":vsplit<CR>", "Vert. window" },
-        i = { ":tabnew %<CR>", "Zoom-in" },
-        o = { ":tabclose<CR>", "Zoom-out" },
-        c = { ":close<CR>", "Close window" },
-        k = { "<C-w>k", "Up window" },
-        j = { "<C-w>j", "Down window" },
-        h = { "<C-w>h", "Left window" },
-        l = { "<C-w>l", "Right window" },
-        ["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
-        ["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
-        ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
-        ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
-        w = { ':exe "resize" . (winwidth(0) * 3/2)<CR>', "Increase weight" },
-        W = { ':exe "resize" . (winwidth(0) * 2/3)<CR>', "Increase weight" },
-        v = {
-            ':exe "vertical resize" . (winheight(0) * 3/2)<CR>',
-            "Increase height",
-        },
-        V = {
-            ':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
-            "Increase height",
-        },
-    },
+	-- LSP diagnostics
+	D = {
+		name = "Diagnostics",
+		f = {
+			"<cmd>lua vim.diagnostic.open_float()<CR>",
+			"Open diagnostics floating",
+		},
+		p = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Goto prev diagnostics" },
+		n = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Goto next diagnostics" },
+		l = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Set loclist" },
+		w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+		c = {
+			":Telescope diagnostics bufnr=0<CR>",
+			"List diagnostics current file",
+		},
+	},
+	-- Running code
+	r = {
+		name = "Run",
+		c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
+		o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
+		t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
+		C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
+		x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
+		l = {
+			'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="lua %"}<CR>',
+			"Run lua file",
+		},
+		d = {
+			name = "Django",
+			r = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py runserver"}<CR>',
+				"Runserver",
+			},
+			R = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py runserver --noreload"}<CR>',
+				"Runserver --noreload",
+			},
+			s = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py shell"}<CR>',
+				"Django Shell",
+			},
+			S = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py createsuperuser"}<CR>',
+				"Create super user",
+			},
+			c = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py collectstatic"}<CR>',
+				"Collect all static files",
+			},
+			k = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="npx kill-port 8000"}<CR>',
+				"Kill Port",
+			},
+			m = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py makemigrations"}<CR>',
+				"Update DB schema",
+			},
+			M = {
+				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py migrate"}<CR>',
+				"Migrate DB",
+			},
+		},
+		p = {
+			-- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
+			-- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
+			-- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
+			name = "Python",
+			r = {
+				':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
+				"Run Python file",
+			},
+			d = {
+				":update<CR>:sp term://python3 -m pdb %<CR>",
+				"Debug Python file",
+			},
+			n = {
+				":update<CR>:sp term://nodemon -e py %<CR>",
+				"Monitor the file",
+			},
+		},
+		-- yabs
+		y = {
+			name = "yabs",
+			t = { ":Telescope yabs tasks<CR>", "List yabs tasks" },
+			g = { ":Telescope yabs globals_tasks<CR>", "List all yabs tasks" },
+			l = {
+				":Telescope yabs current_language_tasks<CR>",
+				"List yabs tasks for language",
+			},
+		},
+	},
+	-- Search files
+	s = {
+		name = "Search",
+		a = { ":Telescope live_grep<CR>", "Live grep" },
+		b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
+		f = { ":Telescope find_files<CR>", "Find files" },
+		g = { ":Telescope git_files<CR>", "Git files" },
+		m = { ":Telescope marks<CR>", "Bookmarks" },
+		r = { ":Telescope oldfiles<CR>", "Recently open files" },
+		h = { ":Telescope help_tags<CR>", "Help Tags" },
+		p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
+		w = { ":Telescope live_grep<CR>", "Find word" },
+		v = { ":FloatermNew vifm<CR>", "ViFm" },
+	},
+	-- Files
+	F = {
+		name = "Files",
+		w = { ":w<CR>", "Save" },
+		c = { ":bdelete<CR>", "Close" },
+		C = { ":q!<CR>", "Quit withou save" },
+		e = { ":qa<CR>", "Exit Neovim" },
+		E = { ":qa!<CR>", "Exit Neovim without save" },
+		q = { ":q<CR>", "Quit" },
+	},
+	-- Git
+	G = {
+		name = "Git",
+		g = { ":Neogit<CR>", "Neogit" },
+		a = { ":Git add .<CR>", "add all" },
+		b = { ":Git blame<CR>", "blame" },
+		B = { ":GBrowse<CR>", "Browse GitHub repo" },
+		c = { ":Git commit<CR>", "commit" },
+		d = {
+			name = "+Diff",
+			h = { ":Gdiffsplit<CR>", "diff split" },
+			v = { ":Gvdiffsplit<CR>", "diff vsplit" },
+			n = { ":Git diff<CR>", "Normal diff" },
+		},
+		l = { ":Git log<CR>", "List log with details" },
+		L = { ":Git log --oneline<CR>", "List log within one line" },
+		p = { ":Git push<CR>", "push" },
+		P = { ":Git pull<CR>", "pull" },
+		r = { ":GRemove<CR>", "remove" },
+		s = { ":Git<CR>", "status" },
+		S = { ":GitGutterSignsToggle<CR>", "toggle signs" },
+		T = {
+			':Git log --no-walk --tags --pretty="%h %d %s" --decorate=full<CR>',
+			"List all tags in log",
+		},
+		z = { ":FloatermNew lazygit<CR>", "Lazygit" },
+		-- Gist
+		G = {
+			name = "gist",
+			-- a    = {':Gist -a', 'post a gist anonymously' },
+			-- b    = {':Gist -b', 'post gist browser' },
+			d = { ":Gist -d<CR>", "delete gist" },
+			e = { ":Gist -e<CR>", "edit gist" },
+			l = { ":Gist -l<CR>", "list public gists" },
+			s = { ":Gist -ls<CR>", "list starred gists" },
+			m = { ":Gist -m<CR>", "post a gist with all open buffers" },
+			p = { ":Gist -p<CR>", "post public gist" },
+			P = { ":Gist -P<CR>", "post private gist" },
+		},
+	},
+	-- utilities
+	u = {
+		name = "Utilities",
+		t = {
+			name = "terminal",
+			d = { "TermExec python manage.py shell<CR>", "Django-admin Shell" },
+			p = { "TermExec python<CR>", "Python shell" },
+			n = { "TermExec node<CR>", "Node.js shell" },
+			v = {
+				"TermExec --wintype='vsplit' --position='right'<CR>",
+				"Debug Term...",
+			},
+		},
+		l = {
+			name = "LiveServer",
+			l = { ":Bracey<CR>", "start live server" },
+			L = { ":BraceyStop<CR>", "stop live server" },
+			r = { ":BraceyReload<CR>", "web page to be reloaded" },
+		},
+		m = {
+			name = "Markdown",
+			m = { ":MarkdownPreview<CR>", "start markdown preview" },
+			M = { ":MarkdownPreviewStop<CR>", "stop markdown preview" },
+		},
+		u = {
+			name = "UML",
+			v = { ":PlantumlOpen<CR>", "start PlantUML preview" },
+			o = {
+				":PlantumlSave docs/diagrams/out.png<CR>",
+				"export PlantUML diagram",
+			},
+		},
+		f = {
+			"TermExec --height=0.7 --width=0.9 --wintype=float vifm<CR>",
+			"ViFm",
+		},
+		r = {
+			"TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
+			"Ranger",
+		},
+	},
+	-- Window
+	w = {
+		name = "Windows",
+		["-"] = { ":split<CR>", "Horiz. window" },
+		["|"] = { ":vsplit<CR>", "Vert. window" },
+		i = { ":tabnew %<CR>", "Zoom-in" },
+		o = { ":tabclose<CR>", "Zoom-out" },
+		c = { ":close<CR>", "Close window" },
+		k = { "<C-w>k", "Up window" },
+		j = { "<C-w>j", "Down window" },
+		h = { "<C-w>h", "Left window" },
+		l = { "<C-w>l", "Right window" },
+		["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
+		["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
+		["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
+		["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
+		w = { ':exe "resize" . (winwidth(0) * 3/2)<CR>', "Increase weight" },
+		W = { ':exe "resize" . (winwidth(0) * 2/3)<CR>', "Increase weight" },
+		v = {
+			':exe "vertical resize" . (winheight(0) * 3/2)<CR>',
+			"Increase height",
+		},
+		V = {
+			':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
+			"Increase height",
+		},
+	},
 }
 
 local opts = { prefix = "<leader>" }
@@ -421,14 +412,14 @@ local opts = { prefix = "<leader>" }
 which_key.register(mappings, opts)
 
 local keymap_v = {
-    name = "Debug",
-    e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
+	name = "Debug",
+	e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
 }
 which_key.register(keymap_v, {
-    mode = "v",
-    prefix = "<Leader>",
-    buffer = nil,
-    silent = true,
-    noremap = true,
-    nowait = false,
+	mode = "v",
+	prefix = "<Leader>",
+	buffer = nil,
+	silent = true,
+	noremap = true,
+	nowait = false,
 })

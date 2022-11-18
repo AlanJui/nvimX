@@ -31,16 +31,16 @@ if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
 end
 
 LSP_SERVERS = {
+	"vimls",
 	"sumneko_lua",
 	"diagnosticls",
-	"dockerls",
 	"pyright",
-	"html",
 	"emmet_ls",
-	"tsserver",
-	"eslint",
+	"html",
 	"cssls",
+	"tailwindcss",
 	"stylelint_lsp",
+	"eslint",
 	"jsonls",
 	"tsserver",
 	"texlab",

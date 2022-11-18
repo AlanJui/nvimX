@@ -1,7 +1,11 @@
------------------------------------------------------------
+-----------------------------------------------------------------
 -- Plugin Manager: install plugins
 -- $ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
------------------------------------------------------------
+-----------------------------------------------------------------
+if DEBUG then
+	print("Loading plugins...")
+end
+
 local package_root = PACKAGE_ROOT
 local compile_path = COMPILE_PATH
 local install_path = INSTALL_PATH
@@ -12,13 +16,20 @@ local install_path = INSTALL_PATH
 
 -- auto install packer if not installed
 local ensure_packer = function()
-  local fn = vim.fn
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-    vim.cmd([[packadd packer.nvim]])
-    return true
-  end
-  return false
+	local fn = vim.fn
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({
+			"git",
+			"clone",
+			"--depth",
+			"1",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		})
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
@@ -31,6 +42,13 @@ vim.cmd([[
   augroup end
 ]])
 
+if DEBUG then
+	print("PACKAGE_ROOT=", PACKAGE_ROOT)
+	print("INSTALL_PATH=", INSTALL_PATH)
+	print("COMPILE_PATH=", COMPILE_PATH)
+	print("packer_bootstrap=", packer_bootstrap)
+end
+
 -- 確認套件 packer.nvim 已被安裝，且已被載入 nvim
 local ok, packer = pcall(require, "packer")
 if not ok then
@@ -42,7 +60,7 @@ packer.init({
 	compile_path = compile_path,
 	plugin_package = "packer",
 	display = { open_fn = require("packer.util").float },
-    max_jobs = 10,
+	max_jobs = 10,
 })
 
 -- 確認 packer.nvim 已能運作後，處理 nvim 套件安裝作業
@@ -53,15 +71,16 @@ end
 
 return require("packer").startup(function(use)
 	if not DEBUG then
-        plugins.load(use)
+		-- 正常時候載入點
+		plugins.load(use)
 	else
 		use("neovim/nvim-lspconfig")
-        local debug_plugins = safe_require(debug-plugins)
-        if not debug_plugins then
-            for _, plugin in ipairs(debug_plugins) do
-                use(plugin)
-            end
-        end
+		local status_debug_plugins, debug_plugins = pcall(require, "debug-plugins")
+		if not status_debug_plugins then
+			for _, plugin in ipairs(debug_plugins) do
+				use(plugin)
+			end
+		end
 	end
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
