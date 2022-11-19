@@ -79,19 +79,22 @@ local function setup_rtp()
 	vim.cmd([[let &packpath = &runtimepath]])
 end
 
-if not DEBUG then
-	setup_rtp()
-else
-	-- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
-	-- P(vim.api.nvim_list_runtime_paths())
-	Print_table(vim.opt.runtimepath:get())
-	print("-----------------------------------------------------------")
+-- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
+if MY_VIM ~= "nvim" then
+	if not DEBUG then
+		setup_rtp()
+	else
+		-- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
+		-- P(vim.api.nvim_list_runtime_paths())
+		Print_table(vim.opt.runtimepath:get())
+		print("-----------------------------------------------------------")
 
-	setup_rtp()
+		setup_rtp()
 
-	Print_table(vim.opt.runtimepath:get())
-	print("-----------------------------------------------------------")
-	-- P(vim.api.nvim_list_runtime_paths())
+		Print_table(vim.opt.runtimepath:get())
+		print("-----------------------------------------------------------")
+		-- P(vim.api.nvim_list_runtime_paths())
+	end
 end
 
 ------------------------------------------------------------------------------

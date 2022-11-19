@@ -16,6 +16,8 @@ Neovim 0.5 的發行，將它推進到一個新的里程碑。打造滿足自己
 - Show/go to references：顯示/跳轉引用處
 - snippets：程式碼片段
 
+### 專案需求
+
 本專案為：「符合個人應用需求的編輯器打造計畫」。為檢驗計畫是否達成，設定之
 專案目標如下：
 
@@ -37,32 +39,42 @@ Neovim 0.5 的發行，將它推進到一個新的里程碑。打造滿足自己
 - 可以透過 [DAP](https://alpha2phi.medium.com/neovim-dap-enhanced-ebc730ff498b)
   與 Neovim 整合，讓 Neovim 可像 VS Code 一樣，當作除錯（Debug）工具來使用
 
-Neovim 在執行時期，對於設定檔存放目錄及插件存放目錄，有其預設如下：
+### 環境需求
+
+Neovim 在執行時期，啟動作業需讀取的設定檔；安裝／更新：擴充套件（Plugins）、
+LSP Servers 時，其存取的「目錄」預設如下：
 
 - 設定（Configuration）存放目錄路徑： `~/.config/nvim/`
 - 執行（Runtime）存放目錄路徑： `~/.local/share/nvim/`
 - 插件存放目錄路徑： `~/.local/share/nvim/site/pack/packer/start/`
 
-目前網路各大高手及高高手所分享的 Neovim 設定，幾乎都是遵循上述預設而成。可是，
-對於我這種入門新手，個人的期望是：「在鑽研 Neovim 的過程中，需要不斷參考，
-各個高人們的心得成果，然後自行實作、驗證自己是否理解，最後決定是否要採用
-，納入本專案的產出： `nvim` 」。所以，我需要兩個相互不影嚮的「工作空間」，
-一個為參考用；另一個則為實作用。
+上述之目錄路徑，為 Neovim 的 RTP (Run Time Path) 預設值。
 
-基於上述的這個需求，nvim 被設計成不會佔用 Neovim 的預設目錄路徑：
-`~/.config/nvim` 及 `~/.local/share/nvim` 。這個設計，固然能帶來各自獨立的好處；
-但也有副作用的麻煩：您得改變以 nvim 指令啟動 Neovim 的習慣。
+打造個人專屬的編輯器，其過程免不了得：參考別人作品及實作驗證。經此過程，
+才能深入了解自己在應用的需求，並逐漸培養出自身在客製化時應具備之技能。
+
+所以，理論上：在我們的電腦中，至少要能安裝兩套以上的 Neovim ，一套供自己
+每日使用；另一套則存放正在實作驗證的半成品；甚至在加上第三套：某高手的參考
+作品。
+
+- 在目錄： ~/.config/nvim ，放置「可正常作業的 Neovim」；
+- 在目錄： ~/.config/my-nvim ，放置「試驗用之 Neovim」；
+- 在目錄： ~/.config/my-nvim2 ，放置「高手 X 的 Neovim 作品」；
+- 在目錄： ~/.config/my-nvim3 ，放置「高手 Y 的 Neovim 作品」。
+
+綜合上述，可得 Neovim 的應用需求：在一台電腦中，可依「目錄」區隔 Neovim
+的作業環境(RTP)，彼此均可獨立運作，不會相互干擾。
 
 ## 前置基礎（Prerequisites）
 
-使用 nvim 之前，請先完成下列套件、執行環境的安裝及設定。個人慣用的安裝作業
+使用 Neovim 之前，請先完成下列套件、執行環境的安裝及設定。個人慣用的安裝作業
 程序，均有標示文件的「連結」網址，提供給有需要的朋友參考。
 
 上述的安裝操作文件，因為原屬個人用的《備忘錄》，所以，其排版格式及遣詞用字，未必
 完美；另外，適用的作業系統僅止於：（1）Manjaro (ArchLinux)、(2) Ubuntu 20.04、
 (3) macOS 11.6 。
 
-- 完成 [Neovim 0.6] (<https://alanjui.github.io/my-dev-env/nvim/#%E5%AE%89%E8%A3%9D%E8%88%87%E6%93%8D%E4%BD%9C>) 套件的安裝
+- 完成 [Neovim] (<https://alanjui.github.io/my-dev-env/nvim/#%E5%AE%89%E8%A3%9D%E8%88%87%E6%93%8D%E4%BD%9C>) 套件的安裝
 - 完成 [Python](https://alanjui.github.io/my-docs/python.html#install-python-tools) 開發環境的安裝
 - 完成 [Node.js](https://alanjui.github.io/my-docs/nodejs.html#%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9A) 開發環境的安裝（因為諸多的 Langage Server 均是以 Node.js 來運作）
 - 完成 [Lua](https://alanjui.github.io/my-docs/lua.html#building-lua) 開發環境及 [Lua Langage Server](https://alanjui.github.io/my-docs/lua.html#install-lua-support-for-vim-neovim) 的安裝
