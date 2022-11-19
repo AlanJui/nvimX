@@ -46,16 +46,16 @@ Neovim 在執行時期，對於設定檔存放目錄及插件存放目錄，有�
 目前網路各大高手及高高手所分享的 Neovim 設定，幾乎都是遵循上述預設而成。可是，
 對於我這種入門新手，個人的期望是：「在鑽研 Neovim 的過程中，需要不斷參考，
 各個高人們的心得成果，然後自行實作、驗證自己是否理解，最後決定是否要採用
-，納入本專案的產出： `my-nvim` 」。所以，我需要兩個相互不影嚮的「工作空間」，
+，納入本專案的產出： `nvim` 」。所以，我需要兩個相互不影嚮的「工作空間」，
 一個為參考用；另一個則為實作用。
 
-基於上述的這個需求，my-nvim 被設計成不會佔用 Neovim 的預設目錄路徑：
+基於上述的這個需求，nvim 被設計成不會佔用 Neovim 的預設目錄路徑：
 `~/.config/nvim` 及 `~/.local/share/nvim` 。這個設計，固然能帶來各自獨立的好處；
 但也有副作用的麻煩：您得改變以 nvim 指令啟動 Neovim 的習慣。
 
 ## 前置基礎（Prerequisites）
 
-使用 my-nvim 之前，請先完成下列套件、執行環境的安裝及設定。個人慣用的安裝作業
+使用 nvim 之前，請先完成下列套件、執行環境的安裝及設定。個人慣用的安裝作業
 程序，均有標示文件的「連結」網址，提供給有需要的朋友參考。
 
 上述的安裝操作文件，因為原屬個人用的《備忘錄》，所以，其排版格式及遣詞用字，未必
@@ -72,25 +72,25 @@ Neovim 在執行時期，對於設定檔存放目錄及插件存放目錄，有�
 ### 1. 下載（Download）
 
 ```sh
-git clone git@github.com:AlanJui/my-nvim.git ~/.config
+git clone git@github.com:AlanJui/nvimX.git ~/.config/nvim
 ```
 
 ### 2. 安裝插件（Install plugins）
 
-本專案使用 packer.nvim 作為 Neovim 的「插件管理工具」。my-nvim 會在 Neovim
+本專案使用 packer.nvim 作為 Neovim 的「插件管理工具」。nvim 會在 Neovim
 啟動的時候，檢查 packer.nvim 是否已存在；並於必要的時候後，自動執行安裝作業。
-另外，my-nvim 使用到的各種插件，也會由 packer.nvim 自動進行安裝。
+另外，nvim 使用到的各種插件，也會由 packer.nvim 自動進行安裝。
 
-(1) 安裝執行檔 my-nvim
+(1) 安裝執行檔 nvim
 
-請依下列指令，完成 my-nvim 這個 Shell Script 執行檔的安裝作業。
+請依下列指令，完成 nvim 這個 Shell Script 執行檔的安裝作業。
 
 ```sh
 mkdir -p ~/.local/bin
-cp ~/.config/my-nvim/tools/my-nvim ~/.local/bin
+cp ~/.config/nvim/tools/nvim ~/.local/bin
 ```
 
-為了讓作業系統能依據 PATH 這個環境變數，搜尋到 my-nvim 這個執行銷，請記得在您使用
+為了讓作業系統能依據 PATH 這個環境變數，搜尋到 nvim 這個執行銷，請記得在您使用
 的 Bash Shell 或 ZSH Shell 設定檔中，於 PATH 環境變數加入 `~/.local/bin` 搜尋路徑。
 
 ```sh
@@ -113,35 +113,35 @@ source ~/.zshrc
 (2) 安裝插件
 
 在終端機輸入下列指令，以便 Neovim 可在不啟動 UI 介面的模式下執行（headless）。
-以便 my-nvim 需要用到的各種插件(Plugins)，可以執行安裝作業。
+以便 nvim 需要用到的各種插件(Plugins)，可以執行安裝作業。
 
 每個插件在完成下載及安裝的工作後，均會顯示結果回報在畫面上，待看到「... has been
 installed」的時候，則可按《Ctrl》＋《C》鍵，終結這個安裝指令。
 
 ```sh
-my-nvim --headless
+nvim --headless
 ```
 
 ### 3. 操作 Neovim（Start Neovim）
 
-請務必記得，使用 my-nvim 需以如下執行檔啟動，而不要直接執行 nvim 指令：
+請務必記得，使用 nvim 需以如下執行檔啟動，而不要直接執行 nvim 指令：
 
 ```sh
-my-nvim
+nvim
 ```
 
 **【附註】：**
 
 本專案的 Neovim 設定檔存放目錄及插件的存放目錄說明：
 
-- 設定 (Configuration) 存放目錄路徑： `~/.config/my-nvim/`
-- 執行時使月檔案及插件存放目錄路徑： `~/.local/share/my-nvim/`
+- 設定 (Configuration) 存放目錄路徑： `~/.config/nvim/`
+- 執行時使月檔案及插件存放目錄路徑： `~/.local/share/nvim/`
 
 ## 後續規劃（Todos）
 
 - 將 DAP 插入納入，以便可以針對 Python 、 JavaScript 及 Lua Script 進行除錯
-- 編撰與 my-nvim 相關的《安裝作業》程序文件，如：Python 、NodeJS、Lua
-- 製作示範影片，供人快速掌握 my-nvim 的操作應用
+- 編撰與 nvim 相關的《安裝作業》程序文件，如：Python 、NodeJS、Lua
+- 製作示範影片，供人快速掌握 nvim 的操作應用
 
 **【附註】：**
 
