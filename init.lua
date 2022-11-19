@@ -94,6 +94,10 @@ else
 	-- P(vim.api.nvim_list_runtime_paths())
 end
 
+------------------------------------------------------------------------------
+-- Configuration supportting for VS Code
+-- 與 VS Code 整合作業時，應有的環境設定
+------------------------------------------------------------------------------
 -- 使用以下方法，皆不能正確運作：
 --   if vim.fn.exists('g:vscode') then
 --   if vim.fn.exists('g:vscode') == 0 then
@@ -110,10 +114,6 @@ if vim.g.vscode ~= nil then
 	-- require('plugins-rc.which-key')
 	-- Must have options of Neovim when under development of init.lua
 	require("essential")
-	-- General options of Neovim
-	require("options")
-	-- User's specific options of Neovim
-	require("settings")
 	-- Key bindings
 	require("keymaps")
 
