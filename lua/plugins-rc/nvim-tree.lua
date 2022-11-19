@@ -1,6 +1,6 @@
 -- Plugin configuration: nvim-tree.lua
-local nvim_tree = safe_require('nvim-tree')
-if not nvim_tree then
+local status, nvim_tree = pcall(require, 'nvim-tree')
+if not status then
     return
 end
 

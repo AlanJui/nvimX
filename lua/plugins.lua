@@ -6,6 +6,8 @@ M.load = function(use)
 	-----------------------------------------------------------
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
+	-- lua functions that many plugins use
+	use("nvim-lua/plenary.nvim")
 	-- Tools to migrating init.vim to init.lua
 	use("norcalli/nvim_utils")
 	-----------------------------------------------------------
@@ -30,6 +32,16 @@ M.load = function(use)
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
 	-- automatically highlighting other uses of the current word under the cursor
 	use({ "RRethy/vim-illuminate" })
+	-- Support LSP CodeAction
+	use({ "kosayoda/nvim-lightbulb" })
+	-- LSP plugin based on Neovim build-in LSP with highly a performant UI
+	use({
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		requires = { "neovim/nvim-lspconfig" },
+	})
+	-- vscode-like pictograms for neovim lsp completion items Topics
+	use({ "onsails/lspkind-nvim" })
 	-- additional functionality for typescript server
 	-- (e.g. rename file & update imports)
 	use({ "jose-elias-alvarez/typescript.nvim" })
@@ -62,15 +74,17 @@ M.load = function(use)
 	-- Treesitter: for better syntax
 	-----------------------------------------------------------
 	-- Nvim Treesitter configurations and abstraction layer
-	use("nvim-treesitter/nvim-treesitter")
-	-- use({
-	--     'nvim-treesitter/nvim-treesitter',
-	--     run = ':TSUpdate',
-	--     -- config = [[ require('plugins.treesitter') ]]
-	--     config = [[ require('plugins.nvim-treesitter') ]],
-	-- })
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = function()
+			local ts_update = require("nvim-treesitter.install").update({
+				with_sync = true,
+			})
+			ts_update()
+		end,
+	})
 	-- Additional textobjects for treesitter
-	use("nvim-treesitter/nvim-treesitter-textobjects")
+	-- use("nvim-treesitter/nvim-treesitter-textobjects")
 	-----------------------------------------------------------
 	-- colorscheme for neovim written in lua specially made for roshnvim
 	-----------------------------------------------------------
@@ -101,21 +115,6 @@ M.load = function(use)
 	-- Utility functions for getting diagnostic status and progress messages
 	-- from LSP servers, for use in the Neovim statusline
 	use({ "nvim-lua/lsp-status.nvim" })
-	-- Support LSP CodeAction
-	use({ "kosayoda/nvim-lightbulb" })
-	-- vscode-like pictograms for neovim lsp completion items Topics
-	-- use({
-	--     'onsails/lspkind-nvim',
-	--     config = [[ require('plugins.lspkind') ]],
-	-- })
-	-- LSP plugin based on Neovim build-in LSP with highly a performant UI
-	use({
-		"glepnir/lspsaga.nvim",
-		branch = "main",
-		requires = { "neovim/nvim-lspconfig" },
-	})
-	-- Icons
-	use({ "kyazdani42/nvim-web-devicons" })
 	-- Fuzzy files finder
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({
@@ -126,6 +125,10 @@ M.load = function(use)
 			"nvim-telescope/telescope-live-grep-raw.nvim",
 		},
 	})
+	-- Icons
+	-- use({ "kyazdani42/nvim-web-devicons" })
+	-- vs-code like icons
+	use("nvim-tree/nvim-web-devicons")
 	-- File/Flolders explorer:nvim-tree
 	use({
 		"kyazdani42/nvim-tree.lua",
@@ -156,6 +159,8 @@ M.load = function(use)
 	-----------------------------------------------------------
 	-- Editting Tools
 	-----------------------------------------------------------
+	-- replace with register contents using motion (gr + motion)
+	use("inkarkat/vim-ReplaceWithRegister")
 	-- surroundings: parentheses, brackets, quotes, XML tags, and more
 	use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
 	-- Toggle comments in Neovim
@@ -172,39 +177,10 @@ M.load = function(use)
 	use({ "mbbill/undotree" })
 	-- Auto close parentheses and repeat by dot dot dot ...
 	use({ "windwp/nvim-autopairs" })
-	---------------------------------------------------------------
-	-- HTML
-	---------------------------------------------------------------
+	-- Use treesitter to autoclose and autorename html tag
 	use({ "windwp/nvim-ts-autotag" })
-	-- Auto close tag
-	-- use({ 'alvan/vim-closetag', })
 	-- Auto change html tags
 	use({ "AndrewRadev/tagalong.vim" })
-	---------------------------------------------------------------
-	-- Python
-	---------------------------------------------------------------
-	-- ALE (Asynchronous Lint Engine) is a plugin providing linting (syntax
-	-- checking and semantic errors) in NeooVim while you edit your text files,
-	-- and acts as a Vim Language Server Protocol client.
-	-- use({
-	--     'dense-analysis/ale',
-	--     config = vim.cmd([[
-	--         runtime ./lua/plugins/ale.rc.vim
-	--     ]])
-	-- })
-	--  Modifies Vim’s indentation behavior to comply with PEP8 and my aesthetic preferences.
-	use("Vimjas/vim-python-pep8-indent")
-
-	-- Python: provides text objects and motions for Python classes, methods,
-	-- functions and doc strings
-	use("jeetsukumaran/vim-pythonsense")
-	-----------------------------------------------------------
-	-- Language specific exensions
-	-----------------------------------------------------------
-	-- DAP adapter for Python
-	use({ "mfussenegger/nvim-dap-python" })
-	-- DAP adapter for the Neovim lua language
-	use({ "jbyuki/one-small-step-for-vimkind" })
 	-----------------------------------------------------------
 	-- Coding Tools
 	-----------------------------------------------------------
@@ -221,9 +197,16 @@ M.load = function(use)
 	-- use({ 'Pocco81/DAPInstall.nvim' })
 	-- Manage debuggers provided by nvim-dap.
 	use({ "Pocco81/dap-buddy.nvim" })
-	-----------------------------------------------------------
+	--
+	-- Language specific exensions
+	--
+	-- DAP adapter for Python
+	use({ "mfussenegger/nvim-dap-python" })
+	-- DAP adapter for the Neovim lua language
+	use({ "jbyuki/one-small-step-for-vimkind" })
+	--
 	-- DAP UI Extensions
-	-----------------------------------------------------------
+	--
 	-- Experimental UI for nvim-dap
 	use({ "rcarriga/nvim-dap-ui" })
 	-- Inlines the values for variables as virtual text using treesitter.
