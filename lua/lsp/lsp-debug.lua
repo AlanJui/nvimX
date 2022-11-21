@@ -1,68 +1,31 @@
------------------------------------------------------------
--- Global Functions
------------------------------------------------------------
--- Get OS Name :lua print(vim.loop.os_uname().sysname)
-function _G.is_empty(str)
-	return str == nil or str == ""
-end
+local M = {}
 
-function _G.join_paths(...)
-	local PATH_SEPERATOR = vim.loop.os_uname().version:match("Windows") and "\\" or "/"
-	local result = table.concat({ ... }, PATH_SEPERATOR)
+local on_windows = vim.loop.os_uname().version:match("Windows")
+
+local function join_paths(...)
+	local path_sep = on_windows and "\\" or "/"
+	local result = table.concat({ ... }, path_sep)
 	return result
 end
 
-function _G.is_git_dir()
-	return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1")
+vim.cmd([[set runtimepath=$VIMRUNTIME]])
+
+local temp_dir = vim.loop.os_getenv("TEMP") or "/tmp"
+
+vim.cmd("set packpath=" .. join_paths(temp_dir, "nvim", "site"))
+
+local package_root = join_paths(temp_dir, "nvim", "site", "pack")
+local install_path = join_paths(package_root, "packer", "start", "packer.nvim")
+local compile_path = join_paths(install_path, "plugin", "packer_compiled.lua")
+
+local function load_plugins()
+	require("packer").startup({
+		{ "wbthomason/packer.nvim", "neovim/nvim-lspconfig" },
+		config = { package_root = package_root, compile_path = compile_path },
+	})
 end
 
-function _G.safe_require(module)
-	local ok, result = pcall(require, module)
-	if not ok then
-		-- vim.notify(string.format("Plugin not installed: %s", module), vim.log.levels.WARN)
-		vim.notify(string.format("Plugin not installed: %s", module), vim.log.levels.ERROR)
-		return ok
-	end
-	return result
-end
-
-function _G.which_os()
-	local system_name
-
-	if vim.fn.has("mac") == 1 then
-		system_name = "macOS"
-	elseif vim.fn.has("unix") == 1 then
-		system_name = "Linux"
-	elseif vim.fn.has("win32") == 1 then
-		system_name = "Windows"
-	else
-		system_name = ""
-	end
-
-	return system_name
-end
-
-function _G.print_rtp()
-	print(string.format("rtp = %s", vim.opt.rtp["_value"]))
-end
-
-function Print_table(a_table)
-	for k, v in pairs(a_table) do
-		print("key = ", k, "    value = ", v)
-	end
-end
-
-function P(cmd)
-	print(vim.inspect(cmd))
-end
-
-function _G.print_table(table)
-	for k, v in pairs(table) do
-		print("key = ", k, "    value = ", v)
-	end
-end
-
-_G.load_config = function()
+M.load_config = function()
 	vim.lsp.set_log_level("trace")
 	if vim.fn.has("nvim-0.5.1") == 1 then
 		require("vim.lsp.log").set_format_func(vim.inspect)
@@ -114,3 +77,23 @@ _G.load_config = function()
 		[[You can find your log at $HOME/.cache/nvim/lsp.log. Please paste in a github issue under a details tag as described in the issue template.]]
 	)
 end
+
+M.startup = function()
+	if vim.fn.isdirectory(install_path) == 0 then
+		vim.fn.system({
+			"git",
+			"clone",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		})
+		load_plugins()
+		require("packer").sync()
+		vim.cmd([[autocmd User PackerComplete ++once lua load_config()]])
+	else
+		load_plugins()
+		require("packer").sync()
+		_G.load_config()
+	end
+end
+
+return M

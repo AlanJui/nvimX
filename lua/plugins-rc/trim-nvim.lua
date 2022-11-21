@@ -1,5 +1,5 @@
 -- This plugin trims trailing whitespace and lines.
-local trim_nvim = safe_require('trim')
+local status, trim_nvim = pcall(require, 'trim')
 if not trim_nvim then
     return
 end

@@ -2,10 +2,6 @@
 -- Plugin Manager: install plugins
 -- $ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 -----------------------------------------------------------------
-if DEBUG then
-	print("Loading plugins...")
-end
-
 local package_root = PACKAGE_ROOT
 local compile_path = COMPILE_PATH
 local install_path = INSTALL_PATH
@@ -42,13 +38,6 @@ vim.cmd([[
   augroup end
 ]])
 
-if DEBUG then
-	print("PACKAGE_ROOT=", PACKAGE_ROOT)
-	print("INSTALL_PATH=", INSTALL_PATH)
-	print("COMPILE_PATH=", COMPILE_PATH)
-	print("packer_bootstrap=", packer_bootstrap)
-end
-
 -- 確認套件 packer.nvim 已被安裝，且已被載入 nvim
 local ok, packer = pcall(require, "packer")
 if not ok then
@@ -70,18 +59,9 @@ if not ok1 then
 end
 
 return require("packer").startup(function(use)
-	if not DEBUG then
-		-- 正常時候載入點
-		plugins.load(use)
-	else
-		use("neovim/nvim-lspconfig")
-		local status_debug_plugins, debug_plugins = pcall(require, "debug-plugins")
-		if not status_debug_plugins then
-			for _, plugin in ipairs(debug_plugins) do
-				use(plugin)
-			end
-		end
-	end
+	-- 正常時候載入點
+	plugins.load(use)
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if packer_bootstrap then

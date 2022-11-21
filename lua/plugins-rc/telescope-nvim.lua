@@ -1,6 +1,7 @@
+
 -- telescope.nvim.lua
-local telescope = safe_require('telescope')
-if not telescope then
+local status, telescope = pcall(require, 'telescope')
+if not status then
     return
 end
 

@@ -13,9 +13,9 @@ require("plugins-rc.lualine-material")
 require("plugins-rc.tabline")
 
 -- User Interface
-require("plugins-rc.nvim-lightbulb")
 require("plugins-rc.nvim-web-devicons")
 require("plugins-rc/indent-blankline")
+require("plugins-rc.nvim-lightbulb")
 
 -- files management
 require("plugins-rc.telescope-nvim")
@@ -35,8 +35,8 @@ require("plugins-rc.consolation-nvim")
 require("plugins-rc.yabs")
 
 -- versional control
-require("plugins-rc.neogit")
 require("plugins-rc.gitsigns")
+require("plugins-rc.neogit")
 require("plugins-rc.vim-gist")
 -- vim.cmd([[ runtime ./lua/plugins-rc/vim-signify.rc.vim]])
 

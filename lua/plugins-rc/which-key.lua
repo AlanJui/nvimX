@@ -61,7 +61,7 @@ local mappings = {
 	-- Top Menu
 	[" "] = { ":Telescope find_files<CR>", "Find files" },
 	[","] = { ":Telescope buffers<CR>", "Show buffers" },
-	[";"] = { ":FloatermNew --wintype=normal --height=10<CR>", "Open Terminal" },
+	[";"] = { ":ToggleTerm size=10<CR>", "Open Terminal" },
 	["v"] = {
 		":FloatermNew --height=0.7 --width=0.9 --wintype=float  vifm<CR>",
 		"ViFm",
@@ -290,11 +290,12 @@ local mappings = {
 	-- Files
 	F = {
 		name = "Files",
+		e = { ":NvimTreeToggle<CR>", "File explorer" },
 		w = { ":w<CR>", "Save" },
 		c = { ":bdelete<CR>", "Close" },
 		C = { ":q!<CR>", "Quit withou save" },
-		e = { ":qa<CR>", "Exit Neovim" },
-		E = { ":qa!<CR>", "Exit Neovim without save" },
+		x = { ":qa<CR>", "Exit Neovim" },
+		X = { ":qa!<CR>", "Exit Neovim without save" },
 		q = { ":q<CR>", "Quit" },
 	},
 	-- Git
@@ -382,6 +383,7 @@ local mappings = {
 	w = {
 		name = "Windows",
 		["-"] = { ":split<CR>", "Horiz. window" },
+		["_"] = { ":vsplit<CR>", "Vert. window" },
 		["|"] = { ":vsplit<CR>", "Vert. window" },
 		i = { ":tabnew %<CR>", "Zoom-in" },
 		o = { ":tabclose<CR>", "Zoom-out" },

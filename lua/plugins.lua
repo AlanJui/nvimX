@@ -107,11 +107,11 @@ M.load = function(use)
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
-	use({ "arkav/lualine-lsp-progress" })
 	use({
 		"kdheepak/tabline.nvim",
 		require = { "hoob3rt/lualine.nvim", "kyazdani42/nvim-web-devicons" },
 	})
+	use({ "arkav/lualine-lsp-progress" })
 	-- Utility functions for getting diagnostic status and progress messages
 	-- from LSP servers, for use in the Neovim statusline
 	use({ "nvim-lua/lsp-status.nvim" })

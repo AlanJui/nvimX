@@ -1,15 +1,15 @@
------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Initial environments for Neovim
 -- 初始階段
------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Global Functions
 -- 為後續作業，需先載入之「共用功能（Global Functions）」。
 require("globals")
 
------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Initial global constants
 -- 設定所需使用之「全域常數」。
------------------------------------------------------------
+------------------------------------------------------------------------------
 DEBUG = false
 -- DEBUG = true
 
@@ -54,13 +54,13 @@ SNIPPETS_PATH = { CONFIG_DIR .. "/my-snippets/snippets" }
 -- 初始時需有的 Neovim 基本設定
 require("essential")
 
------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Initial RTP (Run Time Path) environment
 -- 設定 RTP ，要求 Neovim 啟動時的設定作業、執行作業，不採預設。
 -- 故 my-nvim 的設定檔，可置於目錄： ~/.config/my-nvim/ 運行；
 -- 執行作業（Run Time）所需使用之擴充套件（Plugins）與 LSP Servers
 -- 可置於目錄： ~/.local/share/my-nvim/
------------------------------------------------------------
+------------------------------------------------------------------------------
 local function setup_rtp()
 	-- 變更 stdpath('config') 預設的 rtp : ~/.config/nvim/
 	vim.opt.rtp:remove(join_paths(vim.fn.stdpath("data"), "site"))
@@ -79,21 +79,23 @@ local function setup_rtp()
 	vim.cmd([[let &packpath = &runtimepath]])
 end
 
+local function print_rtp()
+	print("-----------------------------------------------------------")
+	-- P(vim.api.nvim_list_runtime_paths())
+	Print_table(vim.opt.runtimepath:get())
+end
+
 -- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
 if MY_VIM ~= "nvim" then
-	if not DEBUG then
-		setup_rtp()
-	else
-		-- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
-		-- P(vim.api.nvim_list_runtime_paths())
-		Print_table(vim.opt.runtimepath:get())
-		print("-----------------------------------------------------------")
+	-- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
+	if DEBUG then
+		print_rtp()
+	end
 
-		setup_rtp()
+	setup_rtp()
 
-		Print_table(vim.opt.runtimepath:get())
-		print("-----------------------------------------------------------")
-		-- P(vim.api.nvim_list_runtime_paths())
+	if DEBUG then
+		print_rtp()
 	end
 end
 
@@ -124,26 +126,31 @@ if vim.g.vscode ~= nil then
 end
 
 ------------------------------------------------------------------------------
+-- Plugins
+-- 擴充套件處理
+------------------------------------------------------------------------------
+-- (1)
 -- Install Plugin Manager & Plugins
 -- 確保擴充套件管理器（packer.nvim）已完成安裝；以便擴充套件能正常安裝、更新。
--- (1) 當 packer.nvim 尚未安裝，可自動執行下載及安裝作業；
--- (2) 若 packer.nvim 已安裝，則執行擴充套件 (plugins) 的載入作業。
+--  ①  若擴充套件管理器：packer.nvim 尚未安裝，執行下載及安裝作業；
+--  ②  透過擴充套件管理器，執行擴充套件 (plugins) 之載入／安裝作業。
 ------------------------------------------------------------------------------
-require("load-plugins")
-
-------------------------------------------------------------------------------
--- configuration of plugins
--- 載入各擴充套件(plugins) 的設定
+-- (2)
+-- Setup configuration of plugins
+-- 對已載入之各擴充套件，進行設定作業
 ------------------------------------------------------------------------------
 if DEBUG then
-	-- 正處「除錯」作業階段時，僅只載入除錯時所需的
-	-- 擴充套件(plugins) 設定。
-	require("lsp.lsp-debug")
-	_G.load_config()
-elseif INSTALLED then
-	-- 非「除錯」作業；且 packer.nvim 已安裝時，
-	-- 則：開始載入各擴充套件（plugins）的設定；
-	-- 否則：略過擴充套件設定的載入。
+	-- (1)
+	local debug_plugins = require("debug-plugins")
+	require("config_debug_env").setup(PACKAGE_ROOT, INSTALL_PATH, COMPILE_PATH, debug_plugins)
+
+	-- (2)
+	require("setup-plugins")
+else
+	-- (1)
+	require("load-plugins")
+
+	-- (2)
 	require("setup-plugins")
 end
 
@@ -163,7 +170,7 @@ require("settings")
 -- Color Themes
 -- Neovim 畫面的色彩設定
 -----------------------------------------------------------
-if not INSTALLED or DEBUG then
+if not INSTALLED then
 	print("<< Load default colorscheme >>")
 	-- Use solarized8_flat color scheme when first time start my-nvim
 	vim.cmd([[ colorscheme solarized8_flat ]])
@@ -198,6 +205,9 @@ end
 local function blah()
 	print("init.lua is loaded!")
 	print("====================================================================")
+	print("Neovim RTP(Run Time Path ...)")
+	-- P(vim.api.nvim_list_runtime_paths())
+	Print_table(vim.opt.runtimepath:get())
 	print(string.format("OS = %s", which_os()))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
 	print(string.format("DEBUGPY = %s", DEBUGPY))
@@ -209,4 +219,4 @@ local function blah()
 	print("====================================================================")
 end
 
--- blah()
+blah()
