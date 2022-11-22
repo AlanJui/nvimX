@@ -1,6 +1,10 @@
 local M = {}
 
-M.setup = function(package_root, install_path, compile_path, plugins)
+M.setup = function(plugins)
+	local package_root = vim.g.package_root
+	local install_path = vim.g.install_path
+	local compile_path = vim.g.compile_path
+
 	-- ensure packer.nvim has been installed
 	local function ensure_packer()
 		local fn = vim.fn
@@ -23,14 +27,14 @@ M.setup = function(package_root, install_path, compile_path, plugins)
 	local packer_bootstrap = ensure_packer()
 
 	require("packer").init({
-        package_root = package_root,
-        compile_path = compile_path,
-        plugin_package = "packer",
-        display = { 
-	    	display = { show_all_info = true },
-            open_fn = require("packer.util").float 
-        },
-        max_jobs = 10,
+		package_root = package_root,
+		compile_path = compile_path,
+		plugin_package = "packer",
+		display = {
+			display = { show_all_info = true },
+			open_fn = require("packer.util").float,
+		},
+		max_jobs = 10,
 		-- The default print log level. One of: "trace",
 		-- "debug", "info", "warn", "error", "fatal".
 		log = { level = "debug" },
@@ -45,16 +49,16 @@ M.setup = function(package_root, install_path, compile_path, plugins)
 		end,
 	})
 
-    return require("packer").startup(function(use)
-        -- 正常時候載入點
-        plugins.load(use)
+	return require("packer").startup(function(use)
+		-- 正常時候載入點
+		plugins.load(use)
 
-        -- Automatically set up your configuration after cloning packer.nvim
-        -- Put this at the end after all plugins
-        if packer_bootstrap then
-            packer.sync()
-        end
-    end)
+		-- Automatically set up your configuration after cloning packer.nvim
+		-- Put this at the end after all plugins
+		if packer_bootstrap then
+			require("packer").sync()
+		end
+	end)
 end
 
 return M

@@ -2,77 +2,39 @@
 -- Initial environments for Neovim
 -- 初始階段
 ------------------------------------------------------------------------------
--- Global Functions
--- 為後續作業，需先載入之「共用功能（Global Functions）」。
-require("globals")
-
-------------------------------------------------------------------------------
--- Initial global constants
--- 設定所需使用之「全域常數」。
-------------------------------------------------------------------------------
+MY_VIM = "nvim"
 DEBUG = false
 -- DEBUG = true
 
-MY_VIM = "nvim"
-OS_SYS = which_os()
-HOME = os.getenv("HOME")
-
-CONFIG_DIR = HOME .. "/.config/" .. MY_VIM
-RUNTIME_DIR = HOME .. "/.local/share/" .. MY_VIM
-
-PACKAGE_ROOT = RUNTIME_DIR .. "/site/pack"
-INSTALL_PATH = PACKAGE_ROOT .. "/packer/start/packer.nvim"
-COMPILE_PATH = CONFIG_DIR .. "/plugin/packer_compiled.lua"
-
-INSTALLED = false
-if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
-	INSTALLED = true
-end
-
-LSP_SERVERS = {
-	"vimls",
-	"sumneko_lua",
-	"diagnosticls",
-	"pyright",
-	"emmet_ls",
-	"html",
-	"cssls",
-	"tailwindcss",
-	"stylelint_lsp",
-	"eslint",
-	"jsonls",
-	"tsserver",
-	"texlab",
-}
-
-DEBUGPY = "~/.virtualenvs/debugpy/bin/python"
-
--- Your own custom vscode style snippets
-SNIPPETS_PATH = { CONFIG_DIR .. "/my-snippets/snippets" }
-
--- Essential Options
--- 初始時需有的 Neovim 基本設定
-require("essential")
-
 ------------------------------------------------------------------------------
--- Initial RTP (Run Time Path) environment
+-- Setup Neovim Run Time Path
 -- 設定 RTP ，要求 Neovim 啟動時的設定作業、執行作業，不採預設。
 -- 故 my-nvim 的設定檔，可置於目錄： ~/.config/my-nvim/ 運行；
 -- 執行作業（Run Time）所需使用之擴充套件（Plugins）與 LSP Servers
 -- 可置於目錄： ~/.local/share/my-nvim/
 ------------------------------------------------------------------------------
-local function setup_rtp()
+function _G.join_paths(...)
+	local PATH_SEPERATOR = vim.loop.os_uname().version:match("Windows") and "\\" or "/"
+	local result = table.concat({ ... }, PATH_SEPERATOR)
+	return result
+end
+
+local function setup_run_time_path(nvim_name)
+	local home_dir = os.getenv("HOME")
+	local config_dir = home_dir .. "/.config/" .. nvim_name
+	local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
+
 	-- 變更 stdpath('config') 預設的 rtp : ~/.config/nvim/
 	vim.opt.rtp:remove(join_paths(vim.fn.stdpath("data"), "site"))
 	vim.opt.rtp:remove(join_paths(vim.fn.stdpath("data"), "site", "after"))
-	vim.opt.rtp:prepend(join_paths(RUNTIME_DIR, "site"))
-	vim.opt.rtp:append(join_paths(RUNTIME_DIR, "site", "after"))
+	vim.opt.rtp:prepend(join_paths(runtime_dir, "site"))
+	vim.opt.rtp:append(join_paths(runtime_dir, "site", "after"))
 
 	-- 變更 stdpath('data') 預設的 rtp : ~/.local/share/my-nvim/
 	vim.opt.rtp:remove(vim.fn.stdpath("config"))
 	vim.opt.rtp:remove(join_paths(vim.fn.stdpath("config"), "after"))
-	vim.opt.rtp:prepend(CONFIG_DIR)
-	vim.opt.rtp:append(join_paths(CONFIG_DIR, "after"))
+	vim.opt.rtp:prepend(config_dir)
+	vim.opt.rtp:append(join_paths(config_dir, "after"))
 
 	-- 引用 rpt 設定 package path （即擴充擴件(plugins)的安裝路徑）
 	-- 此設定需正確，指令：requitre('<PluginName>') 才能正常執行。
@@ -82,7 +44,10 @@ end
 local function print_rtp()
 	print("-----------------------------------------------------------")
 	-- P(vim.api.nvim_list_runtime_paths())
-	Print_table(vim.opt.runtimepath:get())
+	local rtp_table = vim.opt.runtimepath:get()
+	for k, v in pairs(rtp_table) do
+		print("key = ", k, "    value = ", v)
+	end
 end
 
 -- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
@@ -92,12 +57,26 @@ if MY_VIM ~= "nvim" then
 		print_rtp()
 	end
 
-	setup_rtp()
+	-- change Neovm default RTP
+	setup_run_time_path(MY_VIM)
 
 	if DEBUG then
 		print_rtp()
 	end
 end
+
+-----------------------------------------------------------
+-- Global Functions
+-- 為後續作業，需先載入之「共用功能（Global Functions）」。
+-----------------------------------------------------------
+require("globals")
+
+-----------------------------------------------------------
+-- Essential settings for Neovim
+-- 初始時需有的 Neovim 基本設定
+-----------------------------------------------------------
+vim.g.my_vim = MY_VIM
+require("essential")
 
 ------------------------------------------------------------------------------
 -- Configuration supportting for VS Code
@@ -112,13 +91,11 @@ if vim.g.vscode ~= nil then
 	-----------------------------------------------------------
 	-- Load plugins
 	require("packer").startup(function(use)
-		-- Screen Navigation
-		-- use("folke/which-key.nvim")
+		use("easymotion/vim-easymotion")
+		use("asvetliakov/vim-easymotion")
 	end)
-	-- load configurations for plugins
-	-- require('plugins-rc.which-key')
-	-- Must have options of Neovim when under development of init.lua
-	require("essential")
+	-- Options
+	require("options")
 	-- Key bindings
 	require("keymaps")
 
@@ -142,14 +119,12 @@ end
 if DEBUG then
 	-- (1)
 	local debug_plugins = require("debug-plugins")
-	require("config_debug_env").setup(PACKAGE_ROOT, INSTALL_PATH, COMPILE_PATH, debug_plugins)
-
+	require("config_debug_env").setup(debug_plugins)
 	-- (2)
 	require("setup-plugins")
 else
 	-- (1)
 	require("load-plugins")
-
 	-- (2)
 	require("setup-plugins")
 end
@@ -170,13 +145,7 @@ require("settings")
 -- Color Themes
 -- Neovim 畫面的色彩設定
 -----------------------------------------------------------
-if not INSTALLED then
-	print("<< Load default colorscheme >>")
-	-- Use solarized8_flat color scheme when first time start my-nvim
-	vim.cmd([[ colorscheme solarized8_flat ]])
-else
-	require("color-themes")
-end
+require("color-themes")
 
 -----------------------------------------------------------
 -- Key bindings
@@ -188,9 +157,7 @@ require("keymaps")
 
 -- Load Which-key
 -- 提供【選單】式的指令操作
-if INSTALLED then
-	require("plugins-rc.which-key")
-end
+require("plugins-rc.which-key")
 
 -----------------------------------------------------------
 -- Experiments
@@ -207,10 +174,10 @@ local function blah()
 	print("====================================================================")
 	print("Neovim RTP(Run Time Path ...)")
 	-- P(vim.api.nvim_list_runtime_paths())
-	Print_table(vim.opt.runtimepath:get())
+	print_table(vim.opt.runtimepath:get())
 	print(string.format("OS = %s", which_os()))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
-	print(string.format("DEBUGPY = %s", DEBUGPY))
+	print(string.format("DEBUGPY = %s", vim.g.debugpy))
 
 	-- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
 	local util = require("utils.python")

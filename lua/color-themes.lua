@@ -1,17 +1,20 @@
 -----------------------------------------------------------
 -- Color Themes
 -----------------------------------------------------------
-
 -- set colorscheme to nightfly with protected call
 -- in case it isn't installed
 local status, _ = pcall(vim.cmd, "colorscheme nightfly")
 
-if not status then
+if status then
+	vim.cmd([[ colorscheme nightfly ]])
+else
 	print("Colorscheme of Nightfly not found!") -- print error if colorscheme not installed
 
 	local tokyonight_status, _ = pcall(vim.cmd, "colorscheme tokyonight")
 	if not tokyonight_status then
 		print("Colorscheme of TokyoNight not found!") -- print error if colorscheme not installed
+
+		-- use default colorscheme
 		vim.cmd([[ colorscheme solarized8_flat ]])
 		return
 	else
