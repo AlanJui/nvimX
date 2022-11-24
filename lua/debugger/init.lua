@@ -145,10 +145,10 @@ end
 local function load_language_specific_dap()
 	-- Python Language
 	-- require('dap-debug.dap.django').setup(dap)
-	require("dap-debug.dap.python").setup(dap)
+	require("debugger.adapter.python").setup(dap)
 
 	-- Lua language
-	require("dap-debug.dap.lua").setup(dap)
+	require("debugger.adapter.lua").setup(dap)
 
 	-- local dap_config = {
 	--     python = require('dap-debug.dap-python'),

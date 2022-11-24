@@ -46,6 +46,6 @@ vim.cmd([[runtime ./lua/plugins-rc/vim-instant-markdown.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
 
--- debug
-require("dap-debug")
+-- debug & unit testing
+require("debugger")
 require("plugins-rc.ultest")
