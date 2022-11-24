@@ -1,40 +1,29 @@
-
 -- telescope.nvim.lua
-local status, telescope = pcall(require, 'telescope')
+local status, telescope = pcall(require, "telescope")
 if not status then
-    return
+	return
 end
 
-local actions = require('telescope.actions')
+local actions = require("telescope.actions")
 
--- require('telescope').setup{
-telescope.setup{
-    defaults = {
-        layout_config = {
-            flex = {
-                flip_columns = 130
-            }
-        },
-        mappings = {
-            n = {
-                ['q'] = actions.close
-            },
-            i = {
-                ['<C-u>'] = false,
-                ['<C-d>'] = false,
-            },
-        },
-        layout_strategy = 'flex',
-        vimgrep_arguments = {
-            'rg',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case'
-        }
-    }
-}
+telescope.setup({
+	defaults = {
+		layout_config = { flex = { flip_columns = 130 } },
+		mappings = {
+			n = { ["q"] = actions.close },
+			i = { ["<C-u>"] = false, ["<C-d>"] = false },
+		},
+		layout_strategy = "flex",
+		vimgrep_arguments = {
+			"rg",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+		},
+	},
+})
 
 -- keymap
 -- local keymap = require('utils.set_keymap')

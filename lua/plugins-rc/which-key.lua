@@ -1,74 +1,24 @@
 --------------------------------------------------------------------------
 -- WhichKey Configuration
 --------------------------------------------------------------------------
-local which_key = safe_require("which-key")
-if not which_key then
+local status, which_key = pcall(require, "which-key")
+if not status then
 	return
 end
 
 local mappings = {
-	-- Configure Neovim
-	n = {
-		name = "Neovim",
-		i = { ":e ~/.config/nvim/init.lua<CR>", "nvim/init.lua" },
-		a = {
-			":e ~/.config/nvim/lua/add-on-plugins.lua<CR>",
-			"configure packer.nvim",
-		},
-		p = { ":e ~/.config/nvim/lua/plugins.lua<CR>", "specifying plugins" },
-		k = { ":e ~/.config/nvim/lua/keybindings.lua<CR>", "keybindings" },
-		w = { ":e ~/.config/nvim/lua/rc/which-key-nvim.lua<CR>", "which-key" },
-		s = { ":source ~/.config/nvim/init.lua<CR>", "reload" },
-		S = { ":PackerSync<CR>", "PackerSync" },
-		C = { ":PackerCompile<CR>", "PackerCompile" },
-		c = {
-			name = "configuration",
-			d = { ":e ~/.config/nvim/lua/rc<CR>", "list files in rc dir" },
-			r = { ":e ~/.config/nvim/lua/rc/plugin.lua", "create rc for plugin" },
-		},
-		e = {
-			name = "environment",
-			i = { ":e ~/.config/nvim/lua/init-env.lua<CR>", "init environment" },
-			g = { ":e ~/.config/nvim/lua/globals.lua<CR>", "globals functions" },
-			e = {
-				":e ~/.config/nvim/lua/essential.lua<CR>",
-				"essential for neovim",
-			},
-			o = { ":e ~/.config/nvim/lua/options.lua<CR>", "plugins'soptions" },
-			s = { ":e ~/.config/nvim/lua/settings.lua<CR>", "user's settings" },
-			u = { ":e ~/.config/nvim/lua/utils.lua<CR>", "utils" },
-			n = { ":e ~/.config/nvim/lua/nvim_utils.lua<CR>", "nvim_utils" },
-			c = { ":e ~/.config/nvim/lua/color-themes.lua<CR>", "colorscheme" },
-		},
-		l = {
-			name = "lsp",
-			d = { ":e ~/.config/nvim/lua/lsp<CR>", "list files in dir" },
-			i = { ":e ~/.config/nvim/lua/lsp/init.lua<CR>", "configure lsp main" },
-			c = {
-				":e ~/.config/nvim/lua/lsp/auto-cmp.lua<CR>",
-				"configure auto-completion",
-			},
-			s = {
-				":e ~/.config/nvim/lua/lsp/luasnip.lua<CR>",
-				"configure snippets",
-			},
-			S = {
-				":e ~/.config/nvim/lua/lsp/server-settings.lua<CR>",
-				"configure server setting",
-			},
-		},
-	},
 	-- Top Menu
 	[" "] = { ":Telescope find_files<CR>", "Find files" },
 	[","] = { ":Telescope buffers<CR>", "Show buffers" },
+	["."] = { "<cmd>lua _lazygit_toggle()<CR>", "Lazygit" },
 	[";"] = { ":ToggleTerm size=10<CR>", "Open Terminal" },
-	["v"] = {
-		":FloatermNew --height=0.7 --width=0.9 --wintype=float  vifm<CR>",
-		"ViFm",
-	},
 	["/"] = { "gcc", "Comment out (Toggle)" },
 	["\\"] = { ":NvimTreeToggle<CR>", "File explorer" },
-	["y"] = { ":Telescope yabs tasks<CR>", "List tasks of YABS" },
+	["e"] = { ":Vifm<CR>", "Files manager" },
+	["q"] = {
+		":FloatermNew --height=0.7 --width=0.9 --wintype=float  ranger<CR>",
+		"Quick viewer",
+	},
 	["z"] = { "UndotreeToggle<CR>", "Undo tree" },
 	-- Actions
 	a = {
@@ -80,18 +30,69 @@ local mappings = {
 		n = { ":set nonumber!<CR>", "on/off line-numbers" },
 		N = { ":set norelativenumber!<CR>", "on/off relative line-numbers" },
 	},
-	-- Buffer
+	-- Files
+	f = {
+		name = "Files",
+		e = { ":NvimTreeToggle<CR>", "File explorer" },
+		w = { ":w<CR>", "Save" },
+		i = { "gg=G", "Formate indent of line" },
+		b = {
+			name = "Buffers",
+			l = { ":Telescope buffers<CR>", "List all buffers" },
+			p = { "gT", "Prev. buffer" },
+			n = { "gt", "Next buffer" },
+		},
+		c = {
+			name = "Close",
+			c = { ":bdelete<CR>", "Close" },
+			b = { '%bdelete|edit #|normal `"<CR>', "Close all but current" },
+		},
+		q = {
+			name = "Quit/Exit",
+			["!"] = { ":q!<CR>", "Quit withou save" },
+			q = { ":q<CR>", "Quit" },
+			x = { ":qa<CR>", "Exit Neovim" },
+			X = { ":qa!<CR>", "Exit Neovim without save" },
+		},
+		-- Search files
+		s = {
+			name = "Search",
+			a = { ":Telescope live_grep<CR>", "Live grep" },
+			b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
+			f = { ":Telescope find_files<CR>", "Find files" },
+			g = { ":Telescope git_files<CR>", "Git files" },
+			m = { ":Telescope marks<CR>", "Bookmarks" },
+			r = { ":Telescope oldfiles<CR>", "Recently open files" },
+			h = { ":Telescope help_tags<CR>", "Help Tags" },
+			p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
+			w = { ":Telescope live_grep<CR>", "Find word" },
+			v = { ":FloatermNew vifm<CR>", "ViFm" },
+		},
+	},
+	-- Build (yabs)
 	b = {
-		name = "Buffers",
-		c = { ":bdelete<CR>", "Close buffer" },
-		C = { '%bdelete|edit #|normal `"<CR>', "Close all but current" },
-		I = { "gg=G", "Formate indent of line" },
-		l = { ":Telescope buffers<CR>", "List all buffers" },
-		s = { ":setlocal spell!<CR>", "Toggle spell" },
-		w = { ":StripWhitespace<CR>", "Strip white space" },
-		W = { ":ToggleWhitespace<CR>", "Toggle white space" },
-		["["] = { "gT", "Prev. buffer" },
-		["]"] = { "gt", "Next buffer" },
+		name = "Build...",
+		T = {
+			name = "tasks",
+			t = { ":Telescope yabs tasks<CR>", "List yabs tasks" },
+			g = { ":Telescope yabs globals_tasks<CR>", "List all yabs tasks" },
+			l = {
+				":Telescope yabs current_language_tasks<CR>",
+				"List yabs tasks for language",
+			},
+		},
+		t = { ":Telescope yabs current_language_tasks<CR>", "Tasks for language" },
+		d = {
+			"<cmd>lua require('yabs'):run_default_task()<CR>",
+			"Run default task",
+		},
+		l = { "<cmd>lua require('yabs'):run_task('lint')<CR>", "Lint task" },
+		b = { "<cmd>lua require('yabs'):run_task('build')<CR>", "Build task" },
+		r = { "<cmd>lua require('yabs'):run_task('run')<CR>", "Run task" },
+		z = {
+			"<cmd>lua require('yabs').run_command('echo hello, world', 'quickfix', { open_on_run = 'always' })<CR>",
+			"Run command directly",
+		},
 	},
 	-- Coding
 	c = {
@@ -100,6 +101,27 @@ local mappings = {
 		A = {
 			"<cmd>lua vim.lsp.buf.range_code_action()<CR>",
 			"Do Range CodeAction",
+		},
+		-- LSP diagnostics
+		d = {
+			name = "Diagnostics",
+			l = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+			c = {
+				":Telescope diagnostics bufnr=0<CR>",
+				"List diagnostics current file",
+			},
+			f = {
+				"<cmd>lua vim.diagnostic.open_float()<CR>",
+				"Open diagnostics floating",
+			},
+			p = {
+				"<cmd>lua vim.diagnostic.goto_prev()<CR>",
+				"Goto prev diagnostics",
+			},
+			n = {
+				"<cmd>lua vim.diagnostic.goto_next()<CR>",
+				"Goto next diagnostics",
+			},
 		},
 		f = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
 		k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
@@ -181,125 +203,8 @@ local mappings = {
 		-- REPEL
 		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
 	},
-	-- LSP diagnostics
-	D = {
-		name = "Diagnostics",
-		f = {
-			"<cmd>lua vim.diagnostic.open_float()<CR>",
-			"Open diagnostics floating",
-		},
-		p = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Goto prev diagnostics" },
-		n = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Goto next diagnostics" },
-		l = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Set loclist" },
-		w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
-		c = {
-			":Telescope diagnostics bufnr=0<CR>",
-			"List diagnostics current file",
-		},
-	},
-	-- Running code
-	r = {
-		name = "Run",
-		c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
-		o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
-		t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
-		C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
-		x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
-		l = {
-			'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="lua %"}<CR>',
-			"Run lua file",
-		},
-		d = {
-			name = "Django",
-			r = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py runserver"}<CR>',
-				"Runserver",
-			},
-			R = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py runserver --noreload"}<CR>',
-				"Runserver --noreload",
-			},
-			s = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py shell"}<CR>',
-				"Django Shell",
-			},
-			S = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py createsuperuser"}<CR>',
-				"Create super user",
-			},
-			c = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py collectstatic"}<CR>',
-				"Collect all static files",
-			},
-			k = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="npx kill-port 8000"}<CR>',
-				"Kill Port",
-			},
-			m = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py makemigrations"}<CR>',
-				"Update DB schema",
-			},
-			M = {
-				'<cmd>lua BuiltinTerminalWrapper:send_command {cmd="python manage.py migrate"}<CR>',
-				"Migrate DB",
-			},
-		},
-		p = {
-			-- p = { ':TermExec cmd="python %"<CR>', "Run python file" },
-			-- d = { ':TermExec cmd="python -m pdb %"<CR>', "Debug python file" },
-			-- m = { ':TermExec cmd="nodemon -e py %"<CR>', "Monitor python file" },
-			name = "Python",
-			r = {
-				':update<CR>:exec "!python3" shellescape(@%,1)<CR>',
-				"Run Python file",
-			},
-			d = {
-				":update<CR>:sp term://python3 -m pdb %<CR>",
-				"Debug Python file",
-			},
-			n = {
-				":update<CR>:sp term://nodemon -e py %<CR>",
-				"Monitor the file",
-			},
-		},
-		-- yabs
-		y = {
-			name = "yabs",
-			t = { ":Telescope yabs tasks<CR>", "List yabs tasks" },
-			g = { ":Telescope yabs globals_tasks<CR>", "List all yabs tasks" },
-			l = {
-				":Telescope yabs current_language_tasks<CR>",
-				"List yabs tasks for language",
-			},
-		},
-	},
-	-- Search files
-	s = {
-		name = "Search",
-		a = { ":Telescope live_grep<CR>", "Live grep" },
-		b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
-		f = { ":Telescope find_files<CR>", "Find files" },
-		g = { ":Telescope git_files<CR>", "Git files" },
-		m = { ":Telescope marks<CR>", "Bookmarks" },
-		r = { ":Telescope oldfiles<CR>", "Recently open files" },
-		h = { ":Telescope help_tags<CR>", "Help Tags" },
-		p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
-		w = { ":Telescope live_grep<CR>", "Find word" },
-		v = { ":FloatermNew vifm<CR>", "ViFm" },
-	},
-	-- Files
-	F = {
-		name = "Files",
-		e = { ":NvimTreeToggle<CR>", "File explorer" },
-		w = { ":w<CR>", "Save" },
-		c = { ":bdelete<CR>", "Close" },
-		C = { ":q!<CR>", "Quit withou save" },
-		x = { ":qa<CR>", "Exit Neovim" },
-		X = { ":qa!<CR>", "Exit Neovim without save" },
-		q = { ":q<CR>", "Quit" },
-	},
 	-- Git
-	G = {
+	g = {
 		name = "Git",
 		g = { ":Neogit<CR>", "Neogit" },
 		a = { ":Git add .<CR>", "add all" },
@@ -379,6 +284,48 @@ local mappings = {
 			"Ranger",
 		},
 	},
+	-- Terminal
+	t = {
+		name = "Terminal",
+		c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
+		o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
+		C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
+		x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
+		-- t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
+		h = {
+			":ToggleTerm size=15 direction=horizontal<CR>",
+			"Toggle horizontal terminal",
+		},
+		v = {
+			":ToggleTerm size=" .. (vim.o.columns * 0.5) .. " direction=vertical<CR>",
+			"Toggle vertical terminal",
+		},
+	},
+	-- Running code
+	r = {
+		name = "Run Django...",
+		k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
+		g = { ":2TermExec cmd='git status'<CR>", "git status" },
+		r = { ":TermExec cmd='python manage.py runserver'<CR>", "Runserver" },
+		R = {
+			":TermExec cmd='python manage.py runserver --noreload'<CR>",
+			"Runserver --noreload",
+		},
+		S = { ":2TermExec cmd='python manage.py shell'<CR>", "Django Shell" },
+		s = {
+			":2TermExec cmd='python manage.py createsuperuser'<CR>",
+			"Create super user",
+		},
+		c = {
+			":2TermExec cmd='echo yes | python manage.py collectstatic'<CR>",
+			"Collect all static files",
+		},
+		m = {
+			":2TermExec cmd='python manage.py makemigrations'<CR>",
+			"Update DB schema",
+		},
+		M = { ":2TermExec cmd='python manage.py migrate'<CR>", "Migrate DB" },
+	},
 	-- Window
 	w = {
 		name = "Windows",
@@ -424,4 +371,9 @@ which_key.register(keymap_v, {
 	silent = true,
 	noremap = true,
 	nowait = false,
+})
+
+which_key.setup({
+	-- enable this to hide mappings for which you didn't specify a label
+	ignore_missing = true,
 })

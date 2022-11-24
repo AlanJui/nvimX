@@ -1,42 +1,38 @@
 -- autopairs.lua
-local auto_pairs = safe_require('nvim-autopairs')
-if not auto_pairs then
-    return
+local status, npairs = pcall(require, "nvim-autopairs")
+if not status then
+	return
 end
 
-auto_pairs.setup({
-    check_ts = true,
+local Rule = require("nvim-autopairs.rule")
+
+npairs.setup({
+	check_ts = true,
+	ts_config = {
+		lua = { "string" }, -- it will not add a pair on that treesitter node
+		javascript = { "template_string" },
+		python = { "template_string" },
+		java = false, -- don't check treesitter on java
+	},
 })
 
-auto_pairs.add_rules(
-    require('nvim-autopairs.rules.endwise-lua')
-)
+local ts_conds = require("nvim-autopairs.ts-conds")
+
+-- press % => %% only while inside a comment or string
+npairs.add_rules({
+	Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+	Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+})
+
+-- remove add single quote on filetype scheme or lisp
+require("nvim-autopairs").get_rule("'")[1].not_filetypes = { "scheme", "lisp" }
+
+-- npair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 
 -- Integrate with cmp (auto-compleption)
-local cmp = safe_require('cmp')
-local cmp_autopairs = safe_require('nvim-autopairs.completion.cmp')
+local cmp = safe_require("cmp")
+local cmp_autopairs = safe_require("nvim-autopairs.completion.cmp")
 if not cmp or not cmp_autopairs then
-    return
+	return
 end
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
-
--- auto_pairs.setup {
---   check_ts = true,
---   ts_config = {
---     lua = { "string", "source" },
---     javascript = { "string", "template_string" },
---     java = false,
---   },
---   disable_filetype = { "TelescopePrompt", "spectre_panel" },
---   fast_wrap = {
---     map = "<M-e>",
---     chars = { "{", "[", "(", '"', "'" },
---     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
---     offset = 0, -- Offset from pattern match
---     end_key = "$",
---     keys = "qwertyuiopzxcvbnmasdfghjkl",
---     check_comma = true,
---     highlight = "PmenuSel",
---     highlight_grey = "LineNr",
---   },
--- }
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))

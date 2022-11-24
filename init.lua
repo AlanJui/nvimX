@@ -170,6 +170,7 @@ require("plugins-rc.which-key")
 
 -- Say hello
 local function blah()
+	print("Neovim: " .. MY_VIM)
 	print("init.lua is loaded!")
 	print("====================================================================")
 	print("Neovim RTP(Run Time Path ...)")
