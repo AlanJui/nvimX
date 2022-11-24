@@ -43,12 +43,6 @@ M.setup = function(plugins)
 		autoremove = false,
 	})
 
-	require("packer").startup({
-		function(use)
-			plugins.load(use)
-		end,
-	})
-
 	return require("packer").startup(function(use)
 		-- 正常時候載入點
 		plugins.load(use)

@@ -127,6 +127,8 @@ M.load = function(use)
 	})
 	-- Icons
 	-- use({ "kyazdani42/nvim-web-devicons" })
+	-- File explorer: vifm
+	use("vifm/vifm.vim")
 	-- vs-code like icons
 	use("nvim-tree/nvim-web-devicons")
 	-- File/Flolders explorer:nvim-tree
