@@ -325,6 +325,28 @@ local mappings = {
 			"Update DB schema",
 		},
 		M = { ":2TermExec cmd='python manage.py migrate'<CR>", "Migrate DB" },
+		-- unit testing
+		u = {
+			name = "Unit Testing...",
+			n = {
+				"<cmd>lua require('neotest').run.run()",
+				"Run the nearest test",
+			},
+			r = {
+				"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))",
+				"Test current file",
+			},
+			-- Debug the nearest test (requires nvim-dap and adapter support)
+			d = {
+				"require('neotest').run.run({strategy = 'dap'})",
+				"Debug the nearest test",
+			},
+			s = { "require('neotest').run.stop()", "Stop the nearest test" },
+			a = {
+				"require('neotest').run.attach()",
+				"Attach to the nearest test",
+			},
+		},
 	},
 	-- Window
 	w = {

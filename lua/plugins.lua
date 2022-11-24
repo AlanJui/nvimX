@@ -191,6 +191,15 @@ M.load = function(use)
 	-- terminal
 	use({ "pianocomposer321/consolation.nvim" })
 	use({ "akinsho/toggleterm.nvim", tag = "*" })
+	use({
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+		},
+	})
+	use("nvim-neotest/neotest-python")
 	-----------------------------------------------------------
 	-- DAP
 	-----------------------------------------------------------

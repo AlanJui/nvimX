@@ -48,4 +48,4 @@ vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
 
 -- debug & unit testing
 require("debugger")
-require("plugins-rc.ultest")
+require("unit-test")
