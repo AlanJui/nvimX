@@ -329,21 +329,21 @@ local mappings = {
 		u = {
 			name = "Unit Testing...",
 			n = {
-				"<cmd>lua require('neotest').run.run()",
+				"<cmd>lua require('neotest').run.run()<CR>",
 				"Run the nearest test",
 			},
 			r = {
-				"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))",
+				"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
 				"Test current file",
 			},
 			-- Debug the nearest test (requires nvim-dap and adapter support)
 			d = {
-				"require('neotest').run.run({strategy = 'dap'})",
+				"require('neotest').run.run({strategy = 'dap'})<CR>",
 				"Debug the nearest test",
 			},
-			s = { "require('neotest').run.stop()", "Stop the nearest test" },
+			s = { "require('neotest').run.stop()<CR>", "Stop the nearest test" },
 			a = {
-				"require('neotest').run.attach()",
+				"require('neotest').run.attach()<CR>",
 				"Attach to the nearest test",
 			},
 		},

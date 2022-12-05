@@ -128,7 +128,6 @@ shell:
     - -l
     - -c
     - "tmux attach || tmux"
-    # - "tmux"
 
 # Startup directory, unset or None or home directory
 # working_directory: None

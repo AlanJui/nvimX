@@ -13,6 +13,7 @@
 #   - and iTerm2 is configured to send [1;9A -> [1;9D for option + arrow keys
 # then uncomment the following line to make Meta + arrow keys mapping work
 #set -ga terminal-overrides "*:kUP3=\e[1;9A,*:kDN3=\e[1;9B,*:kRIT3=\e[1;9C,*:kLFT3=\e[1;9D"
+set-option -sa terminal-overrides ',xterm-256color:RBG'
 
 
 # -- windows & pane creation ---------------------------------------------------
@@ -432,6 +433,22 @@ tmux_conf_uninstall_plugins_on_reload=true
 #================================================================================
 # My Configurations
 #================================================================================
+
+set -g mouse on
+set -g mouse-select-pane on
+set -g mouse-resize-pane on
+set -g mouse-select-window on
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+bind -r p       previous-window
+bind -r n       next-window
+
+# Reorder tmux  windows
+bind-key -n C-S-Lef swap-window -t -1\; select-window -t -1
+bind-key -n C-S-Right swap-window -t +1\; select-window -t +1
+
 unbind %
 bind | split-window -h
 bind _ split-window -h
@@ -449,13 +466,19 @@ bind -r h resize-pane -L 5
 
 bind -r m resize-pane -Z
 
-set -g mouse on
-
-set-window-option -g mode-keys vi
+# Clear screen
+# bind -n C-e send-keys -R \; clear-history
+bind -n C-e send-keys "clear"\; send-keys "Enter"
 
 bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
 bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
 
+# force Vi mode
+#   really you should export VISUAL or EDITOR environment variable, see manual
+#set -g status-keys vi
+#set -g mode-keys vi
+
+set-window-option -g mode-keys vi
 unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging with mouse
 
 # tpm plugin
@@ -464,11 +487,11 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 
 # List of tmux plugins
 set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'jimeh/tmux-themepack'
 set -g @plugin 'tmux-plugins/tmux-resurrect' # persist tmux sessions after computer restart
 set -g @plugin 'tmux-plugins/tmux-continuum' # automatically saves sessions for you every 15 minutes
 
-set -g @themepack 'powerline/default/cyan'
+# set -g @plugin 'jimeh/tmux-themepack'
+# set -g @themepack 'powerline/default/cyan'
 
 # Saving and restoring tmux sessions automatically
 # Your tmux sessions will be automatically saved every 15 minutes and automatically
