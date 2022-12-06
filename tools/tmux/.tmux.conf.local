@@ -434,10 +434,11 @@ tmux_conf_uninstall_plugins_on_reload=true
 # My Configurations
 #================================================================================
 
-set -g mouse on
-set -g mouse-select-pane on
-set -g mouse-resize-pane on
-set -g mouse-select-window on
+setw -g mouse on
+# setw -g mode-mouse on
+# set -g mouse-select-window on
+# set -g mouse-select-pane on
+# set -g mouse-resize-pane on
 
 # Shift arrow to switch windows
 bind -n S-Left  previous-window
@@ -446,7 +447,7 @@ bind -r p       previous-window
 bind -r n       next-window
 
 # Reorder tmux  windows
-bind-key -n C-S-Lef swap-window -t -1\; select-window -t -1
+bind-key -n C-S-Left  swap-window -t -1\; select-window -t -1
 bind-key -n C-S-Right swap-window -t +1\; select-window -t +1
 
 unbind %
@@ -470,8 +471,15 @@ bind -r m resize-pane -Z
 # bind -n C-e send-keys -R \; clear-history
 bind -n C-e send-keys "clear"\; send-keys "Enter"
 
+#===============================
+# Copy text to clipboard in Tmux
+#===============================
+# (1) Enter 'copy mode' by pressing CTRL + b, [.
+# (2) Use the arrow keys to go to the position from where you want to start copying. Press 'v' to start copying.
+# (3) Use arrow keys to go to the end of text you want to copy. Press 'y' to end copying.
 bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
 bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+bind-key -T copy-mode-vi 'r' send -X rectangle-selection # copy text in rectangle with "r"
 
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
