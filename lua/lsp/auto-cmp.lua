@@ -39,11 +39,6 @@ cmp.setup({
 			luasnip.lsp_expand(args.body)
 		end,
 	},
-	sources = cmp.config.sources({
-		{ name = "path" },
-		{ name = "nvim_lsp", keyword_length = 1 },
-		{ name = "luasnip", keyword_length = 1 },
-	}, { { name = "buffer", keyword_length = 3 } }),
 	window = { documentation = cmp.config.window.bordered() },
 	mapping = cmp.mapping.preset.insert({
 		["<Up>"] = cmp.mapping.select_prev_item(select_opts),
@@ -94,6 +89,14 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	}),
+	sources = cmp.config.sources({
+		{ name = "path" },
+		{ name = "luasnip", keyword_length = 1 },
+		{ name = "nvim_lsp", keyword_length = 1 },
+		{ name = "nvim_lua" },
+		{ name = "calc" },
+		{ name = "emoji" },
+	}, { { name = "buffer", keyword_length = 3 } }),
 	formatting = {
 		format = lsp_kind.cmp_format({
 			mode = "symbol_text", -- show only symbol annotations

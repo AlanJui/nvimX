@@ -243,6 +243,62 @@ local mappings = {
 			P = { ":Gist -P<CR>", "post private gist" },
 		},
 	},
+	-- Running code
+	r = {
+		name = "Run...",
+		p = {
+			name = "Python",
+			p = {
+				":TermExec direction=horizontal cmd='python %'<CR>",
+				"Run current file",
+			},
+			l = {
+				":TermExec direction=horizontal cmd='pylint %'<CR>",
+				"Lint current file",
+			},
+		},
+		d = {
+			name = "Django...",
+			k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
+			g = { ":2TermExec cmd='git status'<CR>", "git status" },
+			r = { ":TermExec cmd='python manage.py runserver'<CR>", "Runserver" },
+			R = {
+				":TermExec cmd='python manage.py runserver --noreload'<CR>",
+				"Runserver --noreload",
+			},
+			S = { ":2TermExec cmd='python manage.py shell'<CR>", "Django Shell" },
+			s = {
+				":2TermExec cmd='python manage.py createsuperuser'<CR>",
+				"Create super user",
+			},
+			c = {
+				":2TermExec cmd='echo yes | python manage.py collectstatic'<CR>",
+				"Collect all static files",
+			},
+			m = {
+				":2TermExec cmd='python manage.py makemigrations'<CR>",
+				"Update DB schema",
+			},
+			M = { ":2TermExec cmd='python manage.py migrate'<CR>", "Migrate DB" },
+		},
+	},
+	-- Terminal
+	t = {
+		name = "Terminal",
+		c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
+		o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
+		C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
+		x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
+		-- t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
+		h = {
+			":ToggleTerm size=15 direction=horizontal<CR>",
+			"Toggle horizontal terminal",
+		},
+		v = {
+			":ToggleTerm size=" .. (vim.o.columns * 0.5) .. " direction=vertical<CR>",
+			"Toggle vertical terminal",
+		},
+	},
 	-- utilities
 	u = {
 		name = "Utilities",
@@ -282,70 +338,6 @@ local mappings = {
 		r = {
 			"TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
 			"Ranger",
-		},
-	},
-	-- Terminal
-	t = {
-		name = "Terminal",
-		c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
-		o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
-		C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
-		x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
-		-- t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
-		h = {
-			":ToggleTerm size=15 direction=horizontal<CR>",
-			"Toggle horizontal terminal",
-		},
-		v = {
-			":ToggleTerm size=" .. (vim.o.columns * 0.5) .. " direction=vertical<CR>",
-			"Toggle vertical terminal",
-		},
-	},
-	-- Running code
-	r = {
-		name = "Run Django...",
-		k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
-		g = { ":2TermExec cmd='git status'<CR>", "git status" },
-		r = { ":TermExec cmd='python manage.py runserver'<CR>", "Runserver" },
-		R = {
-			":TermExec cmd='python manage.py runserver --noreload'<CR>",
-			"Runserver --noreload",
-		},
-		S = { ":2TermExec cmd='python manage.py shell'<CR>", "Django Shell" },
-		s = {
-			":2TermExec cmd='python manage.py createsuperuser'<CR>",
-			"Create super user",
-		},
-		c = {
-			":2TermExec cmd='echo yes | python manage.py collectstatic'<CR>",
-			"Collect all static files",
-		},
-		m = {
-			":2TermExec cmd='python manage.py makemigrations'<CR>",
-			"Update DB schema",
-		},
-		M = { ":2TermExec cmd='python manage.py migrate'<CR>", "Migrate DB" },
-		-- unit testing
-		u = {
-			name = "Unit Testing...",
-			n = {
-				"<cmd>lua require('neotest').run.run()<CR>",
-				"Run the nearest test",
-			},
-			r = {
-				"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
-				"Test current file",
-			},
-			-- Debug the nearest test (requires nvim-dap and adapter support)
-			d = {
-				"require('neotest').run.run({strategy = 'dap'})<CR>",
-				"Debug the nearest test",
-			},
-			s = { "require('neotest').run.stop()<CR>", "Stop the nearest test" },
-			a = {
-				"require('neotest').run.attach()<CR>",
-				"Attach to the nearest test",
-			},
 		},
 	},
 	-- Window
