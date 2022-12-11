@@ -143,12 +143,6 @@ shift + ctrl + alt + cmd - 1 :~/.config/yabai/scripts/moveWindowToScreen.sh 1
 shift + ctrl + alt + cmd - 2 :~/.config/yabai/scripts/moveWindowToScreen.sh 2
 shift + ctrl + alt + cmd - 3 :~/.config/yabai/scripts/moveWindowToScreen.sh 3
 
-# move window by direction (swap window)
-shift + cmd - h : yabai -m window --swap west
-shift + cmd - j : yabai -m window --swap south
-shift + cmd - k : yabai -m window --swap north
-shift + cmd - l : yabai -m window --swap east
-
 # move window to prev/next screen
 # shift + ctrl + alt + cmd - p : /Users/alanjui/.config/yabai/scripts/moveWindowToPrevDisplay.sh
 # shift + ctrl + alt + cmd - n : /Users/alanjui/.config/yabai/scripts/moveWindowToNextDisplay.sh
@@ -190,6 +184,12 @@ shift + ctrl + cmd - 0x1E : ~/.config/yabai/scripts/moveWindowToDesktop.sh next
 #--------------------------------------------------
 # Move window in a desktop (space)
 #--------------------------------------------------
+
+# move window by direction (swap window)
+shift + cmd - h : yabai -m window --swap west
+shift + cmd - j : yabai -m window --swap south
+shift + cmd - k : yabai -m window --swap north
+shift + cmd - l : yabai -m window --swap east
 
 # flip the layout of desktop horizontally
 shift + ctrl + cmd - x : yabai -m space --mirror x-axis
