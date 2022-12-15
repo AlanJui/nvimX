@@ -77,11 +77,7 @@
 # ############################################################### #
 
 # Restart Yabai
-# hyper = Shift + Ctrl + Cmd(Window) + Alt(Option)
-# hyper - r :
-#     /usr/bin/env osascript <<< \
-#         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-#     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+ctrl + alt + cmd - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 # create a window: open terminal
 # hyper - return : ~/.config/yabai/scripts/open_iterm2.sh
@@ -113,7 +109,7 @@ shift + ctrl + cmd - k : yabai -m window --swap north
 shift + ctrl + cmd - l : yabai -m window --swap east
 
 # fast focus desktop
-shift + alt - x : yabai -m space --focus recent
+shift + alt - 0 : yabai -m space --focus recent
 shift + alt - 1 : yabai -m space --focus 1
 shift + alt - 2 : yabai -m space --focus 2
 shift + alt - 3 : yabai -m space --focus 3
@@ -125,7 +121,7 @@ shift + alt - 8 : yabai -m space --focus 8
 shift + alt - 9 : yabai -m space --focus 9
 
 # send(move) window to desktop and follow focus
-ctrl + shift + alt - z : yabai -m window --space next; yabai -m space --focus next
+ctrl + shift + alt - 0 : yabai -m window --space recent; yabai -m space --focus recent
 ctrl + shift + alt - 1 : yabai -m window --space  1; yabai -m space --focus 1
 ctrl + shift + alt - 2 : yabai -m window --space  2; yabai -m space --focus 2
 ctrl + shift + alt - 3 : yabai -m window --space  3; yabai -m space --focus 3
@@ -137,13 +133,13 @@ ctrl + shift + alt - 8 : yabai -m window --space  8; yabai -m space --focus 8
 ctrl + shift + alt - 9 : yabai -m window --space  9; yabai -m space --focus 9
 
 # focus monitor
-shift + alt - z  : yabai -m display --focus prev
+shift + alt - u  : yabai -m display --focus recent
 shift + alt - q  : yabai -m display --focus 2
 shift + alt - w  : yabai -m display --focus 3
 shift + alt - e  : yabai -m display --focus 1
 
 # send(move) window to monitor and follow focus
-ctrl + shift + alt - c  : yabai -m window --display next; yabai -m display --focus next
+ctrl + shift + alt - u  : yabai -m window --display recent; yabai -m display --focus recent
 ctrl + shift + alt - q  : yabai -m window --display 2; yabai -m display --focus 2
 ctrl + shift + alt - w  : yabai -m window --display 3; yabai -m display --focus 3
 ctrl + shift + alt - e  : yabai -m window --display 1; yabai -m display --focus 1
@@ -216,37 +212,44 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - y : yabai -m space --mirror y-axis
 
 # toggle desktop offset
-ctrl + alt + cmd - a : yabai -m space --toggle padding; yabai -m space --toggle gap
+ctrl + cmd - a : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # toggle window border
-ctrl + alt + cmd - b : yabai -m window --toggle border
+ctrl + cmd - b : yabai -m window --toggle border
 
 # toggle window zoom
-ctrl + alt + cmd - d : yabai -m window --toggle zoom-parent
-ctrl + alt + cmd - f : yabai -m window --toggle zoom-fullscreen
-
-# toggle window native fullscreen(单个窗口进入或退出真全屏-上方的icon都会消失)
-ctrl + shift + alt + cmd  - f : yabai -m window --toggle native-fullscreen
-
-# toggle window split type
-ctrl + alt + cmd - e : yabai -m window --toggle split
-
-# float / unfloat window and center on screen
-ctrl + alt + cmd - t : yabai -m window --toggle float;\
-                                       --grid 4:4:1:1:2:2
-
-# toggle sticky (show on all spaces)
-ctrl + alt + cmd - s : yabai -m window --toggle sticky
-
-# toggle topmost (keep above other windows)
-ctrl + alt + cmd - o : yabai -m window --toggle topmost
+ctrl + cmd - d : yabai -m window --toggle zoom-parent
+ctrl + cmd - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle sticky(+float), topmost, picture-in-picture
-ctrl + alt + cmd - p : yabai -m window --toggle sticky;\
-                                       --toggle topmost;\
-                                       --toggle border;\
-                                       --toggle pip
+ctrl + cmd - p : yabai -m window --toggle sticky;\
+                                 --toggle topmost;\
+                                 --toggle border;\
+                                 --toggle pip
+
+# toggle topmost (keep above other windows)
+ctrl + cmd - o : yabai -m window --toggle topmost
+
+# toggle window native fullscreen(单个窗口进入或退出真全屏-上方的icon都会消失)
+# ctrl + alt + cmd  - f : yabai -m window --toggle native-fullscreen
+
+# toggle window split type 【切換排版方式：上下／左右】
+ctrl + alt + cmd - e : yabai -m window --toggle split
+
+# toggle sticky (show on all spaces) 【作用中視窗變成浮動視窗；非作用中的其它視窗居其下】
+ctrl + alt + cmd - s : yabai -m window --toggle sticky
+
+# float / unfloat window and center on screen
+# The grid format is <rows>:<cols>:<start-x>:<start-y>:<width>:<height>, where rows and
+# cols are how many rows and columns there are in total, start-x and start-y are the start
+# indices for the row and column and width and height are how many rows and columns the
+# window spans.
+# ctrl + alt + cmd - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+# ctrl + alt + cmd - t : yabai -m window --toggle float --grid 1:3:0:0:2:1
+# ctrl + alt + cmd - t : yabai -m window --toggle float --grid 1:3:0:0:2:1
+# ctrl + alt + cmd - t : yabai -m window --toggle float --grid 4:8:1:1:6:2
+ctrl + alt + cmd - t : yabai -m window --toggle float --grid 6:8:1:1:6:4
 
 # change layout of desktop (切換排版方式)
-ctrl + shift + alt + cmd - a : yabai -m space --layout bsp
-ctrl + shift + alt + cmd - s : yabai -m space --layout float
+ctrl + shift + alt + cmd - b : yabai -m space --layout bsp
+ctrl + shift + alt + cmd - f : yabai -m space --layout float

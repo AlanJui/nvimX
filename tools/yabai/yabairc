@@ -66,14 +66,14 @@ yabai -m config window_placement first_child
 #=================================================================================
 
 # Set all padding and gaps to 20pt (default: 0)
-yabai -m config top_padding    20
-yabai -m config bottom_padding 20
-yabai -m config left_padding   20
-yabai -m config right_padding  20
-yabai -m config window_gap     20
+yabai -m config top_padding    2
+yabai -m config bottom_padding 2
+yabai -m config left_padding   2
+yabai -m config right_padding  2
+yabai -m config window_gap     2
 
 # Override gaps for space 2 only
-yabai -m config --space 3 window_gap 0
+# yabai -m config --space 3 window_gap 0
 
 #=================================================================================
 # Mouse support
@@ -113,8 +113,8 @@ yabai -m config normal_window_opacity 1.0
 
 # My custom space names for my 3 monitor setup. These names are used in some of my scripts.
 yabai -m space 1 --label right
-yabai -m space 3 --label left
 yabai -m space 5 --label center
+yabai -m space 3 --label left
 
 # float system preferences. Most of these just diable Yabai form resizing them.
 # yabai -m query --windows | jq '.[].app'
@@ -141,4 +141,11 @@ yabai -m rule --add app="Microsoft Remote Desktop" manage=off
 # yabai -m rule --add app="行事曆" manage=off
 # yabai -m rule --add app="啟動台" manage=off
 # yabai -m rule --add app="Antivirus for Mac" manage=off
+
+
+# tempDir=/tmp/yabai-tiling-floating-toggle
+# [ -d $tempDir ] && rm -rf $tempDir
+# mkdir $tempDir
+
+
 echo "yabai configuration loaded.."
