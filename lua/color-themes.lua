@@ -13,6 +13,18 @@ local function myColorScheme(color)
 	-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
+if os.getenv("TERM_PROGRAM") == "Apple_Terminal" then
+	vim.cmd([[
+        set notermguicolors
+        try
+            colorscheme OceanicNext
+        catch
+            colorscheme gruvbox
+        endtry
+    ]])
+	return
+end
+
 -- 若是已安裝 nightfly colorscheme ，直接採用
 if status then
 	-- vim.cmd([[ colorscheme nightfly ]])
