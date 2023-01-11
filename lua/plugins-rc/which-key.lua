@@ -150,6 +150,7 @@ local mappings = {
 			},
 			T = { ":set filetype=html<CR>", "set file type to HTML" },
 		},
+		u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
 		w = {
 			name = "workspace",
 			l = {
