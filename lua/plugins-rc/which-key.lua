@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------
 local status, which_key = pcall(require, "which-key")
 if not status then
+	print("which-key not loaded")
 	return
 end
 

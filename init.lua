@@ -155,10 +155,6 @@ require("color-themes")
 -- 「快捷鍵」設定
 require("keymaps")
 
--- Load Which-key
--- 提供【選單】式的指令操作
-require("which-key")
-
 -----------------------------------------------------------
 -- Experiments
 -- 實驗用的臨時設定
