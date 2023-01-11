@@ -53,8 +53,10 @@ keymap.set("n", "Y", "y$")
 -- keymap.set('i', '<M-t>', '<ESC>A,<ESC>hi<CR><ESC>O')
 
 -- Move line
-keymap.set("n", "<S-Down>", ":m .+1<CR>")
-keymap.set("n", "<S-Up>", ":m .-2<CR>")
+keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap.set("n", "<S-Down>", ":m .+1<CR>gv=gv")
+keymap.set("n", "<S-Up>", ":m .-2<CR>gv=gv")
 keymap.set("i", "<S-Down>", "<Esc>:m .+1<CR>")
 keymap.set("i", "<S-Up>", "<Esc>:m .-2<CR>")
 keymap.set("v", "<S-Down>", ":move '>+1<CR>gv-gv")
@@ -138,3 +140,35 @@ keymap.set("n", "<localleader>gs", "<cmd>Telescope git_status<cr>") -- list curr
 
 -- restart lsp server
 keymap.set("n", "<localleader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
+
+-- 將下一行的文字「連到本行尾」
+vim.keymap.set("n", "J", "mzJ`z")
+
+-- 螢幕翻頁捲動時，總是居中
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- 執行「搜尋」功能時，找到的文字所在行，總是放在螢幕居中位置
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+-- greatest remap ever
+vim.keymap.set("x", "<localleader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "P", "viwp")
+
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({ "n", "v" }, "<localleader>y", [["+y]])
+vim.keymap.set("n", "<localleader>Y", [["+Y]])
+
+vim.keymap.set({ "n", "v" }, "<localleader>d", [["_d]])
+
+-- delete without yanking
+-- Note: "_ is the `blackhole register` (ref: `:help "_` )
+vim.keymap.set("n", "<localleader>d", [["_d]])
+vim.keymap.set("v", "<localleader>d", [["_d]])
+-- replace currently selected text with default register
+-- without yanking it
+vim.keymap.set("v", "<localleader>p", [["_dP]])
+-- bar
+-- barfoo
+-- bar
+-- bar

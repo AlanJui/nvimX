@@ -9,5 +9,7 @@ end
 
 if vim.fn.has("persistent_undo") == 1 then
 	vim.g.undodir = undo_path
-	vim.cmd("set undofile")
+	-- vim.cmd("set undofile")
+	vim.opt.undodir = undo_path
+	vim.opt.undofile = true
 end

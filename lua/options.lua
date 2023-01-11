@@ -12,7 +12,7 @@ set.wrap = false -- don't automatically wrap on load
 set.showmatch = true -- show the matching part of the pair for [] {} and ()
 set.cursorline = true -- highlight current line
 set.incsearch = true -- incremental search
-set.hlsearch = true -- highlighted search results
+set.hlsearch = false -- highlighted search results
 set.ignorecase = true -- ignore case sensetive while searching
 set.smartcase = true
 set.scrolloff = 1 -- when scrolling, keep cursor 1 lines away from screen border
@@ -40,7 +40,8 @@ vim.cmd([[set undofile]])
 
 -- Disable swap file
 opt.swapfile = false
-opt.writebackup = false
+opt.backup = false
+-- opt.writebackup = false
 
 -- make buffer modifiable
 opt.modifiable = true
@@ -102,3 +103,7 @@ opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
 opt.iskeyword:append("-") -- consider string-string as whole word
+
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
