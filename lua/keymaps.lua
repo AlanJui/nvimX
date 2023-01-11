@@ -2,7 +2,7 @@
 -- keymap.lua
 --------------------------------------------------------------------
 if DEBUG then
-	print('<< DEBUG: Loading keymaps.lua >>')
+	print("<< DEBUG: Loading keymaps.lua >>")
 end
 
 -- set leader key to space
@@ -103,8 +103,8 @@ keymap.set("n", "<localleader>tn", ":tabn<CR>") --  go to next tab
 keymap.set("n", "<localleader>tp", ":tabp<CR>") --  go to previous tab
 
 -- Tab operations
-keymap.set('n', 'gt', '<cmd>bn<CR>')
-keymap.set('n', 'gT', '<cmd>bp<CR>')
+keymap.set("n", "gt", "<cmd>bn<CR>")
+keymap.set("n", "gT", "<cmd>bp<CR>")
 
 --------------------------------------------------------------------
 -- Clear highlighting on escale in normal mode.
@@ -121,7 +121,7 @@ keymap.set("t", "<Esc>", "<C-\\><C-n>")
 --------------------------------------------------------------
 
 -- nvim-tree
-keymap.set("n", "<localleader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
+-- keymap.set("n", "<localleader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
 keymap.set("n", "<localleader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore

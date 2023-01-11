@@ -83,6 +83,7 @@ M.load = function(use)
 			ts_update()
 		end,
 	})
+	use({ "nvim-treesitter/playground" })
 	-- Additional textobjects for treesitter
 	-- use("nvim-treesitter/nvim-treesitter-textobjects")
 	-----------------------------------------------------------
@@ -96,6 +97,8 @@ M.load = function(use)
 	-----------------------------------------------------------
 	-- User Interface
 	-----------------------------------------------------------
+	-- Quick switch between files
+	use("ThePrimeagen/harpoon")
 	-- maximizes and restores current window
 	use("szw/vim-maximizer")
 	-- tmux & split window navigation
