@@ -121,12 +121,12 @@ if DEBUG then
 	local debug_plugins = require("debug-plugins")
 	require("config_debug_env").setup(debug_plugins)
 	-- (2)
-	require("setup-plugins")
+	require("plugins-rc")
 else
 	-- (1)
 	require("load-plugins")
 	-- (2)
-	require("setup-plugins")
+	require("plugins-rc")
 end
 
 ------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ require("keymaps")
 
 -- Load Which-key
 -- 提供【選單】式的指令操作
-require("plugins-rc.which-key")
+require("which-key")
 
 -----------------------------------------------------------
 -- Experiments
