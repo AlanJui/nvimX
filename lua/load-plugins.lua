@@ -29,15 +29,6 @@ local ensure_packer = function()
 end
 local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
--- autocommand that reloads neovim and installs/updates/removes plugins
--- when file is saved
--- vim.cmd([[
---   augroup packer_user_config
---     autocmd!
---     autocmd BufWritePost plugins.lua source <afile> | PackerSync
---   augroup end
--- ]])
-
 -- 確認套件 packer.nvim 已被安裝，且已被載入 nvim
 local ok, packer = pcall(require, "packer")
 if not ok then
@@ -58,8 +49,7 @@ if not ok1 then
 	return
 end
 
-return require("packer").startup(function(use)
-	-- 正常時候載入點
+packer.startup(function(use)
 	plugins.load(use)
 
 	-- Automatically set up your configuration after cloning packer.nvim
@@ -68,3 +58,12 @@ return require("packer").startup(function(use)
 		packer.sync()
 	end
 end)
+
+-- autocommand that reloads neovim and installs/updates/removes plugins
+-- when file is saved
+vim.cmd([[
+augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup end
+]])
