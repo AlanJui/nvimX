@@ -99,7 +99,7 @@ local sources = {
 	-- for linting and static analysis of Lua code
 	-- diagnostics.luacheck,
 	-- Reformats your Lua source code.
-	formatting.lua_format,
+	-- formatting.lua_format,
 	---------------------------------------------------------------
 	-- Web
 	---------------------------------------------------------------

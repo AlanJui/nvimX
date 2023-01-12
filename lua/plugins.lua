@@ -11,16 +11,60 @@ M.load = function(use)
 	-- Tools to migrating init.vim to init.lua
 	use("norcalli/nvim_utils")
 	-----------------------------------------------------------
+	-- Completion: for auto-completion/suggestion/snippets
+	-----------------------------------------------------------
+	-- -- A completion plugin for neovim coded in Lua.
+	-- use({
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	requires = {
+	-- 		-- nvim-cmp source for neovim builtin LSP client
+	-- 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for nvim lua
+	-- 		"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
+	-- 		"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
+	-- 		"hrsh7th/cmp-path", -- nvim-cmp source for math calculation
+	-- 		"hrsh7th/cmp-calc",
+	-- 		"hrsh7th/cmp-emoji",
+	-- 		"hrsh7th/cmp-cmdline",
+	-- 		-- LuaSnip completion source for nvim-cmp
+	-- 		"saadparwaiz1/cmp_luasnip",
+	-- 	},
+	-- })
+	-- -- Snippet Engine for Neovim written in Lua.
+	-- -- tag = "v<CurrentMajor>.*",
+	-- use({ "L3MON4D3/LuaSnip", tag = "v1.1.*" })
+	-- -- Snippets collection for a set of different programming languages for faster development
+	-- use("rafamadriz/friendly-snippets")
+	-----------------------------------------------------------
 	-- LSP/LspInstaller: configurations for the Nvim LSP client
 	-----------------------------------------------------------
-	-- companion plugin for nvim-lspconfig that allows you to seamlessly
-	-- install LSP servers locally
-	-- use({ "williamboman/nvim-lsp-installer" })
-	use({ "williamboman/mason.nvim" })
-	use({ "williamboman/mason-lspconfig.nvim" })
-	-- A collection of common configurations for Neovim's built-in language
-	-- server client
-	use({ "neovim/nvim-lspconfig" })
+	-- -- A collection of common configurations for Neovim's built-in language
+	-- -- server client
+	-- use({ "neovim/nvim-lspconfig" })
+	-- -- companion plugin for nvim-lspconfig that allows you to seamlessly
+	-- -- install LSP servers locally
+	-- -- use({ "williamboman/nvim-lsp-installer" })
+	-- use({ "williamboman/mason.nvim" })
+	-- use({ "williamboman/mason-lspconfig.nvim" })
+	--
+	-- All in one LSP plugin (include auto-complete)
+	--
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		requires = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" },
+			{ "williamboman/mason.nvim" },
+			{ "williamboman/mason-lspconfig.nvim" }, -- Autocompletion
+			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/cmp-buffer" },
+			{ "hrsh7th/cmp-path" },
+			{ "saadparwaiz1/cmp_luasnip" },
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-nvim-lua" }, -- Snippets
+			{ "L3MON4D3/LuaSnip" }, -- Snippet Collection (Optional)
+			{ "rafamadriz/friendly-snippets" },
+		},
+	})
 	-- formatting & linting
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
@@ -46,30 +90,6 @@ M.load = function(use)
 	-- (e.g. rename file & update imports)
 	use({ "jose-elias-alvarez/typescript.nvim" })
 
-	-----------------------------------------------------------
-	-- Completion: for auto-completion/suggestion/snippets
-	-----------------------------------------------------------
-	-- A completion plugin for neovim coded in Lua.
-	use({
-		"hrsh7th/nvim-cmp",
-		requires = {
-			-- nvim-cmp source for neovim builtin LSP client
-			"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for nvim lua
-			"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
-			"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
-			"hrsh7th/cmp-path", -- nvim-cmp source for math calculation
-			"hrsh7th/cmp-calc",
-			"hrsh7th/cmp-emoji",
-			"hrsh7th/cmp-cmdline",
-			-- LuaSnip completion source for nvim-cmp
-			"saadparwaiz1/cmp_luasnip",
-		},
-	})
-	-- Snippet Engine for Neovim written in Lua.
-	-- tag = "v<CurrentMajor>.*",
-	use({ "L3MON4D3/LuaSnip", tag = "v1.1.*" })
-	-- Snippets collection for a set of different programming languages for faster development
-	use("rafamadriz/friendly-snippets")
 	-----------------------------------------------------------
 	-- Treesitter: for better syntax
 	-----------------------------------------------------------
