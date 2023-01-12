@@ -1,24 +1,24 @@
-local status, saga = pcall(require, 'lspsaga')
+local status, saga = pcall(require, "lspsaga")
 if not status then
-    return
+	return
 end
-
-local keymap = vim.keymap.set
 
 saga.init_lsp_saga()
 
+local keymap = vim.keymap.set
+vim.g.maplocalleader = ","
 
 -- Lsp finder find the symbol definition implement reference
 -- if there is no implement it will hide
 -- when you use action in finder like open vsplit then you can
 -- use <C-t> to jump back
-keymap("n", "<leader>gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+keymap("n", "<localleader>gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 
 -- Code action
-keymap({"n","v"}, "<localleader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
+keymap({ "n", "v" }, "<localleader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
 
 -- Rename
-keymap("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
+keymap("n", "<localleader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 
 -- Peek Definition
 -- you can edit the definition file in this flaotwindow
@@ -27,10 +27,10 @@ keymap("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 keymap("n", "<localleader>gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 
 -- Show line diagnostics
-keymap("n", "<localleader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+keymap("n", "<localleader>dl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 
 -- Show cursor diagnostic
-keymap("n", "<localleader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+keymap("n", "<localleader>dc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 
 -- Diagnsotic jump can use `<c-o>` to jump back
 keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
@@ -38,14 +38,14 @@ keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
 
 -- Only jump to error
 keymap("n", "[E", function()
-  require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+	require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
 end, { silent = true })
 keymap("n", "]E", function()
-  require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+	require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
 end, { silent = true })
 
 -- Outline
-keymap("n","<localleader>o", "<cmd>LSoutlineToggle<CR>",{ silent = true })
+keymap("n", "<localleader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
 
 -- Hover Doc
 keymap("n", "<localleader>K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
