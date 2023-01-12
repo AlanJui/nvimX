@@ -75,19 +75,46 @@ lsp.configure("sumneko_lua", {
 	},
 })
 
+------------------------------------------------------------
+-- cmp 預設
+-- 《Enter》：等同 cmp.mapping.confirm() ，參考以下之《C-y》
+-- 《ESC》：等同 cmp.mapping.abort()
+-- 《C-d》：跳至下一個欄位 luasnip.jumpable(1)
+-- 《C-b》：跳至上一個欄位 luasnip.jumpable(-1)
+------------------------------------------------------------
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
+	["<Up>"] = cmp.mapping.select_prev_item(select_opts),
+	["<Down>"] = cmp.mapping.select_next_item(select_opts),
 	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
 	["<C-y>"] = cmp.mapping.confirm({ select = true }),
 	["<C-="] = cmp.mapping.complete(),
+	["<Tab>"] = cmp.mapping(function(fallback)
+		local col = vim.fn.col(".") - 1
+
+		if cmp.visible() then
+			cmp.select_next_item(select_opts)
+		elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+			fallback()
+		else
+			cmp.complete()
+		end
+	end, { "i", "s" }),
+	["<S-Tab>"] = cmp.mapping(function(fallback)
+		if cmp.visible() then
+			cmp.select_prev_item(select_opts)
+		else
+			fallback()
+		end
+	end, { "i", "s" }),
 })
 
 -- disable completion with tab
 -- this helps with copilot setup
-cmp_mappings["<Tab>"] = nil
-cmp_mappings["<S-Tab>"] = nil
+-- cmp_mappings["<Tab>"] = nil
+-- cmp_mappings["<S-Tab>"] = nil
 
 lsp.setup_nvim_cmp({ mapping = cmp_mappings })
 
@@ -106,3 +133,22 @@ lsp.on_attach(on_attach)
 lsp.setup()
 
 vim.diagnostic.config({ virtual_text = true })
+
+------------------------------------------------------------
+-- Add Snippets
+------------------------------------------------------------
+local ok, luasnip = pcall(require, "luasnip")
+if not ok then
+	return
+end
+
+-- Load your own custom vscode style snippets
+require("luasnip.loaders.from_vscode").lazy_load({
+	paths = {
+		CONFIG_DIR .. "/my-snippets",
+		RUNTIME_DIR .. "/site/pack/packer/start/friendly-snippets",
+	},
+})
+-- extends filetypes supported by snippets
+luasnip.filetype_extend("vimwik", { "markdown" })
+luasnip.filetype_extend("html", { "htmldjango" })
