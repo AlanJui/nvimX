@@ -7,6 +7,7 @@ require("plugins-rc.nvim-treesitter")
 
 -- lsp
 require("lsp")
+require("plugins-rc.lspkind")
 
 -- status line
 require("plugins-rc.lualine-material")
@@ -20,6 +21,7 @@ require("plugins-rc.nvim-lightbulb")
 -- files management
 require("plugins-rc.telescope-nvim")
 require("plugins-rc.nvim-tree")
+require("plugins-rc.harpoon")
 
 -- editting tools
 require("plugins-rc.undotree")
@@ -41,7 +43,6 @@ require("plugins-rc.vim-gist")
 -- vim.cmd([[ runtime ./lua/plugins-rc/vim-signify.rc.vim]])
 
 -- Utilities
-require("plugins-rc.harpoon")
 vim.cmd([[runtime ./lua/plugins-rc/bracey.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vim-instant-markdown.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
