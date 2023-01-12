@@ -3,9 +3,9 @@ if not ok then
 	return
 end
 
----
+------------------------------------------------------------------------
 -- Keybindings
----
+------------------------------------------------------------------------
 
 local keymap = vim.keymap -- for conciseness
 
@@ -76,33 +76,16 @@ lsp.configure("sumneko_lua", {
 })
 
 ------------------------------------------------------------
+-- Auto-complete and snippets setup: cmp.nvim + luasnip
 -- cmp 預設
 -- 《Enter》：等同 cmp.mapping.confirm() ，參考以下之《C-y》
 -- 《ESC》：等同 cmp.mapping.abort()
 -- 《C-d》：跳至下一個欄位 luasnip.jumpable(1)
 -- 《C-b》：跳至上一個欄位 luasnip.jumpable(-1)
-------------------------------------------------------------
-local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	["<Up>"] = cmp.mapping.select_prev_item(cmp_select),
-	["<Down>"] = cmp.mapping.select_next_item(cmp_select),
-	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-	["<C-y>"] = cmp.mapping.confirm({ select = true }),
-	["<C-="] = cmp.mapping.complete(),
-})
-
--- disable completion with tab
--- this helps with copilot setup
-cmp_mappings["<Tab>"] = nil
-cmp_mappings["<S-Tab>"] = nil
-
-lsp.setup_nvim_cmp({
-	mapping = cmp_mappings,
-})
 ----------------------------------------------------------
+local cmp = require("cmp")
 local lspkind = require("lspkind")
+local luasnip = require("luasnip")
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 local has_words_before = function()
