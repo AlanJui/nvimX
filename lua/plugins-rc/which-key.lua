@@ -105,6 +105,10 @@ local mappings = {
 		},
 		-- LSP diagnostics
 		d = {
+			":Telescope diagnostics bufnr=0<CR>",
+			"List diagnostics current file",
+		},
+		D = {
 			name = "Diagnostics",
 			l = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
 			c = {
@@ -213,7 +217,8 @@ local mappings = {
 		b = { ":Git blame<CR>", "blame" },
 		B = { ":GBrowse<CR>", "Browse GitHub repo" },
 		c = { ":Git commit<CR>", "commit" },
-		d = {
+		d = { ":Gvdiffsplit<CR>", "diff vsplit" },
+		D = {
 			name = "+Diff",
 			h = { ":Gdiffsplit<CR>", "diff split" },
 			v = { ":Gvdiffsplit<CR>", "diff vsplit" },

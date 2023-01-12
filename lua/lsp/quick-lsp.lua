@@ -85,46 +85,145 @@ lsp.configure("sumneko_lua", {
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
-	["<Up>"] = cmp.mapping.select_prev_item(select_opts),
-	["<Down>"] = cmp.mapping.select_next_item(select_opts),
+	["<Up>"] = cmp.mapping.select_prev_item(cmp_select),
+	["<Down>"] = cmp.mapping.select_next_item(cmp_select),
 	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
 	["<C-y>"] = cmp.mapping.confirm({ select = true }),
 	["<C-="] = cmp.mapping.complete(),
-	["<Tab>"] = cmp.mapping(function(fallback)
-		local col = vim.fn.col(".") - 1
-
-		if cmp.visible() then
-			cmp.select_next_item(select_opts)
-		elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-			fallback()
-		else
-			cmp.complete()
-		end
-	end, { "i", "s" }),
-	["<S-Tab>"] = cmp.mapping(function(fallback)
-		if cmp.visible() then
-			cmp.select_prev_item(select_opts)
-		else
-			fallback()
-		end
-	end, { "i", "s" }),
 })
 
 -- disable completion with tab
 -- this helps with copilot setup
--- cmp_mappings["<Tab>"] = nil
--- cmp_mappings["<S-Tab>"] = nil
+cmp_mappings["<Tab>"] = nil
+cmp_mappings["<S-Tab>"] = nil
 
-lsp.setup_nvim_cmp({ mapping = cmp_mappings })
+lsp.setup_nvim_cmp({
+	mapping = cmp_mappings,
+})
+----------------------------------------------------------
+local lspkind = require("lspkind")
+local select_opts = { behavior = cmp.SelectBehavior.Select }
+
+local has_words_before = function()
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local cmp_config = {
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<Up>"] = cmp.mapping.select_prev_item(select_opts),
+		["<Down>"] = cmp.mapping.select_next_item(select_opts),
+
+		["<C-p>"] = cmp.mapping.select_prev_item(select_opts),
+		["<C-n>"] = cmp.mapping.select_next_item(select_opts),
+
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+
+		["<C-=>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+		["<C-d>"] = cmp.mapping(function(fallback)
+			if luasnip.jumpable(1) then
+				luasnip.jump(1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<C-u>"] = cmp.mapping(function(fallback)
+			if luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+	sources = cmp.config.sources({
+		{ name = "path" },
+		{ name = "luasnip", keyword_length = 1 },
+		{ name = "nvim_lsp", keyword_length = 1 },
+		{ name = "nvim_lua" },
+		{ name = "calc" },
+		{ name = "emoji" },
+	}, { { name = "buffer", keyword_length = 3 } }),
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = "symbol_text", -- show only symbol annotations
+			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+			-- The function below will be called before any actual modifications from lspkind
+			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+			before = function(entry, vim_item)
+				-- vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
+				vim_item.menu = ({
+					nvim_lsp = "[LSP]",
+					luasnip = "[Snippet]",
+					nvim_lua = "[Nvim Lua]",
+					buffer = "[Buffer]",
+				})[entry.source.name]
+
+				vim_item.dup = ({
+					luasnip = 0,
+					nvim_lsp = 0,
+					nvim_lua = 0,
+					buffer = 0,
+				})[entry.source.name] or 0
+
+				return vim_item
+			end,
+		}),
+	},
+}
+
+lsp.setup_nvim_cmp(cmp_config)
 
 lsp.set_preferences({
 	suggest_lsp_servers = false,
+	setup_servers_on_start = true,
+	set_lsp_keymaps = true,
+	configure_diagnostics = true,
+	cmp_capabilities = true,
+	manage_nvim_cmp = true,
+	call_servers = "local",
 	sign_icons = {
-		error = "E",
-		warn = "W",
-		hint = "H",
-		info = "I",
+		error = "✘",
+		warn = "▲",
+		hint = "⚑",
+		info = "",
 	},
 })
 
@@ -137,8 +236,8 @@ vim.diagnostic.config({ virtual_text = true })
 ------------------------------------------------------------
 -- Add Snippets
 ------------------------------------------------------------
-local ok, luasnip = pcall(require, "luasnip")
-if not ok then
+local luasnip_ok, luasnip = pcall(require, "luasnip")
+if not luasnip_ok then
 	return
 end
 

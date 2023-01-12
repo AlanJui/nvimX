@@ -65,6 +65,7 @@ M.load = function(use)
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
+	-- use({ "github/copilot.vim" })
 	-- formatting & linting
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
