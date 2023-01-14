@@ -3,7 +3,8 @@ if not status then
 	return
 end
 
-saga.init_lsp_saga()
+-- saga.init_lsp_saga()
+saga.setup({})
 
 local keymap = vim.keymap.set
 vim.g.maplocalleader = ","

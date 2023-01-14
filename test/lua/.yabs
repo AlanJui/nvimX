@@ -1,0 +1,18 @@
+return {
+	languages = {
+		python = {
+			tasks = {
+				run = {
+					command = "lua %",
+					output = "terminal",
+				},
+			},
+		},
+	},
+	tasks = {
+		build = {
+			command = "cargo build",
+			output = "consolation",
+		},
+	},
+}

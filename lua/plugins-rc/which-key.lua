@@ -20,7 +20,7 @@ local mappings = {
 		":FloatermNew --height=0.7 --width=0.9 --wintype=float  ranger<CR>",
 		"Quick viewer",
 	},
-	["z"] = { "UndotreeToggle<CR>", "Undo tree" },
+	["U"] = { "UndotreeToggle<CR>", "Undo tree" },
 	-- Actions
 	a = {
 		name = "Actions",
@@ -373,6 +373,41 @@ local mappings = {
 		V = {
 			':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
 			"Increase height",
+		},
+	},
+	-- Trouble List
+	z = {
+		name = "Trouble",
+		x = { ":TroubleToggle<CR>", "On/Off TroubleToggle" },
+		r = { ":TroubleToggle lsp_references<CR>", "Display LSP References" },
+		q = { ":TroubleToggle quickfix<CR>", "List QuickFix" },
+		w = {
+			":TroubleToggle workspace_diagnostics<CR>",
+			"List diatnostics of workspace",
+		},
+		d = {
+			":TroubleToggle document_diagnostics<CR>",
+			"List diatnostics of current file",
+		},
+		l = { ":TroubleToggle loclist<CR>", "List loclist" },
+		j = {
+			name = "Jump",
+			f = {
+				'<cmd>lua require("trouble").first({skip_groups = true, jump = true})',
+				"Jump to the first item, skipping the groups",
+			},
+			p = {
+				'<cmd>lua require("trouble").previous({skip_groups = true, jump = true})',
+				"Jump to the previous item, skipping the groups",
+			},
+			n = {
+				'<cmd>lua require("trouble").next({skip_groups = true, jump = true})<CR>',
+				"Jump to the next item, skipping the groups",
+			},
+			l = {
+				'<cmd>lua require("trouble").last({skip_groups = true, jump = true})',
+				"Jump to the last item, skipping the groups",
+			},
 		},
 	},
 }

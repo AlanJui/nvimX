@@ -58,10 +58,10 @@ local c_config = {
 local lua_config = {
 	tasks = {
 		run = {
-			command = "luafile %", -- The command to run (% and other
+			command = "lua %", -- The command to run (% and other
 			-- wildcards will be automatically
 			-- expanded)
-			type = "vim", -- The type of command (can be `vim`, `lua`, or
+			type = "lua", -- The type of command (can be `vim`, `lua`, or
 			-- `shell`, default `shell`)
 		},
 	},

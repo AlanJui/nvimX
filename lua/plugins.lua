@@ -141,7 +141,6 @@ return packer.startup(function(use)
 	use({
 		"glepnir/lspsaga.nvim",
 		branch = "main",
-		requires = { "neovim/nvim-lspconfig" },
 	})
 	-- vscode-like pictograms for neovim lsp completion items Topics
 	use({ "onsails/lspkind-nvim" })
@@ -268,6 +267,19 @@ return packer.startup(function(use)
 	-----------------------------------------------------------
 	-- Coding Tools
 	-----------------------------------------------------------
+	-- A pretty list for showing diagnostics, references, telescope results, quickfix and
+	-- location lists to help you solve all the trouble your code is causing.
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
+	})
 	-- Yet Another Build System
 	use({ "pianocomposer321/yabs.nvim", requires = { "nvim-lua/plenary.nvim" } })
 	-- terminal
