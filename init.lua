@@ -110,8 +110,10 @@ local function blah()
 	print("====================================================================")
 	print("Neovim RTP(Run Time Path ...)")
 	-- P(vim.api.nvim_list_runtime_paths())
-	print_table(vim.opt.runtimepath:get())
-	print(string.format("OS = %s", which_os()))
+	-- PrintTable(vim.opt.runtimepath:get())
+	-- print(string.format("OS = %s", WhichOS()))
+	_G.print_table(vim.opt.runtimepath:get())
+	print(string.format("OS = %s", _G.which_os()))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
 	print(string.format("DEBUGPY = %s", vim.g.debugpy))
 
@@ -122,4 +124,4 @@ local function blah()
 	print("====================================================================")
 end
 
-blah()
+-- blah()

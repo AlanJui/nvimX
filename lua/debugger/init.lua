@@ -142,22 +142,16 @@ end
 -- 各程式語言所用之「除錯接合器」載入作業
 -- 手動下載程式語言專屬之 DAP：
 -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-local function load_language_specific_dap()
+local function load_language_specific_dap(arg_dap)
 	-- Python Language
-	-- require('dap-debug.dap.django').setup(dap)
-	require("debugger.adapter.python").setup(dap)
+	-- require("debugger/adapter/django").setup(arg_dap)
+	require("debugger/adapter/python").setup(arg_dap)
+
+	-- Node.js
+	require("debugger/adapter/nodejs").setup(arg_dap)
 
 	-- Lua language
-	require("debugger.adapter.lua").setup(dap)
-
-	-- local dap_config = {
-	--     python = require('dap-debug.dap-python'),
-	--     lua = require('dap-debug.dap-lua'),
-	-- }
-	-- for dap_name, dap_options in pairs(dap_config) do
-	--     dap.adapters[dap_name] = dap_options.adapters
-	--     dap.configurations[dap_name] = dap_options.configurations
-	-- end
+	require("debugger/adapter/lua").setup(arg_dap)
 end
 
 -----------------------------------------------------------
@@ -165,8 +159,31 @@ end
 -----------------------------------------------------------
 
 setup_style_of_breakpoint()
-load_language_specific_dap()
+load_language_specific_dap(dap)
 configure_debug_ui()
+
+-- dap.configurations.lua = {
+-- 	{
+-- 		type = "nlua",
+-- 		request = "attach",
+-- 		name = "Attach to running Neovim instance",
+-- 		host = function()
+-- 			local value = vim.fn.input("Host [127.0.0.1]: ")
+-- 			if value ~= "" then
+-- 				return value
+-- 			end
+-- 			return "127.0.0.1"
+-- 		end,
+-- 		port = function()
+-- 			local val = tonumber(vim.fn.input("Port: "))
+-- 			assert(val, "Please provide a port number")
+-- 			return val
+-- 		end,
+-- 	},
+-- }
+-- dap.adapters.nlua = function(callback, config)
+-- 	callback({ type = "server", host = config.host, port = config.port })
+-- end
 
 -- DAP 操作之各項「操作指令」，於 which_key 中之 "debug" 指令選單中設定。
 -- 設定【快捷鍵】
