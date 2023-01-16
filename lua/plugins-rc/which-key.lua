@@ -174,6 +174,17 @@ local mappings = {
 	-- Debug
 	d = {
 		name = "Debug",
+		l = {
+			name = "Lua",
+			l = {
+				[[ :lua require("osv").launch({ port = 8086 })<CR> ]],
+				[[ Launch the Lua Server in the debuggee ]],
+			},
+			r = {
+				[[ :lua require("osv").run_this()<CR> ]],
+				[[ Launch Lua file ]],
+			},
+		},
 		b = {
 			"<cmd>lua require'dap'.toggle_breakpoint()<CR>",
 			"Toggle breakpoint",

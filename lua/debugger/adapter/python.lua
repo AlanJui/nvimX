@@ -25,44 +25,32 @@ local get_venv_python_path = function()
 	end
 end
 
-local python_config = {
-	-- The first three options are required by nvim-dap
-	type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-	request = "launch",
-	name = "Launch file",
-
-	program = "${file}", -- This configuration will launch the current file if used.
-	pythonPath = get_venv_python_path(),
-}
-
-local django_config = {
-	type = "python",
-	request = "launch",
-	name = "Launch Django",
-	-- cwd = '${workspaceFolder}',
-	program = "${workspaceFolder}/manage.py",
-	args = {
-		"runserver",
-		"--noreload",
-	},
-	console = "integratedTerminal",
-	justMyCode = true,
-	pythonPath = get_venv_python_path(),
-}
-
 M.setup = function(dap)
 	-- configure DAP Adapter
-	dap.adapters.python = {
-		type = "executable",
-		command = debugpy_path,
-		args = { "-m", "debugpy.adapter" },
-	}
+	dap_python.setup(debugpy_path)
 
 	-- configure configurations of dap Adapter
-	dap.configurations.python = {
-		python_config,
-		django_config,
-	}
+	table.insert(dap.configurations.python, {
+		type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+		request = "launch",
+		name = "Launch Python file",
+		program = "${file}", -- This configuration will launch the current file if used.
+		pythonPath = get_venv_python_path(),
+	})
+	table.insert(dap.configurations.python, {
+		type = "python",
+		request = "launch",
+		name = "Launch Django",
+		-- cwd = '${workspaceFolder}',
+		program = "${workspaceFolder}/manage.py",
+		args = {
+			"runserver",
+			"--noreload",
+		},
+		console = "integratedTerminal",
+		justMyCode = true,
+		pythonPath = get_venv_python_path(),
+	})
 end
 
 return M

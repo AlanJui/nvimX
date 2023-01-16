@@ -132,7 +132,8 @@ return packer.startup(function(use)
 			"ckipp01/stylua-nvim",
 		},
 	})
-	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+	-- bridges gap b/w mason & null-ls
+	use("jay-babu/mason-null-ls.nvim")
 	-- automatically highlighting other uses of the current word under the cursor
 	use({ "RRethy/vim-illuminate" })
 	-- Support LSP CodeAction
