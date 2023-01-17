@@ -20,6 +20,7 @@
 --      using the widget UI
 ------------------------------------------------------------------
 local dap = safe_require("dap")
+-- local mason_nvim_dap = safe_require("mason-nvim-dap")
 -- 設定「除錯接合器」在「使用者介面（UI）」的配置及監控事件
 local dapui = safe_require("dapui")
 
@@ -154,14 +155,109 @@ local function load_language_specific_dap(arg_dap)
 	-- require("debugger/adapter/nodejs").setup(arg_dap)
 end
 
------------------------------------------------------------
--- Main processes
------------------------------------------------------------
+------------------------------------------------
 
-setup_style_of_breakpoint()
-load_language_specific_dap(dap)
-configure_debug_ui()
+local function dap_automatic_setup()
+	-- mason_nvim_dap.setup_handlers({
+	require("mason-nvim-dap").setup_handlers({
+		function(source_name)
+			-- all sources with no handler get passed here
 
+			-- Keep original functionality of `automatic_setup = true`
+			-- mason_nvim_dap.automatic_setup(source_name)
+			require("mason-nvim-dap.automatic_setup")(source_name)
+		end,
+		python = function(source_name)
+			local workspace_folder = vim.fn.getcwd()
+			local pyenv_virtual_env = os.getenv("VIRTUAL_ENV")
+			local pyenv_python_path = pyenv_virtual_env .. "/bin/python"
+
+			local get_venv_python_path = function()
+				-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+				-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+				-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+				if vim.fn.executable(pyenv_python_path) then
+					return pyenv_python_path
+				elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") == 1 then
+					return workspace_folder .. "/venv/bin/python"
+				elseif vim.fn.executable(workspace_folder .. "/.venv/bin/python") == 1 then
+					return workspace_folder .. "/.venv/bin/python"
+				else
+					return "/usr/bin/python"
+				end
+			end
+
+			-- local debugpy_path = os.getenv("HOME") .. "/.virtualenvs/debugpy/bin/python"
+			local debugpy_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+			dap.adapters.python = {
+				type = "executable",
+				command = debugpy_path,
+				args = {
+					"-m",
+					"debugpy.adapter",
+				},
+			}
+			dap.configurations.python = {
+				{
+					type = "python",
+					request = "launch",
+					name = "Launch Python file",
+					program = "${file}", -- This configuration will launch the current file if used.
+					pythonPath = get_venv_python_path(),
+				},
+				{
+					type = "python",
+					request = "launch",
+					name = "Launch Django",
+					-- cwd = '${workspaceFolder}',
+					program = "${workspaceFolder}/manage.py",
+					args = {
+						"runserver",
+						"--noreload",
+					},
+					console = "integratedTerminal",
+					justMyCode = false,
+					pythonPath = get_venv_python_path(),
+				},
+			}
+		end,
+		node2 = function(source_name)
+			local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
+			-- local debug_server_path = vim.fn.stdpath("data")
+			-- .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
+
+			dap.adapters.node2 = {
+				type = "executable",
+				command = "node",
+				args = {
+					debug_server_path,
+				},
+			}
+
+			dap.configurations.javascript = {
+				{
+					name = "Launch",
+					type = "node2",
+					request = "launch",
+					program = "${file}",
+					cwd = vim.fn.getcwd(),
+					sourceMaps = true,
+					protocol = "inspector",
+					console = "integratedTerminal",
+				},
+				{
+					-- For this to work you need to make sure the node process is started with the `--inspect` flag.
+					name = "Attach to process",
+					type = "node2",
+					request = "attach",
+					processId = require("dap.utils").pick_process,
+				},
+			}
+		end,
+	})
+end
+
+-----------------------------------------------------------
 -- DAP 操作之各項「操作指令」，於 which_key 中之 "debug" 指令選單中設定。
 -- 設定【快捷鍵】
 vim.cmd([[
@@ -172,3 +268,22 @@ nnoremap <silent> <F10> <cmd>lua require'dap'.step_over()<CR>
 nnoremap <silent> <F11> <cmd>lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> <cmd>lua require'dap'.step_out()<CR>
 ]])
+-----------------------------------------------------------
+-- Main processes
+-----------------------------------------------------------
+
+-- 務必確認以下的設定指令，須依如下順序執行
+-- require("mason").setup(...)
+-- require("mason-nvim-dap").setup(...),
+-- mason_nvim_dap.setup({
+-- require("mason-nvim-dap").setup({
+-- 	ensure_installed = {
+-- 		"python",
+-- 		"node2",
+-- 	},
+-- 	automatic_setup = true,
+-- })
+-- dap_automatic_setup()
+setup_style_of_breakpoint()
+configure_debug_ui()
+load_language_specific_dap(dap)

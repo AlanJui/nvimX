@@ -171,55 +171,6 @@ local mappings = {
 			},
 		},
 	},
-	-- Debug
-	d = {
-		name = "Debug",
-		l = {
-			name = "Lua",
-			l = {
-				[[ :lua require("osv").launch({ port = 8086 })<CR> ]],
-				[[ Launch the Lua Server in the debuggee ]],
-			},
-			r = {
-				[[ :lua require("osv").run_this()<CR> ]],
-				[[ Launch Lua file ]],
-			},
-		},
-		b = {
-			"<cmd>lua require'dap'.toggle_breakpoint()<CR>",
-			"Toggle breakpoint",
-		},
-		B = {
-			"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition<cmd> '))<CR>",
-			"Condition breakpoint",
-		},
-		c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
-		s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
-		R = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run to Cursor" },
-		i = { "<cmd>lua require'dap'.step_into()<CR>", "Step into" },
-		o = { "<cmd>lua require'dap'.step_over()<CR>", "Step over" },
-		O = { "<cmd>lua require'dap'.step_out()<CR>", "Step out" },
-		p = { "<cmd>lua require'dap'.pause.toggle()<cr>", "Pause" },
-		g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
-		d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
-		x = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
-		q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
-		Q = {
-			"<cmd>lua require'dap'.close()<CR><cmd>lua require'dap.repl'.close()<CR><cmd>lua require'dapui'.close()<CR><cmd>DapVirtualTextForceRefresh<CR>",
-			"Quit Nvim DAP",
-		},
-		-- Show contents in Variable when mouse pointer hover
-		h = { "<cmd>lua require'dap.ui.widgets'.hover()<cr>", "Hover Variables" },
-		e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
-		S = { "<cmd>lua require'dap.ui.widgets'.scopes()<cr>", "Scopes" },
-		u = { "<cmd>lua require'dapui'.toggle()<CR>", "Show/Hide Debug Sidebar" },
-		V = {
-			"<cmd>lua local widgets=require'dap.ui.widgets'; widgets.centered_float(widgets.scopes)<CR>",
-			"Use widgets to display the variables",
-		},
-		-- REPEL
-		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
-	},
 	-- Git
 	g = {
 		name = "Git",

@@ -37,9 +37,10 @@ keymap.set("n", "<M-<>", "V<<Esc>")
 keymap.set("i", "<C-CR>", "<Esc>A<Esc>jddO")
 
 -- Insert line
-keymap.set("i", "<M-n>", "<Esc>o")
-keymap.set("i", "<M-i>", "<Esc>o<Esc>jddkA")
-keymap.set("n", "<M-i>", "^i<Tab>")
+keymap.set("i", "<M-o>", "<Esc>oi")
+keymap.set("i", "<M-n>", "<Esc>jO")
+keymap.set("i", "<M-i>", "<Esc>O<Esc>jddkA")
+keymap.set("n", "<M-i>", "O")
 -- Insert text in HTML Tags
 keymap.set("i", "<M-lt>", "<CR><Esc>O")
 
@@ -59,8 +60,8 @@ keymap.set("n", "<S-Down>", ":m .+1<CR>gv=gv")
 keymap.set("n", "<S-Up>", ":m .-2<CR>gv=gv")
 keymap.set("i", "<S-Down>", "<Esc>:m .+1<CR>")
 keymap.set("i", "<S-Up>", "<Esc>:m .-2<CR>")
-keymap.set("v", "<S-Down>", ":move '>+1<CR>gv-gv")
-keymap.set("v", "<S-Up>", ":move '<-2<CR>gv-gv")
+keymap.set("v", "<S-Down>", ":move '>+1<CR>gv=gv")
+keymap.set("v", "<S-Up>", ":move '<-2<CR>gv=gv")
 
 -- Indent/Unident
 keymap.set("v", "<", "<gv")

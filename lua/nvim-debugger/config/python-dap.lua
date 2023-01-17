@@ -5,6 +5,8 @@ end
 
 local M = {}
 
+local dap = require("dap")
+
 -- local debug_server_path = os.getenv("HOME") .. "/.virtualenvs/debugpy/bin/python"
 local debug_server_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
 local workspace_folder = vim.fn.getcwd()
@@ -26,32 +28,36 @@ local get_venv_python_path = function()
 	end
 end
 
-M.setup = function(dap)
+local python_config = {
+	type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+	request = "launch",
+	name = "Launch Python file",
+	program = "${file}", -- This configuration will launch the current file if used.
+	pythonPath = get_venv_python_path(),
+}
+
+local django_config = {
+	type = "python",
+	request = "launch",
+	name = "Launch Django",
+	-- cwd = '${workspaceFolder}',
+	program = "${workspaceFolder}/manage.py",
+	args = {
+		"runserver",
+		"--noreload",
+	},
+	console = "integratedTerminal",
+	justMyCode = true,
+	pythonPath = get_venv_python_path(),
+}
+
+function M.setup()
 	-- configure DAP Adapter
 	dap_python.setup(debug_server_path)
 
 	-- configure configurations of dap Adapter
-	table.insert(dap.configurations.python, {
-		type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-		request = "launch",
-		name = "Launch Python file",
-		program = "${file}", -- This configuration will launch the current file if used.
-		pythonPath = get_venv_python_path(),
-	})
-	table.insert(dap.configurations.python, {
-		type = "python",
-		request = "launch",
-		name = "Launch Django",
-		-- cwd = '${workspaceFolder}',
-		program = "${workspaceFolder}/manage.py",
-		args = {
-			"runserver",
-			"--noreload",
-		},
-		console = "integratedTerminal",
-		justMyCode = true,
-		pythonPath = get_venv_python_path(),
-	})
+	table.insert(dap.configurations.python, python_config)
+	table.insert(dap.configurations.python, django_config)
 end
 
 return M

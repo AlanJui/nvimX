@@ -102,6 +102,12 @@ require("keymaps")
 -- For folding
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.cmd([[
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+]])
 
 -- Say hello
 local function blah()

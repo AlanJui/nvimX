@@ -7,7 +7,6 @@ require("plugins-rc/nvim-treesitter")
 
 -- lsp
 require("lsp")
-require("plugins-rc/lspkind")
 
 -- status line
 require("plugins-rc/lualine-material")
@@ -50,7 +49,8 @@ vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
 
 -- debug & unit testing
-require("debugger")
+-- require("debugger")
+require("nvim-debugger").setup()
 require("unit-test")
 
 -- Load Which-key

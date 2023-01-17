@@ -1,7 +1,9 @@
 -- Node.js Adapter
 local M = {}
 
-local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
+-- local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
+-- local debug_server_path = vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
+local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-js-debug/out/src/vsDebugServer.js"
 
 -- configure DAP Adapter
 function M.setup(dap)

@@ -31,12 +31,12 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
 -- autocommand that reloads neovim and installs/updates/removes plugins
 -- when file is saved
-vim.cmd([[
-augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-augroup end
-]])
+-- vim.cmd([[
+-- augroup packer_user_config
+--     autocmd!
+--     autocmd BufWritePost plugins.lua source <afile> | PackerSync
+-- augroup end
+-- ]])
 
 -----------------------------------------------------------------
 -- 確認擴充套件 packer.nvim 已安裝，以便執行「初始設定作業」。
@@ -122,8 +122,6 @@ return packer.startup(function(use)
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
-	-- AI code auto-complete
-	use({ "github/copilot.vim" })
 	-- formatting & linting
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
@@ -148,6 +146,8 @@ return packer.startup(function(use)
 	-- additional functionality for typescript server
 	-- (e.g. rename file & update imports)
 	use({ "jose-elias-alvarez/typescript.nvim" })
+	-- AI code auto-complete
+	-- use({ "github/copilot.vim" })
 
 	-----------------------------------------------------------
 	-- Treesitter: for better syntax
@@ -299,17 +299,16 @@ return packer.startup(function(use)
 	-- DAP
 	-----------------------------------------------------------
 	use({ "mfussenegger/nvim-dap" })
-	-- nvim-dap’s functionality for managing various debuggers.
-	-- use({ 'Pocco81/DAPInstall.nvim' })
-	-- Manage debuggers provided by nvim-dap.
-	use({ "Pocco81/dap-buddy.nvim" })
+	-- use({ "jay-babu/mason-nvim-dap.nvim" })
 	--
 	-- Language specific exensions
 	--
-	-- DAP adapter for Python
+	-- DAP for Python
 	use({ "mfussenegger/nvim-dap-python" })
-	-- DAP adapter for the Neovim lua language
+	-- DAP for Lua work in Neovim
 	use({ "jbyuki/one-small-step-for-vimkind" })
+	-- DAP for Node.js
+	use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
 	--
 	-- DAP UI Extensions
 	--
@@ -317,7 +316,7 @@ return packer.startup(function(use)
 	use({ "rcarriga/nvim-dap-ui" })
 	-- Inlines the values for variables as virtual text using treesitter.
 	use({ "theHamsta/nvim-dap-virtual-text" })
-	-- Integration for nvim-dap with telescope.nvim
+	-- -- Integration for nvim-dap with telescope.nvim
 	use({ "nvim-telescope/telescope-dap.nvim" })
 	-- UI integration for nvim-dat with fzf
 	use({ "ibhagwan/fzf-lua" })
