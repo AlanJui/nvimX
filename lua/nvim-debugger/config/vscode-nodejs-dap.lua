@@ -63,6 +63,12 @@ function M.setup()
 				processId = require("dap.utils").pick_process,
 				cwd = "${workspaceFolder}",
 			},
+			{
+				type = "pwa-node",
+				request = "launch",
+				name = "Launch Program",
+				program = "${workspaceFolder}/bin/www",
+			},
 		}
 	end
 end

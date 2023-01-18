@@ -122,6 +122,7 @@ return packer.startup(function(use)
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
+	use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
 	-- formatting & linting
 	use({
 		"jose-elias-alvarez/null-ls.nvim",

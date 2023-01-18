@@ -1,4 +1,5 @@
 _archived/
+node_modules/
 
 test/.vscode/
 test/**/*.aux
@@ -11,4 +12,3 @@ test/**/*.log
 
 plugin/packer_compiled.lua
 tags
-
