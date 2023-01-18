@@ -131,3 +131,10 @@ local function blah()
 end
 
 -- blah()
+
+-- print("DAP = nvim-debugger/config/vscode-nodejs-dap")
+-- print(require("nvim-debugger/config/vscode-nodejs-dap").show_config())
+-- print("DAP = nvim-debugger/config/vscode-nodejs-dap2")
+-- print(require("nvim-debugger/config/vscode-nodejs2-dap2").show_config())
+print("DAP = nvim-debugger/config/vscode-nodejs-dap3")
+print(require("nvim-debugger/config/vscode-nodejs-dap3").show_config())

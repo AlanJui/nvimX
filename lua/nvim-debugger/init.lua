@@ -146,7 +146,9 @@ local function load_language_specific_dap()
 	require("nvim-debugger/config/lua-dap").setup()
 	require("nvim-debugger/config/python-dap").setup()
 	-- require("nvim-debugger/config/nodejs-dap").setup()
-	require("nvim-debugger/config/vscode-nodejs-dap").setup()
+	-- require("nvim-debugger/config/vscode-nodejs-dap").setup()
+	-- require("nvim-debugger/config/vscode-nodejs-dap2").setup()
+	require("nvim-debugger/config/vscode-nodejs-dap3").setup()
 end
 
 local function setup_keymaps()

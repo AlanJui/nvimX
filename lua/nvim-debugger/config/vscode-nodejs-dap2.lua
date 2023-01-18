@@ -1,7 +1,3 @@
-----------------------------------------------------------------------------------------------------
--- Use Mason to install js-debug-adapter
--- the vscode-js-debug is called js-debug-adapter in mason
-----------------------------------------------------------------------------------------------------
 local ok, dap = pcall(require, "dap")
 local ok2, dap_vscode_js = pcall(require, "dap-vscode-js")
 if not ok or not ok2 then
@@ -11,8 +7,7 @@ end
 local M = {}
 
 local node_path = os.getenv("HOME") .. "/n/bin/node"
--- local debugger_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/vscode-js-debug"
-local debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
+local debugger_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/vscode-js-debug"
 local debugger_cmd = { "js-debug-adapter" }
 
 local function setup_vscode_js_debugger()
