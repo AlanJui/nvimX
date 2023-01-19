@@ -44,17 +44,17 @@ local function setup_run_time_path(nvim_name)
 end
 
 -- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
-local vim_name = MY_VIM
+local nvim_dir = os.getenv("MY_NVIM") or "nvim"
 local is_debug = false
 
-if vim_name ~= "nvim" then
+if nvim_dir ~= "nvim" then
     -- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
     if is_debug then
         print_rtp()
     end
 
     -- change Neovm default RTP
-    setup_run_time_path(vim_name)
+    setup_run_time_path(nvim_dir)
 
     if is_debug then
         print_rtp()
