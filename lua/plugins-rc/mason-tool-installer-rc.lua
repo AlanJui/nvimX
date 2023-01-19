@@ -1,3 +1,7 @@
+if not safe_require("mason-tool-installer") then
+	return
+end
+
 require("mason-tool-installer").setup({
 
 	-- a list of all tools you want to ensure are installed upon
