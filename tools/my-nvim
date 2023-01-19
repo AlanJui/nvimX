@@ -1,0 +1,6 @@
+#!/bin/sh
+export MY_NVIM="my-nvim"
+export MY_CONFIG_DIR="$HOME/.config/$MY_NVIM"
+export MY_RUNTIME_DIR="$HOME/.local/share/$MY_NVIM"
+
+exec nvim -u "$MY_CONFIG_DIR/init.lua" --cmd "luafile $MY_CONFIG_DIR/my-nvim-rtp.lua" "$@"

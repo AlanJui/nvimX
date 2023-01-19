@@ -42,9 +42,16 @@ function ShowNodejsDAP()
 end
 
 function PrintTable(table)
-	for k, v in pairs(table) do
-		print("key = ", k, "    value = ", v)
+	for index, data in ipairs(table) do
+		print(index)
+
+		for key, value in pairs(data) do
+			print(string.format("key = %s, value = %s", key, value))
+		end
 	end
+	-- for k, v in pairs(table) do
+	-- 	print("key = ", k, "    value = ", v)
+	-- end
 end
 
 function WhichOS()

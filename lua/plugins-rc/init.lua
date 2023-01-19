@@ -50,8 +50,7 @@ vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
 
 -- debug & unit testing
--- require("debugger")
-require("nvim-debugger").setup()
+require("debugger").setup()
 require("unit-test")
 
 -- Load Which-key

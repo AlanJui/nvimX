@@ -102,6 +102,13 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
+-- folding
+opt.foldmethod = "indent"
+opt.foldnestmax = 10
+opt.foldenable = true
+opt.foldlevel = 2
+
+---------------------------------------------------------------------------------
 opt.iskeyword:append("-") -- consider string-string as whole word
 
 vim.opt.scrolloff = 8

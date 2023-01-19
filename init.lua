@@ -99,18 +99,19 @@ require("keymaps")
 -- 實驗用的臨時設定
 -----------------------------------------------------------
 
--- For folding
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.cmd([[
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-]])
+-- Folding
+-- vim.cmd([[
+-- set foldmethod=indent
+-- set foldnestmax=10
+-- set nofoldenable
+-- set foldlevel=2
+-- ]])
 
--- Say hello
-local function blah()
+-----------------------------------------------------------
+-- Debug Tools
+-- 除錯用工具
+-----------------------------------------------------------
+local function nvim_env_info()
 	print("Neovim: " .. MY_VIM)
 	print("init.lua is loaded!")
 	print("====================================================================")
@@ -130,11 +131,10 @@ local function blah()
 	print("====================================================================")
 end
 
--- blah()
-
--- print("DAP = nvim-debugger/config/vscode-nodejs-dap")
--- print(require("nvim-debugger/config/vscode-nodejs-dap").show_config())
--- print("DAP = nvim-debugger/config/vscode-nodejs-dap2")
--- print(require("nvim-debugger/config/vscode-nodejs2-dap2").show_config())
--- print("DAP = nvim-debugger/config/vscode-nodejs-dap3")
--- print(require("nvim-debugger/config/vscode-nodejs-dap3").show_config())
+-- nvim_env_info()
+-----------------------------------------------------------
+-- Get configurations of DAP
+-- 取得 DAP 設定結果
+-----------------------------------------------------------
+print("DAP = debugger/adapter/vscode-nodejs-dap")
+print(require("debugger/adapter/vscode-nodejs-dap").show_config())
