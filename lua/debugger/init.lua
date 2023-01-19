@@ -152,11 +152,7 @@ end
 -- Main processes
 -----------------------------------------------------------
 
-function M.setup()
-	setup_style_of_breakpoint()
-	setup_debug_ui()
-	load_language_specific_dap()
-	require("debugger/keymaps").setup()
-end
-
-return M
+setup_style_of_breakpoint()
+setup_debug_ui()
+load_language_specific_dap()
+require("debugger/keymaps").setup()
