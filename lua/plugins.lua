@@ -295,6 +295,7 @@ return packer.startup(function(use)
 			"antoinemadec/FixCursorHold.nvim",
 		},
 	})
+	use({ "neotest-plenary" })
 	use("nvim-neotest/neotest-python")
 	-----------------------------------------------------------
 	-- DAP
