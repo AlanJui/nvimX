@@ -32,16 +32,29 @@
 
 "autocmd FileType plantuml nnoremap <buffer> <Leader>b :!java -jar ~/.vim/autoload/plantuml.jar -tpng -o %:p:h %<cr>
 " autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = '~/.vim/autoload/plantuml.jar'
+" PlantUML was installed by homebrew
+" autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = get(
+"
+"     \  matchlist(system('cat `which plantuml` | grep plantuml.jar'), '\v.*\s[''"]?(\S+plantuml\.jar).*'),
+"     \  1,
+"     \  0
+"     \)
 
-autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = '/Users/alanjui/bin/plantuml.jar'
 
-" PlantumlSave default formate
-let g:plantuml_previewer#save_format = 'png'
+lua << EOF
+
+local plantuml_jar_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/plantuml-previewer.vim/lib/plantuml.jar'
+vim.g.puml_jar_path = plantuml_jar_path
+vim.g.puml_previewer = vim.fn.stdpath('data') .. '/site/pack/packer/start/plantuml-previewer.vim/viewer/dist'
+
+EOF
 
 " The plugin will copy viewer to here if the directory does not exist.
 " And tmp.puml and tmp.svg will output to here.
 " Defualt Home Page Path: ~/.vim/plugged/plantuml-previewer.vim/viewer/dist/index.html
+" let g:plantuml_previewer#viewer_path = puml_previewer
+autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = g:puml_jar_path
+" autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/Users/alanjui/.local/share/nvim/site/pack/packer/start/plantuml-previewer.vim/lib/plantuml.jar"
 
-"let g:plantuml_previewer#viewer_path = '~/.vim/plugged/plantuml-previewer.vim/viewer/dist'
-"let g:plantuml_previewer#viewer_path = '/Users/alanjui/bin/plantuml-previewer.vim/viewer/dist'
-
+" PlantumlSave default formate
+let g:plantuml_previewer#save_format = 'png'

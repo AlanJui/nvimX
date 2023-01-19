@@ -44,10 +44,11 @@ require("plugins-rc/vim-gist")
 -- vim.cmd([[ runtime ./lua/plugins-rc/vim-signify.rc.vim]])
 
 -- Utilities
-vim.cmd([[runtime ./lua/plugins-rc/bracey.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vim-instant-markdown.rc.vim]])
+vim.cmd([[runtime ./lua/plugins-rc/markdown-preview-nvim.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/plantuml-previewer.rc.vim]])
 vim.cmd([[runtime ./lua/plugins-rc/vimtex.rc.vim]])
+vim.cmd([[runtime ./lua/plugins-rc/bracey.rc.vim]])
 
 -- debug & unit testing
 require("debugger")

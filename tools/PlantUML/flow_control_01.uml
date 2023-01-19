@@ -1,0 +1,16 @@
+@startuml
+start
+switch (测试?)
+case ( 条件 A )
+  :Text 1;
+case ( 条件 B ) 
+  :Text 2;
+case ( 条件 C )
+  :Text 3;
+case ( 条件 D )
+  :Text 4;
+case ( 条件 E )
+  :Text 5;
+endswitch
+stop
+@enduml
