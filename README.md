@@ -86,27 +86,13 @@ Neovim 預設之安裝目錄路徑為：`~/.config/nvim/` ，但使用者仍可�
 本專案之安裝作業，可採用：預設、自訂兩種方式，如以下流程圖所示。
 
 ```mermaid
-flowchart TB
-
-st->op1->cond
-cond(yes)->sub1->e
-cond(no)->sub2->e
-st=>start: Start
-e=>end: End
-
-op1=>operation: 決定安裝目錄路徑
-sub1=>subroutine: 執行《預設安裝作業》
-sub2=>subroutine: 執行《自訂安裝作業》
-cond=>condition: 採用預設
-
-```
-
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+flowchart LR
+  S([開始]) --> A
+  A[決定安裝目錄路徑]-->B{採用預設};
+  B-- 是 -->C[[執行預設安裝作業]];
+  B-- 否 -->D[[執行自訂安裝作業]];
+  C --> E([結束])
+  D --> E
 ```
 
 ## 預設安裝作業（Default Install Process）
@@ -126,7 +112,7 @@ git clone git@github.com:AlanJui/nvimX.git ~/.config/nvim
 啟動的時候，檢查 packer.nvim 是否已存在；並於必要的時候後，自動執行安裝作業。
 另外，nvim 使用到的各種插件，也會由 packer.nvim 自動進行安裝。
 
-(1) 安裝執行檔 nvim
+�@71�@7 安裝執行檔 nvim
 
 請依下列指令，完成 nvim 這個 Shell Script 執行檔的安裝作業。
 
