@@ -85,17 +85,28 @@ Neovim 預設之安裝目錄路徑為：`~/.config/nvim/` ，但使用者仍可�
 將此預設變更，【例】使用者自訂目錄路徑為：`~/.config/my-nvim/`。
 本專案之安裝作業，可採用：預設、自訂兩種方式，如以下流程圖所示。
 
-```flowchart
+```mermaid
+flowchart TB
+
+st->op1->cond
+cond(yes)->sub1->e
+cond(no)->sub2->e
 st=>start: Start
 e=>end: End
+
 op1=>operation: 決定安裝目錄路徑
 sub1=>subroutine: 執行《預設安裝作業》
 sub2=>subroutine: 執行《自訂安裝作業》
 cond=>condition: 採用預設
 
-st->op1->cond
-cond(yes)->sub1->e
-cond(no)->sub2->e
+```
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ```
 
 ## 預設安裝作業（Default Install Process）
