@@ -347,16 +347,16 @@ return packer.startup(function(use)
     -- Markdown support Mermaid
     -- use({ "iamcco/markdown-preview.nvim" })
     -- install without yarn or npm
-    -- use({
-    --     "iamcco/markdown-preview.nvim",
-    --     run = "cd app && npm install",
-    --     setup = function()
-    --         vim.g.mkdp_filetypes = { "markdown" }
-    --     end,
-    --     ft = { "markdown" },
-    -- })
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
+    })
     -- Markdown preview
-    use({ "instant-markdown/vim-instant-markdown" })
+    -- use({ "instant-markdown/vim-instant-markdown" })
     -- highlight your todo comments in different styles
     -- use({
     -- 	'folke/todo-comments.nvim',

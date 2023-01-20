@@ -81,6 +81,28 @@ LSP Servers 時，其存取的「目錄」預設如下：
 
 ## 安裝與設定作業（Setup process）
 
+Neovim 預設之安裝目錄路徑為：`~/.config/nvim/` ，但使用者仍可依個人需求，
+將此預設變更，【例】使用者自訂目錄路徑為：`~/.config/my-nvim/`。
+本專案之安裝作業，可採用：預設、自訂兩種方式，如以下流程圖所示。
+
+```flowchart
+st=>start: Start
+e=>end: End
+op1=>operation: 決定安裝目錄路徑
+sub1=>subroutine: 執行《預設安裝作業》
+sub2=>subroutine: 執行《自訂安裝作業》
+cond=>condition: 採用預設
+
+st->op1->cond
+cond(yes)->sub1->e
+cond(no)->sub2->e
+```
+
+## 預設安裝作業（Default Install Process）
+
+- 設定檔目錄路徑： $HOME/.config/nvim/
+- 插件檔目錄路徑： $HOME/.local/share/nvim/
+
 ### 1. 下載（Download）
 
 ```sh
@@ -163,70 +185,6 @@ nvim
 - Manjaro (ArchLinux)
 - macOS 11.6.1
 - Ubuntu 22.04
-
-## 快捷鍵（Bindings）
-
-【附註】：
-
-**〈leader〉** = `《，》`
-
-| Plugin    | Mapping      | Action                                  |
-| --------- | ------------ | --------------------------------------- |
-|           | \<Space\>e   | Open file explorer                      |
-|           | \<Space\>;   | Open a terminal window                  |
-|           | sp           | Split window horizontally               |
-|           | vs           | Split window vertically                 |
-|           | \<C-H\>      | Move cursor to split left               |
-|           | \<C-J\>      | Move cursor to split down               |
-|           | \<C-K\>      | Move cursor to split up                 |
-|           | \<C-L\>      | Move cursor to split right              |
-|           | fr           | Search & replace in current buffer      |
-|           | tj           | Move one tab left                       |
-|           | tk           | Move one tab right                      |
-|           | tn           | Create a new tab                        |
-|           | to           | Close all other tabs                    |
-|           | gt           | Go to next tabline                      |
-|           | gT           | Go to prettier tabline                  |
-| coc       | \<C-@\>      | Open autocompletion                     |
-| coc       | \<Enter\>    | Select autocompletion                   |
-| coc       | \<S-Tab\>    | Browse previous autocompletion          |
-| coc       | \<Tab\>      | Browse next autocompletion              |
-| coc       | \<C-S\>      | Selections ranges                       |
-| coc       | \<leader\>a  | Applying code action to selected region |
-| coc       | \<leader\>ac | Applying code action for current buffer |
-| coc       | \<leader\>qf | Apply AutoFix on current line           |
-| coc       | \<leader\>l  | Execute code autofix                    |
-| coc       | \<leader\>rn | Rename                                  |
-| coc       | K            | Show document in pop up window          |
-| coc       | gd           | Go to definition                        |
-| coc       | gy           | Go to type definition                   |
-| coc       | gi           | Go to implementation                    |
-| coc       | gr           | Go to references                        |
-| coc       | gr           | Go to references                        |
-| coc       | [g           | Go to prettier diagnostic               |
-| coc       | ]g           | Go to next diagnostic                   |
-| coc       | \<Space\>a   | List all diagnostics                    |
-| coc       | \<Space\>x   | List all coc extensions installed       |
-| coc       | \<Space\>c   | Search command available in coc.nvim    |
-| coc       | \<Space\>o   | Search symbol within outline view       |
-| Telescope | ;b           | Switch opened files                     |
-| Telescope | ;f           | Find file by file name                  |
-| Telescope | ;g           | Find file by keyword(Live Grep)         |
-| Telescope | ;t           | Open Git worktree picker                |
-| Telescope | ;h           | Search help by tags                     |
-
-## 使用插件（Plugins）
-
-- [Lualine](https://github.com/nvim-lualine/lualine.nvim)
-- [Packer](https://github.com/wbthomason/packer.nvim)
-- [Plenary](https://github.com/nvim-lua/plenary.nvim)
-- [Surround](https://github.com/blackCauldron7/surround.nvim)
-- [Telescope](https://github.com/nvim-telescope/telescope.nvim)
-- [Tokyo Night](https://github.com/folke/tokyonight.nvim)
-- [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-- [nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring)
-- [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
-- [vim-commentary](https://github.com/tpope/vim-commentary/)
 
 ## 維護者（Maintainers）
 
