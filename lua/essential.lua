@@ -4,9 +4,9 @@
 -----------------------------------------------------------
 OS_SYS = which_os()
 
-MY_VIM = vim.g.my_vim
 HOME = os.getenv("HOME")
 
+-- MY_VIM 於 init.lua 定義的全域變數
 CONFIG_DIR = HOME .. "/.config/" .. MY_VIM
 RUNTIME_DIR = HOME .. "/.local/share/" .. MY_VIM
 PACKAGE_ROOT = RUNTIME_DIR .. "/site/pack"

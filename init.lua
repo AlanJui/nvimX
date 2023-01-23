@@ -2,11 +2,9 @@
 -- Initial environments for Neovim
 -- 初始階段
 ------------------------------------------------------------------------------
-local init_dir = os.getenv("MY_NVIM")
-MY_VIM = init_dir or "nvim"
+MY_VIM = os.getenv("MY_NVIM") or "nvim"
 DEBUG = false
 -- DEBUG = true
-vim.g.my_vim = MY_VIM
 
 -----------------------------------------------------------
 -- Global Functions
@@ -28,20 +26,20 @@ require("essential")
 --   if vim.fn.exists('g:vscode') then
 --   if vim.fn.exists('g:vscode') == 0 then
 if vim.g.vscode ~= nil then
-    -----------------------------------------------------------
-    -- VSCode extension"
-    -----------------------------------------------------------
-    -- Load plugins
-    require("packer").startup(function(use)
-        use("easymotion/vim-easymotion")
-        use("asvetliakov/vim-easymotion")
-    end)
-    -- Options
-    require("options")
-    -- Key bindings
-    require("keymaps")
+	-----------------------------------------------------------
+	-- VSCode extension"
+	-----------------------------------------------------------
+	-- Load plugins
+	require("packer").startup(function(use)
+		use("easymotion/vim-easymotion")
+		use("asvetliakov/vim-easymotion")
+	end)
+	-- Options
+	require("options")
+	-- Key bindings
+	require("keymaps")
 
-    return
+	return
 end
 
 ------------------------------------------------------------------------------
@@ -59,16 +57,16 @@ end
 -- 對已載入之各擴充套件，進行設定作業
 ------------------------------------------------------------------------------
 if DEBUG then
-    -- (1)
-    local debug_plugins = require("debug-plugins")
-    require("config_debug_env").setup(debug_plugins)
-    -- (2)
-    require("plugins-rc")
+	-- (1)
+	local debug_plugins = require("debug-plugins")
+	require("config_debug_env").setup(debug_plugins)
+	-- (2)
+	require("plugins-rc")
 else
-    -- (1)
-    require("plugins")
-    -- (2)
-    require("plugins-rc")
+	-- (1)
+	require("plugins")
+	-- (2)
+	require("plugins-rc")
 end
 
 ------------------------------------------------------------------------------
@@ -113,23 +111,23 @@ require("keymaps")
 -- 除錯用工具
 -----------------------------------------------------------
 local function nvim_env_info()
-    print("Neovim: " .. MY_VIM)
-    print("init.lua is loaded!")
-    print("====================================================================")
-    print("Neovim RTP(Run Time Path ...)")
-    -- P(vim.api.nvim_list_runtime_paths())
-    -- PrintTable(vim.opt.runtimepath:get())
-    -- print(string.format("OS = %s", WhichOS()))
-    _G.print_table(vim.opt.runtimepath:get())
-    print(string.format("OS = %s", _G.which_os()))
-    print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
-    print(string.format("DEBUGPY = %s", vim.g.debugpy))
+	print("Neovim: " .. MY_VIM)
+	print("init.lua is loaded!")
+	print("====================================================================")
+	print("Neovim RTP(Run Time Path ...)")
+	-- P(vim.api.nvim_list_runtime_paths())
+	-- PrintTable(vim.opt.runtimepath:get())
+	-- print(string.format("OS = %s", WhichOS()))
+	_G.print_table(vim.opt.runtimepath:get())
+	print(string.format("OS = %s", _G.which_os()))
+	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
+	print(string.format("DEBUGPY = %s", vim.g.debugpy))
 
-    -- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
-    local util = require("utils.python")
-    local venv_python = util.get_python_path_in_venv()
-    print(string.format("$VIRTUAL_ENV = %s", venv_python))
-    print("====================================================================")
+	-- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
+	local util = require("utils.python")
+	local venv_python = util.get_python_path_in_venv()
+	print(string.format("$VIRTUAL_ENV = %s", venv_python))
+	print("====================================================================")
 end
 
 nvim_env_info()
