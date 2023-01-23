@@ -74,6 +74,14 @@ function GetHomeDir()
 	return os.getenv("HOME")
 end
 
+function IsFileExist(path)
+	if vim.fn.empty(path) == 0 then
+		return true
+	else
+		return false
+	end
+end
+
 function _G.which_os()
 	local system_name
 

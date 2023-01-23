@@ -121,7 +121,15 @@ local function nvim_env_info()
 	_G.print_table(vim.opt.runtimepath:get())
 	print(string.format("OS = %s", _G.which_os()))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
-	print(string.format("DEBUGPY = %s", vim.g.debugpy))
+	----------------------------------------------------------------------------
+	-- Debugpy installed info
+	----------------------------------------------------------------------------
+	local debugpy_path = os.getenv("HOME") .. "/.local/share/" .. MY_VIM .. "/mason/packages/debugpy/"
+	if IsFileExist(debugpy_path) then
+		print("Debugpy is installed in path: " .. debugpy_path)
+	else
+		print("Debugpy isn't installed yet!")
+	end
 
 	-- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
 	local util = require("utils.python")
@@ -137,3 +145,4 @@ nvim_env_info()
 -----------------------------------------------------------
 -- print("DAP = debugger/adapter/vscode-nodejs-dap")
 -- print(require("debugger/adapter/vscode-nodejs-dap").show_config())
+-- local debugpy_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/debugpy/"
