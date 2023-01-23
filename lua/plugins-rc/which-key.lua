@@ -73,8 +73,8 @@ local mappings = {
 	-- Build (yabs)
 	b = {
 		name = "Build...",
-		T = {
-			name = "tasks",
+		t = {
+			name = "Run tasks with Telescope",
 			t = { ":Telescope yabs tasks<CR>", "List yabs tasks" },
 			g = { ":Telescope yabs globals_tasks<CR>", "List all yabs tasks" },
 			l = {
@@ -82,7 +82,7 @@ local mappings = {
 				"List yabs tasks for language",
 			},
 		},
-		t = { ":Telescope yabs current_language_tasks<CR>", "Tasks for language" },
+		c = { ":Telescope yabs current_language_tasks<CR>", "Tasks for current language" },
 		d = {
 			"<cmd>lua require('yabs'):run_default_task()<CR>",
 			"Run default task",
@@ -90,10 +90,6 @@ local mappings = {
 		l = { "<cmd>lua require('yabs'):run_task('lint')<CR>", "Lint task" },
 		b = { "<cmd>lua require('yabs'):run_task('build')<CR>", "Build task" },
 		r = { "<cmd>lua require('yabs'):run_task('run')<CR>", "Run task" },
-		z = {
-			"<cmd>lua require('yabs').run_command('echo hello, world', 'quickfix', { open_on_run = 'always' })<CR>",
-			"Run command directly",
-		},
 	},
 	-- Coding
 	c = {

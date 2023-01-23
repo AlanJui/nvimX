@@ -61,8 +61,9 @@ local lua_config = {
 			command = "lua %", -- The command to run (% and other
 			-- wildcards will be automatically
 			-- expanded)
-			type = "lua", -- The type of command (can be `vim`, `lua`, or
+			type = "shell", -- The type of command (can be `vim`, `lua`, or
 			-- `shell`, default `shell`)
+			output = "terminal",
 		},
 	},
 }

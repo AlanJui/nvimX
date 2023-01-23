@@ -98,13 +98,18 @@ require("keymaps")
 -- 實驗用的臨時設定
 -----------------------------------------------------------
 
--- Folding
--- vim.cmd([[
--- set foldmethod=indent
--- set foldnestmax=10
--- set nofoldenable
--- set foldlevel=2
--- ]])
+-----------------------------------------------------------
+-- code folding
+-----------------------------------------------------------
+vim.cmd([[
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=5
+]])
+-- Ref: https://www.jmaguire.tech/posts/treesitter_folding/
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -----------------------------------------------------------
 -- Debug Tools
