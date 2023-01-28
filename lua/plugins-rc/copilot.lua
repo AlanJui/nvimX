@@ -27,7 +27,7 @@ vim.g.copilot_filetypes = {
 
 -------------------------------------------------------------------------------
 -- Default Keymap:
--- <Tab>        ccept the suggestion
+-- <Tab>        Accept the suggestion
 -- <Ctrl-]>	    Dismiss the current suggestion
 -- <Alt-[>	    Cycle to the next suggestion
 -- <Alt-]>	    Cycle to the previous suggestionk
@@ -36,6 +36,8 @@ vim.g.copilot_filetypes = {
 -- imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")
 -- vim.g.copilot_no_tab_map = true
 -- vim.keymap.set.keymap("i", "<C-a>", ":copilot#Accept('\\<CR>')<CR>", { silent = true })
+-- vim.g.copilot_no_tab_map = true
+-- vim.api.nvim_set_keymap("i", "<C-e>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 --
 -- <C-]>                   Dismiss the current suggestion.
 -- <Plug>(copilot-dismiss)

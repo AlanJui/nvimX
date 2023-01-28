@@ -150,4 +150,3 @@ nvim_env_info()
 -----------------------------------------------------------
 -- print("DAP = debugger/adapter/vscode-nodejs-dap")
 -- print(require("debugger/adapter/vscode-nodejs-dap").show_config())
--- local debugpy_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/debugpy/"

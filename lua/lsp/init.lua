@@ -5,6 +5,7 @@
 --------------------------------------------------------------------
 -- require("lsp/auto-cmp")
 -- require("lsp/lsp-servers")
+require("plugins-rc/copilot")
 require("lsp/quick-lsp")
 require("lsp/null-langserver")
 require("lsp/lspsaga")

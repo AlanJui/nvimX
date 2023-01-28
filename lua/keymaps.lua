@@ -82,6 +82,16 @@ keymap.set("n", "<ESC>j", "<cmd>wincmd j<CR>")
 keymap.set("n", "<ESC>h", "<cmd>wincmd h<CR>")
 keymap.set("n", "<ESC>l", "<cmd>wincmd l<CR>")
 
+-- keymap.set("n", "<C-k>", "<cmd>wincmd k<CR>")
+-- keymap.set("n", "<C-j>", "<cmd>wincmd j<CR>")
+-- keymap.set("n", "<C-h>", "<cmd>wincmd h<CR>")
+-- keymap.set("n", "<C-l>", "<cmd>wincmd l<CR>")
+
+-- keymap.set("n", "<S-Up>", "<cmd>wincmd k<CR>")
+-- keymap.set("n", "<S-Down>", "<cmd>wincmd j<CR>")
+-- keymap.set("n", "<S-Left>", "<cmd>wincmd h<CR>")
+-- keymap.set("n", "<S-Right>", "<cmd>wincmd l<CR>")
+
 -- Window Resize
 keymap.set("n", "<M-Up>", "<cmd>wincmd -<CR>")
 keymap.set("n", "<M-Down>", "<cmd>wincmd +<CR>")
