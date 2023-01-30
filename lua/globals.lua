@@ -56,7 +56,7 @@ function GetConfig()
 
 	local debugpy_path = runtime_dir .. "/mason/packages/debugpy/"
 	local snippets_path = {
-		config_dir .. "/my-snippets/snippets",
+		config_dir .. "/my-snippets",
 		package_root .. "/packer/start/friendly-snippets",
 	}
 
