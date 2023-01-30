@@ -302,7 +302,9 @@ return packer.startup(function(use)
 	-- DAP
 	-----------------------------------------------------------
 	use({ "mfussenegger/nvim-dap" })
-	-- use({ "jay-babu/mason-nvim-dap.nvim" })
+	-- bridges mason.nvim with the nvim-dap plugin - making it
+	-- easier to use both plugins together.
+	use({ "jay-babu/mason-nvim-dap.nvim" })
 	-- use({
 	-- 	"microsoft/vscode-js-debug",
 	-- 	opt = true,

@@ -21,8 +21,9 @@
 ------------------------------------------------------------------
 local dap = safe_require("dap")
 local dapui = safe_require("dapui")
+local mason_nvim_dap = safe_require("mason-nvim-dap")
 
-if not dap or not dapui then
+if not dap or not dapui or mason_nvim_dap then
 	return
 end
 
@@ -144,15 +145,91 @@ end
 -- 各程式語言「除錯接合器」載入作業
 local function load_language_specific_dap()
 	require("debugger/adapter/lua-dap").setup()
-	require("debugger/adapter/python-dap").setup()
+	-- require("debugger/adapter/python-dap").setup()
 	require("debugger/adapter/vscode-nodejs-dap").setup()
+end
+
+-- Python 語言「除錯接合器」載入作業
+local debug_server_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+local workspace_folder = vim.fn.getcwd()
+local pyenv_virtual_env = os.getenv("VIRTUAL_ENV")
+local pyenv_python_path = pyenv_virtual_env .. "/bin/python"
+
+local get_venv_python_path = function()
+	-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+	-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+	-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+	if vim.fn.executable(pyenv_python_path) then
+		return pyenv_python_path
+	elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") == 1 then
+		return workspace_folder .. "/venv/bin/python"
+	elseif vim.fn.executable(workspace_folder .. "/.venv/bin/python") == 1 then
+		return workspace_folder .. "/.venv/bin/python"
+	else
+		return "/usr/bin/python"
+	end
 end
 
 -----------------------------------------------------------
 -- Main processes
 -----------------------------------------------------------
 
+-- 務必確認以下的設定指令，須依如下順序執行
+-- require("mason").setup(...)
+-- require("mason-nvim-dap").setup(...),
+mason_nvim_dap.setup({
+	ensure_installed = {
+		"python",
+		"node2",
+		"stylua",
+		"jq",
+	},
+})
+
+mason_nvim_dap.setup_handlers({
+	function(source_name)
+		-- all sources with no handler get passed here
+
+		-- Keep original functionality of `automatic_setup = true`
+		require("mason-nvim-dap.automatic_setup")(source_name)
+	end,
+	python = function(source_name)
+		dap.adapters.python = {
+			type = "executable",
+			-- command = "/usr/bin/python3",
+			command = get_venv_python_path(),
+			args = {
+				"-m",
+				"debugpy.adapter",
+			},
+		}
+
+		dap.configurations.python = {
+			{
+				type = "python",
+				request = "launch",
+				name = "Launch file",
+				program = "${file}", -- This configuration will launch the current file if used.
+			},
+			{
+				type = "python",
+				request = "launch",
+				name = "Launch Django",
+				cwd = "${workspaceFolder}",
+				program = "${workspaceFolder}/manage.py",
+				args = {
+					"runserver",
+					"--noreload",
+				},
+				console = "integratedTerminal",
+				justMyCode = true,
+				pythonPath = get_venv_python_path(),
+			},
+		}
+	end,
+})
+
 setup_style_of_breakpoint()
 setup_debug_ui()
-load_language_specific_dap()
+-- load_language_specific_dap()
 require("debugger/keymaps").setup()
