@@ -6,6 +6,15 @@
 -- 可置於目錄： ~/.local/share/my-nvim/
 ------------------------------------------------------------------------------
 
+-- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
+local my_nvim = os.getenv("MY_NVIM") or vim.g.my_nvim or "nvim"
+local is_debug = os.getenv("DEBUG") or false
+
+local home_dir = os.getenv("HOME")
+local config_dir = home_dir .. "/.config/" .. my_nvim
+local runtime_dir = home_dir .. "/.local/share/" .. my_nvim
+
+------------------------------------------------------------------------------
 local function join_paths(...)
     local PATH_SEPERATOR = vim.loop.os_uname().version:match("Windows") and "\\" or "/"
     local result = table.concat({ ... }, PATH_SEPERATOR)
@@ -21,11 +30,7 @@ local function print_rtp()
     end
 end
 
-local function setup_run_time_path(nvim_name)
-    local home_dir = os.getenv("HOME")
-    local config_dir = home_dir .. "/.config/" .. nvim_name
-    local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
-
+local function setup_run_time_path()
     -- 變更kstdpath('config') 預設的 rtp : ~/.config/nvim/
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath("data"), "site"))
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath("data"), "site", "after"))
@@ -43,18 +48,18 @@ local function setup_run_time_path(nvim_name)
     vim.cmd([[let &packpath = &runtimepath]])
 end
 
--- 若 MY_VIM 設定值，非 Neovim 預設之 `nvim` ；則需變更 Neovim RTP 。
-local nvim_dir = os.getenv("MY_NVIM") or "nvim"
-local is_debug = false
+---------------------------------------------------------------------
+-- Main Process
+---------------------------------------------------------------------
 
-if nvim_dir ~= "nvim" then
+if my_nvim ~= "nvim" then
     -- 在「除錯」作業時，顯示 setup_rtp() 執行前、後， rtp 的設定內容。
     if is_debug then
         print_rtp()
     end
 
     -- change Neovm default RTP
-    setup_run_time_path(nvim_dir)
+    setup_run_time_path()
 
     if is_debug then
         print_rtp()

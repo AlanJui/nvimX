@@ -11,14 +11,13 @@ end
 ------------------------------------------------------------
 -- Add Snippets
 ------------------------------------------------------------
+local nvim_config = GetConfig()
 
 -- Load your own custom vscode style snippets
 require("luasnip.loaders.from_vscode").lazy_load({
-	paths = {
-		-- CONFIG_DIR .. "/my-snippets",
-		RUNTIME_DIR .. "/site/pack/packer/start/friendly-snippets",
-	},
+	paths = nvim_config["snippets"],
 })
+
 -- extends filetypes supported by snippets
 luasnip.filetype_extend("vimwik", { "markdown" })
 luasnip.filetype_extend("html", { "htmldjango" })
@@ -30,7 +29,7 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
-require("plugins-rc.lspkind")
+-- require("plugins-rc.lspkind")
 local lsp_kind = require("lspkind")
 
 ------------------------------------------------------------

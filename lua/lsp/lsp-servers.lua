@@ -39,6 +39,22 @@ mason.setup({
 -----------------------------------------------------------
 -- (2) Setup mason-lspconfig
 -----------------------------------------------------------
+local LSP_SERVERS = {
+	"sumneko_lua",
+	"vimls",
+	"diagnosticls",
+	"pyright",
+	"emmet_ls",
+	"html",
+	"cssls",
+	"tailwindcss",
+	"stylelint_lsp",
+	"eslint",
+	"jsonls",
+	"tsserver",
+	"texlab",
+}
+
 mason_lspconfig.setup({
 	-- list of servers for mason to install
 	ensure_installed = LSP_SERVERS,
@@ -225,13 +241,13 @@ require("mason-lspconfig").setup_handlers({
 				Lua = {
 					-- make the language server recognize "vim" global
 					diagnostics = { globals = { "vim" } },
-					workspace = {
-						-- make language server aware of runtime files
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
-						},
-					},
+					-- workspace = {
+					-- 	-- make language server aware of runtime files
+					-- 	library = {
+					-- 		[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					-- 		[vim.fn.stdpath("config") .. "/lua"] = true,
+					-- 	},
+					-- },
 				},
 			},
 		})

@@ -3,8 +3,7 @@
 -- 初始階段
 ------------------------------------------------------------------------------
 MY_VIM = os.getenv("MY_NVIM") or "nvim"
-DEBUG = false
--- DEBUG = true
+DEBUG = os.getenv("DEBUG") or false
 
 -----------------------------------------------------------
 -- Global Functions
@@ -112,24 +111,33 @@ set foldlevel=5
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -----------------------------------------------------------
+-- Get configurations of DAP
+-- 取得 DAP 設定結果
+-----------------------------------------------------------
+-- print("DAP = debugger/adapter/vscode-nodejs-dap")
+-- print(require("debugger/adapter/vscode-nodejs-dap").show_config())
+
+-----------------------------------------------------------
 -- Debug Tools
 -- 除錯用工具
 -----------------------------------------------------------
 local function nvim_env_info()
-	print("Neovim: " .. MY_VIM)
+	local nvim_config = GetConfig()
+	local MY_NVIM = nvim_config["nvim"]
+	print("Neovim: " .. MY_NVIM)
 	print("init.lua is loaded!")
 	print("====================================================================")
 	print("Neovim RTP(Run Time Path ...)")
 	-- P(vim.api.nvim_list_runtime_paths())
 	-- PrintTable(vim.opt.runtimepath:get())
-	-- print(string.format("OS = %s", WhichOS()))
-	_G.print_table(vim.opt.runtimepath:get())
-	print(string.format("OS = %s", _G.which_os()))
+	PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
+	print(string.format("OS = %s", nvim_config["os"]))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
 	----------------------------------------------------------------------------
 	-- Debugpy installed info
 	----------------------------------------------------------------------------
-	local debugpy_path = os.getenv("HOME") .. "/.local/share/" .. MY_VIM .. "/mason/packages/debugpy/"
+	-- local debugpy_path = os.getenv("HOME") .. "/.local/share/" .. MY_NVIM .. "/mason/packages/debugpy/"
+	local debugpy_path = nvim_config["debugpy_path"]
 	if IsFileExist(debugpy_path) then
 		print("Debugpy is installed in path: " .. debugpy_path)
 	else
@@ -137,16 +145,17 @@ local function nvim_env_info()
 	end
 
 	-- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
-	local util = require("utils.python")
-	local venv_python = util.get_python_path_in_venv()
-	print(string.format("$VIRTUAL_ENV = %s", venv_python))
+	-- local util = require("utils.python")
+	-- local venv = util.get_python_path_in_venv()
+	local venv = nvim_config["python"]["venv"]
+	print(string.format("$VIRTUAL_ENV = %s", venv))
+	----------------------------------------------------------------------------
+	-- configurations
+	----------------------------------------------------------------------------
+	print(string.format("install_path = %s", nvim_config["install_path"]))
+	print("path of all snippets")
+	PrintTableWithIndent(nvim_config["snippets"], 4)
 	print("====================================================================")
 end
 
 nvim_env_info()
------------------------------------------------------------
--- Get configurations of DAP
--- 取得 DAP 設定結果
------------------------------------------------------------
--- print("DAP = debugger/adapter/vscode-nodejs-dap")
--- print(require("debugger/adapter/vscode-nodejs-dap").show_config())

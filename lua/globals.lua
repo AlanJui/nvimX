@@ -28,8 +28,122 @@ local function tprint(tbl, indent)
 	return toprint
 end
 
+local function which_os()
+	local system_name
+
+	if vim.fn.has("mac") == 1 then
+		system_name = "macOS"
+	elseif vim.fn.has("unix") == 1 then
+		system_name = "Linux"
+	elseif vim.fn.has("win32") == 1 then
+		system_name = "Windows"
+	else
+		system_name = ""
+	end
+
+	return system_name
+end
+
+function GetConfig()
+	local os_sys = which_os()
+	local nvim_name = os.getenv("MY_NVIM") or vim.g.my_nvim or "nvim"
+	local home_dir = os.getenv("HOME")
+	local config_dir = home_dir .. "/.config/" .. nvim_name
+	local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
+	local package_root = runtime_dir .. "/site/pack"
+	local install_path = package_root .. "/packer/start/packer.nvim"
+	local compile_path = config_dir .. "/plugin/packer_compiled.lua"
+
+	local debugpy_path = runtime_dir .. "/mason/packages/debugpy/"
+	local snippets_path = {
+		config_dir .. "/my-snippets/snippets",
+		package_root .. "/packer/start/friendly-snippets",
+	}
+
+	local LSP_SERVERS = {
+		"vimls",
+		"sumneko_lua",
+		"diagnosticls",
+		"pyright",
+		"emmet_ls",
+		"html",
+		"cssls",
+		"tailwindcss",
+		"stylelint_lsp",
+		"eslint",
+		"jsonls",
+		"tsserver",
+		"texlab",
+	}
+	-----------------------------------------------------------
+	-- Python environment
+	-----------------------------------------------------------
+	local PYENV_ROOT_PATH = home_dir .. "/.pyenv/versions/"
+	local PYTHON_VERSION = "3.10.6"
+	local PYTHON_VENV = "venv-" .. PYTHON_VERSION
+	local PYENV_GLOBAL_PATH = PYENV_ROOT_PATH .. "/" .. PYTHON_VERSION .. "/bin/python"
+	local PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. "/envs/" .. PYTHON_VENV .. "/bin/python"
+
+	return {
+		os = os_sys,
+		home = home_dir,
+		nvim = nvim_name,
+		config = config_dir,
+		runtime = runtime_dir,
+		package_root = package_root,
+		install_path = install_path,
+		compile_path = compile_path,
+		debugpy_path = debugpy_path,
+		snippets = snippets_path,
+		lsp_servers = LSP_SERVERS,
+		python = {
+			root_path = PYENV_ROOT_PATH,
+			version = PYTHON_VERSION,
+			venv = PYTHON_VENV,
+			global_path = PYENV_GLOBAL_PATH,
+			binary = PYTHON_BINARY,
+		},
+	}
+end
+
+-- function PrintTable(table)
+-- 	for index, data in ipairs(table) do
+-- 		print(index)
+--
+-- 		for key, value in pairs(data) do
+-- 			print(string.format("key = %s, value = %s", key, value))
+-- 		end
+-- 	end
+-- end
+
+function PrintTable(table)
+	for k, v in pairs(table) do
+		print("key = ", k, "    value = ", v)
+	end
+end
+
+function PrintTableWithIndent(table, indent_size)
+	print(tprint(table, indent_size))
+end
+
 function Print_all_in_table(table, indent_size)
 	print(tprint(table, indent_size))
+end
+
+function IsFileExist(path)
+	if vim.fn.empty(path) == 0 then
+		return true
+	else
+		return false
+	end
+end
+
+function Is_packer_nvim_installed()
+	local installed = false
+	if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
+		installed = true
+	end
+	return installed
 end
 
 function ShowNodejsDAP()
@@ -39,19 +153,6 @@ function ShowNodejsDAP()
 	Print_all_in_table(dap.configurations.javascript)
 	print("dap.configurations.typescript = \n")
 	Print_all_in_table(dap.configurations.typescript)
-end
-
-function PrintTable(table)
-	for index, data in ipairs(table) do
-		print(index)
-
-		for key, value in pairs(data) do
-			print(string.format("key = %s, value = %s", key, value))
-		end
-	end
-	-- for k, v in pairs(table) do
-	-- 	print("key = ", k, "    value = ", v)
-	-- end
 end
 
 function WhichOS()
@@ -74,12 +175,8 @@ function GetHomeDir()
 	return os.getenv("HOME")
 end
 
-function IsFileExist(path)
-	if vim.fn.empty(path) == 0 then
-		return true
-	else
-		return false
-	end
+function P(cmd)
+	print(vim.inspect(cmd))
 end
 
 function _G.which_os()
@@ -118,10 +215,6 @@ end
 
 function _G.is_git_dir()
 	return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1")
-end
-
-function P(cmd)
-	print(vim.inspect(cmd))
 end
 
 function _G.print_table(table)
