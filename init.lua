@@ -122,7 +122,7 @@ set foldlevel=5
 -- 除錯用工具
 -----------------------------------------------------------
 local function nvim_env_info()
-	local nvim_config = GetConfig()
+	local nvim_config = _G.GetConfig()
 	local MY_NVIM = nvim_config["nvim"]
 	print("Neovim: " .. MY_NVIM)
 	print("init.lua is loaded!")
@@ -130,7 +130,7 @@ local function nvim_env_info()
 	print("Neovim RTP(Run Time Path ...)")
 	-- P(vim.api.nvim_list_runtime_paths())
 	-- PrintTable(vim.opt.runtimepath:get())
-	PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
+	_G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
 	print(string.format("OS = %s", nvim_config["os"]))
 	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
 	----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ local function nvim_env_info()
 	----------------------------------------------------------------------------
 	-- local debugpy_path = os.getenv("HOME") .. "/.local/share/" .. MY_NVIM .. "/mason/packages/debugpy/"
 	local debugpy_path = nvim_config["debugpy_path"]
-	if IsFileExist(debugpy_path) then
+	if _G.IsFileExist(debugpy_path) then
 		print("Debugpy is installed in path: " .. debugpy_path)
 	else
 		print("Debugpy isn't installed yet!")
@@ -154,7 +154,7 @@ local function nvim_env_info()
 	----------------------------------------------------------------------------
 	print(string.format("install_path = %s", nvim_config["install_path"]))
 	print("path of all snippets")
-	PrintTableWithIndent(nvim_config["snippets"], 4)
+	_G.PrintTableWithIndent(nvim_config["snippets"], 4)
 	print("====================================================================")
 end
 

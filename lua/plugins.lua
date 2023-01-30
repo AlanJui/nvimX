@@ -2,7 +2,7 @@
 -- Plugin Manager: install plugins
 -- $ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 -----------------------------------------------------------------
-local nvim_config = GetConfig()
+local nvim_config = _G.GetConfig()
 local package_root = nvim_config["package_root"]
 local compile_path = nvim_config["compile_path"]
 local install_path = nvim_config["install_path"]
@@ -305,11 +305,6 @@ return packer.startup(function(use)
 	-- bridges mason.nvim with the nvim-dap plugin - making it
 	-- easier to use both plugins together.
 	use({ "jay-babu/mason-nvim-dap.nvim" })
-	-- use({
-	-- 	"microsoft/vscode-js-debug",
-	-- 	opt = true,
-	-- 	run = "npm install --legacy-peer-deps && npm run compile",
-	-- })
 	--
 	-- Language specific exensions
 	--
@@ -317,8 +312,13 @@ return packer.startup(function(use)
 	use({ "mfussenegger/nvim-dap-python" })
 	-- DAP for Lua work in Neovim
 	use({ "jbyuki/one-small-step-for-vimkind" })
-	-- DAP for Node.js
+	-- DAP for Node.js (nvim-dap adapter for vscode-js-debug)
 	use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
+	-- use({
+	-- 	"microsoft/vscode-js-debug",
+	-- 	opt = true,
+	-- 	run = "npm install --legacy-peer-deps && npm run compile",
+	-- })
 	--
 	-- DAP UI Extensions
 	--

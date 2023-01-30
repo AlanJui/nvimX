@@ -2,64 +2,13 @@
 -- Initial global constants
 -- 設定所需使用之「全域常數」。
 -----------------------------------------------------------
-local nvim_config = GetConfig()
--- OS_SYS = which_os()
---
--- HOME = os.getenv("HOME")
---
--- -- MY_VIM 於 init.lua 定義的全域變數
--- -- local MY_VIM = GetConfig()["nvim"]
--- MY_VIM = os.getenv("MY_NVIM") or "nvim"
--- CONFIG_DIR = HOME .. "/.config/" .. MY_VIM
--- RUNTIME_DIR = HOME .. "/.local/share/" .. MY_VIM
--- PACKAGE_ROOT = RUNTIME_DIR .. "/site/pack"
--- INSTALL_PATH = PACKAGE_ROOT .. "/packer/start/packer.nvim"
--- COMPILE_PATH = CONFIG_DIR .. "/plugin/packer_compiled.lua"
---
--- vim.g.package_root = PACKAGE_ROOT
--- vim.g.install_path = INSTALL_PATH
--- vim.g.compile_path = COMPILE_PATH
---
--- INSTALLED = false
--- if vim.fn.empty(vim.fn.glob(INSTALL_PATH)) == 0 then
--- 	INSTALLED = true
--- end
---
--- LSP_SERVERS = {
--- 	"vimls",
--- 	"sumneko_lua",
--- 	"diagnosticls",
--- 	"pyright",
--- 	"emmet_ls",
--- 	"html",
--- 	"cssls",
--- 	"tailwindcss",
--- 	"stylelint_lsp",
--- 	"eslint",
--- 	"jsonls",
--- 	"tsserver",
--- 	"texlab",
--- }
---
--- DEBUGPY = "~/.virtualenvs/debugpy/bin/python"
--- vim.g.debugpy = DEBUGPY
---
--- -- Your own custom vscode style snippets
--- SNIPPETS_PATH = { CONFIG_DIR .. "/my-snippets/snippets" }
---
------------------------------------------------------------
--- Python environment
------------------------------------------------------------
--- PYENV_ROOT_PATH = HOME .. "/.pyenv/versions/"
--- PYTHON_VERSION = "3.10.6"
--- PYTHON_VENV = "venv-" .. PYTHON_VERSION
--- PYENV_GLOBAL_PATH = PYENV_ROOT_PATH .. "/" .. PYTHON_VERSION .. "/bin/python"
--- PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. "/envs/" .. PYTHON_VENV .. "/bin/python"
+local nvim_config = _G.GetConfig()
 
 -----------------------------------------------------------
 -- Neovim global options
 -----------------------------------------------------------
-vim.g.python3_host_prog = nvim_config["python"]["binary"]
+-- vim.g.python3_host_prog = nvim_config["python"]["binary"]
+vim.g.python3_host_prog = nvim_config["python"]["nvim_binary"]
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0

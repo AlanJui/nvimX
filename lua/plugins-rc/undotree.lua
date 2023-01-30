@@ -2,7 +2,7 @@ local execute = vim.api.nvim_command
 local fn = vim.fn
 
 -- Check if `packer` exists. If not, install it as a start plugin.
-local nvim_config = GetConfig()
+local nvim_config = _G.GetConfig()
 local undo_path = nvim_config["runtime"] .. "/undo"
 
 if fn.empty(fn.glob(undo_path)) > 0 then

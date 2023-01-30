@@ -11,7 +11,7 @@ end
 ------------------------------------------------------------
 -- Add Snippets
 ------------------------------------------------------------
-local nvim_config = GetConfig()
+local nvim_config = _G.GetConfig()
 
 -- Load your own custom vscode style snippets
 require("luasnip.loaders.from_vscode").lazy_load({
