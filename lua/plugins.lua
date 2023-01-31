@@ -224,6 +224,8 @@ return packer.startup(function(use)
 	})
 	-- Screen Navigation
 	use("folke/which-key.nvim")
+	-- Allow you to move between Neovim panes and tmux splits seamlessly
+	use("christoomey/vim-tmux-navigator")
 	-----------------------------------------------------------
 	-- Git Tools
 	-----------------------------------------------------------
