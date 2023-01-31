@@ -117,7 +117,7 @@ local sources = {
 	-- files.
 	formatting.markdownlint,
 	-- A linter for YAML files
-	-- diagnostics.zsh,
+	diagnostics.zsh,
 }
 
 null_ls.setup({

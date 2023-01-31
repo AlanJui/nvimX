@@ -12,7 +12,7 @@ local venv_python_path = nvim_config["python"]["venv_python_path"]
 
 function M.setup()
 	mason_nvim_dap.setup_handlers({
-		python = function(source_name)
+		python = function(_source_name) --luacheck: ignore 212
 			dap.adapters.python = {
 				type = "executable",
 				command = debugpy_path,
@@ -34,7 +34,7 @@ function M.setup()
 					type = "python",
 					request = "launch",
 					name = "Launch Django",
-					-- cwd = '${workspaceFolder}',
+					cwd = "${workspaceFolder}",
 					program = "${workspaceFolder}/manage.py",
 					args = {
 						"runserver",
