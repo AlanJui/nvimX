@@ -322,7 +322,9 @@ return packer.startup(function(use)
 	--
 	-- DAP UI Extensions
 	--
-	-- Experimental UI for nvim-dap
+	-- UI for nvim-dap
+	-- Install icons for dap-ui: https://github.com/ChristianChiarulli/neovim-codicons
+	use({ "folke/neodev.nvim" })
 	use({ "rcarriga/nvim-dap-ui" })
 	-- Inlines the values for variables as virtual text using treesitter.
 	use({ "theHamsta/nvim-dap-virtual-text" })

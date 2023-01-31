@@ -19,11 +19,12 @@
 --      :lua require'dap'.repl.open()  or
 --      using the widget UI
 ------------------------------------------------------------------
-local dap = safe_require("dap")
-local dapui = safe_require("dapui")
-local mason_nvim_dap = safe_require("mason-nvim-dap")
+local dap = _G.safe_require("dap")
+local neodev = _G.safe_require("neodev")
+local dapui = _G.safe_require("dapui")
+local mason_nvim_dap = _G.safe_require("mason-nvim-dap")
 
-if not dap or not dapui or not mason_nvim_dap then
+if not dap or not neodev or not dapui or not mason_nvim_dap then
 	return
 end
 
@@ -53,6 +54,13 @@ end
 
 -- 設定操作介面
 local function setup_debug_ui()
+	-- To enable type checking for nvim-dap-ui
+	neodev.setup({
+		libary = {
+			plugins = { "nvim-dap-ui" },
+			types = true,
+		},
+	})
 	-- 設定「除錯接合器（Debug Adapter）」，可顯示「變數」內容值。
 	require("nvim-dap-virtual-text").setup({ commented = true })
 
@@ -143,7 +151,8 @@ end
 -- 各程式語言「除錯接合器」載入作業
 local function load_language_specific_dap()
 	require("debugger/adapter/lua-dap").setup()
-	require("debugger/adapter/python-dap").setup()
+	require("debugger/adapter/mason-python-dap").setup()
+	-- require("debugger/adapter/python-dap").setup()
 	require("debugger/adapter/vscode-nodejs-dap").setup()
 end
 

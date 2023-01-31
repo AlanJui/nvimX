@@ -8,7 +8,7 @@
 --
 -- 3. Open another Neovim instance (instance B)
 --
--- 4. Open `debug_demo.lua` (B)
+-- 4. Open `lua_debug.lua` (B)
 --
 -- 5. Place a breakpoint on line 2 using (B)
 --    :lua require"dap".toggle_breakpoint()

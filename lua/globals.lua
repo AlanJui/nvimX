@@ -80,7 +80,7 @@ local PYENV_ROOT_PATH = home_dir .. "/.pyenv/versions/"
 local PYTHON_VERSION = "3.10.6"
 local PYTHON_VENV = "venv-" .. PYTHON_VERSION
 local PYTHON_BINARY = PYENV_ROOT_PATH .. PYTHON_VERSION .. "/envs/" .. PYTHON_VENV .. "/bin/python"
-local debugpy_path = runtime_dir .. "/mason/packages/debugpy/"
+local debugpy_path = runtime_dir .. "/mason/packages/debugpy/venv/bin/python"
 -----------------------------------------------------------
 -- Python environment for Project
 -----------------------------------------------------------
