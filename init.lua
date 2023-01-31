@@ -121,40 +121,38 @@ set foldlevel=5
 -- Debug Tools
 -- 除錯用工具
 -----------------------------------------------------------
+
+----------------------------------------------------------------------------
+-- configurations
+----------------------------------------------------------------------------
 local function nvim_env_info()
+	----------------------------------------------------------------------------
+	-- Neovim installed info
+	----------------------------------------------------------------------------
 	local nvim_config = _G.GetConfig()
-	local MY_NVIM = nvim_config["nvim"]
-	print("Neovim: " .. MY_NVIM)
 	print("init.lua is loaded!")
-	print("====================================================================")
 	print("Neovim RTP(Run Time Path ...)")
-	-- P(vim.api.nvim_list_runtime_paths())
-	-- PrintTable(vim.opt.runtimepath:get())
 	_G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
+	print("====================================================================")
 	print(string.format("OS = %s", nvim_config["os"]))
-	print(string.format("${workspaceFolder} = %s", vim.fn.getcwd()))
+	print(string.format("Working Directory: %s", vim.fn.getcwd()))
+	print("Configurations path: " .. nvim_config["config"])
+	print("Run Time Path: " .. nvim_config["runtime"])
+	print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
+	print("path of all snippets")
+	_G.PrintTableWithIndent(nvim_config["snippets"], 4)
 	----------------------------------------------------------------------------
 	-- Debugpy installed info
 	----------------------------------------------------------------------------
-	-- local debugpy_path = os.getenv("HOME") .. "/.local/share/" .. MY_NVIM .. "/mason/packages/debugpy/"
-	local debugpy_path = nvim_config["debugpy_path"]
+	local debugpy_path = nvim_config["python"]["debugpy_path"]
 	if _G.IsFileExist(debugpy_path) then
 		print("Debugpy is installed in path: " .. debugpy_path)
 	else
-		print("Debugpy isn't installed yet!")
+		print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
 	end
 
-	-- print(string.format('$VIRTUAL_ENV = %s', os.getenv('VIRTUAL_ENV')))
-	-- local util = require("utils.python")
-	-- local venv = util.get_python_path_in_venv()
 	local venv = nvim_config["python"]["venv"]
 	print(string.format("$VIRTUAL_ENV = %s", venv))
-	----------------------------------------------------------------------------
-	-- configurations
-	----------------------------------------------------------------------------
-	print(string.format("install_path = %s", nvim_config["install_path"]))
-	print("path of all snippets")
-	_G.PrintTableWithIndent(nvim_config["snippets"], 4)
 	print("====================================================================")
 end
 
