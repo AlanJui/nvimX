@@ -18,7 +18,7 @@ local keymap = {
 			},
 			l = {
 				[[ :lua require("osv").run_this()<CR> ]],
-				[[ Launch Lua file ]],
+				[[ Launch file (run_this()) ]],
 			},
 		},
 		t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },

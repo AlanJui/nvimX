@@ -1,3 +1,15 @@
+local path_sep = vim.loop.os_uname().version:match("Windows") and "\\" or "/"
+
+local function file_exists(name)
+	local f = io.open(name, "r")
+	if f ~= nil then
+		io.close(f)
+		return true
+	else
+		return false
+	end
+end
+
 local function which_os()
 	local system_name
 
@@ -47,8 +59,11 @@ end
 local os_sys = which_os()
 local nvim_name = os.getenv("MY_NVIM") or vim.g.my_nvim or "nvim"
 local home_dir = os.getenv("HOME")
-local config_dir = home_dir .. "/.config/" .. nvim_name
-local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
+-- local config_dir = home_dir .. "/.config/" .. nvim_name
+local config_dir = vim.call("stdpath", "config")
+-- local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
+local runtime_dir = vim.call("stdpath", "data")
+local cache_dir = vim.call("stdpath", "cache")
 local package_root = runtime_dir .. "/site/pack"
 local install_path = package_root .. "/packer/start/packer.nvim"
 local compile_path = config_dir .. "/plugin/packer_compiled.lua"
@@ -111,6 +126,7 @@ function _G.GetConfig()
 		nvim = nvim_name,
 		config = config_dir,
 		runtime = runtime_dir,
+		cache = cache_dir,
 		package_root = package_root,
 		install_path = install_path,
 		compile_path = compile_path,
@@ -122,6 +138,13 @@ function _G.GetConfig()
 			debugpy_path = debugpy_path,
 			venv = pyenv_virtual_env,
 			venv_python_path = get_venv_python_path(),
+		},
+		nodejs = {
+			node_path = home_dir .. "/n/bin/node",
+			debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
+			-- debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
+			-- debugger_path = runtime_dir .. "/site/pack/packer/opt/vscode-js-debug",
+			debugger_cmd = { "js-debug-adapter" },
 		},
 	}
 end
@@ -175,17 +198,16 @@ function _G.is_empty(str)
 	return str == nil or str == ""
 end
 
-function _G.is_git_dir()
-	return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1")
+-----------------------------------------------------------------------------
+-- Exampe: JoinPaths("a", "b", "c") => "a/b/c"
+-----------------------------------------------------------------------------
+function _G.JoinPaths(...)
+	local result = table.concat({ ... }, path_sep)
+	return result
 end
 
-function _G.ShowNodejsDAP()
-	local dap = require("dap")
-
-	print("dap.configurations.javascript = \n")
-	_G.Print_all_in_table(dap.configurations.javascript)
-	print("dap.configurations.typescript = \n")
-	_G.Print_all_in_table(dap.configurations.typescript)
+function _G.is_git_dir()
+	return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1")
 end
 
 function _G.get_home_dir()
@@ -212,4 +234,13 @@ function _G.safe_require(module)
 		return ok
 	end
 	return result
+end
+
+function _G.ShowNodejsDAP()
+	local dap = require("dap")
+
+	print("dap.configurations.javascript = \n")
+	_G.Print_all_in_table(dap.configurations.javascript)
+	print("dap.configurations.typescript = \n")
+	_G.Print_all_in_table(dap.configurations.typescript)
 end

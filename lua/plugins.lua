@@ -224,8 +224,6 @@ return packer.startup(function(use)
 	})
 	-- Screen Navigation
 	use("folke/which-key.nvim")
-	-- Allow you to move between Neovim panes and tmux splits seamlessly
-	use("christoomey/vim-tmux-navigator")
 	-----------------------------------------------------------
 	-- Git Tools
 	-----------------------------------------------------------
@@ -315,7 +313,7 @@ return packer.startup(function(use)
 	-- DAP for Lua work in Neovim
 	use({ "jbyuki/one-small-step-for-vimkind" })
 	-- DAP for Node.js (nvim-dap adapter for vscode-js-debug)
-	use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
+	-- use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
 	-- use({
 	-- 	"microsoft/vscode-js-debug",
 	-- 	opt = true,

@@ -1,10 +1,15 @@
 -- Node.js Adapter
+local dap = _G.safe_require("dap")
+if not dap then
+	return
+end
+
 local M = {}
 
 local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
 
 -- configure DAP Adapter
-function M.setup(dap)
+function M.setup()
 	dap.adapters.node2 = {
 		type = "executable",
 		command = "node",

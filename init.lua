@@ -2,8 +2,8 @@
 -- Initial environments for Neovim
 -- 初始階段
 ------------------------------------------------------------------------------
-MY_VIM = os.getenv("MY_NVIM") or "nvim"
-DEBUG = os.getenv("DEBUG") or false
+_G.MY_VIM = os.getenv("MY_NVIM") or "nvim"
+_G.DEBUG = os.getenv("DEBUG") or false
 
 -----------------------------------------------------------
 -- Global Functions
@@ -55,7 +55,7 @@ end
 -- Setup configuration of plugins
 -- 對已載入之各擴充套件，進行設定作業
 ------------------------------------------------------------------------------
-if DEBUG then
+if _G.DEBUG then
 	-- (1)
 	local debug_plugins = require("debug-plugins")
 	require("config_debug_env").setup(debug_plugins)
@@ -177,6 +177,6 @@ local function nodejs_info()
 	print("====================================================================")
 end
 
-nvim_env_info()
+-- nvim_env_info()
 -- debugpy_info()
-nodejs_info()
+-- nodejs_info()

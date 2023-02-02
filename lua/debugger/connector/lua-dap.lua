@@ -1,6 +1,9 @@
-local M = {}
+local dap = _G.safe_require("dap")
+if not dap then
+	return
+end
 
-local dap = require("dap")
+local M = {}
 
 function M.setup()
 	dap.adapters.nlua = function(callback, config)
@@ -30,6 +33,7 @@ function M.setup()
 			end,
 		},
 	}
+	-- print("lua-dap is setupped!")
 end
 
 return M
