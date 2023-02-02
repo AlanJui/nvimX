@@ -125,11 +125,12 @@ set foldlevel=5
 ----------------------------------------------------------------------------
 -- configurations
 ----------------------------------------------------------------------------
+local nvim_config = _G.GetConfig()
+
 local function nvim_env_info()
 	----------------------------------------------------------------------------
 	-- Neovim installed info
 	----------------------------------------------------------------------------
-	local nvim_config = _G.GetConfig()
 	print("init.lua is loaded!")
 	print("Neovim RTP(Run Time Path ...)")
 	_G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
@@ -141,6 +142,10 @@ local function nvim_env_info()
 	print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
 	print("path of all snippets")
 	_G.PrintTableWithIndent(nvim_config["snippets"], 4)
+	print("--------------------------------------------------------------------")
+end
+
+local function debugpy_info()
 	----------------------------------------------------------------------------
 	-- Debugpy installed info
 	----------------------------------------------------------------------------
@@ -153,7 +158,25 @@ local function nvim_env_info()
 
 	local venv = nvim_config["python"]["venv"]
 	print(string.format("$VIRTUAL_ENV = %s", venv))
+	print("--------------------------------------------------------------------")
+end
+
+local function nodejs_info()
+	----------------------------------------------------------------------------
+	-- vscode-js-debug installed info
+	----------------------------------------------------------------------------
+	print(string.format("node_path = %s", nvim_config.nodejs.node_path))
+	local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
+	if _G.IsFileExist(js_debugger_path) then
+		print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
+	else
+		print("JS Debugger isn't installed! " .. js_debugger_path .. "yet!")
+	end
+	print(string.format("debugger_cmd = %s", ""))
+	_G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
 	print("====================================================================")
 end
 
 nvim_env_info()
+-- debugpy_info()
+nodejs_info()
