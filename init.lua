@@ -166,6 +166,7 @@ local function nodejs_info()
 	-- vscode-js-debug installed info
 	----------------------------------------------------------------------------
 	print(string.format("node_path = %s", nvim_config.nodejs.node_path))
+	print(string.format("vim.g.node_host_prog = %s", vim.g.node_host_prog))
 	local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
 	if _G.IsFileExist(js_debugger_path) then
 		print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
@@ -177,6 +178,6 @@ local function nodejs_info()
 	print("====================================================================")
 end
 
--- nvim_env_info()
--- debugpy_info()
--- nodejs_info()
+nvim_env_info()
+debugpy_info()
+nodejs_info()

@@ -139,8 +139,12 @@ function _G.GetConfig()
 			venv = pyenv_virtual_env,
 			venv_python_path = get_venv_python_path(),
 		},
+		------------------------------------------------------------------------------
+		-- npm install -g neovim
+		------------------------------------------------------------------------------
 		nodejs = {
 			node_path = home_dir .. "/n/bin/node",
+			node_host_prog = home_dir .. "/n/lib/node_modules/neovim/bin/cli.js",
 			debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
 			-- debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
 			-- debugger_path = runtime_dir .. "/site/pack/packer/opt/vscode-js-debug",
