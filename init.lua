@@ -178,6 +178,6 @@ local function nodejs_info()
 	print("====================================================================")
 end
 
-nvim_env_info()
-debugpy_info()
-nodejs_info()
+-- nvim_env_info()
+-- debugpy_info()
+-- nodejs_info()

@@ -1,4 +1,4 @@
----@tag dap-vscode-js
+---@tag debugger/adapter/vscode-js
 
 ---@class Settings @Plugin configuration options
 ---@field node_path string: Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -9,10 +9,10 @@
 ---@field log_file_level number: Logging level for output to file. Set to false to disable file logging. Default is false.
 ---@field log_console_level number: Logging level for output to console. Set to false to disable console output. Default is vim.log.levels.ERROR.
 
-local config = require("dap-vscode-js.config")
-local js_session = require("dap-vscode-js.session")
-local js_dap = require("dap-vscode-js.dap")
-local logger = require("dap-vscode-js.log")
+local config = require("debugger/adapter/vscode-js/config")
+local js_session = require("debugger/adapter/vscode-js/session")
+local js_dap = require("debugger/adapter/vscode-js/dap")
+local logger = require("debugger/adapter/vscode-js/log")
 
 local dapjs = {}
 
@@ -20,11 +20,11 @@ local dapjs = {}
 ---@param settings Settings
 ---@param force boolean?
 function dapjs.setup(settings, force)
-	config.__set_config(settings, force or true)
-	js_session.setup_hooks("dap-vscode-js", config)
-	js_dap.attach_adapters(config)
+    config.__set_config(settings, force or true)
+    js_session.setup_hooks("debugger/adapter/vscode-js", config)
+    js_dap.attach_adapters(config)
 
-	logger.debug("Plugin initialized!")
+    logger.debug("Plugin initialized!")
 end
 
 return dapjs

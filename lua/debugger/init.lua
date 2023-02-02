@@ -152,8 +152,8 @@ end
 local function load_language_specific_dap()
 	require("debugger/connector/lua-dap").setup()
 	require("debugger/connector/python-dap").setup()
+	require("debugger/connector/js-dap").setup()
 	-- require("debugger/connector/mason-python-dap").setup()
-	-- require("debugger/connector/js-dap").setup()
 	-- require("debugger/connector/vscode-nodejs-dap").setup()
 	-- require("debugger/connector/node2-dap").setup()
 end

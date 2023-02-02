@@ -1,6 +1,6 @@
 local M = {}
 local dap = require("dap")
-local js_adapter = require("dap-vscode-js.adapter")
+local js_adapter = require("debugger/adapter/vscode-js/adapter")
 
 local DAP_TYPES = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }
 

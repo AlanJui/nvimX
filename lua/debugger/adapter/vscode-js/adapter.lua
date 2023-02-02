@@ -1,9 +1,9 @@
 local M = {}
 local uv = vim.loop
-local js_session = require("dap-vscode-js.session")
-local utils = require("dap-vscode-js.utils")
-local logger = require("dap-vscode-js.log")
-local dapjs_config = require("dap-vscode-js.config")
+local js_session = require("debugger/adapter/vscode-js/session")
+local utils = require("debugger/adapter/vscode-js/utils")
+local logger = require("debugger/adapter/vscode-js/log")
+local dapjs_config = require("debugger/adapter/vscode-js/config")
 local dap = require("dap")
 
 local function adapter_config(port, mode, proc, start_child)
@@ -59,7 +59,7 @@ function M.generate_adapter(mode, config)
 
 		proc = utils.start_debugger(config, function(port, proc)
 			logger.debug("Debugger process started on port " .. port)
-			
+
 			js_session.register_port(port)
 			callback(adapter_config(port, mode, proc, start_child_session))
 		end, function(code, signal)

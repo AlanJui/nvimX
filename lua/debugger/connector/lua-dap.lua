@@ -31,6 +31,7 @@ function M.setup()
 				assert(val, "Please provide a port number")
 				return val
 			end,
+			console = "integratedTerminal",
 		},
 	}
 	-- print("lua-dap is setupped!")

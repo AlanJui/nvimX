@@ -16,6 +16,7 @@ local python_config = {
 	request = "launch",
 	name = "Launch Python file",
 	program = "${file}", -- This configuration will launch the current file if used.
+	console = "integratedTerminal",
 	pythonPath = python_path,
 }
 

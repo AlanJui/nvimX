@@ -1,11 +1,11 @@
 local M = {}
 
-local utils = require("dap-vscode-js.utils")
+local utils = require("debugger/adapter/vscode-js/utils")
 local dap_breakpoints = require("dap.breakpoints")
 local dap = require("dap")
 local dap_utils = require("dap.utils")
 local dap_bp_ns = "dap_breakpoints"
-local logger = require("dap-vscode-js.log")
+local logger = require("debugger/adapter/vscode-js/log")
 
 local sessions = {}
 
@@ -147,7 +147,7 @@ function M.setup_hooks(plugin_id, config)
 		for _, bp in ipairs(get_breakpoints(info.pid)) do
 			if bp.__verified == false then
 				session_debug("Rejecting breakpoint #" .. tostring(bp.id))
-				
+
 				local bp_info = utils.dap_breakpoint_by_state(bp)
 
 				if bp_info then

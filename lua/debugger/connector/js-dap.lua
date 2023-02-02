@@ -15,12 +15,6 @@ local node_path = nvim_config.nodejs.node_path
 local debugger_path = nvim_config.nodejs.debugger_path
 local debugger_cmd = { nvim_config.nodejs.debugger_cmd }
 
--- local node_path = os.getenv("HOME") .. "/n/bin/node"
--- local debugger_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/vscode-js-debug"
--- local debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
--- local debugger_path = vim.fn.stdpath("data") .. "/mason/bin"
--- local debugger_cmd = { "js-debug-adapter" }
-
 local function setup_debug_adapter()
 	debug_adapter.setup({
 		-- Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -35,7 +29,7 @@ local function setup_debug_adapter()
 		-- log_file_path = vim.fn.stdpath("cache") .. "/debug_adapter.log",
 		-- Logging level for output to console. Set to false to disable console output.
 		-- log_console_level = vim.log.levels.ERROR,
-	})
+	}, true)
 end
 
 function M.setup()
@@ -45,36 +39,47 @@ function M.setup()
 	for _, language in ipairs({ "typescript", "javascript" }) do
 		dap_clinet.configurations[language] = {
 			{
+				name = "Launch Chrome",
+				type = "pwa-chrome",
+				request = "launch",
+				url = "http://localhost:8080",
+				webRoot = "${workspaceFolder}",
+			},
+			{
+				name = "Launch file",
 				type = "pwa-node",
 				request = "launch",
-				name = "Launch file",
 				program = "${file}",
 				cwd = "${workspaceFolder}",
+				console = "integratedTerminal",
 			},
 			{
+				name = "Attach",
 				type = "pwa-node",
 				request = "attach",
-				name = "Attach",
 				processId = require("dap.utils").pick_process,
 				cwd = "${workspaceFolder}",
+				console = "integratedTerminal",
 			},
 			{
+				name = "Launch Program",
 				type = "pwa-node",
 				request = "launch",
-				name = "Launch Program",
 				skipFiles = {
 					"<node_internals>/**",
 				},
 				program = "${workspaceFolder}/bin/www",
+				console = "integratedTerminal",
 			},
 			{
+				name = "Launch app.js",
 				type = "pwa-node",
 				request = "launch",
-				name = "Launch app.js",
 				skipFiles = {
 					"<node_internals>/**",
 				},
 				program = "${workspaceFolder}/app.js",
+				console = "integratedTerminal",
 			},
 		}
 	end

@@ -142,13 +142,13 @@ function _G.GetConfig()
 		------------------------------------------------------------------------------
 		-- npm install -g neovim
 		------------------------------------------------------------------------------
+		-- debugger_path = runtime_dir .. "/site/pack/packer/opt/vscode-js-debug",
+		-- debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
 		nodejs = {
 			node_path = home_dir .. "/n/bin/node",
 			node_host_prog = home_dir .. "/n/lib/node_modules/neovim/bin/cli.js",
-			debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
-			-- debugger_path = runtime_dir .. "/mason/packages/js-debug-adapter",
-			-- debugger_path = runtime_dir .. "/site/pack/packer/opt/vscode-js-debug",
-			debugger_cmd = { "js-debug-adapter" },
+			debugger_path = home_dir .. "/.local/share/vscode-js-debug",
+			debugger_cmd = { "vsDebugServer.js", "js-debug-adapter" },
 		},
 	}
 end
@@ -182,8 +182,16 @@ function _G.Print_all_in_table(table, indent_size)
 	print(tprint(table, indent_size))
 end
 
+function _G.IsDirNotExist(dir_path)
+	if file_exists(dir_path) == true then
+		return true
+	else
+		return false
+	end
+end
+
 function _G.IsFileExist(path)
-	if vim.fn.empty(path) == 0 then
+	if file_exists(path) == true then
 		return true
 	else
 		return false

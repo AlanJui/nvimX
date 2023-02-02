@@ -1,6 +1,6 @@
 local M = {}
 
-local config = require("dap-vscode-js.config")
+local config = require("debugger/adapter/vscode-js/config")
 
 local reverse_log_levels = {}
 
@@ -14,7 +14,7 @@ M.log = function(msg, level, reflect_depth)
 	reflect_depth = reflect_depth or 2
 
 	msg = M.msg_prefix .. msg
-	
+
 	if config.log_file_level and level >= config.log_file_level and config.log_file_path then
 		local fp, err = io.open(config.log_file_path, "a")
 		if not fp then
@@ -39,7 +39,7 @@ M.log = function(msg, level, reflect_depth)
 	end
 
 	if config.log_console_level and level >= config.log_console_level then
-		vim.schedule(function ()
+		vim.schedule(function()
 			vim.notify(string.format("[dap-js] %s", msg), level)
 		end)
 	end
