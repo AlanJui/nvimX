@@ -99,8 +99,11 @@ local debugpy_path = runtime_dir .. "/mason/packages/debugpy/venv/bin/python"
 -----------------------------------------------------------
 -- Python environment for Project
 -----------------------------------------------------------
-local pyenv_virtual_env = os.getenv("VIRTUAL_ENV")
-local pyenv_python_path = pyenv_virtual_env .. "/bin/python"
+local pyenv_python_path = ""
+local pyenv_virtual_env = os.getenv("VIRTUAL_ENV") or ""
+if pyenv_virtual_env ~= "" then
+	pyenv_python_path = pyenv_virtual_env .. "/bin/python"
+end
 local workspace_folder = vim.fn.getcwd()
 
 local get_venv_python_path = function()

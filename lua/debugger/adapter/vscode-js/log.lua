@@ -13,6 +13,10 @@ M.msg_prefix = ""
 M.log = function(msg, level, reflect_depth)
 	reflect_depth = reflect_depth or 2
 
+	-- Begin: Debugging
+	print("log.msg = ", msg)
+	-- End: Debugging
+
 	msg = M.msg_prefix .. msg
 
 	if config.log_file_level and level >= config.log_file_level and config.log_file_path then

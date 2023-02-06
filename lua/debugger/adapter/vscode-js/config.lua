@@ -5,7 +5,7 @@ local nvim_config = _G.GetConfig()
 local defaults = {
 	-- node_path = os.getenv("NODE_PATH") or "node",
 	-- debugger_path = utils.join_paths(utils.get_runtime_dir(), "site/pack/packer/opt/vscode-js-debug"),
-	debugger_cmd = nil,
+	debuggr_cmd = nil,
 	log_file_path = utils.join_paths(utils.get_cache_dir(), "dap_vscode_js.log"),
 	log_file_level = false,
 	log_console_level = vim.log.levels.WARN,
@@ -21,8 +21,12 @@ local config = vim.deepcopy(defaults)
 
 local function __set_config(settings, force, table)
 	local new_config = vim.tbl_extend("force", (force and defaults) or table, settings)
-	print("new_config = ")
-	_G.PrintTableWithIndent(new_config)
+	-- Begin: Debugging
+	-- print("new_config = ")
+	-- _G.PrintTableWithIndent(new_config)
+	-- print("table = ")
+	-- _G.PrintTableWithIndent(table)
+	-- End: Debugging
 
 	-- clear current table
 	for key, _ in pairs(table) do
@@ -33,6 +37,10 @@ local function __set_config(settings, force, table)
 	for key, val in pairs(new_config) do
 		table[key] = val
 	end
+	-- Begin: Debugging
+	-- print("new_config = ")
+	-- _G.PrintTableWithIndent(new_config)
+	-- End: Debugging
 end
 
 setmetatable(config, {

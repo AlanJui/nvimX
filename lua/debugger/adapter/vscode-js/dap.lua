@@ -12,6 +12,15 @@ end
 
 function M.attach_adapters(config)
 	local adapter_list = filter_adapters(config.adapters or DAP_TYPES)
+	-- Begin: Debugging
+	-- print("js.dap.attach_adapters()...")
+	--
+	-- print("config:")
+	-- _G.PrintTableWithIndent(config)
+	--
+	-- print("adapter_list:")
+	-- _G.PrintTableWithIndent(adapter_list)
+	-- End: Debugging
 
 	for _, adapter in ipairs(adapter_list) do
 		dap.adapters[adapter] = js_adapter.generate_adapter(adapter, config)

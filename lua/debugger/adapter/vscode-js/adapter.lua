@@ -54,6 +54,13 @@ end
 function M.generate_adapter(mode, config)
 	config = config or dapjs_config
 
+	-- Begin: Debugging
+	-- print("js_adapter.generate_adapter()...")
+	--
+	-- print("config:")
+	-- _G.PrintTableWithIndent(config)
+	-- End: Debugging
+
 	return function(callback)
 		local proc
 

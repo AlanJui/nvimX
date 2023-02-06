@@ -91,9 +91,12 @@ local function register_listener(time, key, plugin_id, func)
 
 		func(session, sessions[session], ...)
 	end
+	print(string.format("register_listener(time:%s, key:%s, plugin_id:%s, func:%s)...", time, key, plugin_id, func))
 end
 
 function M.setup_hooks(plugin_id, config)
+	-- print("config = ")
+	-- _G.PrintTableWithIndent(config)
 	for _, evt in ipairs({ "event_terminated", "event_exited" }) do
 		register_listener("after", evt, plugin_id, function(session)
 			M.unregister_session(session)
@@ -118,6 +121,8 @@ function M.setup_hooks(plugin_id, config)
 			bp.verified = true
 		end
 	end
+	print("CP01 dap.listeners.before['setBreakpoints']['" .. plugin_id .. "-root']")
+	print(dap.listeners.before["setBreakpoints"][plugin_id .. "-root"])
 
 	register_listener("before", "setBreakpoints", plugin_id, function(session, info, err, body, request)
 		if err then

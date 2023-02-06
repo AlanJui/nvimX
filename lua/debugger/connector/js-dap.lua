@@ -24,11 +24,13 @@ local function setup_debug_adapter()
 		-- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
 		-- debugger_cmd = debugger_cmd,
 		-- which adapters to register in nvim-dap
-		adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+		-- adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+		adapters = { "pwa-node" },
 		-- Path for file logging
-		-- log_file_path = vim.fn.stdpath("cache") .. "/debug_adapter.log",
+		log_file_path = vim.fn.stdpath("cache") .. "/debug_adapter.log",
 		-- Logging level for output to console. Set to false to disable console output.
 		-- log_console_level = vim.log.levels.ERROR,
+		log_console_level = vim.log.levels.DEBUG,
 	}, true)
 end
 
