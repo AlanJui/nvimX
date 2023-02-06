@@ -6,9 +6,9 @@ end
 
 local M = {}
 
--- local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
-local debug_server_path = os.getenv("HOME")
-	.. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
+local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js"
+-- local debug_server_path = os.getenv("HOME")
+-- 	.. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
 
 -- configure DAP Adapter
 function M.setup()
