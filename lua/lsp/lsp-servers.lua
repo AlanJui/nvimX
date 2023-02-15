@@ -24,7 +24,6 @@ if not mason_null_ls_status then
 end
 
 local nvim_config = _G.GetConfig()
-
 -----------------------------------------------------------
 -- (1) Setup mason
 -----------------------------------------------------------
@@ -42,9 +41,11 @@ mason.setup({
 -----------------------------------------------------------
 -- (2) Setup mason-lspconfig
 -----------------------------------------------------------
+local lsp_servers = nvim_config["lsp_servers"]
+
 mason_lspconfig.setup({
 	-- list of servers for mason to install
-	ensure_installed = nvim_config["lsp_servers"],
+	ensure_installed = lsp_servers,
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true,
 })
@@ -219,8 +220,8 @@ require("mason-lspconfig").setup_handlers({
 	end,
 	-- Next, you can provide a dedicated handler for specific servers.
 	-- For example, a handler override for the `rust_analyzer`:
-	["sumneko_lua"] = function()
-		lspconfig.sumneko_lua.setup({
+	["lua_ls"] = function()
+		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			flags = lsp_flags,
@@ -230,6 +231,7 @@ require("mason-lspconfig").setup_handlers({
 					diagnostics = {
 						globals = {
 							"vim",
+							"hs",
 						},
 					},
 					-- workspace = {

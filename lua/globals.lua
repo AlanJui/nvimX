@@ -75,7 +75,8 @@ local snippets_path = {
 
 local LSP_SERVERS = {
 	"vimls",
-	"sumneko_lua",
+	"lua_ls",
+	-- "sumneko_lua",
 	-- "diagnosticls",
 	"pyright",
 	"emmet_ls",
