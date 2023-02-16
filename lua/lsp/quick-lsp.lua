@@ -60,12 +60,15 @@ end
 ------------------------------------------------------------------------
 lsp.preset("recommended")
 
+local nvim_config = _G.GetConfig()
+
 -- 務必安裝之 LSP Server 清單
 -- LSP_SERVERS Table 設定內容，參考：essential.lua
-lsp.ensure_installed(LSP_SERVERS)
+lsp.ensure_installed(nvim_config["lsp_servers"])
 
 -- Fix Undefined global 'vim'
-lsp.configure("sumneko_lua", {
+-- lsp.configure("sumneko_lua", {
+lsp.configure("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -85,7 +88,11 @@ lsp.configure("sumneko_lua", {
 ----------------------------------------------------------
 local cmp = require("cmp")
 local lspkind = require("lspkind")
-local luasnip = require("luasnip")
+local luasnip_ok, luasnip = pcall(require, "luasnip")
+if not luasnip_ok then
+	return
+end
+
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 local has_words_before = function()
@@ -237,12 +244,9 @@ vim.diagnostic.config({ virtual_text = true })
 ------------------------------------------------------------
 -- Add Snippets
 ------------------------------------------------------------
-local luasnip_ok, luasnip = pcall(require, "luasnip")
-if not luasnip_ok then
-	return
-end
-
 -- Load your own custom vscode style snippets
+local CONFIG_DIR = vim.fn.stdpath("config")
+local RUNTIME_DIR = vim.fn.stdpath("data")
 require("luasnip.loaders.from_vscode").lazy_load({
 	paths = {
 		CONFIG_DIR .. "/my-snippets",

@@ -90,6 +90,7 @@ local mappings = {
 		l = { "<cmd>lua require('yabs'):run_task('lint')<CR>", "Lint task" },
 		b = { "<cmd>lua require('yabs'):run_task('build')<CR>", "Build task" },
 		r = { "<cmd>lua require('yabs'):run_task('run')<CR>", "Run task" },
+		p = { "<cmd>lua require('yabs'):run_task()<CR>", "Tasks for Project" },
 	},
 	-- Coding
 	c = {
@@ -226,25 +227,25 @@ local mappings = {
 			name = "Django...",
 			k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
 			g = { ":2TermExec cmd='git status'<CR>", "git status" },
-			r = { ":TermExec cmd='python manage.py runserver'<CR>", "Runserver" },
+			r = { ":TermExec cmd='.venv/bin/poetry run python manage.py runserver'<CR>", "Runserver" },
 			R = {
-				":TermExec cmd='python manage.py runserver --noreload'<CR>",
+				":TermExec cmd='poetry run python manage.py runserver --noreload'<CR>",
 				"Runserver --noreload",
 			},
-			S = { ":2TermExec cmd='python manage.py shell'<CR>", "Django Shell" },
+			S = { ":2TermExec cmd='poetry run python manage.py shell'<CR>", "Django Shell" },
 			s = {
-				":2TermExec cmd='python manage.py createsuperuser'<CR>",
+				":2TermExec cmd='poetry run python manage.py createsuperuser'<CR>",
 				"Create super user",
 			},
 			c = {
-				":2TermExec cmd='echo yes | python manage.py collectstatic'<CR>",
+				":2TermExec cmd='echo yes | poetry run python manage.py collectstatic'<CR>",
 				"Collect all static files",
 			},
 			m = {
-				":2TermExec cmd='python manage.py makemigrations'<CR>",
+				":2TermExec cmd='poetry run python manage.py makemigrations'<CR>",
 				"Update DB schema",
 			},
-			M = { ":2TermExec cmd='python manage.py migrate'<CR>", "Migrate DB" },
+			M = { ":2TermExec cmd='poetry run python manage.py migrate'<CR>", "Migrate DB" },
 		},
 	},
 	-- Terminal

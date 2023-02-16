@@ -1,19 +1,22 @@
 {
-    "venvPath": "/home/alanjui/.pyenv/versions/3.10.6/envs",
-    "venv": "venv-3.10.6",
-    "exclude": [
-        "**/node_modules",
-        "**/__pycache__"
-    ],
-    "reportUnusedVariable": false,
-    "reportUnusedFunction": false,
-    "reportUnusedImport": true,
-    "reportMissingImports": true,
-    "reportMissingTypeStubs": "strict",
-    "reportOptionalMemberAccess": false,
-    "reportGeneralTypeIssues": "warning",
-    "stubPath": "typings",
-    "typeshedPaths": [],
-    "typeCheckingMode": "off",
-    "useLibraryCodeForTypes": true
+	"venvPath": "./",
+	"venv": ".venv",
+	"exclude": [
+		"**/node_modules",
+		"**/__pycache__"
+	],
+	"ignore": [
+		"**/node_modules",
+		"**/__pycache__"
+	],
+	"reportUnusedVariable": false,
+	"reportUnusedFunction": false,
+	"reportUnusedImport": true,
+	"reportMissingImports": true,
+	"reportMissingTypeStubs": "error",
+	"reportOptionalMemberAccess": false,
+	"reportGeneralTypeIssues": "warning",
+	"typeshedPaths": [],
+	"typeCheckingMode": "basic",
+	"useLibraryCodeForTypes": true
 }
