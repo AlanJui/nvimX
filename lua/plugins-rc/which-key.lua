@@ -107,7 +107,13 @@ local mappings = {
 		},
 		D = {
 			name = "Diagnostics",
-			l = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+			l = {
+				name = "LspSaga",
+				b = { "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show buffer diagnostics" },
+				c = { "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show cursor diagnostics" },
+				l = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show line diagnostics" },
+			},
+			w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
 			c = {
 				":Telescope diagnostics bufnr=0<CR>",
 				"List diagnostics current file",
@@ -133,6 +139,7 @@ local mappings = {
 			name = "goto",
 			D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
 			d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition" },
+			p = { ":Lspsaga peek_definition<CR>", "Peek definition" },
 			t = {
 				"<cmd>lua vim.lsp.buf.type_definition()<CR>",
 				"Go to type definition",

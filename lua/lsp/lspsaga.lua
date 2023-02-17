@@ -25,13 +25,17 @@ keymap("n", "<localleader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 -- you can edit the definition file in this flaotwindow
 -- also support open/vsplit/etc operation check definition_action_keys
 -- support tagstack C-t jump back
-keymap("n", "<localleader>gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+keymap("n", "<localleader>gp", "<cmd>Lspsaga peek_type_definition<CR>", { silent = true })
+keymap("n", "<localleader>gd", "<cmd>Lspsaga goto_type_definition<CR>", { silent = true })
+
+-- Show buffer diagnostic
+keymap("n", "<localleader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>", { silent = true })
 
 -- Show line diagnostics
-keymap("n", "<localleader>dl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+keymap("n", "<localleader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 
 -- Show cursor diagnostic
-keymap("n", "<localleader>dc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+keymap("n", "<localleader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 
 -- Diagnsotic jump can use `<c-o>` to jump back
 keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
