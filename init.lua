@@ -127,6 +127,7 @@ set foldlevel=5
 ----------------------------------------------------------------------------
 local nvim_config = _G.GetConfig()
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function nvim_env_info()
 	----------------------------------------------------------------------------
 	-- Neovim installed info
@@ -145,6 +146,7 @@ local function nvim_env_info()
 	print("--------------------------------------------------------------------")
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function debugpy_info()
 	----------------------------------------------------------------------------
 	-- Debugpy installed info
@@ -161,6 +163,7 @@ local function debugpy_info()
 	print("--------------------------------------------------------------------")
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function nodejs_info()
 	----------------------------------------------------------------------------
 	-- vscode-js-debug installed info
@@ -179,5 +182,5 @@ local function nodejs_info()
 end
 
 -- nvim_env_info()
--- debugpy_info()
+debugpy_info()
 -- nodejs_info()

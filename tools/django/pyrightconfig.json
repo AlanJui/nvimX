@@ -3,7 +3,9 @@
 	"venv": ".venv",
 	"exclude": [
 		"**/node_modules",
-		"**/__pycache__"
+		"**/__pycache__",
+		"**/.venv",
+		"**/.*"
 	],
 	"ignore": [
 		"**/node_modules",

@@ -171,7 +171,7 @@ return packer.startup(function(use)
 			ts_update()
 		end,
 	})
-	use({ "nvim-treesitter/playground" })
+	-- use({ "nvim-treesitter/playground" })
 	-- Additional textobjects for treesitter
 	-- use("nvim-treesitter/nvim-treesitter-textobjects")
 	-----------------------------------------------------------

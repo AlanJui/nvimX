@@ -12,17 +12,17 @@ django = "^4.1.7"
 
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^2.16.2"
-pyright = "^1.1.294"
-pylint-django = "^2.5.3"
 django-stubs = "^1.14.0"
 mypy = "^1.0.0"
+pylint = "^2.16.2"
+pylint-django = "^2.5.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-# [tool.mypy]
+[tool.mypy]
+exclude = ['.venv', 'venv']
 # plugins = ["mypy_django_plugin.main"]
 #
 # [tool.django-stubs]

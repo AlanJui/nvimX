@@ -1,51 +1,143 @@
-return ({
-    languages = {
-        python = {
-            tasks = {
-                run = {
-                    command = 'python manage.py runserver',
-                    output = 'terminal',
-                },
-            },
-        },
-    },
-    -- Python
-    tasks = {
-        kill_port = {
-            command = 'npx kill-port 8000',
-            output = 'terminal',
-        },
-        testing = {
-            command = 'python manage.py runserver --noreload',
-            output = 'terminal',
-        },
-        runserver = {
-            command = 'python manage.py runserver',
-            output = 'consolation',
-        },
-        shell = {
-            command = 'python manage.py shell',
-            output = 'terminal',
-        },
-        collect_static = {
-            command = 'python manage.py collectstatic',
-            output = 'echo',
-        },
-        create_super_user = {
-            command = 'python manage.py createsuperuser',
-            output = 'consolation',
-        },
-        make_migrations = {
-            command = 'python manage.py makemigrations',
-            output = 'terminal',
-        },
-        migrate = {
-            command = 'python manage.py migrate',
-            output = 'terminal',
-        },
-        sql_migrate = {
-            command = 'python manage.py sqlmigrate',
-            output = 'terminal',
-        },
-    },
-})
+return {
+	languages = {
+		python = {
+			tasks = {
+				run = {
+					command = "poetry run python manage.py runserver",
+					output = "terminal",
+				},
+				run_noreload = {
+					command = "poetry run python manage.py runserver --noreload",
+					output = "terminal",
+				},
+				kill_port = {
+					command = "npx kill-port 8000",
+					output = "terminal",
+				},
+				collect_static = {
+					command = "poetry run python manage.py collectstatic --noinput",
+					output = "terminal",
+				},
+				testing = {
+					command = "poetry run python manage.py runserver --noreload",
+					output = "terminal",
+				},
+				runserver = {
+					command = "poetry run python manage.py runserver",
+					output = "terminal",
+				},
+				shell = {
+					command = "poetry run python manage.py shell",
+					output = "terminal",
+				},
+				create_super_user = {
+					command = "poetry run python manage.py createsuperuser",
+					output = "terminal",
+				},
+				make_migrations = {
+					command = "poetry run python manage.py makemigrations",
+					output = "terminal",
+				},
+				migrate = {
+					command = "poetry run python manage.py migrate",
+					output = "terminal",
+				},
+				sql_migrate = {
+					command = "poetry run python manage.py sqlmigrate",
+					output = "terminal",
+				},
+				export_requirements_txt = {
+					command = "poetry export -f requirements.txt --output requirements.txt",
+					output = "terminal",
+				},
+			},
+		},
+		htmldjango = {
+			tasks = {
+				run = {
+					command = "poetry run python manage.py runserver",
+					output = "terminal",
+				},
+				run_noreload = {
+					command = "poetry run python manage.py runserver --noreload",
+					output = "terminal",
+				},
+				kill_port = {
+					command = "npx kill-port 8000",
+					output = "terminal",
+				},
+				collect_static = {
+					command = "poetry run python manage.py collectstatic --noinput",
+					output = "terminal",
+				},
+				testing = {
+					command = "poetry run python manage.py runserver --noreload",
+					output = "terminal",
+				},
+				runserver = {
+					command = "poetry run python manage.py runserver",
+					output = "terminal",
+				},
+				shell = {
+					command = "poetry run python manage.py shell",
+					output = "terminal",
+				},
+				create_super_user = {
+					command = "poetry run python manage.py createsuperuser",
+					output = "terminal",
+				},
+				make_migrations = {
+					command = "poetry run python manage.py makemigrations",
+					output = "terminal",
+				},
+				migrate = {
+					command = "poetry run python manage.py migrate",
+					output = "terminal",
+				},
+				sql_migrate = {
+					command = "poetry run python manage.py sqlmigrate",
+					output = "terminal",
+				},
+			},
+		},
+	},
+	-- Python
+	tasks = {
+		kill_port = {
+			command = "npx kill-port 8000",
+			output = "terminal",
+		},
+		testing = {
+			command = "poetry run python manage.py runserver --noreload",
+			output = "terminal",
+		},
+		runserver = {
+			command = "poetry run python manage.py runserver",
+			output = "terminal",
+		},
+		shell = {
+			command = "poetry run python manage.py shell",
+			output = "terminal",
+		},
+		collect_static = {
+			command = "poetry run python manage.py collectstatic --noinput",
+			output = "terminal",
+		},
+		create_super_user = {
+			command = "poetry run python manage.py createsuperuser",
+			output = "terminal",
+		},
+		make_migrations = {
+			command = "poetry run python manage.py makemigrations",
+			output = "terminal",
+		},
+		migrate = {
+			command = "poetry run python manage.py migrate",
+			output = "terminal",
+		},
+		sql_migrate = {
+			command = "poetry run python manage.py sqlmigrate",
+			output = "terminal",
+		},
+	},
+}
