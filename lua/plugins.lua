@@ -71,27 +71,34 @@ return packer.startup(function(use)
 	-----------------------------------------------------------
 	-- Completion: for auto-completion/suggestion/snippets
 	-----------------------------------------------------------
-	-- -- A completion plugin for neovim coded in Lua.
-	-- use({
-	-- 	"hrsh7th/nvim-cmp",
-	-- 	requires = {
-	-- 		-- nvim-cmp source for neovim builtin LSP client
-	-- 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for nvim lua
-	-- 		"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
-	-- 		"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
-	-- 		"hrsh7th/cmp-path", -- nvim-cmp source for math calculation
-	-- 		"hrsh7th/cmp-calc",
-	-- 		"hrsh7th/cmp-emoji",
-	-- 		"hrsh7th/cmp-cmdline",
-	-- 		-- LuaSnip completion source for nvim-cmp
-	-- 		"saadparwaiz1/cmp_luasnip",
-	-- 	},
-	-- })
-	-- -- Snippet Engine for Neovim written in Lua.
-	-- -- tag = "v<CurrentMajor>.*",
-	-- use({ "L3MON4D3/LuaSnip", tag = "v1.1.*" })
-	-- -- Snippets collection for a set of different programming languages for faster development
-	-- use("rafamadriz/friendly-snippets")
+	-- A completion plugin for neovim coded in Lua.
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			-- nvim-cmp source for neovim builtin LSP client
+			"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for nvim lua
+			"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
+			"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
+			"hrsh7th/cmp-path", -- nvim-cmp source for math calculation
+			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-emoji",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-copilot",
+			-- LuaSnip completion source for nvim-cmp
+			"saadparwaiz1/cmp_luasnip",
+		},
+	})
+	-- Snippet Engine for Neovim written in Lua.
+	-- tag = "v<CurrentMajor>.*",
+	use({
+		"L3MON4D3/LuaSnip",
+		-- follow latest release
+		tag = "v1.*",
+		-- install jsregexp (optional!:)
+		run = "make install_jsregexp",
+	})
+	-- Snippets collection for a set of different programming languages for faster development
+	use("rafamadriz/friendly-snippets")
 	-----------------------------------------------------------
 	-- LSP/LspInstaller: configurations for the Nvim LSP client
 	-----------------------------------------------------------

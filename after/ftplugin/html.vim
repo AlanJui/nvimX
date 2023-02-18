@@ -11,14 +11,14 @@ let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
 let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
-""--------------------------------------------------------------
-"" Django
-
-autocmd FileType htmldjango setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd FileType htmldjango inoremap {{ {{  }}<left><left><left>
-autocmd FileType htmldjango inoremap {% {%  %}<left><left><left>
-autocmd FileType htmldjango inoremap {# {#  #}<left><left><left>
-
+"--------------------------------------------------------------
+" Django
+"
+" autocmd FileType htmldjango setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" autocmd FileType htmldjango inoremap {{ {{  }}<left><left><left>
+" autocmd FileType htmldjango inoremap {% {%  %}<left><left><left>
+" autocmd FileType htmldjango inoremap {# {#  #}<left><left><left>
+"
 " 判別是否適用 htmldjango 檔案格式
 " === To enable filetype for htmldjango ===
 " 判別是否適用 django-html 檔案格式

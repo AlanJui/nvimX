@@ -67,12 +67,14 @@ local nvim_config = _G.GetConfig()
 lsp.ensure_installed(nvim_config["lsp_servers"])
 
 -- Fix Undefined global 'vim'
--- lsp.configure("sumneko_lua", {
 lsp.configure("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
-				globals = { "vim" },
+				globals = {
+					"vim",
+					"hs",
+				},
 			},
 		},
 	},
@@ -96,6 +98,7 @@ end
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 local has_words_before = function()
+	unpack = unpack or table.unpack -- luacheck: globals unpack (compatibility with Lua 5.1)
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -114,25 +117,24 @@ local cmp_config = {
 		["<Up>"] = cmp.mapping.select_prev_item(select_opts),
 		["<Down>"] = cmp.mapping.select_next_item(select_opts),
 
-		["<C-p>"] = cmp.mapping.select_prev_item(select_opts),
-		["<C-n>"] = cmp.mapping.select_next_item(select_opts),
+		-- ["<C-b>"] = cmp.mapping.select_prev_item(select_opts),
+		-- ["<C-f>"] = cmp.mapping.select_next_item(select_opts),
 
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		-- ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		-- ["<C-d>"] = cmp.mapping.scroll_docs(4),
 
 		["<C-=>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 
-		["<C-d>"] = cmp.mapping(function(fallback)
+		["<C-n>"] = cmp.mapping(function(fallback)
 			if luasnip.jumpable(1) then
 				luasnip.jump(1)
 			else
 				fallback()
 			end
 		end, { "i", "s" }),
-
-		["<C-u>"] = cmp.mapping(function(fallback)
+		["<C-p>"] = cmp.mapping(function(fallback)
 			if luasnip.jumpable(-1) then
 				luasnip.jump(-1)
 			else
@@ -161,7 +163,7 @@ local cmp_config = {
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<C-g>"] = cmp.mapping(function(fallback)
+		["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore unused argument 'fallback'
 			vim.api.nvim_feedkeys(
 				vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
 				"n",
@@ -174,6 +176,7 @@ local cmp_config = {
 	},
 	sources = cmp.config.sources({
 		{ name = "path" },
+		{ name = "copilot" },
 		{ name = "luasnip", keyword_length = 1 },
 		{ name = "nvim_lsp", keyword_length = 1 },
 		{ name = "nvim_lua" },
@@ -182,11 +185,17 @@ local cmp_config = {
 	}, { { name = "buffer", keyword_length = 3 } }),
 	formatting = {
 		format = lspkind.cmp_format({
-			mode = "symbol_text", -- show only symbol annotations
-			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+			-- show only symbol annotations
+			mode = "symbol_text",
+			-- prevent the popup from showing more than provided characters
+			-- (e.g 50 will not show more than 50 characters)
+			maxwidth = 50,
+			-- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+			-- (must define maxwidth first)
+			ellipsis_char = "...",
 			-- The function below will be called before any actual modifications from lspkind
-			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+			-- so that you can provide more controls on popup customization.
+			-- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
 			before = function(entry, vim_item)
 				-- vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
 				vim_item.menu = ({

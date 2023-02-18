@@ -1,8 +1,8 @@
-local tabline = safe_require('tabline')
+local tabline = _G.safe_require("tabline")
 if not tabline then
-    return
+	return
 end
 
 tabline.setup({
-    enable = false
+	enable = false,
 })

@@ -1,12 +1,12 @@
-local consolation = safe_require("consolation")
+local consolation = _G.safe_require("consolation")
 if not consolation then
 	return
 end
 
 local Wrapper = require("consolation").Wrapper
 
-BuiltinTerminalWrapper = Wrapper:new()
-BuiltinTerminalWrapper:setup({
+_G.BuiltinTerminalWrapper = Wrapper:new()
+_G.BuiltinTerminalWrapper:setup({
 	create = function()
 		vim.cmd("vnew | term")
 	end,

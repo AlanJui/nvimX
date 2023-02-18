@@ -1,9 +1,9 @@
-local yabs = safe_require("yabs")
+local yabs = _G.safe_require("yabs")
 if not yabs then
 	return
 end
 
-local telescope = safe_require("telescope")
+local telescope = _G.safe_require("telescope")
 if not telescope then
 	return
 end
@@ -40,7 +40,8 @@ local c_config = {
 					-- Job here is a plenary.job object that represents
 					-- the finished task, read more about it here:
 					-- https://github.com/nvim-lua/plenary.nvim#plenaryjob
-					on_exit = function(Job, exit_code)
+					---@diagnostic disable-next-line: unused-local
+					on_exit = function(Job, exit_code) -- luacheck: no unused args
 						-- The parameters `Job` and `exit_code` are optional,
 						-- you can omit extra arguments or
 						-- skip some of them using _ for the name

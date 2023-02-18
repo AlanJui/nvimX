@@ -1,31 +1,40 @@
 {
-  "tabWidth": 2,
-  "semi": false,
-  "singleQuote": true,
-  "overrides": [
-    {
-      "files": [ "*.md", "*.tex" ]
-      "options": {
-        "tabWidth": 4
-      }
-    },
-    {
-      "files": "*.json",
-      "options": {
-        "tabWidth": 6
-      }
-    },
-    {
-      "files": [ "*.py", "*.lua" ],
-      "options": {
-        "tabWidth": 4
-      }
-    },
-    {
-      "files": [ "*.html", "*.css" ],
-      "options": {
-        "tabWidth": 4
-      }
-    }
-  ]
+	"tabWidth": 2,
+	"semi": false,
+	"singleQuote": true,
+	"overrides": [
+		{
+			"files": [
+				"*.md",
+				"*.tex"
+			],
+			"options": {
+				"tabWidth": 4
+			}
+		},
+		{
+			"files": "*.json",
+			"options": {
+				"tabWidth": 6
+			}
+		},
+		{
+			"files": [
+				"*.py",
+				"*.lua"
+			],
+			"options": {
+				"tabWidth": 4
+			}
+		},
+		{
+			"files": [
+				"*.html",
+				"*.css"
+			],
+			"options": {
+				"tabWidth": 4
+			}
+		}
+	]
 }

@@ -82,24 +82,25 @@ local sources = {
 	-- Pylint is a Python static code analysis tool which looks for
 	-- programming errors, helps enforcing a coding standard, sniffs
 	-- for code smells and offers simple refactoring suggestions.
-	diagnostics.pylint.with({
-		diagnostics_postprocess = function(diagnostic)
-			diagnostic.code = diagnostic.message_id
-		end,
-	}),
+	-- diagnostics.pylint.with({
+	-- 	diagnostics_postprocess = function(diagnostic)
+	-- 		diagnostic.code = diagnostic.message_id
+	-- 	end,
+	-- }),
 	formatting.isort,
-	formatting.autopep8, -- formatting.black,
+	formatting.autopep8,
+	-- formatting.black,
 	-- A pure-Python Django/Jinja template indenter without dependencies.
 	formatting.djhtml,
 	formatting.djlint,
 
 	-- mypy is an optional static type checker for Python that aims to
 	-- combine the benefits fo dynamic (or "dock") typing and static typings.
-	diagnostics.mypy,
+	-- diagnostics.mypy,
 
 	-- pydocstyle is a static analysis tool for checking compliance
 	-- with Python docstring conventions.
-	diagnostics.pydocstyle,
+	-- diagnostics.pydocstyle,
 
 	-- flake8 is a python tool that glues together pycodestyle,
 	-- pyflakes, mccabe, and third-party plugins to check the style

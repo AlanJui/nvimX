@@ -1,7 +1,3 @@
--- references:
--- 1. Linguist: https://github.com/github/linguist
--- 2. coc-explorer: https://github.com/weirongxu/coc-explorer/blob/59bd41f8fffdc871fbd77ac443548426bd31d2c3/src/icons.nerdfont.json#L2
--- 3. chad-tree: https://github.com/ms-jpq/chadtree/blob/f9f333c062/artifacts/icons.json
 local icons = {
 	["gruntfile"] = { icon = "", color = "#e37933", name = "Gruntfile" },
 	["gulpfile"] = { icon = "", color = "#cc3e44", name = "Gulpfile" },

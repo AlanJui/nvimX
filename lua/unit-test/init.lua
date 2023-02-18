@@ -1,10 +1,11 @@
-if not safe_require("neotest") then
+if not _G.safe_require("neotest") then
 	return
 end
 
 local ok, neotest_plenary = pcall(require, "neotest-plenary")
 if not ok then
-	require("neotest").setup({
+	-- require("neotest").setup({
+	neotest_plenary.setup({
 		adapters = {
 			require("neotest-python")({
 				dap = { justMyCode = false },
@@ -12,7 +13,8 @@ if not ok then
 		},
 	})
 else
-	require("neotest").setup({
+	-- require("neotest").setup({
+	neotest_plenary.setup({
 		adapters = {
 			require("neotest-python")({
 				dap = { justMyCode = false },

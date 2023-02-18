@@ -30,8 +30,8 @@ require("nvim-autopairs").get_rule("'")[1].not_filetypes = { "scheme", "lisp" }
 -- npair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 
 -- Integrate with cmp (auto-compleption)
-local cmp = safe_require("cmp")
-local cmp_autopairs = safe_require("nvim-autopairs.completion.cmp")
+local cmp = _G.safe_require("cmp")
+local cmp_autopairs = _G.safe_require("nvim-autopairs.completion.cmp")
 if not cmp or not cmp_autopairs then
 	return
 end

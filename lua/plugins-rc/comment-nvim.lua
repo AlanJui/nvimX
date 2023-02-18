@@ -1,5 +1,4 @@
-
-local Comment = safe_require("Comment")
+local Comment = _G.safe_require("Comment")
 if not Comment then
 	return
 end

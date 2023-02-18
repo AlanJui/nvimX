@@ -1,4 +1,4 @@
-if not safe_require("mason-tool-installer") then
+if not _G.safe_require("mason-tool-installer") then
 	return
 end
 
@@ -15,10 +15,11 @@ require("mason-tool-installer").setup({
 		{ "bash-language-server", auto_update = true },
 
 		"lua-language-server",
-		"vim-language-server",
-		-- "gopls",
+		"luacheck",
 		"stylua",
+		"vim-language-server",
 		"shellcheck",
+		-- "gopls",
 		-- "editorconfig-checker",
 		-- "gofumpt",
 		-- "golines",
@@ -26,7 +27,6 @@ require("mason-tool-installer").setup({
 		-- "gotests",
 		-- "impl",
 		-- "json-to-struct",
-		"luacheck",
 		-- "misspell",
 		-- "revive",
 		-- "shellcheck",
