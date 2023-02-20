@@ -140,7 +140,7 @@ return packer.startup(function(use)
 		},
 	})
 	-- bridges gap b/w mason & null-ls
-	use("jay-babu/mason-null-ls.nvim")
+	-- use("jay-babu/mason-null-ls.nvim")
 	-- automatically highlighting other uses of the current word under the cursor
 	use({ "RRethy/vim-illuminate" })
 	-- Support LSP CodeAction

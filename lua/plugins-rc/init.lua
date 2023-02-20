@@ -6,8 +6,8 @@
 require("plugins-rc/nvim-treesitter")
 
 -- lsp
-require("lsp")
 require("plugins-rc/mason-tool-installer-rc")
+require("lsp")
 
 -- status line
 require("plugins-rc/lualine-material")
