@@ -17,6 +17,7 @@ local nvim_config = _G.GetConfig()
 -- python3 -m pip install pynvim
 -- pyenv which python  # Note the path
 --
+vim.g.loaded_python2_provider = 0
 vim.g.loaded_python3_provider = 1
 vim.g.python3_host_prog = nvim_config["python"]["nvim_binary"]
 vim.g.node_host_prog = nvim_config["nodejs"]["node_host_prog"]
