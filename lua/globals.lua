@@ -74,7 +74,6 @@ local snippets_path = {
 }
 
 local LSP_SERVERS = {
-    "vimls",
     "lua_ls",
     "diagnosticls",
     "pyright",
@@ -82,11 +81,12 @@ local LSP_SERVERS = {
     "html",
     "cssls",
     "tailwindcss",
-    "stylelint_lsp",
+    "tsserver",
     "eslint",
     "jsonls",
-    "tsserver",
+    "stylelint_lsp",
     "texlab",
+    -- "vimls",
 }
 -----------------------------------------------------------
 -- Python environment for NeoVim
