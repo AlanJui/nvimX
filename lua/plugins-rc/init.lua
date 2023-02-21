@@ -16,7 +16,7 @@ require("plugins-rc/tabline")
 -- User Interface
 require("plugins-rc/nvim-web-devicons")
 require("plugins-rc/indent-blankline")
-require("plugins-rc/nvim-lightbulb")
+-- require("plugins-rc/nvim-lightbulb")
 
 -- files management
 require("plugins-rc/telescope-nvim")

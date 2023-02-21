@@ -8,11 +8,19 @@
 -- require("lsp/lsp-servers")
 -- require("lsp/null-langserver")
 -- require("lsp/lspsaga")
+
 --------------------------------------------------------------------
 -- easy way
 --------------------------------------------------------------------
-require("plugins-rc/copilot")
-require("lsp/quick-lsp")
-require("lsp/null-langserver")
+-- require("plugins-rc/copilot")
+-- require("lsp/quick-lsp")
+-- require("lsp/null-langserver")
 -- require("plugins-rc/mason-null-ls-rc")
+-- require("lsp/lspsaga")
+
+-- --------------------------------------------------------------------
+-- Integrate Way: Lsp + Mason + Null-ls + Cmp
+--------------------------------------------------------------------
+require("plugins-rc/copilot")
+require("lsp/quick-lsp2")
 require("lsp/lspsaga")
