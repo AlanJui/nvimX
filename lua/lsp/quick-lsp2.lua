@@ -345,46 +345,36 @@ lsp.on_attach(on_attach)
 
 -- Fix Undefined global 'vim'
 lsp.configure("lua_ls", {
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = {
-					"vim",
-					"hs",
-				},
-			},
-		},
-	},
+	on_attach = on_attach,
+	settings = require("lsp/settings/lua_ls"),
+})
+
+lsp.configure("pyright", {
+	on_attach = on_attach,
+	settings = require("lsp/settings/pyright"),
 })
 
 lsp.configure("tsserver", {
 	on_attach = on_attach,
-	settings = {
-		completion = {
-			completeFunctionCalls = true,
-			-- completePropertyWithSemicolon = true,
-			-- completeJSDocs = true,
-			-- autoImportSuggestions = true,
-			-- importModuleSpecifier = "relative",
-			-- importModuleSpecifierEnding = "minimal",
-			-- importStatementCompletion = "auto",
-			-- nameSuggestions = true,
-			-- paths = {
-			--     { kind = "pathCompletion", trigger = "./", value = "./" },
-			--     { kind = "pathCompletion", trigger = "../", value = "../" },
-			--     { kind = "pathCompletion", trigger = "/", value = "/" },
-			-- },
-		},
-		-- documentFormatting = false,
-		-- documentRangeFormatting = false,
-	},
+	settings = require("lsp/settings/tsserver"),
+})
+
+lsp.configure("jsonls", {
+	on_attach = on_attach,
+	settings = require("lsp/settings/jsonls"),
+})
+
+lsp.configure("texlab", {
+	on_attach = on_attach,
+	settings = require("lsp/settings/texlab"),
 })
 
 -- share configuration between multiple servers
 -- see :help lsp-zero.setup_servers()
 lsp.setup_servers({
 	"eslint",
-	"angularls",
+	-- "angularls",
+	-- "vuels",
 	opts = {
 		single_file_support = false,
 		on_attach = on_attach,
