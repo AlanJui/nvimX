@@ -6,7 +6,6 @@
 require("plugins-rc/nvim-treesitter")
 
 -- lsp
-require("plugins-rc/mason-tool-installer-rc")
 require("lsp")
 
 -- status line
