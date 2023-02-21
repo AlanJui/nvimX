@@ -117,10 +117,10 @@ local has_words_before = function()
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local my_mapping = { -- luacheck: ignore
+local my_mapping = {
+	-- luacheck: ignore
 	["<Up>"] = cmp.mapping.select_prev_item(select_opts),
 	["<Down>"] = cmp.mapping.select_next_item(select_opts),
-
 	-- ["<C-b>"] = cmp.mapping.select_prev_item(select_opts),
 	-- ["<C-f>"] = cmp.mapping.select_next_item(select_opts),
 
@@ -130,7 +130,6 @@ local my_mapping = { -- luacheck: ignore
 	["<C-=>"] = cmp.mapping.complete(),
 	["<C-e>"] = cmp.mapping.abort(),
 	["<CR>"] = cmp.mapping.confirm({ select = true }),
-
 	["<C-n>"] = cmp.mapping(function(fallback)
 		if luasnip.jumpable(1) then
 			luasnip.jump(1)
@@ -145,7 +144,6 @@ local my_mapping = { -- luacheck: ignore
 			fallback()
 		end
 	end, { "i", "s" }),
-
 	["<Tab>"] = cmp.mapping(function(fallback)
 		if cmp.visible() then
 			cmp.select_next_item()
@@ -157,7 +155,6 @@ local my_mapping = { -- luacheck: ignore
 			fallback()
 		end
 	end, { "i", "s" }),
-
 	["<S-Tab>"] = cmp.mapping(function(fallback)
 		if cmp.visible() then
 			cmp.select_prev_item()
@@ -558,3 +555,16 @@ null_ls.setup({
 	on_attach = null_ls_on_attach,
 	sources = null_ls_sources,
 })
+
+if _G.safe_require("mason-null-ls") then
+	-- See mason-null-ls.nvim's documentation for more details:
+	-- https://github.com/jay-babu/mason-null-ls.nvim#setup
+	require("mason-null-ls").setup({
+		ensure_installed = nil,
+		automatic_installation = false, -- You can still set this to `true`
+		automatic_setup = true,
+	})
+
+	-- Required when `automatic_setup` is true
+	require("mason-null-ls").setup_handlers()
+end
