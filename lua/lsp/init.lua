@@ -140,13 +140,6 @@ local cmp_config = {
 	},
 	-- mapping = cmp.mapping.preset.insert(my_mapping),
 	mapping = lsp.defaults.cmp_mappings({
-		["<Up>"] = cmp.mapping.select_prev_item(select_opts),
-		["<Down>"] = cmp.mapping.select_next_item(select_opts),
-
-		["<C-=>"] = cmp.mapping.complete(),
-		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-
 		-- go to next placeholder in the snippet
 		["<C-n>"] = cmp.mapping(function(fallback)
 			if luasnip.jumpable(1) then
@@ -163,46 +156,54 @@ local cmp_config = {
 				fallback()
 			end
 		end, { "i", "s" }),
+		-- ---@diagnostic disable-next-line: unused-local
+		-- ["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
+		-- 	vim.api.nvim_feedkeys(
+		-- 		vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
+		-- 		"n",
+		-- 		true
+		-- 	)
+		-- end),
 
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
+		-- ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
+		-- ["<Down>"] = cmp.mapping.select_next_item(select_opts),
 
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		---@diagnostic disable-next-line: unused-local
-		["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
-			vim.api.nvim_feedkeys(
-				vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-				"n",
-				true
-			)
-		end),
+		-- ["<C-e>"] = cmp.mapping.complete(),
+		-- ["<C-e>"] = cmp.mapping.abort(),
+		-- ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		-- ["<CR>"]  = cmp.mapping.confirm({ select = true }),
+
+		-- ["<Tab>"] = cmp.mapping(function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_next_item()
+		-- 	elseif luasnip.expand_or_jumpable() then
+		-- 		luasnip.expand_or_jump()
+		-- 	elseif has_words_before() then
+		-- 		cmp.complete()
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
+		--
+		-- ["<S-Tab>"] = cmp.mapping(function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_prev_item()
+		-- 	elseif luasnip.jumpable(-1) then
+		-- 		luasnip.jump(-1)
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
 	}),
 	experimental = {
 		ghost_text = false, -- this feature conflict with copilot.vim's preview.
 	},
 	sources = cmp.config.sources({
-		{ name = "path" },
-		{ name = "copilot" },
-		{ name = "luasnip", keyword_length = 1 },
 		{ name = "nvim_lsp", keyword_length = 1 },
 		{ name = "nvim_lua" },
+		{ name = "path" },
+		{ name = "luasnip", keyword_length = 1 },
+		{ name = "copilot" },
 		{ name = "calc" },
 		{ name = "emoji" },
 	}, { { name = "buffer", keyword_length = 3 } }),
@@ -286,139 +287,11 @@ lsp.on_attach(on_attach)
 -- see :help lsp-zero.configure()
 
 -- Fix Undefined global 'vim'
-lsp.configure("lua_ls", {
-	on_attach = on_attach,
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = {
-					"vim",
-					"hs",
-				},
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = { enable = false },
-		},
-	},
-})
-
-lsp.configure("pyright", {
-	on_attach = on_attach,
-	cmd = { "pyright-langserver", "--stdio" },
-	filetypes = { "python" },
-	settings = {
-		python = {
-			analysis = {
-				autoSearchPaths = true,
-				diagnosticMode = "workspace",
-				useLibraryCodeForTypes = true,
-				typeCheckingMode = "off",
-				logLevel = "Error",
-			},
-			linting = {
-				pylintArgs = {
-					"--load-plugins=pylint_django",
-					"--load-plugins=pylint_dango.checkers.migrations",
-					"--errors-only",
-				},
-			},
-		},
-	},
-	single_file_support = true,
-})
-
-lsp.configure("tsserver", {
-	settings = {
-		completion = {
-			completeFunctionCalls = true,
-			-- completePropertyWithSemicolon = true,
-			-- completeJSDocs = true,
-			-- autoImportSuggestions = true,
-			-- importModuleSpecifier = "relative",
-			-- importModuleSpecifierEnding = "minimal",
-			-- importStatementCompletion = "auto",
-			-- nameSuggestions = true,
-			-- paths = {
-			--     { kind = "pathCompletion", trigger = "./", value = "./" },
-			--     { kind = "pathCompletion", trigger = "../", value = "../" },
-			--     { kind = "pathCompletion", trigger = "/", value = "/" },
-			-- },
-		},
-		-- documentFormatting = false,
-		-- documentRangeFormatting = false,
-	},
-})
-
-lsp.configure("jsonls", {
-	on_attach = on_attach,
-	filetypes = { "json", "jsonc" },
-	settings = {
-		json = {
-			schemas = require("lsp/settings/json-schemas"),
-		},
-	},
-	setup = {
-		commands = {
-			Format = {
-				function()
-					vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
-				end,
-			},
-		},
-	},
-	init_options = {
-		provideFormatter = true,
-	},
-	single_file_support = true,
-})
-
-lsp.configure("texlab", {
-	on_attach = on_attach,
-	cmd = { "texlab" },
-	filetypes = { "tex", "bib" },
-	settings = {
-		texlab = {
-			-- rootDirectory = nil,
-			-- --      ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-			-- build = _G.TeXMagicBuildConfig,
-			-- --      ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
-			-- forwardSearch = {
-			--     executable = 'evince',
-			--     args = { '%p' },
-			-- },
-			auxDirectory = ".",
-			bibtexFormatter = "texlab",
-			build = {
-				args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-				executable = "latexmk",
-				forwardSearchAfter = false,
-				onSave = false,
-			},
-			chktex = {
-				onEdit = false,
-				onOpenAndSave = false,
-			},
-			diagnosticsDelay = 300,
-			formatterLineLength = 80,
-			forwardSearch = {
-				args = {},
-			},
-			latexFormatter = "latexindent",
-			latexindent = {
-				modifyLineBreaks = false,
-			},
-		},
-	},
-})
+-- lsp.configure("texlab", require("lsp/settings/jsonls").setup(on_attach))
+-- lsp.configure("texlab", require("lsp/settings/lua_ls").setup(on_attach))
+-- lsp.configure("texlab", require("lsp/settings/pyright").setup(on_attach))
+-- lsp.configure("texlab", require("lsp/settings/tsserver").setup(on_attach))
+-- lsp.configure("texlab", require("lsp/settings/texlab").setup(on_attach))
 
 -- share configuration between multiple servers
 -- see :help lsp-zero.setup_servers()
@@ -454,6 +327,11 @@ vim.diagnostic.config({ virtual_text = true })
 
 vim.diagnostic.config({
 	virtual_text = true,
+	signs = true,
+	update_in_insert = false,
+	underline = true,
+	severity_sort = true,
+	float = true,
 })
 
 ------------------------------------------------------------
@@ -505,9 +383,11 @@ end
 -- end
 
 -- to setup format on save
+local null_opts = lsp.build_options("null-ls", {})
 local lsp_format_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local null_ls_on_attach = function(current_client, bufnr)
+	null_opts.on_attach(current_client, bufnr)
 	if current_client.supports_method("textDocument/formatting") then
 		vim.api.nvim_clear_autocmds({ group = lsp_format_augroup, buffer = bufnr })
 		vim.api.nvim_create_autocmd("BufWritePre", {
