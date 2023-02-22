@@ -44,6 +44,8 @@ disable=raw-checker-failed,
         no-member,
         import-error,
         missing-module-docstring,
+		missing-class-docstring,
+		missing-function-docstring,
         missing-docstring,
         invalid-name,
         consider-using-enumerate

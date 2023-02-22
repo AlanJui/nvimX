@@ -23,6 +23,7 @@ require("plugins-rc/nvim-tree")
 require("plugins-rc/harpoon")
 
 -- editting tools
+require("plugins-rc/nvim-ufo-rc")
 require("plugins-rc/undotree")
 require("plugins-rc/trim-nvim")
 require("plugins-rc/comment-nvim")

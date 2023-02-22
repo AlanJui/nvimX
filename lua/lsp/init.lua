@@ -118,76 +118,11 @@ local cmp_sources = lsp.defaults.cmp_sources()
 table.insert(cmp_sources, { name = "copilot" })
 
 local has_words_before = function()
+	---@diagnostic disable-next-line: deprecated
 	unpack = unpack or table.unpack -- luacheck: globals unpack (compatibility with Lua 5.1)
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
-local my_mapping = {
-	-- luacheck: ignore
-	["<Up>"] = cmp.mapping.select_prev_item(select_opts),
-	["<Down>"] = cmp.mapping.select_next_item(select_opts),
-	-- ["<C-b>"] = cmp.mapping.select_prev_item(select_opts),
-	-- ["<C-f>"] = cmp.mapping.select_next_item(select_opts),
-
-	-- ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-	-- ["<C-d>"] = cmp.mapping.scroll_docs(4),
-
-	["<C-=>"] = cmp.mapping.complete(),
-	["<C-e>"] = cmp.mapping.abort(),
-	["<CR>"] = cmp.mapping.confirm({ select = true }),
-	["<C-n>"] = cmp.mapping(function(fallback)
-		if luasnip.jumpable(1) then
-			luasnip.jump(1)
-		else
-			fallback()
-		end
-	end, { "i", "s" }),
-	["<C-p>"] = cmp.mapping(function(fallback)
-		if luasnip.jumpable(-1) then
-			luasnip.jump(-1)
-		else
-			fallback()
-		end
-	end, { "i", "s" }),
-	["<Tab>"] = cmp.mapping(function(fallback)
-		if cmp.visible() then
-			cmp.select_next_item()
-		elseif luasnip.expand_or_jumpable() then
-			luasnip.expand_or_jump()
-		elseif has_words_before() then
-			cmp.complete()
-		else
-			fallback()
-		end
-	end, { "i", "s" }),
-	["<S-Tab>"] = cmp.mapping(function(fallback)
-		if cmp.visible() then
-			cmp.select_prev_item()
-		elseif luasnip.jumpable(-1) then
-			luasnip.jump(-1)
-		else
-			fallback()
-		end
-	end, { "i", "s" }),
-	["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
-		vim.api.nvim_feedkeys(
-			vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-			"n",
-			true
-		)
-	end),
-}
-
-local my_cmp_sources = cmp.config.sources({ -- luacheck: ignore
-	{ name = "path" },
-	{ name = "copilot" },
-	{ name = "luasnip", keyword_length = 1 },
-	{ name = "nvim_lsp", keyword_length = 1 },
-	{ name = "nvim_lua" },
-	{ name = "calc" },
-	{ name = "emoji" },
-}, { { name = "buffer", keyword_length = 3 } })
 
 local cmp_config = {
 	preselect = "none",
@@ -250,6 +185,7 @@ local cmp_config = {
 				fallback()
 			end
 		end, { "i", "s" }),
+		---@diagnostic disable-next-line: unused-local
 		["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
 			vim.api.nvim_feedkeys(
 				vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
@@ -546,26 +482,48 @@ if not null_ls or not lsp then
 	return
 end
 
-local null_opts = lsp.build_options("null-ls", {})
-
 -- Format buffer using only null-ls
-local null_ls_on_attach = function(client, bufnr)
-	null_opts.on_attach(client, bufnr)
+--
+-- local null_opts = lsp.build_options("null-ls", {})
+-- local null_ls_on_attach = function(client, bufnr)
+-- 	null_opts.on_attach(client, bufnr)
+--
+-- 	local format_cmd = function(input)
+-- 		vim.lsp.buf.format({
+-- 			id = client.id,
+-- 			timeout_ms = 5000,
+-- 			async = input.bang,
+-- 		})
+-- 	end
+--
+-- 	local bufcmd = vim.api.nvim_buf_create_user_command
+-- 	bufcmd(bufnr, "NullFormat", format_cmd, {
+-- 		bang = true,
+-- 		range = true,
+-- 		desc = "Format using null-ls",
+-- 	})
+-- end
 
-	local format_cmd = function(input)
-		vim.lsp.buf.format({
-			id = client.id,
-			timeout_ms = 5000,
-			async = input.bang,
+-- to setup format on save
+local lsp_format_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+local null_ls_on_attach = function(current_client, bufnr)
+	if current_client.supports_method("textDocument/formatting") then
+		vim.api.nvim_clear_autocmds({ group = lsp_format_augroup, buffer = bufnr })
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = lsp_format_augroup,
+			buffer = bufnr,
+			callback = function()
+				vim.lsp.buf.format({
+					filter = function(client) -- luacheck: ignore
+						--  only use null-ls for formatting instead of lsp server
+						return client.name == "null-ls"
+					end,
+					bufnr = bufnr,
+				})
+			end,
 		})
 	end
-
-	local bufcmd = vim.api.nvim_buf_create_user_command
-	bufcmd(bufnr, "NullFormat", format_cmd, {
-		bang = true,
-		range = true,
-		desc = "Format using null-ls",
-	})
 end
 
 -- register any number of sources simultaneously
@@ -619,6 +577,7 @@ local null_ls_sources = {
 	-- Pylint is a Python static code analysis tool which looks for
 	-- programming errors, helps enforcing a coding standard, sniffs
 	-- for code smells and offers simple refactoring suggestions.
+	-- diagnostics.pylint,
 	-- diagnostics.pylint.with({
 	-- 	diagnostics_postprocess = function(diagnostic)
 	-- 		diagnostic.code = diagnostic.message_id
@@ -633,11 +592,11 @@ local null_ls_sources = {
 
 	-- mypy is an optional static type checker for Python that aims to
 	-- combine the benefits fo dynamic (or "dock") typing and static typings.
-	-- diagnostics.mypy,
+	diagnostics.mypy,
 
 	-- pydocstyle is a static analysis tool for checking compliance
 	-- with Python docstring conventions.
-	-- diagnostics.pydocstyle,
+	diagnostics.pydocstyle,
 
 	-- flake8 is a python tool that glues together pycodestyle,
 	-- pyflakes, mccabe, and third-party plugins to check the style

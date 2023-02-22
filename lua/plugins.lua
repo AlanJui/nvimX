@@ -265,6 +265,11 @@ return packer.startup(function(use)
 	-----------------------------------------------------------
 	-- Editting Tools
 	-----------------------------------------------------------
+	-- To make Neovim's fold look modern and keep high performance.
+	use({
+		"kevinhwang91/nvim-ufo",
+		requires = "kevinhwang91/promise-async",
+	})
 	-- replace with register contents using motion (gr + motion)
 	use("inkarkat/vim-ReplaceWithRegister")
 	-- surroundings: parentheses, brackets, quotes, XML tags, and more
