@@ -13,9 +13,11 @@ require("mason-tool-installer").setup({
 		-- you can turn off/on auto_update per tool
 		{ "bash-language-server", auto_update = true },
 
+		"lua-language-server",
 		"luacheck",
 		"stylua",
 		"shellcheck",
+		"pyright",
 		"debugpy",
 		"mypy",
 		"pydocstyle",
@@ -28,7 +30,6 @@ require("mason-tool-installer").setup({
 		"js-debug-adapter",
 		"node-debug2-adapter",
 		-- "vim-language-server",
-		-- "lua-language-server",
 		-- "gopls",
 		-- "editorconfig-checker",
 		-- "gofumpt",
