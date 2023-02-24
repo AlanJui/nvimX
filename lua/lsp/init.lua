@@ -161,6 +161,7 @@ end
 -- Setup Diagnostics
 ------------------------------------------------------------
 local function setup_diagnostics()
+	---@diagnostic disable-next-line: redefined-local
 	local sign = function(opts) -- luacheck: ignore
 		vim.fn.sign_define(opts.name, {
 			texthl = opts.name,
