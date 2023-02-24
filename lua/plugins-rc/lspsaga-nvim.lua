@@ -1,64 +1,95 @@
-local status, saga = pcall(require, "lspsaga")
-if not status then
+local lsp_saga = _G.safe_require("lspsaga")
+if not lsp_saga then
 	return
 end
 
 -- saga.init_lsp_saga()
-saga.setup({})
+lsp_saga.setup({})
 
-local keymap = vim.keymap.set
 vim.g.maplocalleader = ","
+local keymap = vim.keymap.set
 
--- Lsp finder find the symbol definition implement reference
--- if there is no implement it will hide
--- when you use action in finder like open vsplit then you can
--- use <C-t> to jump back
-keymap("n", "<localleader>gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+-- LSP finder - Find the symbol's definition
+-- If there is no definition, it will instead be hidden
+-- When you use an action in finder like "open vsplit",
+-- you can use <C-t> to jump back
+keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
 
 -- Code action
-keymap({ "n", "v" }, "<localleader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
+keymap({ "n", "v" }, "<locallocalder>ca", "<cmd>Lspsaga code_action<CR>")
 
--- Rename
-keymap("n", "<localleader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
+-- Rename all occurrences of the hovered word for the entire file
+keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
 
--- Peek Definition
--- you can edit the definition file in this flaotwindow
--- also support open/vsplit/etc operation check definition_action_keys
--- support tagstack C-t jump back
-keymap("n", "<localleader>gp", "<cmd>Lspsaga peek_type_definition<CR>", { silent = true })
-keymap("n", "<localleader>gd", "<cmd>Lspsaga goto_type_definition<CR>", { silent = true })
+-- Rename all occurrences of the hovered word for the selected files
+keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 
--- Show buffer diagnostic
-keymap("n", "<localleader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>", { silent = true })
+-- Peek definition
+-- You can edit the file containing the definition in the floating window
+-- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
+-- It also supports tagstack
+-- Use <C-t> to jump back
+keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+
+-- Go to definition
+keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
+
+-- Peek type definition
+-- You can edit the file containing the type definition in the floating window
+-- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
+-- It also supports tagstack
+-- Use <C-t> to jump back
+keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+
+-- Go to type definition
+keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
 
 -- Show line diagnostics
-keymap("n", "<localleader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+-- You can pass argument ++unfocus to
+-- unfocus the show_line_diagnostics floating window
+keymap("n", "<locallocalder>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
--- Show cursor diagnostic
-keymap("n", "<localleader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+-- Show cursor diagnostics
+-- Like show_line_diagnostics, it supports passing the ++unfocus argument
+keymap("n", "<locallocalder>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
--- Diagnsotic jump can use `<c-o>` to jump back
-keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+-- Show buffer diagnostics
+keymap("n", "<locallocalder>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
--- Only jump to error
+-- Diagnostic jump
+-- You can use <C-o> to jump back to your previous location
+keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+
+-- Diagnostic jump with filters such as only jumping to an error
 keymap("n", "[E", function()
-	require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
+	require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end)
 keymap("n", "]E", function()
-	require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-end, { silent = true })
+	require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+end)
 
--- Outline
-keymap("n", "<localleader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
+-- Toggle outline
+keymap("n", "<locallocalder>o", "<cmd>Lspsaga outline<CR>")
 
 -- Hover Doc
-keymap("n", "<localleader>K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+-- If there is no hover doc,
+-- there will be a notification stating that
+-- there is no information available.
+-- To disable it just use ":Lspsaga hover_doc ++quiet"
+-- Pressing the key twice will enter the hover window
+keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
--- Float terminal
-keymap("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
--- if you want pass somc cli command into terminal you can do like this
--- open lazygit in lspsaga float terminal
-keymap("n", "<A-d>", "<cmd>Lspsaga open_floaterm lazygit<CR>", { silent = true })
--- close floaterm
-keymap("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+-- If you want to keep the hover window in the top right hand corner,
+-- you can pass the ++keep argument
+-- Note that if you use hover with ++keep, pressing this key again will
+-- close the hover window. If you want to jump to the hover window
+-- you should use the wincmd command "<C-w>w"
+keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+
+-- Call hierarchy
+keymap("n", "<locallocalder>ci", "<cmd>Lspsaga incoming_calls<CR>")
+keymap("n", "<locallocalder>co", "<cmd>Lspsaga outgoing_calls<CR>")
+
+-- Floating terminal
+keymap({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")

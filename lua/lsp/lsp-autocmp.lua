@@ -1,3 +1,11 @@
+------------------------------------------------------------
+-- Auto-complete and snippets setup: cmp.nvim + luasnip
+-- 《Enter》：等同 cmp.mapping.confirm()
+-- 《C-E》：關閉 Auto-complete 操作視窗
+-- 《ESC》：等同 cmp.mapping.abort()
+-- 《C-N》：跳至 Snippet 下一個欄位 luasnip.jumpable(1)
+-- 《C-P》：跳至 Snippet 上一個欄位 luasnip.jumpable(-1)
+----------------------------------------------------------
 local cmp = _G.safe_require("cmp")
 local luasnip = _G.safe_require("luasnip")
 local lspkind = _G.safe_require("lspkind")
