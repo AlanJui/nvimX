@@ -1,8 +1,9 @@
 local M = {}
 
-function M.setup(on_attach)
+function M.setup(on_attach, capabilities)
 	return {
 		on_attach = on_attach,
+        capabilities = capabilities,
 		filetypes = { "json", "jsonc" },
 		settings = {
 			json = {

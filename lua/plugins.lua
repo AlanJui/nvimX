@@ -58,7 +58,8 @@ packer.init({
 -----------------------------------------------------------------
 -- 透過 packer 執行「擴充套件載入作業」
 -----------------------------------------------------------------
-return packer.startup(function(use)
+local use = require("packer").use
+return packer.startup(function()
 	-----------------------------------------------------------
 	-- Essential plugins
 	-----------------------------------------------------------
@@ -73,10 +74,12 @@ return packer.startup(function(use)
 	-----------------------------------------------------------
 	-- A completion plugin for neovim coded in Lua.
 	use({
+        -- Completion framework
 		"hrsh7th/nvim-cmp",
 		requires = {
-			-- nvim-cmp source for neovim builtin LSP client
-			"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for nvim lua
+			-- LSP completion source
+			"hrsh7th/cmp-nvim-lsp",
+            -- Useful completion sources
 			"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
 			"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
 			"hrsh7th/cmp-path", -- nvim-cmp source for math calculation

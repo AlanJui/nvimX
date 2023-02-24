@@ -136,15 +136,6 @@ cmp.setup({
 			end,
 		}),
 	},
-	documentation = {
-		max_height = 15,
-		max_width = 60,
-		border = "rounded",
-		col_offset = 0,
-		side_padding = 1,
-		winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
-		zindex = 1001,
-	},
 })
 
 -- Set configuration for specific filetype.
