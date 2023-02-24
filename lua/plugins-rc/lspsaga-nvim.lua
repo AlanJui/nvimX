@@ -16,7 +16,7 @@ local keymap = vim.keymap.set
 keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
 
 -- Code action
-keymap({ "n", "v" }, "<locallocalder>ca", "<cmd>Lspsaga code_action<CR>")
+keymap({ "n", "v" }, "<localleader>ca", "<cmd>Lspsaga code_action<CR>")
 
 -- Rename all occurrences of the hovered word for the entire file
 keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
@@ -29,7 +29,7 @@ keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 -- It also supports tagstack
 -- Use <C-t> to jump back
-keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
 -- Go to definition
 keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
@@ -47,14 +47,14 @@ keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
 -- Show line diagnostics
 -- You can pass argument ++unfocus to
 -- unfocus the show_line_diagnostics floating window
-keymap("n", "<locallocalder>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+keymap("n", "<localleader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
 -- Show cursor diagnostics
 -- Like show_line_diagnostics, it supports passing the ++unfocus argument
-keymap("n", "<locallocalder>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+keymap("n", "<localleader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 -- Show buffer diagnostics
-keymap("n", "<locallocalder>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+keymap("n", "<localleader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
 -- Diagnostic jump
 -- You can use <C-o> to jump back to your previous location
@@ -70,7 +70,7 @@ keymap("n", "]E", function()
 end)
 
 -- Toggle outline
-keymap("n", "<locallocalder>o", "<cmd>Lspsaga outline<CR>")
+keymap("n", "<localleader>o", "<cmd>Lspsaga outline<CR>")
 
 -- Hover Doc
 -- If there is no hover doc,
@@ -88,8 +88,8 @@ keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 
 -- Call hierarchy
-keymap("n", "<locallocalder>ci", "<cmd>Lspsaga incoming_calls<CR>")
-keymap("n", "<locallocalder>co", "<cmd>Lspsaga outgoing_calls<CR>")
+keymap("n", "<localleader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+keymap("n", "<localleader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 -- Floating terminal
 keymap({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")

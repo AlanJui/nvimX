@@ -25,10 +25,9 @@ local nvim_config = _G.GetConfig()
 -- Automatic LSP Setup
 ------------------------------------------------------------------------
 local function setup_lsp_auto_installation()
-	------------------------------------------------------------------------
-	-- Mason: Easily install and manage LSP servers, DAP servers, linters,
-	-- and formatters.
-	------------------------------------------------------------------------
+	--
+	-- Mason: Easily install and manage LSP servers, DAP servers, linters, and formatters.
+	--
 	mason.setup({
 		install_root_dir = nvim_config["runtime"] .. "/mason",
 		ui = {
@@ -54,36 +53,34 @@ local function setup_lsp_auto_installation()
 	-- 透過 mason-tool-installer 自動安裝 Null-LS, DAP ；
 	-- 且自動更新所有的 LS 及 Null-LS
 	------------------------------------------------------------
-	if _G.safe_require("mason-tool-installer") then
-		---@diagnostic disable-next-line: unused-local
-		local ensure_installed_list = { -- luacheck: ignore
-			-- DAP
-			"debugpy",
-			"js-debug-adapter",
-			"node-debug2-adapter",
-		}
+	---@diagnostic disable-next-line: unused-local
+	local ensure_installed_list = { -- luacheck: ignore
+		-- DAP
+		"debugpy",
+		"js-debug-adapter",
+		"node-debug2-adapter",
+	}
 
-		require("mason-tool-installer").setup({
-			-- a list of all tools you want to ensure are installed upon
-			-- start; they should be the names Mason uses for each tool
-			ensure_installed = ensure_installed_list,
-			-- if set to true this will check each tool for updates. If updates
-			-- are available the tool will be updated. This setting does not
-			-- affect :MasonToolsUpdate or :MasonToolsInstall.
-			-- Default: false
-			auto_update = true,
-			-- automatically install / update on startup. If set to false nothing
-			-- will happen on startup. You can use :MasonToolsInstall or
-			-- :MasonToolsUpdate to install tools and check for updates.
-			-- Default: true
-			run_on_start = true,
-			-- set a delay (in ms) before the installation starts. This is only
-			-- effective if run_on_start is set to true.
-			-- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
-			-- Default: 0
-			start_delay = 3000, -- 3 second delay
-		})
-	end
+	require("mason-tool-installer").setup({
+		-- a list of all tools you want to ensure are installed upon
+		-- start; they should be the names Mason uses for each tool
+		ensure_installed = ensure_installed_list,
+		-- if set to true this will check each tool for updates. If updates
+		-- are available the tool will be updated. This setting does not
+		-- affect :MasonToolsUpdate or :MasonToolsInstall.
+		-- Default: false
+		auto_update = true,
+		-- automatically install / update on startup. If set to false nothing
+		-- will happen on startup. You can use :MasonToolsInstall or
+		-- :MasonToolsUpdate to install tools and check for updates.
+		-- Default: true
+		run_on_start = true,
+		-- set a delay (in ms) before the installation starts. This is only
+		-- effective if run_on_start is set to true.
+		-- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
+		-- Default: 0
+		start_delay = 3000, -- 3 second delay
+	})
 end
 
 ------------------------------------------------------------------------
@@ -93,22 +90,29 @@ local function setup_lsp()
 	------------------------------------------------------------------------
 	-- Keybindings
 	------------------------------------------------------------------------
-	local keymap = vim.keymap -- for conciseness
+	-- local keymap = vim.keymap -- for conciseness
+	--
+	-- -- enable keybinds only for when lsp server available
+	-- -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+	-- local opts = { noremap = true, silent = true }
+	-- keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+	-- keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+	-- keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+	-- keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+	--
+	-- local lsp_attach = require("lsp/lsp-on-attach").key_bindings()
 
-	-- enable keybinds only for when lsp server available
-	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-	local opts = { noremap = true, silent = true }
-	keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-	keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
-
-	local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-	local lsp_attach = require("lsp/lsp-on-attach").key_bindings()
+	--
+	-- 使用 LSP Saga 代替 LSP Key Bindings
+	--
+	---@diagnostic disable-next-line: unused-local
+	local lsp_attach = function(client, bufnr) end -- luacheck: ignore
 
 	------------------------------------------------------------------------
 	-- Setup lspconfig with setup_handlers of mason-ispconfig
 	------------------------------------------------------------------------
+	local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 	require("mason-lspconfig").setup_handlers({
 		-- The first entry (without a key) will be the default handler
 		-- and will be called for each installed server that doesn't have
@@ -157,7 +161,6 @@ end
 -- Setup Diagnostics
 ------------------------------------------------------------
 local function setup_diagnostics()
-	---@diagnostic disable-next-line: redefined-local
 	local sign = function(opts) -- luacheck: ignore
 		vim.fn.sign_define(opts.name, {
 			texthl = opts.name,
