@@ -58,7 +58,10 @@ cmp.setup({
 			luasnip.lsp_expand(args.body)
 		end,
 	},
-	window = { documentation = cmp.config.window.bordered() },
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-y>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
