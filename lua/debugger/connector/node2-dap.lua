@@ -11,7 +11,8 @@ local debug_server_path = os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug
 -- 	.. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
 
 -- configure DAP Adapter
-function M.setup()
+---@diagnostic disable-next-line: unused-local
+function M.setup(source_name) -- luacheck: ignore
 	-- dap.set_log_level("TRACE")
 	dap.set_log_level("DEBUG")
 

@@ -151,31 +151,49 @@ end
 -- 各程式語言「除錯接合器」載入作業
 local function load_language_specific_dap()
 	require("debugger/connector/lua-dap").setup()
-	require("debugger/connector/python-dap").setup()
 	-- require("debugger/connector/js-dap").setup()
 	-- require("debugger/connector/mason-python-dap").setup()
 	-- require("debugger/connector/vscode-nodejs-dap").setup()
-	require("debugger/connector/node2-dap").setup()
 end
 
 -----------------------------------------------------------
 -- Main processes
 -----------------------------------------------------------
 
--- 務必確認以下的設定指令，須依如下順序執行
--- require("mason").setup(...)
--- require("mason-nvim-dap").setup(...),
--- mason_nvim_dap.setup({
--- 	ensure_installed = {
--- 		"python",
--- 		"node2",
--- 	},
--- 	automatic_setup = false,
+-- 務必依如下順序執行
+-- require("mason").setup({...})
+-- require("mason-nvim-dap").setup({
+--     ensure_installed = { ... },
+--     automatic_setup = false,
 -- })
+-- require 'mason-nvim-dap'.setup_handlers({ ... })
 
 --
 -- main processes
 --
+mason_nvim_dap.setup({
+	ensure_installed = {
+		"python",
+		"node2",
+		"js",
+		"bash",
+	},
+	automatic_setup = true,
+})
+
+mason_nvim_dap.setup_handlers({
+	function(source_name)
+		-- all sources with no handler get passed here
+
+		-- Keep original functionality of `automatic_setup = true`
+		require("mason-nvim-dap.automatic_setup")(source_name)
+	end,
+	---@diagnostic disable-next-line, undefined-global: 113
+	python = require("debugger/connector/python-dap").setup(source_name), -- luacheck: ignore
+	---@diagnostic disable-next-line: undefined-global
+	node2 = require("debugger/connector/node2-dap").setup(source_name), -- luacheck: ignore
+})
+
 load_language_specific_dap()
 setup_style_of_breakpoint()
 setup_debug_ui()

@@ -180,9 +180,9 @@ cmp.setup({
 			cmp.config.compare.order,
 		},
 	},
-	experimental = {
-		ghost_text = false, -- this feature conflict with copilot.vim's preview.
-	},
+	-- experimental = {
+	-- 	ghost_text = false, -- this feature conflict with copilot.vim's preview.
+	-- },
 	sources = cmp.config.sources({
 		-- Copilot Source
 		{ name = "copilot", group_index = 2 },
