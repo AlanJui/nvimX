@@ -9,8 +9,6 @@
 local cmp = _G.safe_require("cmp")
 local luasnip = _G.safe_require("luasnip")
 local lspkind = _G.safe_require("lspkind")
-local copilot = _G.safe_require("copilot")
-local copilot_cmp = _G.safe_require("copilot_cmp")
 
 if not lspkind or not cmp or not luasnip then
 	return
@@ -18,7 +16,16 @@ else
 	-- Highlighting & Icon
 	-- lspkind.init()
 	vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+
 	-- Copilot.lua Support
+	vim.cmd([[
+    packadd copilot.lua
+    packadd copilot-cmp
+    ]])
+
+	local copilot = _G.safe_require("copilot")
+	local copilot_cmp = _G.safe_require("copilot_cmp")
+
 	if copilot and copilot_cmp then
 		copilot.setup({})
 		copilot_cmp.setup({

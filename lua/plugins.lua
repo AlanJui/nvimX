@@ -58,11 +58,6 @@ packer.init({
 -----------------------------------------------------------------
 -- 透過 packer 執行「擴充套件載入作業」
 -----------------------------------------------------------------
-vim.cmd [[
-packadd copilot.lua
-packadd copilot-cmp
-]]
-
 local use = require("packer").use
 return packer.startup(function()
 	-----------------------------------------------------------
