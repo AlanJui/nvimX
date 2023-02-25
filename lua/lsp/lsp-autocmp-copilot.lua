@@ -9,20 +9,57 @@
 local cmp = _G.safe_require("cmp")
 local luasnip = _G.safe_require("luasnip")
 local lspkind = _G.safe_require("lspkind")
+local copilot = _G.safe_require("copilot")
+local copilot_cmp = _G.safe_require("copilot_cmp")
 
 if not lspkind or not cmp or not luasnip then
 	return
 else
-	lspkind.init()
-	------------------------------------------------------------
-	-- integrate with copilot.vim
-	------------------------------------------------------------
-	-- disables the fallback mechanism of copilot.vim
-	-- vim.cmd([[
-	-- let g:copilot_no_tab_map = v:true
-	-- imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
-	-- ]])
+	-- Highlighting & Icon
+	-- lspkind.init()
+	vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+	-- Copilot.lua Support
+	if copilot and copilot_cmp then
+		copilot.setup({})
+		copilot_cmp.setup({
+			method = "getCompletionsCycling",
+			formatters = {
+				label = require("copilot_cmp.format").format_label_text,
+				insert_text = require("copilot_cmp.format").format_insert_text,
+				preview = require("copilot_cmp.format").deindent,
+			},
+		})
+	end
 end
+
+local symbol_map = {
+	Copilot = "",
+	Text = "  ",
+	Method = "",
+	Function = "",
+	Constructor = "",
+	Field = "ﰠ",
+	Variable = "",
+	Class = "ﴯ",
+	Interface = "  ",
+	Module = "",
+	Property = "  ",
+	Unit = "  ",
+	Value = "",
+	Enum = "",
+	Keyword = "",
+	Snippet = "",
+	Color = "  ",
+	File = "  ",
+	Reference = "  ",
+	Folder = "  ",
+	EnumMember = "",
+	Constant = "",
+	Struct = "פּ",
+	Event = "  ",
+	Operator = "  ",
+	TypeParameter = "  ",
+}
 
 ------------------------------------------------------------
 -- Add Snippets
@@ -46,10 +83,11 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 local has_words_before = function()
-	---@diagnostic disable-next-line: deprecated
-	unpack = unpack or table.unpack -- luacheck: globals unpack (compatibility with Lua 5.1)
+	if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+		return false
+	end
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 
 ------------------------------------------------------------
@@ -62,7 +100,12 @@ cmp.setup({
 	mapping = cmp.mapping.preset.insert({
 		["<C-y>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<CR>"] = cmp.mapping.confirm({
+			-- select = true,
+			-- this is the important line
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
+		}),
 		["<Up>"] = cmp.mapping.select_prev_item(select_opts),
 		["<Down>"] = cmp.mapping.select_next_item(select_opts),
 		-- go to next placeholder in the snippet
@@ -81,17 +124,26 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
+		["<Tab>"] = vim.schedule_wrap(function(fallback)
+			if cmp.visible() and has_words_before() then
+				cmp.select_next_item({
+					behavior = cmp.SelectBehavior.Select,
+				})
 			else
 				fallback()
 			end
-		end, { "i", "s" }),
+		end),
+		-- ["<Tab>"] = cmp.mapping(function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_next_item()
+		-- 	elseif luasnip.expand_or_jumpable() then
+		-- 		luasnip.expand_or_jump()
+		-- 	elseif has_words_before() then
+		-- 		cmp.complete()
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -101,24 +153,38 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		---@diagnostic disable-next-line: unused-local
-		["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
-			vim.api.nvim_feedkeys(
-				vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-				"n",
-				true
-			)
-		end),
 	}),
+	sorting = {
+		priority_weight = 2,
+		comparators = {
+			require("copilot_cmp.comparators").prioritize,
+			require("copilot_cmp.comparators").score,
+
+			-- Below is the default comparitor list and order for nvim-cmp
+			cmp.config.compare.offset,
+			-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+			cmp.config.compare.exact,
+			cmp.config.compare.score,
+			cmp.config.compare.recently_used,
+			cmp.config.compare.locality,
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
+	},
 	experimental = {
 		ghost_text = false, -- this feature conflict with copilot.vim's preview.
 	},
 	sources = cmp.config.sources({
-		{ name = "copilot" },
+		-- Copilot Source
+		{ name = "copilot", group_index = 2 },
+		-- Other Sources
+		{ name = "nvim_lsp", group_index = 2 },
+		{ name = "path", group_index = 2 },
+		{ name = "luasnip", group_index = 2 },
 		{ name = "path" },
-		{ name = "nvim_lsp", keyword_length = 1 },
 		{ name = "nvim_lua" },
-		{ name = "luasnip", keyword_length = 1 },
 		{ name = "calc" },
 		{ name = "emoji" },
 	}, { { name = "buffer", keyword_length = 3 } }),
@@ -130,8 +196,10 @@ cmp.setup({
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			local kind = require("lspkind").cmp_format({
+				-- mode = "symbol",
 				mode = "symbol_text",
 				maxwidth = 50,
+				symbol_map = symbol_map,
 			})(entry, vim_item)
 			local source_name = " : " .. string.upper(entry.source.name) .. ""
 			local strings = vim.split(kind.kind, "%s", { trimempty = true })

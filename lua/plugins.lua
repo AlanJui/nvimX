@@ -58,6 +58,11 @@ packer.init({
 -----------------------------------------------------------------
 -- 透過 packer 執行「擴充套件載入作業」
 -----------------------------------------------------------------
+vim.cmd [[
+packadd copilot.lua
+packadd copilot-cmp
+]]
+
 local use = require("packer").use
 return packer.startup(function()
 	-----------------------------------------------------------
@@ -74,19 +79,18 @@ return packer.startup(function()
 	-----------------------------------------------------------
 	-- A completion plugin for neovim coded in Lua.
 	use({
-        -- Completion framework
+		-- Completion framework
 		"hrsh7th/nvim-cmp",
 		requires = {
 			-- LSP completion source
 			"hrsh7th/cmp-nvim-lsp",
-            -- Useful completion sources
+			-- Useful completion sources
 			"hrsh7th/cmp-nvim-lua", -- nvim-cmp source for buffer words
 			"hrsh7th/cmp-buffer", -- nvim-cmp source for filesystem paths
 			"hrsh7th/cmp-path", -- nvim-cmp source for math calculation
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-emoji",
 			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-copilot",
 			-- LuaSnip completion source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip",
 		},
@@ -147,7 +151,25 @@ return packer.startup(function()
 	-- they have a consistent environment.
 	use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
 	-- AI code auto-complete
-	use({ "github/copilot.vim" })
+	-- use({ "github/copilot.vim" })
+	-- use({ "hrsh7th/cmp-copilot" })
+	-- Copilot Lua
+	-- use({ "zbirenbaum/copilot.lua" })
+	use({
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+	})
+	use({
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	})
 	-- formatting & linting
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
