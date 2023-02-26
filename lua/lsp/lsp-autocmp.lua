@@ -17,10 +17,11 @@ else
 	-- integrate with copilot.vim
 	------------------------------------------------------------
 	-- disables the fallback mechanism of copilot.vim
-	vim.cmd([[
-    let g:copilot_no_tab_map = v:true
-    imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
-    ]])
+	-- vim.cmd([[
+	--    let g:copilot_no_tab_map = v:true
+	--    imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
+	--    ]])
+	vim.g.copilot_no_tab_map = false
 end
 
 local symbol_map = {
@@ -133,14 +134,14 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		---@diagnostic disable-next-line: unused-local
-		["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
-			vim.api.nvim_feedkeys(
-				vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-				"n",
-				true
-			)
-		end),
+		-- ---@diagnostic disable-next-line: unused-local
+		-- ["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
+		-- 	vim.api.nvim_feedkeys(
+		-- 		vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
+		-- 		"n",
+		-- 		true
+		-- 	)
+		-- end),
 	}),
 	experimental = {
 		ghost_text = false, -- this feature conflict with copilot.vim's preview.
