@@ -2,20 +2,20 @@
 -- Initial environments for Neovim
 -- 初始階段
 ------------------------------------------------------------------------------
-_G.MY_VIM = os.getenv("MY_NVIM") or "nvim"
-_G.DEBUG = os.getenv("DEBUG") or false
+_G.MY_VIM = os.getenv "MY_NVIM" or "nvim"
+_G.DEBUG = os.getenv "DEBUG" or false
 
 -----------------------------------------------------------
 -- Global Functions
 -- 為後續作業，需先載入之「共用功能（Global Functions）」。
 -----------------------------------------------------------
-require("globals")
+require "globals"
 
 -----------------------------------------------------------
 -- Essential settings for Neovim
 -- 初始時需有的 Neovim 基本設定
 -----------------------------------------------------------
-require("essential")
+require "essential"
 
 ------------------------------------------------------------------------------
 -- Configuration supportting for VS Code
@@ -25,20 +25,20 @@ require("essential")
 --   if vim.fn.exists('g:vscode') then
 --   if vim.fn.exists('g:vscode') == 0 then
 if vim.g.vscode ~= nil then
-	-----------------------------------------------------------
-	-- VSCode extension"
-	-----------------------------------------------------------
-	-- Load plugins
-	require("packer").startup(function(use)
-		use("easymotion/vim-easymotion")
-		use("asvetliakov/vim-easymotion")
-	end)
-	-- Options
-	require("options")
-	-- Key bindings
-	require("keymaps")
+    -----------------------------------------------------------
+    -- VSCode extension"
+    -----------------------------------------------------------
+    -- Load plugins
+    require("packer").startup(function(use)
+        use "easymotion/vim-easymotion"
+        use "asvetliakov/vim-easymotion"
+    end)
+    -- Options
+    require "options"
+    -- Key bindings
+    require "keymaps"
 
-	return
+    return
 end
 
 ------------------------------------------------------------------------------
@@ -56,16 +56,16 @@ end
 -- 對已載入之各擴充套件，進行設定作業
 ------------------------------------------------------------------------------
 if _G.DEBUG then
-	-- (1)
-	local debug_plugins = require("debug-plugins")
-	require("config_debug_env").setup(debug_plugins)
-	-- (2)
-	require("plugins-rc")
+    -- (1)
+    local debug_plugins = require "debug-plugins"
+    require("config_debug_env").setup(debug_plugins)
+    -- (2)
+    require "plugins-rc"
 else
-	-- (1)
-	require("plugins")
-	-- (2)
-	require("plugins-rc")
+    -- (1)
+    require "plugins"
+    -- (2)
+    require "plugins-rc"
 end
 
 ------------------------------------------------------------------------------
@@ -74,23 +74,23 @@ end
 ------------------------------------------------------------------------------
 -- General options of Neovim
 -- Neovim 執行時期，應有之預設
-require("options")
+require "options"
 
 -- User's specific options of Neovim
 -- 使用者為個人需求，須變預設之設定
-require("settings")
+require "settings"
 
 -----------------------------------------------------------
 -- Color Themes
 -- Neovim 畫面的色彩設定
 -----------------------------------------------------------
-require("color-themes")
+require "color-themes"
 
 -----------------------------------------------------------
 -- Key bindings
 -- 快捷鍵設定：操作時的按鍵設定
 -----------------------------------------------------------
-require("keymaps")
+require "keymaps"
 
 -----------------------------------------------------------
 -- Experiments
@@ -100,12 +100,12 @@ require("keymaps")
 -----------------------------------------------------------
 -- code folding
 -----------------------------------------------------------
-vim.cmd([[
+vim.cmd [[
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=5
-]])
+]]
 -- Ref: https://www.jmaguire.tech/posts/treesitter_folding/
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -128,57 +128,58 @@ set foldlevel=5
 local nvim_config = _G.GetConfig()
 
 ---@diagnostic disable-next-line: unused-function, unused-local
-local function nvim_env_info()
-	----------------------------------------------------------------------------
-	-- Neovim installed info
-	----------------------------------------------------------------------------
-	print("init.lua is loaded!")
-	print("Neovim RTP(Run Time Path ...)")
-	_G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4)
-	print("====================================================================")
-	print(string.format("OS = %s", nvim_config["os"]))
-	print(string.format("Working Directory: %s", vim.fn.getcwd()))
-	print("Configurations path: " .. nvim_config["config"])
-	print("Run Time Path: " .. nvim_config["runtime"])
-	print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
-	print("path of all snippets")
-	_G.PrintTableWithIndent(nvim_config["snippets"], 4)
-	print("--------------------------------------------------------------------")
+local function nvim_env_info() -- luacheck: ignore
+    ----------------------------------------------------------------------------
+    -- Neovim installed info
+    ----------------------------------------------------------------------------
+    print "init.lua is loaded!"
+    print "Neovim RTP(Run Time Path ...)"
+    ---@diagnostic disable-next-line: undefined-field
+    _G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4) -- luacheck: ignore
+    print "===================================================================="
+    print(string.format("OS = %s", nvim_config["os"]))
+    print(string.format("Working Directory: %s", vim.fn.getcwd()))
+    print("Configurations path: " .. nvim_config["config"])
+    print("Run Time Path: " .. nvim_config["runtime"])
+    print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
+    print "path of all snippets"
+    _G.PrintTableWithIndent(nvim_config["snippets"], 4)
+    print "--------------------------------------------------------------------"
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function debugpy_info()
-	----------------------------------------------------------------------------
-	-- Debugpy installed info
-	----------------------------------------------------------------------------
-	local debugpy_path = nvim_config["python"]["debugpy_path"]
-	if _G.IsFileExist(debugpy_path) then
-		print("Debugpy is installed in path: " .. debugpy_path)
-	else
-		print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
-	end
+    ----------------------------------------------------------------------------
+    -- Debugpy installed info
+    ----------------------------------------------------------------------------
+    local debugpy_path = nvim_config["python"]["debugpy_path"]
+    if _G.IsFileExist(debugpy_path) then
+        print("Debugpy is installed in path: " .. debugpy_path)
+    else
+        print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
+    end
 
-	local venv = nvim_config["python"]["venv"]
-	print(string.format("$VIRTUAL_ENV = %s", venv))
-	print("--------------------------------------------------------------------")
+    local venv = nvim_config["python"]["venv"]
+    print(string.format("$VIRTUAL_ENV = %s", venv))
+    print "--------------------------------------------------------------------"
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
-local function nodejs_info()
-	----------------------------------------------------------------------------
-	-- vscode-js-debug installed info
-	----------------------------------------------------------------------------
-	print(string.format("node_path = %s", nvim_config.nodejs.node_path))
-	print(string.format("vim.g.node_host_prog = %s", vim.g.node_host_prog))
-	local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
-	if _G.IsFileExist(js_debugger_path) then
-		print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
-	else
-		print("JS Debugger isn't installed! " .. js_debugger_path .. "yet!")
-	end
-	print(string.format("debugger_cmd = %s", ""))
-	_G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
-	print("====================================================================")
+local function nodejs_info() -- luacheck: ignore
+    ----------------------------------------------------------------------------
+    -- vscode-js-debug installed info
+    ----------------------------------------------------------------------------
+    print(string.format("node_path = %s", nvim_config.nodejs.node_path))
+    print(string.format("vim.g.node_host_prog = %s", vim.g.node_host_prog))
+    local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
+    if _G.IsFileExist(js_debugger_path) then
+        print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
+    else
+        print("JS Debugger isn't installed! " .. js_debugger_path .. "yet!")
+    end
+    print(string.format("debugger_cmd = %s", ""))
+    _G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
+    print "===================================================================="
 end
 
 -- nvim_env_info()
