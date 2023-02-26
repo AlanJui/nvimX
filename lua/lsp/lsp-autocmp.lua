@@ -12,7 +12,45 @@ local lspkind = _G.safe_require("lspkind")
 
 if not lspkind or not cmp or not luasnip then
 	return
+else
+	------------------------------------------------------------
+	-- integrate with copilot.vim
+	------------------------------------------------------------
+	-- disables the fallback mechanism of copilot.vim
+	vim.cmd([[
+    let g:copilot_no_tab_map = v:true
+    imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
+    ]])
 end
+
+local symbol_map = {
+	Copilot = "",
+	Text = "  ",
+	Method = "",
+	Function = "",
+	Constructor = "",
+	Field = "ﰠ",
+	Variable = "",
+	Class = "ﴯ",
+	Interface = "  ",
+	Module = "",
+	Property = "  ",
+	Unit = "  ",
+	Value = "",
+	Enum = "",
+	Keyword = "",
+	Snippet = "",
+	Color = "  ",
+	File = "  ",
+	Reference = "  ",
+	Folder = "  ",
+	EnumMember = "",
+	Constant = "",
+	Struct = "פּ",
+	Event = "  ",
+	Operator = "  ",
+	TypeParameter = "  ",
+}
 
 ------------------------------------------------------------
 -- Add Snippets
@@ -41,15 +79,6 @@ local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
-------------------------------------------------------------
--- integrate with copilot.vim
-------------------------------------------------------------
--- disables the fallback mechanism of copilot.vim
-vim.cmd([[
-let g:copilot_no_tab_map = v:true
-imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
-]])
 
 ------------------------------------------------------------
 cmp.setup({
@@ -130,6 +159,7 @@ cmp.setup({
 		fields = { "abbr", "kind", "menu" },
 		-- here is where the change happens
 		format = lspkind.cmp_format({
+			symbol_map = symbol_map,
 			-- show only symbol annotations
 			mode = "symbol_text",
 			-- prevent the popup from showing more than provided characters
@@ -142,6 +172,15 @@ cmp.setup({
 			-- lspkind so that you can provide more controls on popup customization.
 			-- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
 			before = function(entry, vim_item)
+				-- local kind = require("lspkind").cmp_format({
+				-- 	-- mode = "symbol",
+				-- 	mode = "symbol_text",
+				-- 	maxwidth = 50,
+				-- 	symbol_map = symbol_map,
+				-- })(entry, vim_item)
+				-- local source_name = " : " .. string.upper(entry.source.name) .. ""
+				-- local strings = vim.split(kind.kind, "%s", { trimempty = true })
+				-- vim_item.menu = "   (" .. (strings[2] or "") .. source_name .. ")"
 				vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
 				return vim_item
 			end,

@@ -146,8 +146,8 @@ return packer.startup(function()
 	-- they have a consistent environment.
 	use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
 	-- AI code auto-complete
-	-- use({ "github/copilot.vim" })
-	-- use({ "hrsh7th/cmp-copilot" })
+	use({ "github/copilot.vim" })
+	use({ "hrsh7th/cmp-copilot" })
 	-- Copilot Lua
 	-- use({ "zbirenbaum/copilot.lua" })
 	use({

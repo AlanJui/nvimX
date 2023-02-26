@@ -60,10 +60,13 @@ local os_sys = which_os()
 local nvim_name = os.getenv("MY_NVIM") or vim.g.my_nvim or "nvim"
 local home_dir = os.getenv("HOME")
 -- local config_dir = home_dir .. "/.config/" .. nvim_name
-local config_dir = vim.call("stdpath", "config")
+-- local config_dir = vim.call("stdpath", "config")
+local config_dir = vim.fn.stdpath("config")
 -- local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
-local runtime_dir = vim.call("stdpath", "data")
-local cache_dir = vim.call("stdpath", "cache")
+-- local runtime_dir = vim.call("stdpath", "data")
+local runtime_dir = vim.fn.stdpath("data")
+-- local cache_dir = vim.call("stdpath", "cache")
+local cache_dir = vim.fn.stdpath("cache")
 local package_root = runtime_dir .. "/site/pack"
 local install_path = package_root .. "/packer/start/packer.nvim"
 local compile_path = config_dir .. "/plugin/packer_compiled.lua"
@@ -181,17 +184,86 @@ function _G.JoinTwoTable(tbl1, tbl2)
 	return new_tbl
 end
 
-function _G.print_table(table)
-	for index, data in ipairs(table) do
-		print(index)
+function _G.print_table(node)
+	local cache, stack, output = {}, {}, {}
+	local depth = 1
+	local output_str = "{\n"
 
-		for key, value in pairs(data) do
-			print(string.format("key = %s, value = %s", key, value))
+	while true do
+		local size = 0
+		---@diagnostic disable-next-line: unused-local
+		for k, v in pairs(node) do -- luacheck: ignore
+			size = size + 1
+		end
+
+		local cur_index = 1
+		for k, v in pairs(node) do
+			if (cache[node] == nil) or (cur_index >= cache[node]) then
+				if string.find(output_str, "}", output_str:len()) then
+					output_str = output_str .. ",\n"
+				elseif not (string.find(output_str, "\n", output_str:len())) then
+					output_str = output_str .. "\n"
+				end
+
+				-- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
+				table.insert(output, output_str)
+				output_str = ""
+
+				local key
+				if type(k) == "number" or type(k) == "boolean" then
+					key = "[" .. tostring(k) .. "]"
+				else
+					key = "['" .. tostring(k) .. "']"
+				end
+
+				if type(v) == "number" or type(v) == "boolean" then
+					output_str = output_str .. string.rep("\t", depth) .. key .. " = " .. tostring(v)
+				elseif type(v) == "table" then
+					output_str = output_str .. string.rep("\t", depth) .. key .. " = {\n"
+					table.insert(stack, node)
+					table.insert(stack, v)
+					cache[node] = cur_index + 1
+					break
+				else
+					output_str = output_str .. string.rep("\t", depth) .. key .. " = '" .. tostring(v) .. "'"
+				end
+
+				if cur_index == size then
+					output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}"
+				else
+					output_str = output_str .. ","
+				end
+			else
+				-- close the table
+				if cur_index == size then
+					output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}"
+				end
+			end
+
+			cur_index = cur_index + 1
+		end
+
+		if size == 0 then
+			output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}"
+		end
+
+		if #stack > 0 then
+			node = stack[#stack]
+			stack[#stack] = nil
+			depth = cache[node] == nil and depth + 1 or depth - 1
+		else
+			break
 		end
 	end
+
+	-- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
+	table.insert(output, output_str)
+	output_str = table.concat(output)
+
+	print(output_str)
 end
 
-function _G.PrintTable(table)
+function _G.DumpTable(table)
 	for k, v in pairs(table) do
 		print("key = ", k, "    value = ", v)
 	end
@@ -201,8 +273,8 @@ function _G.PrintTableWithIndent(table, indent_size)
 	print(tprint(table, indent_size))
 end
 
-function _G.Print_all_in_table(table, indent_size)
-	print(tprint(table, indent_size))
+function _G.PrintTable(table)
+	_G.print_table(table)
 end
 
 function _G.IsDirNotExist(dir_path)
@@ -275,7 +347,7 @@ function _G.ShowNodejsDAP()
 	local dap = require("dap")
 
 	print("dap.configurations.javascript = \n")
-	_G.Print_all_in_table(dap.configurations.javascript)
+	_G.PrintTable(dap.configurations.javascript)
 	print("dap.configurations.typescript = \n")
-	_G.Print_all_in_table(dap.configurations.typescript)
+	_G.PrintTable(dap.configurations.typescript)
 end
