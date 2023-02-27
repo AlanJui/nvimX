@@ -1,10 +1,10 @@
-local lspconfig = _G.safe_require "lspconfig"
-local mason = _G.safe_require "mason"
-local mason_lspconfig = _G.safe_require "mason-lspconfig"
-local mason_tool_installer = _G.safe_require "mason-tool-installer"
-local cmp = _G.safe_require "cmp"
-local luasnip = _G.safe_require "luasnip"
-local lspkind = _G.safe_require "lspkind"
+local lspconfig = _G.safe_require("lspconfig")
+local mason = _G.safe_require("mason")
+local mason_lspconfig = _G.safe_require("mason-lspconfig")
+local mason_tool_installer = _G.safe_require("mason-tool-installer")
+local cmp = _G.safe_require("cmp")
+local luasnip = _G.safe_require("luasnip")
+local lspkind = _G.safe_require("lspkind")
 
 if not lspconfig or not mason or not mason_lspconfig or not mason_tool_installer then return end
 
@@ -24,7 +24,7 @@ local function setup_lsp_auto_installation()
     --
     -- Mason: Easily install and manage LSP servers, DAP servers, linters, and formatters.
     --
-    mason.setup {
+    mason.setup({
         install_root_dir = nvim_config["runtime"] .. "/mason",
         ui = {
             icons = {
@@ -33,17 +33,17 @@ local function setup_lsp_auto_installation()
                 server_uninstalled = "✗",
             },
         },
-    }
+    })
 
     -- `mason-lspconfig` provides extra, opt-in, functionality that allows you to
     -- automatically set up LSP servers installed via `mason.nvim` without having to
     -- manually add each server setup to your Neovim configuration. It also makes it
     -- possible to use newly installed servers without having to restart Neovim!
-    require("mason-lspconfig").setup {
+    require("mason-lspconfig").setup({
         ensure_installed = nvim_config["lsp_servers"],
         -- auto-install configured servers (with lspconfig)
         automatic_installation = true,
-    }
+    })
 
     ------------------------------------------------------------
     -- 透過 mason-tool-installer 自動安裝 Null-LS, DAP ；
@@ -57,7 +57,7 @@ local function setup_lsp_auto_installation()
         "node-debug2-adapter",
     }
 
-    require("mason-tool-installer").setup {
+    require("mason-tool-installer").setup({
         -- a list of all tools you want to ensure are installed upon
         -- start; they should be the names Mason uses for each tool
         ensure_installed = ensure_installed_list,
@@ -76,7 +76,7 @@ local function setup_lsp_auto_installation()
         -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
         -- Default: 0
         start_delay = 3000, -- 3 second delay
-    }
+    })
 end
 
 ------------------------------------------------------------------------
@@ -109,15 +109,15 @@ local function setup_lsp()
     ------------------------------------------------------------------------
     local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    require("mason-lspconfig").setup_handlers {
+    require("mason-lspconfig").setup_handlers({
         -- The first entry (without a key) will be the default handler
         -- and will be called for each installed server that doesn't have
         -- a dedicated handler.
         function(server_name) -- default handler (optional)
-            lspconfig[server_name].setup {
+            lspconfig[server_name].setup({
                 on_attach = lsp_attach,
                 capabilities = lsp_capabilities,
-            }
+            })
         end,
         -- Next, you can provide a dedicated handler for specific servers.
         -- For example, a handler override for the `rust_analyzer`:
@@ -128,7 +128,9 @@ local function setup_lsp()
             -- lspconfig.lua_ls.setup(
             --     require("lsp/settings/lua_ls").setup(lsp_attach, lsp_capabilities)
             -- )
-            lspconfig.lua_ls.setup {
+            lspconfig.lua_ls.setup({
+                on_attach = lsp_attach,
+                capabilities = lsp_capabilities,
                 settings = {
                     Lua = {
                         diagnostics = {
@@ -136,7 +138,21 @@ local function setup_lsp()
                         },
                     },
                 },
-            }
+            })
+        end,
+        ["emmet_ls"] = function()
+            lspconfig.emmet_ls.setup({
+                on_attach = lsp_attach,
+                capabilities = lsp_capabilities,
+                filetypes = {
+                    "htmldjango",
+                    "html",
+                    "css",
+                    "scss",
+                    "typescriptreact",
+                    "javascriptreact",
+                },
+            })
         end,
         ["pyright"] = function()
             lspconfig.pyright.setup(require("lsp/settings/pyright").setup(lsp_attach, lsp_capabilities))
@@ -150,7 +166,7 @@ local function setup_lsp()
         ["texlab"] = function()
             lspconfig.texlab.setup(require("lsp/settings/texlab").setup(lsp_attach, lsp_capabilities))
         end,
-    }
+    })
 end
 
 ------------------------------------------------------------
@@ -166,12 +182,12 @@ local function setup_diagnostics()
         })
     end
 
-    sign { name = "DiagnosticSignError", text = "✘" }
-    sign { name = "DiagnosticSignWarn", text = " " }
-    sign { name = "DiagnosticSignHint", text = "" }
-    sign { name = "DiagnosticSignInfo", text = "" }
+    sign({ name = "DiagnosticSignError", text = "✘" })
+    sign({ name = "DiagnosticSignWarn", text = " " })
+    sign({ name = "DiagnosticSignHint", text = "" })
+    sign({ name = "DiagnosticSignInfo", text = "" })
 
-    vim.diagnostic.config {
+    vim.diagnostic.config({
         virtual_text = true,
         signs = true,
         update_in_insert = false,
@@ -183,7 +199,7 @@ local function setup_diagnostics()
             header = "",
             prefix = "",
         },
-    }
+    })
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 
@@ -199,7 +215,7 @@ end
 setup_lsp_auto_installation()
 
 -- (2) 設定 Auto Completion (Auto-cmp and snippets setup: cmp.nvim + luasnip)
-require "lsp/lsp-autocmp"
+require("lsp/lsp-autocmp")
 -- require("lsp/lsp-autocmp-copilot")
 
 -- (3) 設定 LSP (Setup configuration for every LSP)
@@ -212,4 +228,4 @@ require("lsp/lsp-null-ls").setup()
 setup_diagnostics()
 
 -- (6) 設定 Lsp Saga
-require "plugins-rc.lspsaga-nvim"
+require("plugins-rc.lspsaga-nvim")
