@@ -2,20 +2,20 @@
 -- Initial environments for Neovim
 -- 初始階段
 ------------------------------------------------------------------------------
-_G.MY_VIM = os.getenv "MY_NVIM" or "nvim"
-_G.DEBUG = os.getenv "DEBUG" or false
+_G.MY_VIM = os.getenv("MY_NVIM") or "nvim"
+_G.DEBUG = os.getenv("DEBUG") or false
 
 -----------------------------------------------------------
 -- Global Functions
 -- 為後續作業，需先載入之「共用功能（Global Functions）」。
 -----------------------------------------------------------
-require "globals"
+require("globals")
 
 -----------------------------------------------------------
 -- Essential settings for Neovim
 -- 初始時需有的 Neovim 基本設定
 -----------------------------------------------------------
-require "essential"
+require("essential")
 
 ------------------------------------------------------------------------------
 -- Configuration supportting for VS Code
@@ -24,19 +24,20 @@ require "essential"
 -- 使用以下方法，皆不能正確運作：
 --   if vim.fn.exists('g:vscode') then
 --   if vim.fn.exists('g:vscode') == 0 then
+---@diagnostic disable-next-line: undefined-field
 if vim.g.vscode ~= nil then
     -----------------------------------------------------------
     -- VSCode extension"
     -----------------------------------------------------------
     -- Load plugins
     require("packer").startup(function(use)
-        use "easymotion/vim-easymotion"
-        use "asvetliakov/vim-easymotion"
+        use("easymotion/vim-easymotion")
+        use("asvetliakov/vim-easymotion")
     end)
     -- Options
-    require "options"
+    require("options")
     -- Key bindings
-    require "keymaps"
+    require("keymaps")
 
     return
 end
@@ -57,15 +58,15 @@ end
 ------------------------------------------------------------------------------
 if _G.DEBUG then
     -- (1)
-    local debug_plugins = require "debug-plugins"
+    local debug_plugins = require("debug-plugins")
     require("config_debug_env").setup(debug_plugins)
     -- (2)
-    require "plugins-rc"
+    require("plugins-rc")
 else
     -- (1)
-    require "plugins"
+    require("plugins")
     -- (2)
-    require "plugins-rc"
+    require("plugins-rc")
 end
 
 ------------------------------------------------------------------------------
@@ -74,23 +75,23 @@ end
 ------------------------------------------------------------------------------
 -- General options of Neovim
 -- Neovim 執行時期，應有之預設
-require "options"
+require("options")
 
 -- User's specific options of Neovim
 -- 使用者為個人需求，須變預設之設定
-require "settings"
+require("settings")
 
 -----------------------------------------------------------
 -- Color Themes
 -- Neovim 畫面的色彩設定
 -----------------------------------------------------------
-require "color-themes"
+require("color-themes")
 
 -----------------------------------------------------------
 -- Key bindings
 -- 快捷鍵設定：操作時的按鍵設定
 -----------------------------------------------------------
-require "keymaps"
+require("keymaps")
 
 -----------------------------------------------------------
 -- Experiments
@@ -100,12 +101,12 @@ require "keymaps"
 -----------------------------------------------------------
 -- code folding
 -----------------------------------------------------------
-vim.cmd [[
+vim.cmd([[
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=5
-]]
+]])
 -- Ref: https://www.jmaguire.tech/posts/treesitter_folding/
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -132,19 +133,19 @@ local function nvim_env_info() -- luacheck: ignore
     ----------------------------------------------------------------------------
     -- Neovim installed info
     ----------------------------------------------------------------------------
-    print "init.lua is loaded!"
-    print "Neovim RTP(Run Time Path ...)"
+    print("init.lua is loaded!")
+    print("Neovim RTP(Run Time Path ...)")
     ---@diagnostic disable-next-line: undefined-field
     _G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4) -- luacheck: ignore
-    print "===================================================================="
+    print("====================================================================")
     print(string.format("OS = %s", nvim_config["os"]))
     print(string.format("Working Directory: %s", vim.fn.getcwd()))
     print("Configurations path: " .. nvim_config["config"])
     print("Run Time Path: " .. nvim_config["runtime"])
     print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
-    print "path of all snippets"
+    print("path of all snippets")
     _G.PrintTableWithIndent(nvim_config["snippets"], 4)
-    print "--------------------------------------------------------------------"
+    print("--------------------------------------------------------------------")
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
@@ -161,7 +162,7 @@ local function debugpy_info()
 
     local venv = nvim_config["python"]["venv"]
     print(string.format("$VIRTUAL_ENV = %s", venv))
-    print "--------------------------------------------------------------------"
+    print("--------------------------------------------------------------------")
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
@@ -179,9 +180,42 @@ local function nodejs_info() -- luacheck: ignore
     end
     print(string.format("debugger_cmd = %s", ""))
     _G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
-    print "===================================================================="
+    print("====================================================================")
 end
 
 -- nvim_env_info()
 debugpy_info()
 -- nodejs_info()
+------------------------------------------------------------------------------
+-- Test
+------------------------------------------------------------------------------
+
+-- Add local LuaRocks installation directory to package path
+-- package.path = package.path .. ";~/.config/nvim/lua/rocks/?.lua"
+-- package.path = package.path .. ";~/.config/nvim/lua/?.lua"
+-- package.cpath = package.cpath .. ";~/.config/nvim/lua/rocks/?.so"
+-- vim.cmd([[
+-- luafile ~/.config/nvim/lua/my-chatgpt.lua
+-- ]])
+
+function _G.my_test_1()
+    -- Set some options
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+    vim.o.expandtab = true
+
+    -- Create a new buffer and set its contents
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Hello, world!" })
+
+    -- Open the new buffer in a split window
+    vim.api.nvim_command("split")
+    vim.api.nvim_buf_set_name(buf, "hello.txt")
+end
+
+local pretty = require("pl.pretty")
+function _G.run_shell_command()
+    local command = "ls -l"
+    local output = vim.fn.system(command)
+    print(output)
+end

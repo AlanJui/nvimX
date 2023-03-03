@@ -143,22 +143,6 @@ return packer.startup(function()
     -- helps users keep up-to-date with their tools and to make certain
     -- they have a consistent environment.
     use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
-    -- AI code auto-complete
-    use({ "github/copilot.vim" })
-    use({ "hrsh7th/cmp-copilot" })
-    -- Copilot Lua
-    -- use({ "zbirenbaum/copilot.lua" })
-    use({
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function() require("copilot").setup({}) end,
-    })
-    use({
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
-        config = function() require("copilot_cmp").setup() end,
-    })
     -- formatting & linting
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -185,6 +169,34 @@ return packer.startup(function()
     -- (e.g. rename file & update imports)
     -- use({ "jose-elias-alvarez/typescript.nvim" })
 
+    -----------------------------------------------------------
+    -- AI Tooles
+    -----------------------------------------------------------
+    -- ChatGPT
+    use({
+        "jackMort/ChatGPT.nvim",
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+    })
+    -- AI code auto-complete
+    use({ "github/copilot.vim" })
+    use({ "hrsh7th/cmp-copilot" })
+    -- Copilot Lua
+    -- use({ "zbirenbaum/copilot.lua" })
+    use({
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function() require("copilot").setup({}) end,
+    })
+    use({
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        config = function() require("copilot_cmp").setup() end,
+    })
     -----------------------------------------------------------
     -- Treesitter: for better syntax
     -----------------------------------------------------------

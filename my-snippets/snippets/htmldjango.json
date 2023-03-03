@@ -295,24 +295,21 @@
   "dj_view": {
     "prefix": "dj_view",
     "body": [
-      "{% extends 'base.html' %}",
+      "{% extends '${1:base.html}' %}",
       "",
-      "{% load static %}",
-      "",
-      "{% block title %}$1{% endblock %}",
+      "{% block title %}$2{% endblock %}",
       "",
       "{% block content %}",
-      "  $2",
+      "  $3",
       "{% endblock content %}",
       "",
       "{% block javascript %}",
       "<script>",
-      "  ",
       "</script>",
       "{% endblock javascript %}",
       ""
     ],
-    "description": "Django: HTML tags for View"
+    "description": "Django: Template for View"
   },
   "dj_base_bootstrap": {
     "prefix": "dj_base_bootstrap",
