@@ -63,8 +63,8 @@ require("mason-null-ls").setup({
 -- Required when `automatic_setup` is true
 --
 -- register any number of sources simultaneously
-local formatting = null_ls.builtins.formatting -- to setup formatters
-local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+-- local formatting = null_ls.builtins.formatting -- to setup formatters
+-- local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 -- local completion = null_ls.builtins.completion
 -- local code_actions = null_ls.builtins.code_actions
 local utils = require("null-ls.utils")
@@ -79,18 +79,37 @@ require("mason-null-ls").setup_handlers({
     end,
     ---@diagnostic disable-next-line: unused-local
     stylua = function(source_name, methods) -- luacheck: ignore
-        null_ls.register(formatting.stylua)
+        null_ls.register(null_ls.builtins.formatting.stylua)
     end,
-    mypy = function(source_name, methods) -- luacheck: ignore
-        null_ls.register(diagnostics.mypy.with({
+    ---@diagnostic disable-next-line: unused-local
+    pylint = function(source_name, methods) -- luacheck: ignore
+        null_ls.register(null_ls.builtins.diagnostics.pylint.with({
+            command = "pylint",
+            -- extra_args = { "--load-plugins", "pylint_django" },
+            -- init_options = {
+            --     "init-hook='import sys; import os; from pylint.config import find_pylintrc; sys.path.append(os.path.dirname(find_pylintrc()))'",
+            -- },
+        }))
+    end,
+    ---@diagnostic disable-next-line: unused-local
+    pydocstyle = function(source_name, methods) -- luacheck: ignore
+        null_ls.register(null_ls.builtins.diagnostics.pydocstyle.with({
+            extra_args = { "--config=$ROOT/setup.cfg" },
+        }))
+    end,
+    ---@diagnostic disable-next-line: unused-local
+    mypy = function(source_name, methods)
+        null_ls.register(null_ls.builtins.diagnostics.mypy.with({
             extra_args = { "--config-file", "mypy.ini" },
-            -- cwd = function(_) return vim.fn.getcwd() end,
+            -- extra_args = { "--config-file", "pyproject.toml" },
+            -- extra_args = { "--config-file", "setup.cfg" },
+            cwd = function(_) return vim.fn.getcwd() end,
             runtime_condition = function(params) return utils.path.exists(params.bufname) end,
         }))
     end,
     ---@diagnostic disable-next-line: unused-local
-    prettier = function(source_name, methods) -- luacheck: ignore
-        null_ls.register(formatting.prettier.with({
+    prettier = function(source_name, methods)
+        null_ls.register(null_ls.builtins.formatting.prettier.with({
             filetypes = {
                 "html",
                 "css",

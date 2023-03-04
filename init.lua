@@ -128,6 +128,13 @@ set foldlevel=5
 ----------------------------------------------------------------------------
 local nvim_config = _G.GetConfig()
 
+local function show_current_working_dir()
+    -- Automatic change to working directory you start Neovim
+    local my_working_dir = vim.fn.getcwd()
+    print(string.format("current working dir = %s", my_working_dir))
+    vim.api.nvim_command("cd " .. my_working_dir)
+end
+
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function nvim_env_info() -- luacheck: ignore
     ----------------------------------------------------------------------------
@@ -153,15 +160,14 @@ local function debugpy_info()
     ----------------------------------------------------------------------------
     -- Debugpy installed info
     ----------------------------------------------------------------------------
+    local venv = nvim_config["python"]["venv"]
+    print(string.format("$VIRTUAL_ENV = %s", venv))
     local debugpy_path = nvim_config["python"]["debugpy_path"]
     if _G.IsFileExist(debugpy_path) then
         print("Debugpy is installed in path: " .. debugpy_path)
     else
         print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
     end
-
-    local venv = nvim_config["python"]["venv"]
-    print(string.format("$VIRTUAL_ENV = %s", venv))
     print("--------------------------------------------------------------------")
 end
 
@@ -183,8 +189,9 @@ local function nodejs_info() -- luacheck: ignore
     print("====================================================================")
 end
 
--- nvim_env_info()
+show_current_working_dir()
 debugpy_info()
+-- nvim_env_info()
 -- nodejs_info()
 ------------------------------------------------------------------------------
 -- Test
@@ -213,9 +220,10 @@ function _G.my_test_1()
     vim.api.nvim_buf_set_name(buf, "hello.txt")
 end
 
-local pretty = require("pl.pretty")
 function _G.run_shell_command()
     local command = "ls -l"
     local output = vim.fn.system(command)
     print(output)
 end
+
+-- local pretty = require("pl.pretty")

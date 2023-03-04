@@ -49,10 +49,58 @@ local function setup_lsp_auto_installation()
     -- 透過 mason-tool-installer 自動安裝 Null-LS, DAP ；
     -- 且自動更新所有的 LS 及 Null-LS
     ------------------------------------------------------------
+    -- local ensure_installed_list = {
+    --     -- Lua
+    --     "lua-language-server",
+    --     "vim-language-server",
+    --     "diagnostic-languageserver",
+    --     "stylua",
+    --     -- luacheck: ignore
+    --     -- Python
+    --     "pyright",
+    --     "pylint",
+    --     "pydocstyle",
+    --     "flake8",
+    --     "djlint",
+    --     "isort",
+    --     "autopep8",
+    --     "black",
+    --     "debugpy",
+    --     -- Web
+    --     "html-lsp",
+    --     "css-lsp",
+    --     "tailwindcss-language-server",
+    --     "stylelint-lsp",
+    --     "emmet-ls",
+    --     "prettier",
+    --     -- JavaScript
+    --     "typescript-language-server",
+    --     "json-lsp",
+    --     "eslint-lsp",
+    --     "js-debug-adapter",
+    --     "node-debug2-adapter",
+    --     -- Others
+    --     "yamllint",
+    --     "yamlfmt",
+    --     "bash-debug-adapter",
+    --     "bash-language-server",
+    --     "shellcheck",
+    --     "jq",
+    --     "markdownlint",
+    --     "texlab",
+    -- }
     ---@diagnostic disable-next-line: unused-local
-    local ensure_installed_list = { -- luacheck: ignore
-        -- DAP
+    local ensure_installed_list = {
+        "lua-language-server",
+        "diagnostic-languageserver",
+        "pyright",
+        "autopep8",
+        "black",
         "debugpy",
+        "prettier",
+        "typescript-language-server",
+        "json-lsp",
+        "eslint-lsp",
         "js-debug-adapter",
         "node-debug2-adapter",
     }
