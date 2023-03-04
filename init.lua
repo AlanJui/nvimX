@@ -189,8 +189,8 @@ local function nodejs_info() -- luacheck: ignore
     print("====================================================================")
 end
 
-show_current_working_dir()
-debugpy_info()
+-- show_current_working_dir()
+-- debugpy_info()
 -- nvim_env_info()
 -- nodejs_info()
 ------------------------------------------------------------------------------
