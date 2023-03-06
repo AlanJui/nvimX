@@ -1,9 +1,7 @@
 --------------------------------------------------------------------
 -- keymap.lua
 --------------------------------------------------------------------
-if DEBUG then
-	print("<< DEBUG: Loading keymaps.lua >>")
-end
+if DEBUG then print("<< DEBUG: Loading keymaps.lua >>") end
 
 -- set leader key to space
 vim.g.mapleader = " "
@@ -37,7 +35,7 @@ keymap.set("n", "<M-<>", "V<<Esc>")
 keymap.set("i", "<C-CR>", "<Esc>A<Esc>jddO")
 
 -- Insert line
-keymap.set("i", "<M-o>", "<Esc>oi")
+keymap.set("i", "<M-o>", "<Esc>o")
 keymap.set("i", "<M-n>", "<Esc>jO")
 keymap.set("i", "<M-i>", "<Esc>O<Esc>jddkA")
 keymap.set("n", "<M-i>", "O")

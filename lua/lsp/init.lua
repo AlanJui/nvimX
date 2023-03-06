@@ -95,7 +95,6 @@ local function setup_lsp_auto_installation()
         "diagnostic-languageserver",
         "pyright",
         "autopep8",
-        "black",
         "debugpy",
         "prettier",
         "typescript-language-server",

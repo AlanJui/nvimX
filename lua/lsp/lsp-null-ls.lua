@@ -100,11 +100,11 @@ require("mason-null-ls").setup_handlers({
     ---@diagnostic disable-next-line: unused-local
     mypy = function(source_name, methods)
         null_ls.register(null_ls.builtins.diagnostics.mypy.with({
-            extra_args = { "--config-file", "mypy.ini" },
             -- extra_args = { "--config-file", "pyproject.toml" },
+            -- extra_args = { "--config-file", "mypy.ini" },
             -- extra_args = { "--config-file", "setup.cfg" },
-            cwd = function(_) return vim.fn.getcwd() end,
-            runtime_condition = function(params) return utils.path.exists(params.bufname) end,
+            -- cwd = function(_) return vim.fn.getcwd() end,
+            -- runtime_condition = function(params) return utils.path.exists(params.bufname) end,
         }))
     end,
     ---@diagnostic disable-next-line: unused-local
