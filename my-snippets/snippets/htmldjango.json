@@ -93,9 +93,31 @@
     ],
     "description": "Django: base.html"
   },
+  "dj_ext_base": {
+    "prefix": "dj_ext_base",
+    "body": [
+      "{% extends '${1:base.html}' %}",
+      "",
+      "{% block title %}$2{% endblock %}",
+      "",
+      "{% block content %}",
+      "  $3",
+      "{% endblock content %}",
+      "",
+      "{% block javascript %}",
+      "<script>",
+      "</script>",
+      "{% endblock javascript %}",
+      ""
+    ],
+    "description": "Django: Extennds Base Template for View"
+  },
   "dj_extends": {
     "prefix": "dj_extends",
-    "body": ["{% extends '${1:base.html}' %}", ""],
+    "body": [
+      "{% extends '${1:base.html}' %}",
+      ""
+    ],
     "description": "Django: extends"
   },
   "dj_view": {
@@ -132,22 +154,34 @@
   },
   "dj_load": {
     "prefix": "dj_load",
-    "body": ["{% load $1 %}", ""],
+    "body": [
+      "{% load $1 %}",
+      ""
+    ],
     "description": "Django: load "
   },
   "dj_load_static": {
     "prefix": "dj_load_static",
-    "body": ["{% load static %}", ""],
+    "body": [
+      "{% load static %}",
+      ""
+    ],
     "description": "Django: load static files"
   },
   "dj_blk": {
     "prefix": "dj_blk",
-    "body": ["{% block $1 %}{% endblock $1 %}"],
+    "body": [
+      "{% block $1 %}{% endblock $1 %}"
+    ],
     "description": "One line block "
   },
   "dj_block": {
     "prefix": "dj_block",
-    "body": ["{% block $1 %}", "$2", "{% endblock $1 %}"],
+    "body": [
+      "{% block $1 %}",
+      "$2",
+      "{% endblock $1 %}"
+    ],
     "description": "Django: block "
   },
   "dj_div": {
@@ -172,17 +206,27 @@
   },
   "dj_if": {
     "prefix": "dj_if",
-    "body": ["{% if $1 %}", "  $2", "{% endif %}"],
+    "body": [
+      "{% if $1 %}",
+      "  $2",
+      "{% endif %}"
+    ],
     "description": "Django: if"
   },
   "dj_else": {
     "prefix": "dj_else",
-    "body": ["{% else %}", "  $1"],
+    "body": [
+      "{% else %}",
+      "  $1"
+    ],
     "description": "Django: else"
   },
   "dj_include": {
     "prefix": "dj_include",
-    "body": ["{% include '$1' %}", ""],
+    "body": [
+      "{% include '$1' %}",
+      ""
+    ],
     "description": "Django: include"
   },
   "dj_blk_styles": {
@@ -197,22 +241,30 @@
   },
   "dj_link_href": {
     "prefix": "dj_link_href",
-    "body": ["<link rel=\"stylesheet\" href=\"{% static '$1.css' %}\" />"],
+    "body": [
+      "<link rel=\"stylesheet\" href=\"{% static '$1.css' %}\" />"
+    ],
     "description": "Django: source of style file"
   },
   "dj_script_src": {
     "prefix": "dj_script_src",
-    "body": ["<script src=\"{% static '$1.js' %}\"></script>"],
+    "body": [
+      "<script src=\"{% static '$1.js' %}\"></script>"
+    ],
     "description": "Django: script src "
   },
   "dj_a_href": {
     "prefix": "dj_a_href",
-    "body": ["<a href=\"{% url '$1' %}\" $2>$3</a>"],
+    "body": [
+      "<a href=\"{% url '$1' %}\" $2>$3</a>"
+    ],
     "description": "Django: a href"
   },
   "dj_img_src": {
     "prefix": "dj_img_src",
-    "body": ["<img src=\"{% static '$1' %}\" />"],
+    "body": [
+      "<img src=\"{% static '$1' %}\" />"
+    ],
     "description": "Django: img src"
   },
   "dj_form_asp": {
@@ -221,7 +273,7 @@
       "<form method=\"POST\" class=\"${2:form-horizontal}\">",
       "\t{% csrf_token %}",
       "\t{{ form.as_p }}",
-      "\t<button type=\"submit\" class=\"btn btn-primary\">$1</button>",
+      "\t<p><input type=\"submit\" value=\"Add comment\"/></p>",
       "</form>"
     ],
     "description": "Django: form as_p"
@@ -275,22 +327,45 @@
   },
   "dj_for": {
     "prefix": "dj_for",
-    "body": ["{% for $1 in $2 %}", "  $3", "{% empty %}", "", "{% endfor %}"],
+    "body": [
+      "{% for $1 in $2 %}",
+      "  $3",
+      "{% empty %}",
+      "",
+      "{% endfor %}"
+    ],
     "description": "Django: for loop"
+  },
+  "dj_with": {
+    "prefix": "dj_with",
+    "body": [
+      "{% with $1 as $2 %}",
+      "  $3",
+      "{% endwith %}"
+    ],
+    "description": "Django: with statement"
   },
   "dj_blkc": {
     "prefix": "dj_blkc",
-    "body": ["{% block content %}", "$1", "{% endblock content %}"],
+    "body": [
+      "{% block content %}",
+      "$1",
+      "{% endblock content %}"
+    ],
     "description": "Django: block content"
   },
   "dj_blkt": {
     "prefix": "dj_blkt",
-    "body": ["{% block title %}$1{% endblock %}"],
+    "body": [
+      "{% block title %}$1{% endblock %}"
+    ],
     "description": "Django: block title"
   },
   "dj_blkt1": {
     "prefix": "dj_blkt1",
-    "body": ["{% block title %}\n$1\n{% endblock %}"],
+    "body": [
+      "{% block title %}\n$1\n{% endblock %}"
+    ],
     "description": "Django: block title"
   },
   "dj_blksrc": {
@@ -323,7 +398,9 @@
   },
   "dj_loads": {
     "prefix": "dj_loads",
-    "body": ["{% load static %}"],
+    "body": [
+      "{% load static %}"
+    ],
     "description": "Django: load static files"
   }
 }
