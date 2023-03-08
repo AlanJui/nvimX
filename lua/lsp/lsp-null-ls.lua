@@ -39,11 +39,11 @@ local ensure_installed_list = {
     -- "pylint",
     -- "mypy",
     "pydocstyle",
-    "flake8",
+    -- "flake8",
     "isort",
     "djhtml",
     "djlint",
-    "autopep8",
+    -- "autopep8",
     -- Markdown
     "markdownlint",
     -- Shell
@@ -100,7 +100,7 @@ require("mason-null-ls").setup_handlers({
     ---@diagnostic disable-next-line: unused-local
     mypy = function(source_name, methods)
         null_ls.register(null_ls.builtins.diagnostics.mypy.with({
-            -- extra_args = { "--config-file", "pyproject.toml" },
+            extra_args = { "--config-file", "pyproject.toml" },
             -- extra_args = { "--config-file", "mypy.ini" },
             -- extra_args = { "--config-file", "setup.cfg" },
             -- cwd = function(_) return vim.fn.getcwd() end,
