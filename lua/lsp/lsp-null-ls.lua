@@ -36,7 +36,7 @@ local ensure_installed_list = {
     -- Web
     "prettier",
     -- Python/Django
-    -- "pylint",
+    "pylint",
     -- "mypy",
     "pydocstyle",
     -- "flake8",

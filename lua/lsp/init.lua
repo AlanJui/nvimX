@@ -94,7 +94,7 @@ local function setup_lsp_auto_installation()
         "lua-language-server",
         "diagnostic-languageserver",
         "pyright",
-        "autopep8",
+        "pylint",
         "debugpy",
         "prettier",
         "typescript-language-server",
