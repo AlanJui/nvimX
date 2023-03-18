@@ -92,16 +92,19 @@ local function setup_lsp_auto_installation()
     ---@diagnostic disable-next-line: unused-local
     local ensure_installed_list = {
         "lua-language-server",
+        "stylua",
         "diagnostic-languageserver",
         "pyright",
         "pylint",
         "debugpy",
+        "tailwindcss-language-server",
         "prettier",
         "typescript-language-server",
         "json-lsp",
         "eslint-lsp",
         "js-debug-adapter",
         "node-debug2-adapter",
+        "texlab",
     }
 
     require("mason-tool-installer").setup({
@@ -198,6 +201,16 @@ local function setup_lsp()
                     "scss",
                     "typescriptreact",
                     "javascriptreact",
+                    "markdown",
+                },
+                init_options = {
+                    html = {
+                        options = {
+                            -- For possible options,
+                            -- see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                            ["bem.enabled"] = true,
+                        },
+                    },
                 },
             })
         end,
