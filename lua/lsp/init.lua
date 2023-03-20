@@ -102,9 +102,6 @@ local function setup_lsp_auto_installation()
         "typescript-language-server",
         "json-lsp",
         "eslint-lsp",
-        "js-debug-adapter",
-        "node-debug2-adapter",
-        "texlab",
     }
 
     require("mason-tool-installer").setup({
