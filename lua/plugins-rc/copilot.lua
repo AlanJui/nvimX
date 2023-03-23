@@ -4,15 +4,13 @@
 -- on individually.
 -------------------------------------------------------------------------------
 local ok = pcall(require, "copilot")
-if not ok then
-	return
-end
+if not ok then return end
 
 -- use this table to disable/enable filetypes
 -- 正向表列：每種程式語語，均需 Copilot 協助；不需使用之程式語言，則一一條列。
 vim.g.copilot_filetypes = {
-	xml = false,
-	markdown = false,
+    xml = false,
+    markdown = true,
 }
 --
 -- since most are enabled by default you can turn them off
@@ -46,7 +44,8 @@ vim.g.copilot_filetypes = {
 -------------------------------------------------------------------------------
 
 -- Keymap
-vim.g.copilot_no_tab_map = true
+-- vim.g.copilot_no_tab_map = true
+vim.g.copilot_no_tab_map = false
 -- Syntax Highlighting
 vim.cmd([[highlight CopilotSuggestion guifg=#555557 ctermfg=8]])
 -- vim.keymap.set.keymap("i", "<C-y>", ":copilot#Accept('\\<CR>')<CR>", { silent = true })

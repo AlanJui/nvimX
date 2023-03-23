@@ -225,5 +225,3 @@ function _G.run_shell_command()
     local output = vim.fn.system(command)
     print(output)
 end
-
--- local pretty = require("pl.pretty")

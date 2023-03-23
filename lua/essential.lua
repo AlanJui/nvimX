@@ -60,9 +60,9 @@ vim.opt.numberwidth = 4
 -- A backspace keypress will remove softabstop columns of whitespace.
 --
 -- vim.opt.softtabstop = 0
-vim.opt.softtabstop = 4
-vim.opt.tabstop = 4 -- spaces per tab
-vim.opt.shiftwidth = 4 -- spaces per tab (when shifting), when using the >> or << commands, shift lines by 4 spaces
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2 -- spaces per tab
+vim.opt.shiftwidth = 2 -- spaces per tab (when shifting), when using the >> or << commands, shift lines by 4 spaces
 vim.opt.expandtab = false -- don't expand tabs into spaces
 vim.opt.smarttab = true -- <tab>/<BS> indent/dedent in leading whitespace
 vim.opt.autoindent = true -- maintain indent of current line
@@ -96,7 +96,9 @@ vim.opt.smartindent = true
 -- }
 
 -- Disable line wrap
-vim.opt.textwidth = 0
-vim.opt.wrapmargin = 0
-vim.opt.wrap = false
+-- vim.opt.textwidth = 0
+-- vim.opt.wrapmargin = 0
+-- vim.opt.wrap = false
 -- vim.wo.wrap = false
+
+vim.opt.textwidth = 80

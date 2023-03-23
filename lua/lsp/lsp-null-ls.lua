@@ -67,7 +67,7 @@ require("mason-null-ls").setup({
 -- local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 -- local completion = null_ls.builtins.completion
 -- local code_actions = null_ls.builtins.code_actions
-local utils = require("null-ls.utils")
+-- local utils = require("null-ls.utils")
 
 require("mason-null-ls").setup_handlers({
     function(source_name, methods)

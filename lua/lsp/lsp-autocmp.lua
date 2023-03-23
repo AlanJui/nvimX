@@ -171,14 +171,14 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-        -- ---@diagnostic disable-next-line: unused-local
-        -- ["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
-        --     vim.api.nvim_feedkeys(
-        --         vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-        --         "n",
-        --         true
-        --     )
-        -- end),
+        ---@diagnostic disable-next-line: unused-local
+        ["<C-g>"] = cmp.mapping(function(fallback) -- luacheck: ignore
+            vim.api.nvim_feedkeys(
+                vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
+                "n",
+                true
+            )
+        end),
     }),
     -- experimental = {
     --     ghost_text = false, -- this feature conflict with copilot.vim's preview.
@@ -188,7 +188,7 @@ cmp.setup({
         { name = "nvim_lsp", keyword_length = 1 },
         { name = "nvim_lua" },
         { name = "luasnip", keyword_length = 1 },
-        { name = "copilot" },
+        -- { name = "copilot" },
         { name = "calc" },
         { name = "emoji" },
     }, { { name = "buffer", keyword_length = 3 } }),

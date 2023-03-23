@@ -181,7 +181,7 @@ local function setup_lsp()
                 settings = {
                     Lua = {
                         diagnostics = {
-                            globals = { "vim" },
+                            globals = { "vim", "hs" },
                         },
                     },
                 },
@@ -272,8 +272,9 @@ end
 setup_lsp_auto_installation()
 
 -- (2) 設定 Auto Completion (Auto-cmp and snippets setup: cmp.nvim + luasnip)
-require("lsp/lsp-autocmp")
 -- require("lsp/lsp-autocmp-copilot")
+require("plugins-rc.copilot")
+require("lsp/lsp-autocmp")
 
 -- (3) 設定 LSP (Setup configuration for every LSP)
 setup_lsp()
@@ -286,3 +287,21 @@ setup_diagnostics()
 
 -- (6) 設定 Lsp Saga
 require("plugins-rc.lspsaga-nvim")
+
+-- (7) 令 Null Server 有最高使用權
+-- local function select_lsp(client_id)
+--     if client_id == 4 then -- null-ls 的客戶端 ID
+--         return 1
+--     end
+--     return 0
+-- end
+--
+-- vim.cmd([[
+--   autocmd User lsp_setup call lsp#register_server({
+--       \ 'name': 'null-ls',
+--       \ 'priority': 100,
+--       \ 'whitelist': ['markdown'],
+--       \ 'config': {
+--       \   'config_callback': v:lua.select_lsp,
+--       \}})
+-- ]])
