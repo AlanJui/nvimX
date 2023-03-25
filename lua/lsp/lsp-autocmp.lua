@@ -104,6 +104,7 @@ require("luasnip.loaders.from_vscode").lazy_load({
 
 -- extends filetypes supported by snippets
 luasnip.filetype_extend("vimwik", { "markdown" })
+luasnip.filetype_extend("markdown", { "css" })
 luasnip.filetype_extend("html", { "htmldjango" })
 
 ------------------------------------------------------------
@@ -184,11 +185,11 @@ cmp.setup({
     --     ghost_text = false, -- this feature conflict with copilot.vim's preview.
     -- },
     sources = cmp.config.sources({
+        { name = "copilot" },
+        { name = "luasnip", keyword_length = 1 },
         { name = "path" },
         { name = "nvim_lsp", keyword_length = 1 },
         { name = "nvim_lua" },
-        { name = "luasnip", keyword_length = 1 },
-        -- { name = "copilot" },
         { name = "calc" },
         { name = "emoji" },
     }, { { name = "buffer", keyword_length = 3 } }),

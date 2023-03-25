@@ -32,7 +32,7 @@ end
 local ensure_installed_list = {
     -- Lua
     -- "luacheck",
-    "stylua",
+    -- "stylua",
     -- Web
     "prettier",
     -- Python/Django

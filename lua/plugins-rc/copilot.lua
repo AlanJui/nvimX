@@ -6,6 +6,9 @@
 local ok = pcall(require, "copilot")
 if not ok then return end
 
+-- 禁用內部文件類型限制
+-- vim.g.copilot_internal_filetypes = {}
+
 -- use this table to disable/enable filetypes
 -- 正向表列：每種程式語語，均需 Copilot 協助；不需使用之程式語言，則一一條列。
 vim.g.copilot_filetypes = {

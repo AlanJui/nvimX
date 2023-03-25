@@ -1,7 +1,8 @@
 {
-    "diagnostics.globals": [
-        "vim",
-        "_G"
-    ],
-    "workspace.checkThirdParty": false
+  "diagnostics.globals": [
+    "vim",
+    "hs",
+    "_G"
+  ],
+  "workspace.checkThirdParty": false
 }

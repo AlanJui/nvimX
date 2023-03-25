@@ -272,7 +272,7 @@ setup_lsp_auto_installation()
 
 -- (2) 設定 Auto Completion (Auto-cmp and snippets setup: cmp.nvim + luasnip)
 -- require("lsp/lsp-autocmp-copilot")
-require("plugins-rc.copilot")
+require("plugins-rc/copilot")
 require("lsp/lsp-autocmp")
 
 -- (3) 設定 LSP (Setup configuration for every LSP)
