@@ -92,7 +92,6 @@ local function setup_lsp_auto_installation()
     ---@diagnostic disable-next-line: unused-local
     local ensure_installed_list = {
         "lua-language-server",
-        "stylua",
         "diagnostic-languageserver",
         "pyright",
         "pylint",

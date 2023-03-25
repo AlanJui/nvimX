@@ -12,3 +12,5 @@ test/**/*.log
 
 plugin/packer_compiled.lua
 tags
+_tmp/
+tmp/
