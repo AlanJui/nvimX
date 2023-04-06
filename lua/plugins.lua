@@ -389,7 +389,16 @@ return packer.startup(function()
     -- UI for nvim-dap
     -- Install icons for dap-ui: https://github.com/ChristianChiarulli/neovim-codicons
     use({ "folke/neodev.nvim" })
-    use({ "rcarriga/nvim-dap-ui" })
+    -- use({ "rcarriga/nvim-dap-ui" })
+    -- Reset nvim-dap-ui to a specific commit
+    use({
+        'rcarriga/nvim-dap-ui',
+        tag = 'v3.6.4',
+        requires = {
+            'mfussenegger/nvim-dap'
+        }
+    })
+
     -- Inlines the values for variables as virtual text using treesitter.
     use({ "theHamsta/nvim-dap-virtual-text" })
     -- -- Integration for nvim-dap with telescope.nvim

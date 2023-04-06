@@ -62,6 +62,7 @@ local home_dir = os.getenv("HOME")
 local config_dir = vim.fn.stdpath("config")
 -- local runtime_dir = home_dir .. "/.local/share/" .. nvim_name
 -- local runtime_dir = vim.call("stdpath", "data")
+-- $HOME/.local/share/nvim/
 local runtime_dir = vim.fn.stdpath("data")
 -- local cache_dir = vim.call("stdpath", "cache")
 local cache_dir = vim.fn.stdpath("cache")
