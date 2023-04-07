@@ -22,7 +22,7 @@ keymap({ "n", "v" }, "<localleader>ca", "<cmd>Lspsaga code_action<CR>")
 keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
 
 -- Rename all occurrences of the hovered word for the selected files
-keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
+-- keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 
 -- Peek definition
 -- You can edit the file containing the definition in the floating window
@@ -42,7 +42,7 @@ keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
 
 -- Go to type definition
-keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
+-- keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
 
 -- Show line diagnostics
 -- You can pass argument ++unfocus to

@@ -19,9 +19,9 @@ keymap.set("i", "<c-s>", "<Esc>:w<CR>a", {})
 -- Line editting
 --------------------------------------------------------------------
 -- Editting on Insert Mode
-keymap.set("i", "<M-,>", "<Right>,")
-keymap.set("i", "<M-.>", "<Right>.")
-keymap.set("i", "<M-:>", "<Right>:")
+-- keymap.set("i", "<M-,>", "<Right>,")
+-- keymap.set("i", "<M-.>", "<Right>.")
+-- keymap.set("i", "<M-:>", "<Right>:")
 keymap.set("i", "<M-,><M-,>", "<Esc>A,")
 keymap.set("i", "<M-.><M-.>", "<Esc>A.")
 keymap.set("i", "<M-:><M-:>", "<Esc>A:")
@@ -181,3 +181,9 @@ vim.keymap.set("v", "<localleader>p", [["_dP]])
 -- barfoo
 -- bar
 -- bar
+---------------------------------------------------------
+-- 禁用插件的映射
+vim.g.plugin_disable_mappings = 1
+
+-- 使用自己的映射
+vim.api.nvim_set_keymap('n', 'ys', '<Plug>Ysurround', {})

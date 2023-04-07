@@ -27,11 +27,11 @@ let g:closetag_emptyTags_caseSensitive = 1
 " Disables auto-close if not in a "valid" region (based on filetype)
 "
 let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ 'typescriptreact': 'jsxRegion,tsxRegion',
-    \ 'javascriptreact': 'jsxRegion',
-    \ }
+      \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+      \ 'javascript.jsx': 'jsxRegion',
+      \ 'typescriptreact': 'jsxRegion,tsxRegion',
+      \ 'javascriptreact': 'jsxRegion',
+      \ }
 
 " Shortcut for closing tags, default is '>'
 "
@@ -40,4 +40,4 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 " let mapleader=','
-let g:closetag_close_shortcut = '<leader>>'
+let g:closetag_close_shortcut = '<leader>'

@@ -133,5 +133,5 @@ mason_nvim_dap.setup_handlers({
 load_language_specific_dap()
 setup_style_of_breakpoint()
 setup_debug_ui()
-require("debugger/keymaps").setup()
+-- require("debugger/keymaps").setup()
 -- print("Debugger module configured!")

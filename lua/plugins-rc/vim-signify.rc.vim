@@ -6,7 +6,7 @@
 " (2) :SignifyToggleHighlight
 "=================================================================
 " map leader to Space
-" let mapleader = " " 
+" let mapleader = " "
 
 " Jump though hunks
 " nmap <leader>gj <plug>(signify-next-hunk)

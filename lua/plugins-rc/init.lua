@@ -19,15 +19,15 @@ require("plugins-rc/indent-blankline")
 
 -- files management
 -- require("plugins-rc/telescope-nvim")
-require("my-telescope")
+-- require("my-telescope")
 require("plugins-rc/nvim-tree")
 require("plugins-rc/harpoon")
 
 -- editting tools
+require("plugins-rc/comment-nvim")
 require("plugins-rc/nvim-ufo-rc")
 require("plugins-rc/undotree")
 require("plugins-rc/trim-nvim")
-require("plugins-rc/comment-nvim")
 require("plugins-rc/autopairs")
 require("plugins-rc/nvim-ts-autotag")
 vim.cmd([[runtime ./lua/plugins-rc/tagalong-vim.rc.vim]])

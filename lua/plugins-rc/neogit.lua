@@ -1,21 +1,21 @@
 local status, neogit = pcall(require, "neogit")
 if not status then
-	return
+    return
 end
 
 neogit.setup({
-	disable_signs = false,
-	disable_context_highlighting = false,
-	-- Disablint commit confirmation
-	disable_commit_confirmation = true,
-	-- customize displayed signs
-	signs = {
-		-- { CLOSED, OPENED }
-		section = { ">", "v" },
-		item = { ">", "v" },
-		hunk = { "", "" },
-	},
-	integrations = { diffview = true },
+    disable_signs = false,
+    disable_context_highlighting = false,
+    -- Disablint commit confirmation
+    disable_commit_confirmation = true,
+    -- customize displayed signs
+    signs = {
+        -- { CLOSED, OPENED }
+        section = { ">", "v" },
+        item = { ">", "v" },
+        hunk = { "", "" },
+    },
+    integrations = { diffview = true },
 })
 
 -- Notification Highlighting

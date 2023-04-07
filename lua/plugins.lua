@@ -201,6 +201,10 @@ return packer.startup(function()
     -- Treesitter: for better syntax
     -----------------------------------------------------------
     -- Nvim Treesitter configurations and abstraction layer
+    -- use({
+    --     'nvim-treesitter/nvim-treesitter',
+    --     run = ':TSUpdate'
+    -- })
     use({
         "nvim-treesitter/nvim-treesitter",
         run = function()
@@ -255,18 +259,19 @@ return packer.startup(function()
         },
     })
     -- Telescope Extensions
-    use("cljoly/telescope-repo.nvim")
+    -- use({ "cljoly/telescope-repo.nvim" })
     use({ "nvim-telescope/telescope-file-browser.nvim" })
     use({ "nvim-telescope/telescope-ui-select.nvim" })
-    use("dhruvmanila/telescope-bookmarks.nvim")
-    use("nvim-telescope/telescope-github.nvim")
+    use({ "dhruvmanila/telescope-bookmarks.nvim" })
+    use({ "nvim-telescope/telescope-github.nvim" })
     -- Trying command palette
     use({ "LinArcX/telescope-command-palette.nvim" })
     use({
         "AckslD/nvim-neoclip.lua",
         config = function() require("neoclip").setup() end,
     })
-    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
+    -- dependency for better sorting performance
+    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use("jvgrootveld/telescope-zoxide")
     -- Icons
     -- use({ "kyazdani42/nvim-web-devicons" })
@@ -310,7 +315,7 @@ return packer.startup(function()
         requires = "kevinhwang91/promise-async",
     })
     -- replace with register contents using motion (gr + motion)
-    use("inkarkat/vim-ReplaceWithRegister")
+    -- use("inkarkat/vim-ReplaceWithRegister")
     -- surroundings: parentheses, brackets, quotes, XML tags, and more
     use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
     -- Toggle comments in Neovim
