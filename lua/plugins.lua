@@ -1,4 +1,4 @@
------------------------------------------------------------------
+----------------------------------------------------------------
 -- Plugin Manager: install plugins
 -- $ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 -----------------------------------------------------------------
@@ -398,7 +398,7 @@ return packer.startup(function()
     -- Reset nvim-dap-ui to a specific commit
     use({
         'rcarriga/nvim-dap-ui',
-        tag = 'v3.6.4',
+        -- tag = 'v3.6.4',
         requires = {
             'mfussenegger/nvim-dap'
         }

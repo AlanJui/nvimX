@@ -25,8 +25,8 @@ local mappings = {
     ["."] = { "<cmd>lua _lazygit_toggle()<CR>", "Lazygit" },
     [";"] = { ":ToggleTerm size=10<CR>", "Open Terminal" },
     ["/"] = { "gcc", "Comment out (Toggle)" },
-    ["\\"] = { ":NvimTreeToggle<CR>", "File explorer" },
-    ["e"] = { ":Vifm<CR>", "Files manager" },
+    ["e"] = { ":NvimTreeToggle<CR>", "File explorer" },
+    ["\\"] = { ":Vifm<CR>", "Files manager" },
     ["q"] = {
         ":FloatermNew --height=0.7 --width=0.9 --wintype=float  ranger<CR>",
         "Quick viewer",
