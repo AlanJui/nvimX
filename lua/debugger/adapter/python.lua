@@ -23,7 +23,7 @@ function M.setup()
   end
 
   local venv_python_path = get_venv_python_path()
-  local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/bin/debugpy"
+  local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
 
   dap.adapters.python = {
     type = "executable",

@@ -20,10 +20,10 @@
 --      using the widget UI
 ------------------------------------------------------------------
 local dap = safe_require("dap")
-local mason_nvim_dap = safe_require("mason-nvim-dap")
+-- 設定「除錯接合器」在「使用者介面（UI）」的配置及監控事件
 local dapui = safe_require("dapui")
 
-if not dap or not dapui or not mason_nvim_dap then return end
+if not dap or not dapui then return end
 
 local function setup_debugger_icons()
   vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
@@ -33,8 +33,7 @@ local function setup_debugger_icons()
   vim.fn.sign_define("DapLogPoint", { text = "💬", texthl = "", linehl = "", numhl = "" })
 end
 
--- 設定「除錯接合器」在「使用者介面（UI）」的配置及監控事件
-local function setup_debugger_ui()
+local function configure_debug_ui()
   -- 設定「除錯接合器（Debug Adapter）」，可顯示「變數」內容值。
   require("nvim-dap-virtual-text").setup({ commented = true })
 
@@ -50,9 +49,20 @@ local function setup_debugger_ui()
       repl = "r",
       toggle = "t",
     },
+    -- Expand lines larger than the window
+    -- Requires >= 0.7
+    expand_lines = vim.fn.has("nvim-0.7"),
+    -- Layouts define sections of the screen to place windows.
+    -- The position can be "left", "right", "top" or "bottom".
+    -- The size specifies the height/width depending on position. It can be an Int
+    -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
+    -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
+    -- Elements are the elements shown in the layout (in order).
+    -- Layouts are opened in order so that earlier layouts take priority in window sizing.
     layouts = {
       {
         elements = {
+          -- Elements can be strings or table with id and size keys.
           { id = "scopes", size = 0.25 },
           "breakpoints",
           "stacks",
@@ -68,7 +78,9 @@ local function setup_debugger_ui()
       },
     },
     controls = {
+      -- Requires Neovim nightly (or 0.8 when released)
       enabled = true,
+      -- Display controls in this element
       element = "repl",
       icons = {
         pause = "",
@@ -103,87 +115,6 @@ local function setup_debugger_ui()
   dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 end
 
------------------------------------------------------------
--- It's important that you set up the plugins in the following order:
---
---   1. mason.nvim
---   2. mason-nvim-dap.nvim
---
--- Pay extra attention to this if you're using a plugin manager to load plugins for you,
--- as there are no guarantees it'll load plugins in the correct order unless explicitly
--- instructed to.
------------------------------------------------------------
-
-local function get_venv_python_path()
-  local workspace_folder = vim.fn.getcwd()
-
-  if vim.fn.executable(workspace_folder .. "/.venv/bin/python") then
-    return workspace_folder .. "/.venv/bin/python"
-  elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") then
-    return workspace_folder .. "/venv/bin/python"
-  elseif vim.fn.executable(os.getenv("VIRTUAL_ENV") .. "/bin/python") then
-    return os.getenv("VIRTUAL_ENV" .. "/bin/python")
-  else
-    return "/usr/bin/python"
-  end
-end
-
-local venv_python_path = get_venv_python_path()
--- local debugpy_python_path = "/usr/bin/python3"
-local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
-
-local handlers = {
-  function(config) require("mason-nvim-dap").default_setup(config) end,
-  python = function() --luacheck: ignore 212
-    dap.adapters.python = {
-      type = "executable",
-      command = debugpy_python_path,
-      args = {
-        "-m",
-        "debugpy.adapter",
-      },
-    }
-
-    dap.configurations.python = {
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch file",
-        program = "${file}", -- This configuration will launch the current file if used.
-        pythonPath = venv_python_path,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch Django Server",
-        cwd = "${workspaceFolder}",
-        program = "${workspaceFolder}/manage.py",
-        args = {
-          "runserver",
-          "--noreload",
-        },
-        console = "integratedTerminal",
-        justMyCode = true,
-        pythonPath = venv_python_path,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Python: Django Debug Single Test",
-        program = "${workspaceFolder}/manage.py",
-        args = {
-          "test",
-          "${relativeFileDirname}",
-        },
-        django = true,
-        console = "integratedTerminal",
-        pythonPath = venv_python_path,
-        -- pythonPath = "${workspaceFolder}/.venv/bin/python",
-      },
-    }
-  end,
-}
-
 -- 各程式語言所用之「除錯接合器」載入作業
 -- 手動下載程式語言專屬之 DAP：
 -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
@@ -203,13 +134,8 @@ end
 -----------------------------------------------------------
 
 setup_debugger_icons()
-setup_debugger_ui()
+configure_debug_ui()
 load_language_specific_dap()
-
-mason_nvim_dap.setup({
-  ensure_installed = { "stylua", "jq", "debugpy" },
-  handlers = handlers,
-})
 
 -- DAP 操作之各項「操作指令」，於 which_key 中之 "debug" 指令選單中設定。
 require("debugger/keymaps").setup()
