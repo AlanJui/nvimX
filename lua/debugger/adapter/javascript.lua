@@ -2,21 +2,17 @@
 -- Use Mason to install js-debug-adapter
 -- the vscode-js-debug is called js-debug-adapter in mason
 ----------------------------------------------------------------------------------------------------
-local ok, dap_clinet = pcall(require, "dap")
-local ok2, debug_adapter = pcall(require, "debugger/adapter/vscode-js")
+local ok, dap = pcall(require, "dap")
+local ok2, dap_adapter = pcall(require, "dap-vscode-js")
 if not ok or not ok2 then
 	return
 end
 
 local M = {}
 
-local nvim_config = _G.GetConfig()
-local node_path = nvim_config.nodejs.node_path
-local debugger_path = nvim_config.nodejs.debugger_path
-local debugger_cmd = { nvim_config.nodejs.debugger_cmd }
-
-local function setup_debug_adapter()
-	debug_adapter.setup({
+function M.setup()
+	-- configure run time environment for DAP of vscode-js-debug
+	dap_adapter.setup({
 		-- Path of node executable. Defaults to $NODE_PATH, and then "node"
 		-- node_path = node_path,
 		-- Path to vscode-js-debug installation.
@@ -25,21 +21,17 @@ local function setup_debug_adapter()
 		-- debugger_cmd = debugger_cmd,
 		-- which adapters to register in nvim-dap
 		-- adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-		adapters = { "pwa-node" },
+		adapters = { "pwa-node", "pwa-chrome" },
 		-- Path for file logging
-		log_file_path = vim.fn.stdpath("cache") .. "/debug_adapter.log",
+		-- log_file_path = vim.fn.stdpath("cache") .. "/debug_adapter.log",
 		-- Logging level for output to console. Set to false to disable console output.
 		-- log_console_level = vim.log.levels.ERROR,
-		log_console_level = vim.log.levels.DEBUG,
-	}, true)
-end
+		-- log_console_level = vim.log.levels.DEBUG,
+	})
 
-function M.setup()
-	-- configure run time environment for DAP of vscode-js-debug
-	setup_debug_adapter()
 	-- language configurations
 	for _, language in ipairs({ "typescript", "javascript" }) do
-		dap_clinet.configurations[language] = {
+		dap.configurations[language] = {
 			{
 				name = "Launch Chrome",
 				type = "pwa-chrome",
@@ -84,7 +76,6 @@ function M.setup()
 				console = "integratedTerminal",
 			},
 		}
-	end
 end
 
 return M

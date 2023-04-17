@@ -26,6 +26,7 @@ treesitter.setup({
     "toml",
     "bash",
     "markdown",
+    "markdown_inline",
     "latex",
   },
   -- auto install above language parsers
