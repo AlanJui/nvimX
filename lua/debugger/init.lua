@@ -195,7 +195,8 @@ local function load_language_specific_dap()
   require("debugger/adapter/lua").setup()
 
   -- Node.js
-  require("debugger/adapter/node2").setup()
+  -- require("debugger/adapter/node2").setup()
+  require("debugger/adapter/javascript").setup()
 end
 
 -----------------------------------------------------------
