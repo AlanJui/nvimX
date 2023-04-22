@@ -1,0 +1,6 @@
+#!/bin/sh
+# export DEBUG=true
+
+export NVIM_APPNAME="lzvim"
+
+NVIM_APPNAME="$NVIM_APPNAME" nvim "$@"
