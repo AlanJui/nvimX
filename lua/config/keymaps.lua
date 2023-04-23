@@ -10,6 +10,7 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
+------------------------------------------------------------------------------
 map("n", "<leader>.", "<cmd>Alpha<cr>", { desc = "Dashboard" })
 
 -- better up/down
@@ -121,10 +122,6 @@ map("n", "<leader>sq", "<cmd>qa<cr>", { desc = "Quit all" })
 if vim.fn.has("nvim-0.9.0") == 1 then
   map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 end
-
--- floating terminal
-map("n", "<leader>ft", function() Util.float_term(nil, { cwd = Util.get_root() }) end, { desc = "Terminal (root dir)" })
-map("n", "<leader>fT", function() Util.float_term() end, { desc = "Terminal (cwd)" })
 map("t", "<esc><esc>", "<c-\\><c-n>", {desc = "Enter Normal Mode"})
 
 -- windows
