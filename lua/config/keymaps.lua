@@ -157,6 +157,7 @@ map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 --------------------------------------------------------------------
 -- My maps
 --------------------------------------------------------------------
+vim.g.maplocalleader = ","
 local keymap = vim.keymap.set
 
 keymap("i", "jj", "<Esc>")
