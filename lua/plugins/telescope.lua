@@ -3,6 +3,7 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-project.nvim",
       "nvim-telescope/telescope-dap.nvim",
       "ahmedkhalf/project.nvim",
@@ -99,7 +100,7 @@ return {
         function()
           -- require("telescope.builtin").find_files({ cmd = false })
           require("telescope.builtin").find_files({
-            cmd = false,
+            cwd = false,
             previewer = true,
             -- layout_strategy = "vertical",
             -- layout_config = {
@@ -110,8 +111,8 @@ return {
         desc = "Find Files (cwd)",
       },
       { "<leader>fB", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
-      { "<leader>fo", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
-      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
+      { "<leader>fr", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
+      { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
       -- git
       { "<leader>gr", "<cmd>Telescope repo list<cr>", desc = "List Git Repo" },
       { "<leader>gC", "<cmd>Telescope conventional_commits<cr>", desc = "Conventional Commits" },
@@ -128,14 +129,16 @@ return {
       {
         "<leader>sg",
         function()
-          require("telescope.builtin").live_grep()
+          -- require("telescope.builtin").live_grep()
+          require("telescope").extensions.live_grep_args.live_grep_args()
         end,
         desc = "Grep (root dir)",
       },
       {
         "<leader>sG",
         function()
-          require("telescope.builtin").live_grep({ cmd = false })
+          -- require("telescope.builtin").live_grep({ cwd = false })
+          require("telescope").extensions.live_grep_args.live_grep_args({ cwd = false })
         end,
         desc = "Grep (cwd)",
       },
@@ -184,12 +187,13 @@ return {
     opts = {},
     ---------------------------------------------------------------------------
     config = function()
-      local Util = require("lazyvim.util")
+      -- local Util = require("lazyvim.util")
+      -- local icons = require("config.icons")
       ------------------------------------------------------------------------------
       local telescope = require("telescope")
-      local icons = require("config.icons")
       local actions = require("telescope.actions")
       local actions_layout = require("telescope.actions.layout")
+      local lga_actions = require("telescope-live-grep-args.actions")
       local transform_mod = require("telescope.actions.mt").transform_mod
       local custom_actions = transform_mod({
         -- VisiData
@@ -289,6 +293,20 @@ return {
             hidden_files = false,
             theme = "dropdown",
           },
+          live_grep_args = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            -- define mappings, e.g.
+            mappings = { -- extend mappings
+              i = {
+                ["<C-k>"] = lga_actions.quote_prompt(),
+                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+              },
+            },
+            -- ... also accepts theme settings, for example:
+            -- theme = "dropdown", -- use dropdown theme
+            -- theme = { }, -- use own theme spec
+            -- layout_config = { mirror=true }, -- mirror preview pane
+          },
         },
       }
       telescope.setup(opts)
@@ -300,6 +318,7 @@ return {
       telescope.load_extension("dap")
       telescope.load_extension("frecency")
       telescope.load_extension("luasnip")
+      telescope.load_extension("live_grep_args")
       telescope.load_extension("conventional_commits")
       telescope.load_extension("lazy")
     end,
