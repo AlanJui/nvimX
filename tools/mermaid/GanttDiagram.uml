@@ -1,0 +1,18 @@
+@startgantt
+
+Project starts 2021-08-01
+
+[建置網路] lasts 4 days
+then [安裝伺服器] lasts 4 days
+[撰寫手冊] starts at [建置網路]'s end and lasts 7 days
+
+[軟體開發] lasts 5 days
+then [軟體測試] lasts 4 days
+
+[完成驗收] happens at [安裝伺服器]'s end
+[完成驗收] happens at [撰寫手冊]'s end
+[完成驗收] happens at [軟體測試]'s end
+
+@endgantt
+
+

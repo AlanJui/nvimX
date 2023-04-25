@@ -1,0 +1,19 @@
+{
+  "pythonPlatform": "Darwin",
+  "pythonVersion": "3.10",
+  "venv": "my-tshu-im",
+  "venvPath": "$HOME/.pyenv/versions",
+  "exclude": ["**/node_modules", "**/__pycache__"],
+  "ignore": ["**/node_modules", "**/__pycache__"],
+  "reportUnusedVariable": false,
+  "reportUnusedFunction": false,
+  "reportUnusedImport": true,
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": "strict",
+  "reportOptionalMemberAccess": false,
+  "reportGeneralTypeIssues": "warning",
+  "stubPath": "typings",
+  "typeshedPaths": [],
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true
+}

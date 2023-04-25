@@ -1,0 +1,38 @@
+# rules:
+# - name: Consider adding meta keywords
+#   pattern: "<head>(?!.*(<meta\s+name=['\"]keywords['\"]\s+content=['\"](.+?)['\"]\s*/?>)).*</head>"
+#   message: "Consider adding a <meta> tag with the 'keywords' attribute and content."
+#   level: warning
+#
+# - name: Tag should be self-closing
+#   pattern: "<{{ tag }}(?:(?!/>)|[^>])*>.*</{{ tag }}>?"
+#   message: "Tag '{{ tag }}' should be self-closing."
+#   level: error
+#   parameters:
+#     tag:
+#       type: string
+#       description: "The name of the tag that should be self-closing."
+#       required: true
+#
+# - name: Html tag should be self-closing
+#   pattern: "<html(?:(?!/>)|[^>])*>.*</html *>?"
+#   message: "The <html> tag should be self-closing."
+#   level: error
+options:
+  ignore_case: true
+rules:
+  - name: Consider adding meta keywords
+    ignore: true
+  - name: Tag should be self closing
+    ignore: true
+  - name: Endblock should have name
+    ignore: true
+  - name: Tag should be self closing
+    pattern: "<{{ tag }}(?:(?!/>)|[^>])*>.*</{{ tag }}>?"
+    message: "Tag '{{ tag }}' should be self-closing."
+    level: error
+    parameters:
+      tag:
+        type: string
+        description: "The name of the tag that should be self-closing."
+        required: true

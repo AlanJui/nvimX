@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "ex-2023-02"
+version = "0.1.0"
+description = ""
+authors = ["居正中 <AlanJui.1960@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ex_2023_02"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.7"
+
+[tool.poetry.group.dev.dependencies]
+django-stubs = "^1.14.0"
+mypy = "^1.0.1"
+pylint = "^2.16.2"
+pylint-django = "^2.5.3"
+autopep8 = "^2.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+exclude = ['.venv', 'venv']
+
+[mypy.plugins.django-stubs]
+django_settings_module = "web_app.settings"
+
+[tool.flake8]
+ignore = ['E231', 'E241', 'E501']
+exclude = ['.git', '__pycache__', 'docs/source/conf.py', 'old', 'build', 'dist']
+per-file-ignores = [
+    '__init__.py:F401',
+]
+max-line-length = 88
+max-complexity = 10
+count = true
+
+[tool.autopep8]
+max_line_length = 120
+ignore = ["E501", "W6"]
+in-place = true
+recursive = true
+aggressive = 3

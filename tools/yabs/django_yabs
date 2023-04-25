@@ -1,0 +1,51 @@
+return ({
+    languages = {
+        python = {
+            tasks = {
+                run = {
+                    command = 'python manage.py runserver',
+                    output = 'terminal',
+                },
+            },
+        },
+    },
+    -- Python
+    tasks = {
+        kill_port = {
+            command = 'sudo kill -9 $(sudo lsof -t -i:8000)',
+            output = 'terminal',
+        },
+        testing = {
+            command = 'python manage.py runserver --noreload',
+            output = 'terminal',
+        },
+        runserver = {
+            command = 'python manage.py runserver',
+            output = 'terminal',
+        },
+        shell = {
+            command = 'python manage.py shell',
+            output = 'terminal',
+        },
+        collect_static = {
+            command = 'python manage.py collectstatic',
+            output = 'terminal',
+        },
+        create_super_user = {
+            command = 'python manage.py createsuperuser',
+            output = 'terminal',
+        },
+        make_migrations = {
+            command = 'python manage.py makemigrations',
+            output = 'terminal',
+        },
+        migrate = {
+            command = 'python manage.py migrate',
+            output = 'terminal',
+        },
+        sql_migrate = {
+            command = 'python manage.py sqlmigrate',
+            output = 'terminal',
+        },
+    },
+})
