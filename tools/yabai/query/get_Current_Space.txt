@@ -1,0 +1,14 @@
+{
+	"id":9,
+	"uuid":"5A3CC048-7B1A-4130-BAE5-D3C07B3323C5",
+	"index":3,
+	"label":"",
+	"type":"float",
+	"display":2,
+	"windows":[97, 266],
+	"first-window":0,
+	"last-window":0,
+	"has-focus":true,
+	"is-visible":true,
+	"is-native-fullscreen":false
+}

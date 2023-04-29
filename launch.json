@@ -1,0 +1,17 @@
+{
+  "$schema": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json#",
+  "adapters": {
+    "nlua": {
+      "host": "127.0.0.1",
+      "port": "8086"
+    }
+  },
+  "configurations": {
+    "osv": {
+      "adapter": "nlua",
+      "configuration": {
+        "request": "attach"
+      }
+    }
+  }
+}

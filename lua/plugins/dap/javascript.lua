@@ -5,9 +5,7 @@ end
 
 local M = {}
 
-function M.setup()
-  local dap = require("dap")
-
+function M.setup(dap)
   dap_adapter.setup({
     -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
     -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
