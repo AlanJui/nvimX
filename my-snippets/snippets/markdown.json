@@ -1,8 +1,18 @@
 {
+  "bash script": {
+    "prefix": "bash",
+    "body": ["```bash", "${0}", "```"],
+    "description": "輸入 Bash Shell 指令"
+  },
   "shell command": {
-    "prefix": "cmd",
+    "prefix": "sh",
     "body": ["```sh", "${0}", "```"],
     "description": "輸入 Shell 指令"
+  },
+  "terminal command": {
+    "prefix": "cmd",
+    "body": ["```sh", "${0}", "```"],
+    "description": "在 Terminal 輸入指令"
   },
   "python code": {
     "prefix": "code",

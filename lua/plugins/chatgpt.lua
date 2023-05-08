@@ -11,7 +11,7 @@ return {
     local wk = require("which-key")
 
     wk.register({
-      c = {
+      p = {
         name = "ChatGPT",
         e = {
           function()

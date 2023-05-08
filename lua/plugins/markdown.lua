@@ -1,6 +1,33 @@
 return {
+  -- {
+  --   "tpope/vim-markdown",
+  --   config = function()
+  --     -- 設定 Markdown 語法中的程式碼塊 (fenced code blocks) 語言支持 'html', 'python' 和
+  --     -- 'bash=sh' 是指定的語言，其中 'bash=sh' 表示將 bash 語言識別為 sh 語言
+  --     vim.g.markdown_fenced_languages = { "html", "python", "bash=sh" }
+  --     vim.g.markdown_syntax_conceal = 0
+  --     vim.g.markdown_minlines = 100
+  --   end,
+  -- },
+
+  -- Markdown Syntax Highlighting
+  {
+    "preservim/vim-markdown",
+    config = function()
+      -- vim.g.markdown_fenced_languages = {
+      --   "html",
+      --   "python",
+      --   "bash=sh",
+      -- }
+      -- disabling conceal for code fences
+      -- vim.g.markdown_conceal_code_blocks = 0
+    end,
+  },
   -- Live server
-  { "turbio/bracey.vim", run = "npm install --prefix server" },
+  {
+    "turbio/bracey.vim",
+    run = "npm install --prefix server",
+  },
   -- Open URI with your favorite browser from your most favorite editor
   { "tyru/open-browser.vim" },
   -- Preview markdown file

@@ -3,7 +3,8 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "nightfly",
+      -- colorscheme = "catppuccin",
       -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
       -- ---@type string|fun()
       -- colorscheme = function()
