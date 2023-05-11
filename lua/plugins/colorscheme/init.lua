@@ -21,15 +21,15 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.nightflyCursorColor = true
-      vim.g.nightflyItalics = false
-      vim.g.nightflyNormalFloat = true
+      -- vim.g.nightflyCursorColor = true
+      -- vim.g.nightflyItalics = false
+      -- vim.g.nightflyTransparent = false
+      -- vim.g.nightflyUndercurls = true
+      -- vim.g.nightflyUnderlineMatchParen = true
+      -- vim.g.nightflyVirtualTextColor = true
+      -- vim.g.nightflyWinSeparator = 2
       vim.g.nightflyTerminalColors = true
-      vim.g.nightflyTransparent = false
-      vim.g.nightflyUndercurls = true
-      vim.g.nightflyUnderlineMatchParen = true
-      vim.g.nightflyVirtualTextColor = true
-      vim.g.nightflyWinSeparator = 2
+      vim.g.nightflyNormalFloat = true
 
       vim.cmd([[colorscheme nightfly]])
     end,
