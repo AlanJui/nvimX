@@ -9,12 +9,6 @@
 return {
   -- add gruvbox
   { "ellisonleao/gruvbox.nvim" },
-  -- {
-  --   "Alexis12119/nightly.nvim",
-  --   lazy = true,
-  --   priority = 1000,
-  -- },
-  -- { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
   {
     "bluz71/vim-nightfly-colors",
     name = "nightfly",
@@ -30,11 +24,9 @@ return {
       -- vim.g.nightflyWinSeparator = 2
       vim.g.nightflyTerminalColors = true
       vim.g.nightflyNormalFloat = true
-
       vim.cmd([[colorscheme nightfly]])
     end,
   },
-
   {
     "marko-cerovac/material.nvim",
     lazy = true,
@@ -43,32 +35,27 @@ return {
       vim.g.material_style = "deep ocean"
     end,
   },
-
   {
     "folke/tokyonight.nvim",
     lazy = true,
     priority = 1000,
   },
-
   {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
     priority = 1000,
   },
-
   {
     "navarasu/onedark.nvim",
     lazy = true,
     priority = 1000,
   },
-
   {
     "rebelot/kanagawa.nvim",
     lazy = true,
     priority = 1000,
   },
-
   {
     "Mofiqul/dracula.nvim",
     lazy = true,
