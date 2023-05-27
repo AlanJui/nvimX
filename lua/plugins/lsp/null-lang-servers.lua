@@ -21,6 +21,7 @@ return {
         nls.builtins.diagnostics.shellcheck,
         nls.builtins.formatting.shfmt,
         -- Python
+        nls.builtins.diagnostics.pylint,
         -- nls.builtins.diagnostics.pylint.with({
         -- extra_args = { "--load-plugins", "pylint_django" },
         -- init_options = {
@@ -28,7 +29,6 @@ return {
         -- },
         -- }),
         nls.builtins.diagnostics.flake8,
-        nls.builtins.diagnostics.pylint,
         nls.builtins.diagnostics.pydocstyle.with({
           extra_args = { "--config=$ROOT/setup.cfg" },
         }),

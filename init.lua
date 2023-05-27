@@ -26,4 +26,4 @@ vim.g.loaded_perl_provider = 0
 -- Debug Tools
 -- 除錯用工具
 -----------------------------------------------------------
-require("myTest")
+-- require("myTest")
