@@ -1,15 +1,16 @@
-local M = {}
-
-function M.setup()
-  require("lspconfig").lua_ls.setup({
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim", "hs" },
-        },
-      },
-    },
-  })
-end
-
-return M
+return {
+	-- mason = false, -- set to false if you don't want this server to be installed with mason
+	settings = {
+		Lua = {
+			workspace = {
+				checkThirdParty = false,
+			},
+			completion = {
+				callSnippet = "Replace",
+			},
+			diagnostics = {
+				globals = { "vim", "hs" },
+			},
+		},
+	},
+}
