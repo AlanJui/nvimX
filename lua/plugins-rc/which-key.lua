@@ -353,7 +353,7 @@ local mappings = {
     },
   },
   -- Trouble List
-  z = {
+  x = {
     name = "Trouble",
     x = { ":TroubleToggle<CR>", "On/Off TroubleToggle" },
     r = { ":TroubleToggle lsp_references<CR>", "Display LSP References" },
