@@ -11,9 +11,12 @@ return {
   -- },
 
   -- Markdown Syntax Highlighting
+  -- URL: https://github.com/preservim/vim-markdown
   {
     "preservim/vim-markdown",
     config = function()
+      -- 變更預設：文件內容毋需折疊
+      vim.g.vim_markdown_folding_disabled = 1
       -- vim.g.markdown_fenced_languages = {
       --   "html",
       --   "python",
