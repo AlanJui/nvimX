@@ -1,11 +1,10 @@
 -- Node.js Adapter
 local M = {}
 
-local debug_server_path = vim.fn.stdpath("data") .. "/mason/bin/node-debug2-adapter"
-
 -- configure DAP Adapter
 function M.setup()
   local dap = require("dap")
+  local debug_server_path = vim.fn.stdpath("data") .. "/mason/bin/node-debug2-adapter"
 
   dap.adapters.node2 = {
     type = "executable",

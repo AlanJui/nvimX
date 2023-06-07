@@ -1,66 +1,61 @@
-local dap = _G.safe_require("dap")
-local mason_nvim_dap = _G.safe_require("mason-nvim-dap")
-if not dap or not mason_nvim_dap then
-    return
+return function(config)
+  local function get_venv_python_path()
+    local workspace_folder = vim.fn.getcwd()
+
+    if vim.fn.executable(workspace_folder .. "/.venv/bin/python") then
+      return workspace_folder .. "/.venv/bin/python"
+    elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") then
+      return workspace_folder .. "/venv/bin/python"
+    elseif vim.fn.executable(os.getenv("VIRTUAL_ENV") .. "/bin/python") then
+      return os.getenv("VIRTUAL_ENV" .. "/bin/python")
+    else
+      return "/usr/bin/python"
+    end
+  end
+
+  local venv_python_path = get_venv_python_path()
+  local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+
+  config.adapters = {
+    type = "executable",
+    command = debugpy_python_path,
+    args = { "-m", "debugpy.adapter" },
+  }
+
+  config.configurations = {
+    {
+      type = "python",
+      request = "launch",
+      name = "Launch file",
+      program = "${file}",
+      pythonPath = venv_python_path,
+    },
+    {
+      type = "python",
+      request = "launch",
+      name = "Launch Django Server",
+      cwd = "${workspaceFolder}",
+      program = "${workspaceFolder}/manage.py",
+      args = {
+        "runserver",
+        "--noreload",
+      },
+      console = "integratedTerminal",
+      justMyCode = true,
+      pythonPath = venv_python_path,
+    },
+    {
+      type = "python",
+      request = "launch",
+      name = "Python: Django Debug Single Test",
+      program = "${workspaceFolder}/manage.py",
+      args = {
+        "test",
+        "${relativeFileDirname}",
+      },
+      django = true,
+      console = "integratedTerminal",
+      pythonPath = venv_python_path,
+    },
+  }
 end
-
-local M = {}
-
-local nvim_config = _G.GetConfig()
-local debugpy_path = nvim_config["python"]["debugpy_path"]
-local venv_python_path = nvim_config["python"]["venv_python_path"]
-
-function M.setup()
-    mason_nvim_dap.setup_handlers({
-        python = function() --luacheck: ignore 212
-            dap.adapters.python = {
-                type = "executable",
-                command = debugpy_path,
-                args = {
-                    "-m",
-                    "debugpy.adapter",
-                },
-            }
-
-            dap.configurations.python = {
-                {
-                    type = "python",
-                    request = "launch",
-                    name = "Launch file",
-                    program = "${file}", -- This configuration will launch the current file if used.
-                    pythonPath = venv_python_path,
-                },
-                {
-                    type = "python",
-                    request = "launch",
-                    name = "Launch Django Server",
-                    cwd = "${workspaceFolder}",
-                    program = "${workspaceFolder}/manage.py",
-                    args = {
-                        "runserver",
-                        "--noreload",
-                    },
-                    console = "integratedTerminal",
-                    justMyCode = true,
-                    pythonPath = venv_python_path,
-                },
-                {
-                    type = "python",
-                    request = "launch",
-                    name = "Python: Django Debug Single Test",
-                    -- pythonPath = venv_python_path,
-                    pythonPath = "${workspaceFolder}/.venv/bin/python",
-                    program = "${workspaceFolder}/manage.py",
-                    args = {
-                        "test",
-                        "${relativeFileDirname}"
-                    },
-                    django = true,
-                    console = "integratedTerminal",
-                },
-            }
-        end,
-    })
-end
-
-return M

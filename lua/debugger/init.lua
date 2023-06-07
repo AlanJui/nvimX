@@ -23,7 +23,10 @@ local dap = safe_require("dap")
 local mason_nvim_dap = safe_require("mason-nvim-dap")
 local dapui = safe_require("dapui")
 
-if not dap or not dapui or not mason_nvim_dap then return end
+if not dap or not dapui or not mason_nvim_dap then
+  print("mason-nvim-dap: dap or dapui or mason_nvim_dap is not loaded!")
+  return
+end
 
 local function setup_debugger_icons()
   vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
@@ -128,62 +131,6 @@ local function get_venv_python_path()
   end
 end
 
-local venv_python_path = get_venv_python_path()
--- local debugpy_python_path = "/usr/bin/python3"
-local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
-
-local handlers = {
-  function(config) require("mason-nvim-dap").default_setup(config) end,
-  python = function() --luacheck: ignore 212
-    dap.adapters.python = {
-      type = "executable",
-      command = debugpy_python_path,
-      args = {
-        "-m",
-        "debugpy.adapter",
-      },
-    }
-
-    dap.configurations.python = {
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch file",
-        program = "${file}", -- This configuration will launch the current file if used.
-        pythonPath = venv_python_path,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch Django Server",
-        cwd = "${workspaceFolder}",
-        program = "${workspaceFolder}/manage.py",
-        args = {
-          "runserver",
-          "--noreload",
-        },
-        console = "integratedTerminal",
-        justMyCode = true,
-        pythonPath = venv_python_path,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Python: Django Debug Single Test",
-        program = "${workspaceFolder}/manage.py",
-        args = {
-          "test",
-          "${relativeFileDirname}",
-        },
-        django = true,
-        console = "integratedTerminal",
-        pythonPath = venv_python_path,
-        -- pythonPath = "${workspaceFolder}/.venv/bin/python",
-      },
-    }
-  end,
-}
-
 -- 各程式語言所用之「除錯接合器」載入作業
 -- 手動下載程式語言專屬之 DAP：
 -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
@@ -203,14 +150,23 @@ end
 -- Main processes
 -----------------------------------------------------------
 
-setup_debugger_icons()
-setup_debugger_ui()
-load_language_specific_dap()
-
+-- 透過 Mason 安裝 DAP
 mason_nvim_dap.setup({
-  ensure_installed = { "stylua", "jq", "debugpy" },
-  handlers = handlers,
+  ensure_installed = {
+    -- Python Debugger: "debugpy"
+    "python",
+    -- Node.js Debugger: "node-debug2-adapter"
+    "node2",
+    -- JavaScript Debugger: "js-debug-adapter"
+    "js",
+  },
 })
 
--- DAP 操作之各項「操作指令」，於 which_key 中之 "debug" 指令選單中設定。
+-- 設定除錯器使用者操作介面及應監視操作事件
+setup_debugger_icons()
+setup_debugger_ui()
+-- 載入各除錯接合器
+load_language_specific_dap()
+
+-- 設定除錯器使用之操作按鍵（Which Key）
 require("debugger/keymaps").setup()
