@@ -28,43 +28,37 @@ end
 -- Install Null-LS automatically
 --------------------------------------------------------------
 local ensure_installed_list = {
-  -- Lua
-  -- "luacheck",
-  "stylua",
-  -- Web
-  "prettier",
-  -- Python/Django
-  "pylint",
-  -- "mypy",
-  "pydocstyle",
-  -- "flake8",
-  "isort",
-  "djhtml",
-  "djlint",
-  -- "autopep8",
-  -- Markdown
-  "markdownlint",
-  -- Shell
+  -- Shell Script
   "zsh",
   "shellcheck",
+  "shfmt",
+  -- Lua Script
+  "stylua",
+  -- Python
+  "pylint",
+  "isort",
+  "mypy",
+  "pydocstyle",
+  "flake8",
+  "djlint",
+  "autopep8",
+  -- Web
+  "prettier",
+  -- Markdown
+  "markdownlint",
   -- Misc.
   "jq",
 }
 
 local function mason_null_ls_setup()
   -- register any number of sources simultaneously
-  -- local formatting = null_ls.builtins.formatting -- to setup formatters
-  -- local diagnostics = null_ls.builtins.diagnostics -- to setup linters
-  -- local completion = null_ls.builtins.completion
-  -- local code_actions = null_ls.builtins.code_actions
-  -- local utils = require("null-ls.utils")
-
   mason_null_ls.setup({
     ensure_installed = ensure_installed_list,
     automatic_installation = true,
     automatic_setup = true,
     handlers = {
-      function(source_name, methods) require("mason-null-ls.automatic_setup")(source_name, methods) end,
+      -- function(source_name, methods) require("mason-null-ls.automatic_setup")(source_name, methods) end,
+      function() end, -- disables automatic setup of all null-ls sources
       ---@diagnostic disable-next-line: unused-local
       stylua = function(source_name, methods) -- luacheck: ignore
         null_ls.register(null_ls.builtins.formatting.stylua)
@@ -80,12 +74,22 @@ local function mason_null_ls_setup()
           -- },
         }))
       end,
+
       ---@diagnostic disable-next-line: unused-local
       pydocstyle = function(source_name, methods) -- luacheck: ignore
         null_ls.register(null_ls.builtins.diagnostics.pydocstyle.with({
           extra_args = { "--config=$ROOT/setup.cfg" },
         }))
       end,
+
+      ---@diagnostic disable-next-line: unused-local
+      autopep8 = function(source_name, methods) -- luacheck: ignore
+        null_ls.register(null_ls.builtins.formatting.autopep8)
+        -- null_ls.register(null_ls.builtins.formatting.autopep8.with({
+        --   extra_args = { "--config=$ROOT/setup.cfg" },
+        -- }))
+      end,
+
       ---@diagnostic disable-next-line: unused-local
       mypy = function(source_name, methods)
         null_ls.register(null_ls.builtins.diagnostics.mypy.with({
@@ -96,6 +100,7 @@ local function mason_null_ls_setup()
           -- runtime_condition = function(params) return utils.path.exists(params.bufname) end,
         }))
       end,
+
       ---@diagnostic disable-next-line: unused-local
       prettier = function(source_name, methods)
         null_ls.register(null_ls.builtins.formatting.prettier.with({

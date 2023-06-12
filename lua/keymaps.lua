@@ -186,4 +186,10 @@ vim.keymap.set("v", "<localleader>p", [["_dP]])
 vim.g.plugin_disable_mappings = 1
 
 -- 使用自己的映射
-vim.api.nvim_set_keymap('n', 'ys', '<Plug>Ysurround', {})
+-- vim.api.nvim_set_keymap("n", "ys", "<Plug>Ysurround", {})
+
+-- Copilot Keymap Testing
+-- vim.keymap.set("i", "<C-g>", "Accept")
+-- vim.keymap.set("i", "<C-]>", "Next Suggesion")
+-- vim.keymap.set("i", "<C-[>", "Prev Suggesion")
+-- vim.keymap.set("i", "<C-\\>", "Dismiss")

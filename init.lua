@@ -26,20 +26,20 @@ require("essential")
 --   if vim.fn.exists('g:vscode') == 0 then
 ---@diagnostic disable-next-line: undefined-field
 if vim.g.vscode ~= nil then
-    -----------------------------------------------------------
-    -- VSCode extension"
-    -----------------------------------------------------------
-    -- Load plugins
-    require("packer").startup(function(use)
-        use("easymotion/vim-easymotion")
-        use("asvetliakov/vim-easymotion")
-    end)
-    -- Options
-    require("options")
-    -- Key bindings
-    require("keymaps")
+  -----------------------------------------------------------
+  -- VSCode extension"
+  -----------------------------------------------------------
+  -- Load plugins
+  require("packer").startup(function(use)
+    use("easymotion/vim-easymotion")
+    use("asvetliakov/vim-easymotion")
+  end)
+  -- Options
+  require("options")
+  -- Key bindings
+  require("keymaps")
 
-    return
+  return
 end
 
 ------------------------------------------------------------------------------
@@ -57,16 +57,16 @@ end
 -- 對已載入之各擴充套件，進行設定作業
 ------------------------------------------------------------------------------
 if _G.DEBUG then
-    -- (1)
-    local debug_plugins = require("debug-plugins")
-    require("config_debug_env").setup(debug_plugins)
-    -- (2)
-    require("plugins-rc")
+  -- (1)
+  local debug_plugins = require("debug-plugins")
+  require("config_debug_env").setup(debug_plugins)
+  -- (2)
+  require("plugins-rc")
 else
-    -- (1)
-    require("plugins")
-    -- (2)
-    require("plugins-rc")
+  -- (1)
+  require("plugins")
+  -- (2)
+  require("plugins-rc")
 end
 
 ------------------------------------------------------------------------------
@@ -130,64 +130,64 @@ set foldlevel=5
 local nvim_config = _G.GetConfig()
 
 local function show_current_working_dir()
-    -- Automatic change to working directory you start Neovim
-    local my_working_dir = vim.fn.getcwd()
-    print(string.format("current working dir = %s", my_working_dir))
-    vim.api.nvim_command("cd " .. my_working_dir)
+  -- Automatic change to working directory you start Neovim
+  local my_working_dir = vim.fn.getcwd()
+  print(string.format("current working dir = %s", my_working_dir))
+  vim.api.nvim_command("cd " .. my_working_dir)
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function nvim_env_info() -- luacheck: ignore
-    ----------------------------------------------------------------------------
-    -- Neovim installed info
-    ----------------------------------------------------------------------------
-    print("init.lua is loaded!")
-    print("Neovim RTP(Run Time Path ...)")
-    ---@diagnostic disable-next-line: undefined-field
-    _G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4) -- luacheck: ignore
-    print("====================================================================")
-    print(string.format("OS = %s", nvim_config["os"]))
-    print(string.format("Working Directory: %s", vim.fn.getcwd()))
-    print("Configurations path: " .. nvim_config["config"])
-    print("Run Time Path: " .. nvim_config["runtime"])
-    print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
-    print("path of all snippets")
-    _G.PrintTableWithIndent(nvim_config["snippets"], 4)
-    print("--------------------------------------------------------------------")
+  ----------------------------------------------------------------------------
+  -- Neovim installed info
+  ----------------------------------------------------------------------------
+  print("init.lua is loaded!")
+  print("Neovim RTP(Run Time Path ...)")
+  ---@diagnostic disable-next-line: undefined-field
+  _G.PrintTableWithIndent(vim.opt.runtimepath:get(), 4) -- luacheck: ignore
+  print("====================================================================")
+  print(string.format("OS = %s", nvim_config["os"]))
+  print(string.format("Working Directory: %s", vim.fn.getcwd()))
+  print("Configurations path: " .. nvim_config["config"])
+  print("Run Time Path: " .. nvim_config["runtime"])
+  print(string.format("Plugins management installed path: %s", nvim_config["install_path"]))
+  print("path of all snippets")
+  _G.PrintTableWithIndent(nvim_config["snippets"], 4)
+  print("--------------------------------------------------------------------")
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function debugpy_info()
-    ----------------------------------------------------------------------------
-    -- Debugpy installed info
-    ----------------------------------------------------------------------------
-    local venv = nvim_config["python"]["venv"]
-    print(string.format("$VIRTUAL_ENV = %s", venv))
-    local debugpy_path = nvim_config["python"]["debugpy_path"]
-    if _G.IsFileExist(debugpy_path) then
-        print("Debugpy is installed in path: " .. debugpy_path)
-    else
-        print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
-    end
-    print("--------------------------------------------------------------------")
+  ----------------------------------------------------------------------------
+  -- Debugpy installed info
+  ----------------------------------------------------------------------------
+  local venv = nvim_config["python"]["venv"]
+  print(string.format("$VIRTUAL_ENV = %s", venv))
+  local debugpy_path = nvim_config["python"]["debugpy_path"]
+  if _G.IsFileExist(debugpy_path) then
+    print("Debugpy is installed in path: " .. debugpy_path)
+  else
+    print("Debugpy isn't installed in path: " .. debugpy_path .. "yet!")
+  end
+  print("--------------------------------------------------------------------")
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function nodejs_info() -- luacheck: ignore
-    ----------------------------------------------------------------------------
-    -- vscode-js-debug installed info
-    ----------------------------------------------------------------------------
-    print(string.format("node_path = %s", nvim_config.nodejs.node_path))
-    print(string.format("vim.g.node_host_prog = %s", vim.g.node_host_prog))
-    local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
-    if _G.IsFileExist(js_debugger_path) then
-        print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
-    else
-        print("JS Debugger isn't installed! " .. js_debugger_path .. "yet!")
-    end
-    print(string.format("debugger_cmd = %s", ""))
-    _G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
-    print("====================================================================")
+  ----------------------------------------------------------------------------
+  -- vscode-js-debug installed info
+  ----------------------------------------------------------------------------
+  print(string.format("node_path = %s", nvim_config.nodejs.node_path))
+  print(string.format("vim.g.node_host_prog = %s", vim.g.node_host_prog))
+  local js_debugger_path = nvim_config["nodejs"]["debugger_path"]
+  if _G.IsFileExist(js_debugger_path) then
+    print(string.format("nodejs.debugger_path = %s", nvim_config.nodejs.debugger_path))
+  else
+    print("JS Debugger isn't installed! " .. js_debugger_path .. "yet!")
+  end
+  print(string.format("debugger_cmd = %s", ""))
+  _G.PrintTableWithIndent(nvim_config.nodejs.debugger_cmd, 4)
+  print("====================================================================")
 end
 
 -- show_current_working_dir()
@@ -207,22 +207,30 @@ debugpy_info()
 -- ]])
 
 function _G.my_test_1()
-    -- Set some options
-    vim.o.tabstop = 4
-    vim.o.shiftwidth = 4
-    vim.o.expandtab = true
+  -- Set some options
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
+  vim.o.expandtab = true
 
-    -- Create a new buffer and set its contents
-    local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Hello, world!" })
+  -- Create a new buffer and set its contents
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Hello, world!" })
 
-    -- Open the new buffer in a split window
-    vim.api.nvim_command("split")
-    vim.api.nvim_buf_set_name(buf, "hello.txt")
+  -- Open the new buffer in a split window
+  vim.api.nvim_command("split")
+  vim.api.nvim_buf_set_name(buf, "hello.txt")
 end
 
 function _G.run_shell_command()
-    local command = "ls -l"
-    local output = vim.fn.system(command)
-    print(output)
+  local command = "ls -l"
+  local output = vim.fn.system(command)
+  print(output)
 end
+
+-- vim.cmd([[
+-- imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")
+-- let g:copilot_no_tab_map = v:true
+-- imap <silent> <C-d> <Plug>(copilot-dismiss)
+-- imap <silent> <C-]> <Plug>(copilot-next)
+-- imap <silent> <C-[> <Plug>(copilot-previous)
+-- ]])
