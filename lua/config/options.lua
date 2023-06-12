@@ -7,4 +7,4 @@ opt.swapfile = false
 opt.backup = false
 opt.writebackup = false
 -- opt.foldmethod = "marker"
-opt.foldmethod = "indent"
+-- opt.foldmethod = "indent"

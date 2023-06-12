@@ -9,11 +9,18 @@ return {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
     },
+    cmd = "Neogit",
+    opts = {
+      integrations = {
+        diffview = true,
+      },
+      disable_commit_confirmation = true,
+    },
     keys = {
       {
         "<leader>gn",
         "<cmd>Neogit<cr>",
-        desc = "My Neogit",
+        desc = "Neogit",
       },
     },
     config = function()
@@ -21,7 +28,7 @@ return {
       neogit.setup({
         disable_signs = false,
         disable_context_highlighting = false,
-        disable_commit_confirmation = false,
+        disable_commit_confirmation = true,
         -- customize displayed signs
         signs = {
           -- { CLOSED, OPENED }

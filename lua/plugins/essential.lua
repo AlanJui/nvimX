@@ -1,6 +1,5 @@
 return {
   { "vifm/vifm.vim" },
-  { "nvim-tree/nvim-web-devicons", lazy = true },
   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
   {
     "echasnovski/mini.ai",
