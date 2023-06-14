@@ -1,220 +1,124 @@
-local lspconfig = _G.safe_require("lspconfig")
-local mason = _G.safe_require("mason")
-local mason_lspconfig = _G.safe_require("mason-lspconfig")
-local mason_tool_installer = _G.safe_require("mason-tool-installer")
-local cmp = _G.safe_require("cmp")
-local luasnip = _G.safe_require("luasnip")
-local lspkind = _G.safe_require("lspkind")
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+local lspconfig = require("lspconfig")
 
-if not lspconfig or not mason or not mason_lspconfig or not mason_tool_installer then return end
-
-if not cmp or not luasnip or not lspkind then return end
-
-------------------------------------------------------------------------
--- Variables for this Module
-------------------------------------------------------------------------
-_G.LspFormattingAugroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-local nvim_config = _G.GetConfig()
-
-------------------------------------------------------------------------
--- Automatic LSP Setup
-------------------------------------------------------------------------
--- local function setup_lsp_auto_installation()
---   ------------------------------------------------------------
---   -- 透過 mason-tool-installer 自動安裝 Null-LS, DAP ；
---   -- 且自動更新所有的 LS 及 Null-LS
---   ------------------------------------------------------------
---   ---@diagnostic disable-next-line: unused-local
---   local ensure_installed_list = {
---     "lua-language-server",
---     "diagnostic-languageserver",
---     "pyright",
---     "pylint",
---     "debugpy",
---     "tailwindcss-language-server",
---     "prettier",
---     "typescript-language-server",
---     "json-lsp",
---     "eslint-lsp",
---   }
---
---   require("mason-tool-installer").setup({
---     ensure_installed = ensure_installed_list,
---     auto_update = true,
---     run_on_start = true,
---     start_delay = 3000, -- 3 second delay
---   })
--- end
-
-------------------------------------------------------------------------
--- Setup configuration for every LSP
-------------------------------------------------------------------------
-local function setup_lsp()
-  -- 使用 LSP Saga 代替 LSP Key Bindings
-  ---@diagnostic disable-next-line: unused-local
-  local lsp_attach = function(client, bufnr) end -- luacheck: ignore
-
-  local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-  ------------------------------------------------------------------------
-  -- Mason: Easily install and manage LSP servers, DAP servers, linters, and formatters.
-  --
-  -- `mason-lspconfig` provides extra, opt-in, functionality that allows you to
-  -- automatically set up LSP servers installed via `mason.nvim` without having to
-  -- manually add each server setup to your Neovim configuration. It also makes it
-  -- possible to use newly installed servers without having to restart Neovim!
-  ------------------------------------------------------------------------
-  mason.setup({
-    ui = {
-      icons = {
-        server_installed = "✓",
-        server_pending = "➜",
-        server_uninstalled = "✗",
-      },
+mason.setup({
+  ui = {
+    check_outdated_packages_on_open = false,
+    border = "single",
+    icons = {
+      server_installed = "✓",
+      server_pending = "➜",
+      server_uninstalled = "✗",
     },
-  })
+  },
+})
 
-  mason_lspconfig.setup({
-    ensure_installed = {
-      -- Shell Script
-      "bashls",
-      -- Lua Script
-      "lua_ls",
-      -- Python
-      "pyright",
-      -- Web: HTML, CSS, JavaScript
-      "cssls",
-      "emmet_ls",
-      "html",
-      "jsonls",
-      "tsserver",
-      -- Markdown
-      "marksman",
-      -- configuration
-      "taplo", -- TOML
-      "yamlls",
-      "lemminx", -- XML
-      -- Others
-      "julials",
-    },
-  })
+mason_lspconfig.setup({
+  ensuer_installed = {
+    -- Shell Script
+    "bashls",
+    -- Lua Script
+    "lua_ls",
+    -- Python
+    "pyright",
+    -- Web: HTML, CSS, JavaScript
+    "cssls",
+    "emmet_ls",
+    "html",
+    "jsonls",
+    "tsserver",
+    -- Markdown
+    "marksman",
+    -- configuration
+    "taplo", -- TOML
+    "yamlls",
+    "lemminx", -- XML
+    -- Others
+    "julials",
+  },
+})
+
+local function setup_language_servers()
+  -- 無需透過 mason_lspconfig 進行 LSP 自動設定的語言伺服器
+  local disabled_servers = { "texlab" }
 
   mason_lspconfig.setup_handlers({
-    function(server_name) -- default handler (optional)
-      lspconfig[server_name].setup({
-        on_attach = lsp_attach,
-        capabilities = lsp_capabilities,
-      })
+    function(server_name)
+      for _, name in pairs(disabled_servers) do
+        if name == server_name then return end
+      end
+      local opts = {
+        on_attach = require("lsp.handlers").on_attach,
+        capabilities = require("lsp.handlers").capabilities,
+      }
+
+      local require_ok, lsp_settings = pcall(require, "lsp.settings." .. server_name)
+      if require_ok then opts = vim.tbl_deep_extend("force", lsp_settings, opts) end
+
+      lspconfig[server_name].setup(opts)
     end,
-    ["lua_ls"] = function()
-      -- lspconfig.lua_ls.setup(
-      --     require("lsp/settings/lua_ls").setup(lsp_attach, lsp_capabilities)
-      -- )
-      lspconfig.lua_ls.setup({
-        on_attach = lsp_attach,
-        capabilities = lsp_capabilities,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim", "hs" },
-            },
-          },
-        },
-      })
+    ["texlab"] = function()
+      local opts = {
+        on_attach = require("lsp.handlers").on_attach,
+        capabilities = require("lsp.handlers").capabilities,
+      }
+      local lsp_settings = require("lsp.settings.texlab")
+      opts = vim.tbl_deep_extend("force", lsp_settings, opts)
+      lspconfig.texlab.setup({})
     end,
-    ["emmet_ls"] = function()
-      lspconfig.emmet_ls.setup({
-        on_attach = lsp_attach,
-        capabilities = lsp_capabilities,
-        filetypes = {
-          "htmldjango",
-          "html",
-          "css",
-          "scss",
-          "typescriptreact",
-          "javascriptreact",
-          "markdown",
-        },
-        init_options = {
-          html = {
-            options = {
-              -- For possible options,
-              -- see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-              ["bem.enabled"] = true,
-            },
-          },
-        },
-      })
-    end,
-    ["pyright"] = function()
-      lspconfig.pyright.setup(require("lsp/settings/pyright").setup(lsp_attach, lsp_capabilities))
-    end,
-    ["tsserver"] = function()
-      lspconfig.tsserver.setup(require("lsp/settings/tsserver").setup(lsp_attach, lsp_capabilities))
-    end,
-    ["jsonls"] = function() lspconfig.jsonls.setup(require("lsp/settings/jsonls").setup(lsp_attach, lsp_capabilities)) end,
-    ["texlab"] = function() lspconfig.texlab.setup(require("lsp/settings/texlab").setup(lsp_attach, lsp_capabilities)) end,
   })
 end
 
-------------------------------------------------------------
--- Setup Diagnostics
-------------------------------------------------------------
-local function setup_diagnostics()
-  ---@diagnostic disable-next-line: redefined-local
-  local sign = function(opts) -- luacheck: ignore
-    vim.fn.sign_define(opts.name, {
-      texthl = opts.name,
-      text = opts.text,
-      numhl = "",
-    })
-  end
-
-  sign({ name = "DiagnosticSignError", text = "✘" })
-  sign({ name = "DiagnosticSignWarn", text = " " })
-  sign({ name = "DiagnosticSignHint", text = "" })
-  sign({ name = "DiagnosticSignInfo", text = "" })
-
-  vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    update_in_insert = false,
-    underline = true,
-    severity_sort = true,
-    float = {
-      border = "rounded",
-      source = "always",
-      header = "",
-      prefix = "",
-    },
-  })
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+-- 令語言伺服器支援「自動補全輸入（Autocompletion）」及「片語（Snippets）」
+-- Add additional capabilities supported by nvim-cmp
+local function setup_auto_completion()
+  require("plugins-rc.copilot")
+  require("lsp.autocmp")
 end
 
-------------------------------------------------------------
--- Main Program
-------------------------------------------------------------
+local function setup_keymapping()
+  -- 設定語言伺服器通用按鍵
+  vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+  vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+  vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
--- (1) 設定 LSP 自動安裝機制 (Automatic LSP Setup)
--- setup_lsp_auto_installation()
+  -- 設定語言伺服器專屬按鍵
+  -- Use LspAttach autocommand to only map the following keys after the language server attaches to the current buffer
+  -- 當「語言服務器」連上當前緩衝區後，使用 LspAttach 自動命令，設定以下按鍵
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
+      -- Enable completion triggered by <c-x><c-o>
+      vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
--- (2) 設定 Auto Completion (Auto-cmp and snippets setup: cmp.nvim + luasnip)
--- require("lsp/lsp-autocmp-copilot")
-require("plugins-rc/copilot")
-require("lsp/lsp-autocmp")
+      -- Buffer local mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local opts = { buffer = ev.buf }
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+      vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+      vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+      vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+      vim.keymap.set("n", "<space>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
+      vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+      vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+      vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "<space>f", function() vim.lsp.buf.format({ async = true }) end, opts)
+    end,
+  })
+end
 
--- (3) 設定 LSP (Setup configuration for every LSP)
-setup_lsp()
+----------------------------------------------------------------
 
--- (4) 設定 Null Languager Server (Null-LS Setup)
-require("lsp/lsp-null-ls")
+setup_language_servers()
 
--- (5) 設定 LSP Diagnostics (Setup Diagnostics)
-setup_diagnostics()
+setup_auto_completion()
 
--- (6) 設定 Lsp Saga
-require("plugins-rc.lspsaga-nvim")
+-- setup_keymapping()
+
+require("lsp.null-ls")
