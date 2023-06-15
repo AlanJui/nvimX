@@ -1,5 +1,7 @@
 local dap_python = safe_require("dap-python")
-if not dap_python then return end
+if not dap_python then
+  return
+end
 
 local M = {}
 

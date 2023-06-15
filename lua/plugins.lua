@@ -43,7 +43,9 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 -- 確認擴充套件 packer.nvim 已安裝，以便執行「初始設定作業」。
 -----------------------------------------------------------------
 local ok, packer = pcall(require, "packer")
-if not ok then return end
+if not ok then
+  return
+end
 
 packer.init({
   package_root = package_root,
@@ -211,12 +213,16 @@ return packer.startup(function()
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function() require("copilot").setup({}) end,
+    config = function()
+      require("copilot").setup({})
+    end,
   })
   use({
     "zbirenbaum/copilot-cmp",
     after = { "copilot.lua" },
-    config = function() require("copilot_cmp").setup() end,
+    config = function()
+      require("copilot_cmp").setup()
+    end,
   })
   -----------------------------------------------------------
   -- Treesitter: for better syntax
@@ -289,7 +295,9 @@ return packer.startup(function()
   use({ "LinArcX/telescope-command-palette.nvim" })
   use({
     "AckslD/nvim-neoclip.lua",
-    config = function() require("neoclip").setup() end,
+    config = function()
+      require("neoclip").setup()
+    end,
   })
   -- dependency for better sorting performance
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
@@ -399,12 +407,12 @@ return packer.startup(function()
   use({ "jbyuki/one-small-step-for-vimkind" })
   -- DAP for Node.js (nvim-dap adapter for vscode-js-debug)
   use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
-  use({
-    "microsoft/vscode-js-debug",
-    opt = true,
-    -- run = "npm install --legacy-peer-deps && npm run compile",
-    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-  })
+  -- use({
+  --   "microsoft/vscode-js-debug",
+  --   opt = true,
+  --   -- run = "npm install --legacy-peer-deps && npm run compile",
+  --   run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+  -- })
   --
   -- DAP UI Extensions
   --
@@ -450,7 +458,9 @@ return packer.startup(function()
   use({
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
     ft = { "markdown" },
   })
   -- Markdown preview
@@ -488,5 +498,7 @@ return packer.startup(function()
   })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
-  if packer_bootstrap then packer.sync() end
+  if packer_bootstrap then
+    packer.sync()
+  end
 end)

@@ -29,30 +29,34 @@ if not dap or not dapui or not mason_nvim_dap then
 end
 
 local function setup_debugger_icons()
-  vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
-  vim.fn.sign_define("DapStopped", { text = "▶", texthl = "", linehl = "", numhl = "" })
-  vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "", linehl = "", numhl = "" })
-  vim.fn.sign_define("DapBreakpointCondition", { text = "❓", texthl = "", linehl = "", numhl = "" })
-  vim.fn.sign_define("DapLogPoint", { text = "💬", texthl = "", linehl = "", numhl = "" })
+  -- vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+  -- vim.fn.sign_define("DapStopped", { text = "▶", texthl = "", linehl = "", numhl = "" })
+  -- vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "", linehl = "", numhl = "" })
+  -- vim.fn.sign_define("DapBreakpointCondition", { text = "❓", texthl = "", linehl = "", numhl = "" })
+  -- vim.fn.sign_define("DapLogPoint", { text = "💬", texthl = "", linehl = "", numhl = "" })
+  local icons = require("icons")
+  vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+
+  for name, sign in pairs(icons.dap) do
+    sign = type(sign) == "table" and sign or { sign }
+    vim.fn.sign_define("Dap" .. name, {
+      text = sign[1],
+      texthl = sign[2] or "DiagnosticInfo",
+      linehl = sign[3],
+      numhl = sign[3],
+    })
+  end
 end
 
 -- 設定「除錯接合器」在「使用者介面（UI）」的配置及監控事件
 local function setup_debugger_ui()
   -- 設定「除錯接合器（Debug Adapter）」，可顯示「變數」內容值。
-  require("nvim-dap-virtual-text").setup({ commented = true })
+  require("nvim-dap-virtual-text").setup({
+    commented = true,
+  })
 
   -- 設定「除錯器」的「使用者介面」在「右側」顯示
   dapui.setup({
-    icons = { expanded = "▾", collapsed = "▸", current_frame = "" },
-    mappings = {
-      -- Use a table to apply multiple mappings
-      expand = { "<CR>", "<2-LeftMouse>" },
-      open = "o",
-      remove = "d",
-      edit = "e",
-      repl = "r",
-      toggle = "t",
-    },
     layouts = {
       {
         elements = {
@@ -70,40 +74,22 @@ local function setup_debugger_ui()
         position = "bottom",
       },
     },
-    controls = {
-      enabled = true,
-      element = "repl",
-      icons = {
-        pause = "",
-        play = "",
-        step_into = "",
-        step_over = "",
-        step_out = "",
-        step_back = "",
-        run_last = "",
-        terminate = "",
-      },
-    },
-    floating = {
-      max_height = nil, -- These can be integers or a float between 0 and 1.
-      max_width = nil, -- Floats will be treated as percentage of your screen.
-      border = "single", -- Border style. Can be "single", "double" or "rounded"
-      mappings = { close = { "q", "<Esc>" } },
-    },
-    windows = { indent = 1 },
-    render = {
-      max_type_length = nil, -- Can be integer or nil.
-    },
   })
 
   -- 完成「初始作業」後，便顯示使用者介面
-  dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
 
   -- 值「終結作業」時，便關閉使用者介面
-  dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
 
   -- 值「結束作業」時，便關閉使用者介面
-  dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
 end
 
 -----------------------------------------------------------

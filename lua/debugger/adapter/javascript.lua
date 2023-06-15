@@ -4,7 +4,9 @@
 ----------------------------------------------------------------------------------------------------
 local ok, dap = pcall(require, "dap")
 local ok2, dap_adapter = pcall(require, "dap-vscode-js")
-if not ok or not ok2 then return end
+if not ok or not ok2 then
+  return
+end
 
 local M = {}
 
@@ -13,7 +15,7 @@ function M.setup()
   dap_adapter.setup({
     -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
     -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
-    -- debugger_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/vscode-js-debug",
+    debugger_path = os.getenv("HOME") .. "/.local/share/vscode-js-debug",
     -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
     adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }, -- which adapters to register in nvim-dap
     -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
