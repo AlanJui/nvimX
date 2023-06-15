@@ -5,6 +5,14 @@ local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 M.capabilities = cmp_nvim_lsp.default_capabilities()
 
+-- 加入 nvim-ufo 支援
+-- Tell the server the capability of foldingRange
+-- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+M.capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
 M.setup = function()
   local signs = { Error = "", Warn = "", Hint = "", Info = "" }
   for type, icon in pairs(signs) do

@@ -67,6 +67,27 @@ return packer.startup(function()
   use("nvim-lua/plenary.nvim")
   -- Tools to migrating init.vim to init.lua
   use("norcalli/nvim_utils")
+  -- To make Neovim's fold look modern and keep high performance.
+  use({
+    "kevinhwang91/nvim-ufo",
+    requires = {
+      "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require("statuscol.builtin")
+          require("statuscol").setup({
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          })
+        end,
+      },
+    },
+  })
   -----------------------------------------------------------
   -- Completion: for auto-completion/suggestion/snippets
   -----------------------------------------------------------
@@ -309,11 +330,6 @@ return packer.startup(function()
   -----------------------------------------------------------
   -- Editting Tools
   -----------------------------------------------------------
-  -- To make Neovim's fold look modern and keep high performance.
-  use({
-    "kevinhwang91/nvim-ufo",
-    requires = "kevinhwang91/promise-async",
-  })
   -- replace with register contents using motion (gr + motion)
   -- use("inkarkat/vim-ReplaceWithRegister")
   -- surroundings: parentheses, brackets, quotes, XML tags, and more

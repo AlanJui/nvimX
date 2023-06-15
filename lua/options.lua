@@ -48,13 +48,13 @@ opt.modifiable = true
 
 -- highlight on yank
 exec(
-    [[
+  [[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500, on_visual=true}
   augroup end
 ]],
-    false
+  false
 )
 
 -- jump to the last position when reopening a file
@@ -103,10 +103,11 @@ opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
 -- folding
-opt.foldmethod = "indent"
-opt.foldnestmax = 10
-opt.foldenable = true
-opt.foldlevel = 2
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 ---------------------------------------------------------------------------------
 opt.iskeyword:append("-") -- consider string-string as whole word

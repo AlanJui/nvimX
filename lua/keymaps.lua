@@ -192,4 +192,10 @@ vim.g.plugin_disable_mappings = 1
 -- vim.keymap.set("i", "<C-g>", "Accept")
 -- vim.keymap.set("i", "<C-]>", "Next Suggesion")
 -- vim.keymap.set("i", "<C-[>", "Prev Suggesion")
--- vim.keymap.set("i", "<C-\\>", "Dismiss")
+--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+
+---------------------------------------------------------
+-- nvim.ufo Folding Tools
+---------------------------------------------------------
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)

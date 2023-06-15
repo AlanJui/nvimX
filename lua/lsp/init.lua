@@ -68,6 +68,9 @@ local function setup_language_servers()
       lspconfig.texlab.setup({})
     end,
   })
+
+  -- 設定 nvim-ufo
+  require("plugins-rc.nvim-ufo")
 end
 
 -- 令語言伺服器支援「自動補全輸入（Autocompletion）」及「片語（Snippets）」
