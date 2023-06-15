@@ -68,7 +68,7 @@ return packer.startup(function()
   -- lua functions that many plugins use
   use("nvim-lua/plenary.nvim")
   -- Tools to migrating init.vim to init.lua
-  use("norcalli/nvim_utils")
+  -- use("norcalli/nvim_utils")
   -- To make Neovim's fold look modern and keep high performance.
   use({
     "kevinhwang91/nvim-ufo",
@@ -209,21 +209,21 @@ return packer.startup(function()
   use({ "hrsh7th/cmp-copilot" })
   -- Copilot Lua
   -- use({ "zbirenbaum/copilot.lua" })
-  use({
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  })
-  use({
-    "zbirenbaum/copilot-cmp",
-    after = { "copilot.lua" },
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  })
+  -- use({
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({})
+  --   end,
+  -- })
+  -- use({
+  --   "zbirenbaum/copilot-cmp",
+  --   after = { "copilot.lua" },
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end,
+  -- })
   -----------------------------------------------------------
   -- Treesitter: for better syntax
   -----------------------------------------------------------
