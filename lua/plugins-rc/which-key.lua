@@ -144,14 +144,6 @@ local mappings = {
     },
     f = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
     k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
-    s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
-    t = {
-      name = "Splitting/Joining blocks of code",
-      t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
-      s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
-      j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
-    },
     g = {
       name = "goto",
       D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
@@ -174,6 +166,21 @@ local mappings = {
         "set file type to django template",
       },
       T = { ":set filetype=html<CR>", "set file type to HTML" },
+    },
+    o = {
+      name = "Outline",
+      t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
+      o = { "<cmd>AerialOpen<cr>", "Open outline window" },
+      n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
+      p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
+    },
+    r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
+    s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
+    t = {
+      name = "Splitting/Joining blocks of code",
+      t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+      s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
+      j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
     },
     u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
     w = {

@@ -391,6 +391,13 @@ return packer.startup(function()
       require("colorizer").setup()
     end,
   })
+  -- Source Code Outline
+  use({
+    "stevearc/aerial.nvim",
+    config = function()
+      require("aerial").setup()
+    end,
+  })
   -----------------------------------------------------------
   -- Coding Tools
   -----------------------------------------------------------
