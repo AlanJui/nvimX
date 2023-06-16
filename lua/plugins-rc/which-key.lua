@@ -146,6 +146,12 @@ local mappings = {
     k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
     r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
     s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
+    t = {
+      name = "Splitting/Joining blocks of code",
+      t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+      s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
+      j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
+    },
     g = {
       name = "goto",
       D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },

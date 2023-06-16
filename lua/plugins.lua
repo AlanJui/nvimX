@@ -341,7 +341,16 @@ return packer.startup(function()
   -- replace with register contents using motion (gr + motion)
   -- use("inkarkat/vim-ReplaceWithRegister")
   -- surroundings: parentheses, brackets, quotes, XML tags, and more
-  use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
+  -- use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end,
+  })
   -- Toggle comments in Neovim
   -- use({ "tpope/vim-commentary" })
   use({ "numToStr/Comment.nvim" })
@@ -350,6 +359,21 @@ return packer.startup(function()
   use("JoosepAlviste/nvim-ts-context-commentstring")
   -- Causes all trailing whitespace characters to be highlighted
   use({ "cappyzawa/trim.nvim" })
+  -- Splitting/Joining blocks of code
+  use({
+    "Wansmer/treesj",
+    requires = { "nvim-treesitter" },
+    config = function()
+      require("treesj").setup({--[[ your config ]]
+      })
+      -- For use default preset and it work with dot
+      vim.keymap.set("n", "<leader>m", require("treesj").toggle)
+      -- For extending default preset with `recursive = true`, but this doesn't work with dot
+      vim.keymap.set("n", "<leader>M", function()
+        require("treesj").toggle({ split = { recursive = true } })
+      end)
+    end,
+  })
   -- Multiple cursor editting
   use({ "mg979/vim-visual-multi" })
   -- visualizes undo history and makes it easier to browse and switch between different undo branches
@@ -466,16 +490,25 @@ return packer.startup(function()
   -- Markdown preview
   -- use({ "instant-markdown/vim-instant-markdown" })
   -- highlight your todo comments in different styles
-  -- use({
-  -- 	'folke/todo-comments.nvim',
-  -- 	requires = 'nvim-lua/plenary.nvim',
-  -- 	config = function()
-  -- 	    require('todo-comments').setup({
-  --              -- configuration comes here
-  --              -- or leave it empty to use the default setting
-  -- 	    })
-  -- 	end,
-  -- })
+  use({
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup({})
+      vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next()
+      end, { desc = "Next todo comment" })
+
+      vim.keymap.set("n", "[t", function()
+        require("todo-comments").jump_prev()
+      end, { desc = "Previous todo comment" })
+
+      -- You can also specify a list of valid jump keywords
+      vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next({ keywords = { "ERROR", "WARNING" } })
+      end, { desc = "Next error/warning todo comment" })
+    end,
+  })
   -----------------------------------------------------------
   -- LaTeX
   -----------------------------------------------------------
