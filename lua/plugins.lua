@@ -384,6 +384,13 @@ return packer.startup(function()
   use({ "windwp/nvim-ts-autotag" })
   -- Auto change html tags
   use({ "AndrewRadev/tagalong.vim" })
+  -- A high-performance color highlighter for Neovim
+  use({
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  })
   -----------------------------------------------------------
   -- Coding Tools
   -----------------------------------------------------------
