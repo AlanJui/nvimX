@@ -108,7 +108,8 @@ local opts = {
   },
   extensions = {
     file_browser = {
-      theme = "dropdown",
+      -- theme = "dropdown",
+      theme = "ivy",
       previewer = false,
       hijack_netrw = true,
       mappings = mappings,
