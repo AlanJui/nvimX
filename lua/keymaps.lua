@@ -12,6 +12,7 @@ vim.g.maplocalleader = ","
 local keymap = vim.keymap.set -- for conciseness
 
 keymap("i", "jj", "<Esc>")
+keymap("n", "<leader><leader>", "<c-^>") -- Switch between 2 buffers
 
 -- Ctrl-s: to save
 keymap("n", "<c-s>", ":w<CR>", {})

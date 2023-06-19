@@ -20,7 +20,7 @@ which_key.setup({
 
 local mappings = {
   -- Top Menu
-  [" "] = { ":Telescope find_files<CR>", "Find files" },
+  ["<leader>"] = { "<c-^>", "Quick Switch 2 Buffers" }, -- Switch between 2 buffers
   [","] = { ":Telescope buffers<CR>", "Show buffers" },
   ["."] = { "<cmd>lua _lazygit_toggle()<CR>", "Lazygit" },
   [";"] = { ":ToggleTerm size=10<CR>", "Open Terminal" },
