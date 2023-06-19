@@ -25,8 +25,7 @@ require("plugins-rc/indent-blankline")
 -- require("plugins-rc/nvim-lightbulb")
 
 -- files management
--- require("plugins-rc/telescope-nvim")
--- require("my-telescope")
+require("plugins-rc/telescope-nvim")
 require("plugins-rc/nvim-tree")
 require("plugins-rc/harpoon")
 

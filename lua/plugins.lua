@@ -125,47 +125,19 @@ return packer.startup(function()
   -----------------------------------------------------------
   -- LSP/LspInstaller: configurations for the Nvim LSP client
   -----------------------------------------------------------
-  -- -- A collection of common configurations for Neovim's built-in language
-  -- -- server client
-  -- use({ "neovim/nvim-lspconfig" })
-  -- -- companion plugin for nvim-lspconfig that allows you to seamlessly
-  -- -- install LSP servers locally
-  -- -- use({ "williamboman/nvim-lsp-installer" })
-  -- use({ "williamboman/mason.nvim" })
-  -- use({ "williamboman/mason-lspconfig.nvim" })
-  --
-  -- All in one LSP plugin (include auto-complete)
-  --
-  use({
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v1.x",
-    requires = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" }, -- Required
-      { "williamboman/mason.nvim" }, -- Optional
-      { "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" }, -- Required
-      { "hrsh7th/cmp-nvim-lsp" }, -- Required
-      { "hrsh7th/cmp-buffer" }, -- Optional
-      { "hrsh7th/cmp-path" }, -- Optional
-      { "saadparwaiz1/cmp_luasnip" }, -- Optional
-      { "hrsh7th/cmp-nvim-lua" }, -- Optional
-
-      -- Snippets
-      { "L3MON4D3/LuaSnip" }, -- Required
-      { "rafamadriz/friendly-snippets" }, -- Optional
-
-      -- Optional
-      { "simrat39/rust-tools.nvim" },
-    },
-  })
+  -- A collection of common configurations for Neovim's built-in language
+  -- server client
+  use({ "neovim/nvim-lspconfig" })
+  -- companion plugin for nvim-lspconfig that allows you to seamlessly
+  -- install LSP servers locally
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
   -- bridges gap b/w mason & null-ls
   use("jay-babu/mason-null-ls.nvim")
   -- helps users keep up-to-date with their tools and to make certain
   -- they have a consistent environment.
-  use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
+  -- use({ "williamboman/nvim-lsp-installer" })
+  -- use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
   -- formatting & linting
   use({
     "jose-elias-alvarez/null-ls.nvim",
@@ -182,16 +154,33 @@ return packer.startup(function()
   -- vscode-like pictograms for neovim lsp completion items Topics
   use({ "onsails/lspkind-nvim" })
   --
-  -- automatically highlighting other uses of the current word under the cursor
-  -- use({ "RRethy/vim-illuminate" })
+  -- All in one LSP plugin (include auto-complete)
   --
-  -- Support LSP CodeAction
-  -- use({ "kosayoda/nvim-lightbulb" })
+  -- use({
+  --   "VonHeikemen/lsp-zero.nvim",
+  --   branch = "v1.x",
+  --   requires = {
+  --     -- LSP Support
+  --     { "neovim/nvim-lspconfig" }, -- Required
+  --     { "williamboman/mason.nvim" }, -- Optional
+  --     { "williamboman/mason-lspconfig.nvim" }, -- Optional
   --
-  -- additional functionality for typescript server
-  -- (e.g. rename file & update imports)
-  -- use({ "jose-elias-alvarez/typescript.nvim" })
-
+  --     -- Autocompletion
+  --     { "hrsh7th/nvim-cmp" }, -- Required
+  --     { "hrsh7th/cmp-nvim-lsp" }, -- Required
+  --     { "hrsh7th/cmp-buffer" }, -- Optional
+  --     { "hrsh7th/cmp-path" }, -- Optional
+  --     { "saadparwaiz1/cmp_luasnip" }, -- Optional
+  --     { "hrsh7th/cmp-nvim-lua" }, -- Optional
+  --
+  --     -- Snippets
+  --     { "L3MON4D3/LuaSnip" }, -- Required
+  --     { "rafamadriz/friendly-snippets" }, -- Optional
+  --
+  --     -- Optional
+  --     { "simrat39/rust-tools.nvim" },
+  --   },
+  -- })
   -----------------------------------------------------------
   -- AI Tooles
   -----------------------------------------------------------
@@ -228,10 +217,6 @@ return packer.startup(function()
   -- Treesitter: for better syntax
   -----------------------------------------------------------
   -- Nvim Treesitter configurations and abstraction layer
-  -- use({
-  --     'nvim-treesitter/nvim-treesitter',
-  --     run = ':TSUpdate'
-  -- })
   use({
     "nvim-treesitter/nvim-treesitter",
     run = function()
@@ -241,9 +226,6 @@ return packer.startup(function()
       ts_update()
     end,
   })
-  -- use({ "nvim-treesitter/playground" })
-  -- Additional textobjects for treesitter
-  -- use("nvim-treesitter/nvim-treesitter-textobjects")
   -----------------------------------------------------------
   -- colorscheme for neovim written in lua specially made for roshnvim
   -----------------------------------------------------------
@@ -281,40 +263,36 @@ return packer.startup(function()
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
     requires = {
-      "nvim-lua/plenary.nvim",
+      --------------------------------------------------------
+      -- Telescope Extensions
+      --------------------------------------------------------
+      "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-raw.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-project.nvim",
+      "ahmedkhalf/project.nvim",
+      "cljoly/telescope-repo.nvim",
+      "stevearc/aerial.nvim",
+      "nvim-telescope/telescope-frecency.nvim",
+      "kkharji/sqlite.lua",
+      "aaronhallaert/advanced-git-search.nvim",
+      "benfowler/telescope-luasnip.nvim",
+      "olacin/telescope-cc.nvim",
+      "tsakirist/telescope-lazy.nvim",
+      {
+        "ecthelionvi/NeoComposer.nvim",
+        dependencies = { "kkharji/sqlite.lua" },
+        enabled = false,
+        opts = {},
+      },
     },
   })
-  -- Telescope Extensions
-  -- use({ "cljoly/telescope-repo.nvim" })
-  use({ "nvim-telescope/telescope-file-browser.nvim" })
-  use({ "nvim-telescope/telescope-ui-select.nvim" })
-  use({ "dhruvmanila/telescope-bookmarks.nvim" })
-  use({ "nvim-telescope/telescope-github.nvim" })
-  -- Trying command palette
-  use({ "LinArcX/telescope-command-palette.nvim" })
-  use({
-    "AckslD/nvim-neoclip.lua",
-    config = function()
-      require("neoclip").setup()
-    end,
-  })
-  -- dependency for better sorting performance
-  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
-  use("jvgrootveld/telescope-zoxide")
-  -- Icons
-  -- use({ "kyazdani42/nvim-web-devicons" })
-  -- File explorer: vifm
-  use("vifm/vifm.vim")
+  --------------------------------------------------------
+  -- Enhance UI for Neovim
+  --------------------------------------------------------
   -- vs-code like icons
   use("nvim-tree/nvim-web-devicons")
   -- File/Flolders explorer:nvim-tree
-  -- use({
-  --   "kyazdani42/nvim-tree.lua",
-  --   requires = {
-  --     "kyazdani42/nvim-web-devicons", -- optional, for file icon
-  --   },
-  -- })
   use({
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -373,9 +351,6 @@ return packer.startup(function()
   -- Editting Tools
   -----------------------------------------------------------
   -- replace with register contents using motion (gr + motion)
-  -- use("inkarkat/vim-ReplaceWithRegister")
-  -- surroundings: parentheses, brackets, quotes, XML tags, and more
-  -- use({ "tpope/vim-surround", requires = { "tpope/vim-repeat" } })
   use({
     "kylechui/nvim-surround",
     tag = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -386,7 +361,6 @@ return packer.startup(function()
     end,
   })
   -- Toggle comments in Neovim
-  -- use({ "tpope/vim-commentary" })
   use({ "numToStr/Comment.nvim" })
   -- A Neovim plugin for setting the commentstring option based on the cursor
   -- location in the file. The location is checked via treesitter queries.
@@ -479,19 +453,12 @@ return packer.startup(function()
   use({ "jbyuki/one-small-step-for-vimkind" })
   -- DAP for Node.js (nvim-dap adapter for vscode-js-debug)
   use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
-  -- use({
-  --   "microsoft/vscode-js-debug",
-  --   opt = true,
-  --   -- run = "npm install --legacy-peer-deps && npm run compile",
-  --   run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-  -- })
   --
   -- DAP UI Extensions
   --
   -- UI for nvim-dap
   -- Install icons for dap-ui: https://github.com/ChristianChiarulli/neovim-codicons
   use({ "folke/neodev.nvim" })
-  -- use({ "rcarriga/nvim-dap-ui" })
   -- Reset nvim-dap-ui to a specific commit
   use({
     "rcarriga/nvim-dap-ui",
@@ -500,7 +467,6 @@ return packer.startup(function()
       "mfussenegger/nvim-dap",
     },
   })
-
   -- Inlines the values for variables as virtual text using treesitter.
   use({ "theHamsta/nvim-dap-virtual-text" })
   -- -- Integration for nvim-dap with telescope.nvim
@@ -512,6 +478,8 @@ return packer.startup(function()
   -----------------------------------------------------------
   -- Utility
   -----------------------------------------------------------
+  -- File explorer: vifm
+  use("vifm/vifm.vim")
   -- Floater Terminal
   use({ "voldikss/vim-floaterm" })
   -- Live server
@@ -525,8 +493,6 @@ return packer.startup(function()
   -- provides support to mermaid syntax files (e.g. *.mmd, *.mermaid)
   use({ "mracos/mermaid.vim" })
   -- Markdown support Mermaid
-  -- use({ "iamcco/markdown-preview.nvim" })
-  -- install without yarn or npm
   use({
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
@@ -535,8 +501,6 @@ return packer.startup(function()
     end,
     ft = { "markdown" },
   })
-  -- Markdown preview
-  -- use({ "instant-markdown/vim-instant-markdown" })
   -- highlight your todo comments in different styles
   use({
     "folke/todo-comments.nvim",

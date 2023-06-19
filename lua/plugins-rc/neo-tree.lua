@@ -92,6 +92,14 @@ require("neo-tree").setup({
         state.commands.open(state)
       end
     end,
+    parent_or_close = function(state)
+      local node = state.tree:get_node()
+      if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+        state.commands.toggle_node(state)
+      else
+        require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+      end
+    end,
   },
   window = {
     position = "left",
@@ -111,6 +119,7 @@ require("neo-tree").setup({
       ["P"] = { "toggle_preview", config = { use_float = true } },
       -- ["l"] = "focus_preview",
       ["l"] = "child_or_open",
+      ["h"] = "parent_or_close",
       ["S"] = "open_split",
       ["s"] = "open_vsplit",
       -- ["S"] = "split_with_window_picker",
@@ -157,11 +166,11 @@ require("neo-tree").setup({
   filesystem = {
     filtered_items = {
       visible = false, -- when true, they will just be displayed differently than normal items
-      hide_dotfiles = true,
+      hide_dotfiles = false,
       hide_gitignored = true,
       hide_hidden = true, -- only works on Windows for hidden files/directories
       hide_by_name = {
-        --"node_modules"
+        "node_modules",
       },
       hide_by_pattern = { -- uses glob style patterns
         --"*.meta",
@@ -172,22 +181,25 @@ require("neo-tree").setup({
         ".stylua.toml",
       },
       never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-        --".DS_Store",
-        --"thumbs.db"
+        ".DS_Store",
+        "thumbs.db",
       },
       never_show_by_pattern = { -- uses glob style patterns
         --".null-ls_*",
       },
     },
-    follow_current_file = false, -- This will find and focus the file in the active buffer every
+    -- follow_current_file = false, -- This will find and focus the file in the active buffer every
     -- time the current file is changed while the tree is open.
     group_empty_dirs = false, -- when true, empty folders will be grouped together
-    hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+    --hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
     -- in whatever position is specified in window.position
     -- "open_current",  -- netrw disabled, opening a directory opens within the
     -- window like netrw would, regardless of window.position
     -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-    use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+    -- use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+    follow_current_file = true, -- This will find and focus the file in the active buffer every
+    hijack_netrw_behavior = "open_current",
+    use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
     -- instead of relying on nvim autocmd events.
     window = {
       mappings = {
@@ -212,6 +224,20 @@ require("neo-tree").setup({
     },
 
     commands = {}, -- Add a custom command or override a global one using the same function name
+  },
+  event_handlers = {
+    -- {
+    --   event = "neo_tree_buffer_enter",
+    --   handler = function()
+    --     vim.opt_local.signcolumn = "auto"
+    --   end,
+    -- },
+    {
+      event = "file_opened",
+      handler = function(_)
+        require("neo-tree").close_all()
+      end,
+    },
   },
   buffers = {
     follow_current_file = true, -- This will find and focus the file in the active buffer every

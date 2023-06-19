@@ -44,7 +44,7 @@ local mappings = {
     N = { ":set norelativenumber!<CR>", "on/off relative line-numbers" },
   },
   -- Files
-  f = {
+  F = {
     name = "Files",
     e = { ":NvimTreeToggle<CR>", "File explorer" },
     w = { ":w<CR>", "Save" },
@@ -67,19 +67,46 @@ local mappings = {
       x = { ":qa<CR>", "Exit Neovim" },
       X = { ":qa!<CR>", "Exit Neovim without save" },
     },
+  },
+  f = {
+    name = "Find",
+    f = { ":Telescope find_files<CR>", "Find files" },
+    o = { ":Telescope frecency theme=dropdown previewer=false<cr>", "Recent" },
+    b = { ":Telescope buffers<cr>", "Buffers" },
+    B = { ":Telescope file_browser<cr>", "Browser" },
     -- Search files
     s = {
       name = "Search",
       a = { ":Telescope live_grep<CR>", "Live grep" },
       b = { ":Telescope buffers theme=get_dropdown<CR>", "buffers" },
+      c = { ":Telescope colorscheme<CR>", "Lists available colorschemes" },
       f = { ":Telescope find_files<CR>", "Find files" },
       g = { ":Telescope git_files<CR>", "Git files" },
+      q = { ":Telescope quickfix<CR>", "Lists items in the quickfix list" },
       m = { ":Telescope marks<CR>", "Bookmarks" },
       r = { ":Telescope oldfiles<CR>", "Recently open files" },
       h = { ":Telescope help_tags<CR>", "Help Tags" },
-      p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
+      s = { ":Telescope luasnip<CR>", "Snippets" },
       w = { ":Telescope live_grep<CR>", "Find word" },
-      v = { ":FloatermNew vifm<CR>", "ViFm" },
+    },
+    t = {
+      name = "Telescope Tools...",
+      c = { "<cmd>Telescope conventional_commits<cr>", "Conventional Commits" },
+      r = { "<cmd>Telescope repo list<cr>", "Search Git Repo" },
+      h = { "<cmd>Telescope help_tags<cr>", "Search Help Tags" },
+      o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
+      p = {
+        function()
+          require("telescope").extensions.project.project({ display_type = "minimal" })
+        end,
+        "List",
+      },
+      C = {
+        function()
+          require("telescope.builtin").colorscheme({ enable_preview = true })
+        end,
+        "Colorscheme",
+      },
     },
   },
   -- Build (yabs)
@@ -286,7 +313,7 @@ local mappings = {
     c = { "<cmd>lua BuiltinTerminalWrapper:create()<CR>", "Create Terminal" },
     o = { "<cmd>lua BuiltinTerminalWrapper:open()<CR>", "Open Terminal" },
     C = { "<cmd>lua BuiltinTerminalWrapper:close()<CR>", "Close Terminal" },
-    x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
+    p = { ":FloatermNew ranger<CR>", "Picture Viewer" },
     -- t = { "<cmd>lua BuiltinTerminalWrapper:toggle()<CR>", "Toggle Terminal" },
     h = {
       ":ToggleTerm size=15 direction=horizontal<CR>",
@@ -296,6 +323,7 @@ local mappings = {
       ":ToggleTerm size=" .. (vim.o.columns * 0.5) .. " direction=vertical<CR>",
       "Toggle vertical terminal",
     },
+    x = { "<cmd>lua BuiltinTerminalWrapper:kill()<CR>", "Kill Terminal" },
   },
   -- utilities
   u = {
