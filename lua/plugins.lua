@@ -259,6 +259,11 @@ return packer.startup(function()
   -- from LSP servers, for use in the Neovim statusline
   use({ "nvim-lua/lsp-status.nvim" })
   -- Fuzzy files finder
+  -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  use({
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  })
   use({
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
@@ -268,8 +273,8 @@ return packer.startup(function()
       --------------------------------------------------------
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-raw.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-project.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
       "ahmedkhalf/project.nvim",
       "cljoly/telescope-repo.nvim",
       "stevearc/aerial.nvim",

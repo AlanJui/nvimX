@@ -92,6 +92,12 @@ local mappings = {
     t = {
       name = "Telescope Tools...",
       c = { "<cmd>Telescope conventional_commits<cr>", "Conventional Commits" },
+      C = {
+        function()
+          require("telescope.builtin").colorscheme({ enable_preview = true })
+        end,
+        "Colorscheme",
+      },
       r = { "<cmd>Telescope repo list<cr>", "Search Git Repo" },
       h = { "<cmd>Telescope help_tags<cr>", "Search Help Tags" },
       o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
@@ -101,12 +107,7 @@ local mappings = {
         end,
         "List",
       },
-      C = {
-        function()
-          require("telescope.builtin").colorscheme({ enable_preview = true })
-        end,
-        "Colorscheme",
-      },
+      P = { "<cmd>Telescope file_browser cwd=~/.config/nvimp/lua<CR>", "Browse Lua Scripts" },
     },
   },
   -- Build (yabs)
@@ -368,31 +369,28 @@ local mappings = {
   },
   -- Window
   w = {
-    name = "Windows",
+    name = "Window",
     ["-"] = { ":split<CR>", "Horiz. window" },
     ["_"] = { ":vsplit<CR>", "Vert. window" },
     ["|"] = { ":vsplit<CR>", "Vert. window" },
-    i = { ":tabnew %<CR>", "Zoom-in" },
-    o = { ":tabclose<CR>", "Zoom-out" },
+    ["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
+    ["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
+    ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
+    ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
     c = { ":close<CR>", "Close window" },
     k = { "<C-w>k", "Up window" },
     j = { "<C-w>j", "Down window" },
     h = { "<C-w>h", "Left window" },
     l = { "<C-w>l", "Right window" },
-    ["<Up>"] = { "<cmd>wincmd -<CR>", "Shrink down" },
-    ["<Down>"] = { "<cmd>wincmd +<CR>", "Grow up" },
-    ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
-    ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
-    w = { ':exe "resize" . (winwidth(0) * 3/2)<CR>', "Increase weight" },
-    W = { ':exe "resize" . (winwidth(0) * 2/3)<CR>', "Increase weight" },
-    v = {
-      ':exe "vertical resize" . (winheight(0) * 3/2)<CR>',
-      "Increase height",
-    },
-    V = {
-      ':exe "vertical resize" . (winheight(0) * 2/3)<CR>',
-      "Increase height",
-    },
+    f = { "<cmd>FocusToggle<cr>", "Toggle window focus" },
+    s = { "<cmd>FocusSplitNicely<cr>", "Split a window on golden ratio" },
+    t = { "<cmd>TroubleToggle<cr>", "Toggle Trouble List Winodw" },
+    T = { "<cmd>TroubleRefresh<cr>", "Refresh Trouble List Winodw" },
+    o = { "<cmd>AerialToggle<cr>", "Toggle code outline window" }, -- aerial.nvim plugin
+    O = { "<cmd>lua require('nvim-window').pick()<cr>", "Choose window" },
+    m = { "<cmd>FocusMaxOrEqual<cr>", "Toggle window zoom" },
+    Z = { ":tabnew %<CR>", "Zoom-in" },
+    z = { ":tabclose<CR>", "Zoom-out" },
   },
   -- Trouble List
   x = {

@@ -9,7 +9,48 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+-- vim.api.nvim_set_keymap('模式', '键盘映射', '<cmd>lua telescope_luafile()<CR>', { noremap = true, silent = true })
 local keymap = vim.keymap.set -- for conciseness
+
+function Telescope_Luafile()
+  local result = require("telescope").extensions.file_browser.file_browser({
+    cwd = "~/.config/nvim/lua/user/my_libs",
+    path = "%:p:h%",
+    cwd_to_path = true,
+  })
+  -- local result = require("telescope.builtin").find_files({
+  --   cwd = "~/.config/nvim/lua/user/my-libs/",
+  --   prompt_prefix = "🔍",
+  -- })
+  print(result)
+  -- _G.DumpTable(result)
+  -- require("telescope.builtin").file_browse({
+  --   cwd = "~/.config/nvim/lua/user/my-libs",
+  -- })
+end
+
+function TelescopeFindFiles()
+  require("telescope.builtin").find_files({
+    cwd = "~/.config/nvim/lua/user/my-libs/",
+    prompt_prefix = "🔍",
+    attach_mappings = function(prompt_bufnr)
+      local entry = require("telescope.actions.state").get_selected_entry()
+      require("telescope.actions").close(prompt_bufnr)
+      vim.cmd(":luafile " .. entry.path)
+    end,
+  })
+end
+
+-- vim.api.nvim_set_keymap("n", "tt", "<cmd>lua Telescope_Luafile()<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "tt", "<cmd>lua TelescopeFindFiles()<CR>", { noremap = true, silent = true })
+
+-- open file_browser with the path of the current buffer
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>fe",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
 
 keymap("i", "jj", "<Esc>")
 keymap("n", "<leader><leader>", "<c-^>") -- Switch between 2 buffers
