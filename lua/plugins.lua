@@ -345,7 +345,8 @@ return packer.startup(function()
   use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
   -- A work-in-progress Magit clone for Neovim that is geared toward the Vim philosophy.
   use({
-    "TimUntersberger/neogit",
+    -- "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     requires = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
   })
   -- for creating gist
