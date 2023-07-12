@@ -1,15 +1,22 @@
 return {
-  -- {
-  --   "tpope/vim-markdown",
-  --   config = function()
-  --     -- 設定 Markdown 語法中的程式碼塊 (fenced code blocks) 語言支持 'html', 'python' 和
-  --     -- 'bash=sh' 是指定的語言，其中 'bash=sh' 表示將 bash 語言識別為 sh 語言
-  --     vim.g.markdown_fenced_languages = { "html", "python", "bash=sh" }
-  --     vim.g.markdown_syntax_conceal = 0
-  --     vim.g.markdown_minlines = 100
-  --   end,
-  -- },
-
+  -- Open URI with your favorite browser from Neovim
+  {
+    "tyru/open-browser.vim",
+    lazy = false,
+    ft = { "plantuml" },
+  },
+  -- PlantUML syntax highlighting
+  {
+    "aklt/plantuml-syntax",
+    lazy = false,
+    ft = { "plantuml" },
+  },
+  -- provides support to mermaid syntax files (e.g. *.mmd, *.mermaid)
+  {
+    "mracos/mermaid.vim",
+    lazy = false,
+    ft = { "mermaid", "markdown" },
+  },
   -- Markdown Syntax Highlighting
   -- URL: https://github.com/preservim/vim-markdown
   {
@@ -29,63 +36,77 @@ return {
   -- Live server
   {
     "turbio/bracey.vim",
-    run = "npm install --prefix server",
+    build = "npm install --prefix server",
   },
-  -- Open URI with your favorite browser from your most favorite editor
-  { "tyru/open-browser.vim" },
   -- Preview markdown file
   {
     "iamcco/markdown-preview.nvim",
     enabled = true,
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
     ft = { "markdown" },
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     keys = {
       { "<leader>um", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle Markdown Previewer" },
     },
-    -- enabled = false,
-    -- build = "cd app && npm install",
-    -- opts = function()
-    --   vim.g.mkdp_filetypes = { "markdown" }
-    -- end,
+    setup = function()
+      vim.cmd([[
+        let g:mkdp_filetypes = { "markdown" }
+        let g:mkdp_auto_start = 0
+        let g:mkdp_auto_close = 1
+        let g:mkdp_command_for_global = 0
+        let g:mkdp_open_to_the_world = 0
+        let g:mkdp_open_ip = "127.0.0.1"
+        let g:mkdp_port = "9999"
+        let g:mkdp_filetypes = { "markdown" }
+        let g:mkdp_browserfunc = ""
+        let g:mkdp_preview_options = {
+            \ 'mkit': {},
+            \ 'katex': {},
+            \ 'uml': {},
+            \ 'maid': {},
+            \ 'disable_sync_scroll': 0,
+            \ 'sync_scroll_type': 'middle',
+            \ 'hide_yaml_meta': 1,
+            \ 'sequence_diagrams': {},
+            \ 'flowchart_diagrams': {},
+            \ 'content_editable': v:false,
+            \ 'disable_filename': 0,
+            \ 'toc': {}
+            \ }
+        let g:mkdp_markdown_css = ""
+        let g:mkdp_highlight_css = ""
+        let g:mkdp_page_title = "${name}"
+      ]])
+    end,
   },
   -- PlantUML
   {
     "weirongxu/plantuml-previewer.vim",
+    ft = { "plantuml" },
+    dependices = {
+      {
+        -- Open URI with your favorite browser from Neovim
+        "tyru/open-browser.vim",
+        -- PlantUML syntax highlighting
+        "aklt/plantuml-syntax",
+        -- provides support to mermaid syntax files (e.g. *.mmd, *.mermaid)
+        "mracos/mermaid.vim",
+      },
+    },
+    cmd = { "PlantumlOpen", "PlantumlSave", "PlantumlToggle" },
     keys = {
       { "<leader>uP", "<cmd>PlantumlToggle<cr>", desc = "Toggle PUML Previewer" },
+      { "<leader>UP", "<cmd>PlantumlToggle<cr>", desc = "Toggle PUML Previewer" },
     },
     config = function()
-      vim.g.puml_jar_path = vim.fn.stdpath("data") .. "/lazy/plantuml-previewer.vim/lib/plantuml.jar"
-      vim.g.puml_previewer = vim.fn.stdpath("data") .. "/lazy/plantuml-previewer.vim/viewer/dist"
-      vim.cmd([[ 
-        autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = g:puml_jar_path
+      vim.g.my_jar_path = vim.fn.stdpath("data") .. "/lazy/plantuml-previewer.vim/lib/plantuml.jar"
+      vim.cmd([[
+        autocmd FileType plantuml let g:plantuml_previewer#plantuml_jar_path = g:my_jar_path
+        let g:plantuml_previewer#save_format = "png"
+        let g:plantuml_previewer#debug_mode = 1
       ]])
-
-      -- vim.g.puml_previewer_save_format = "png"
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_auto_close = 1
-      vim.g.mkdp_command_for_global = 0
-      vim.g.mkdp_open_to_the_world = 0
-      vim.g.mkdp_open_ip = "127.0.0.1"
-      vim.g.mkdp_port = "9999"
-      vim.g.mkdp_browserfunc = ""
-      vim.g.mkdp_preview_options = {
-        mkit = {},
-        katex = {},
-        uml = {},
-        maid = {},
-        disable_sync_scroll = 0,
-        sync_scroll_type = "middle",
-        hide_yaml_meta = 1,
-        sequence_diagrams = {},
-        flowchart_diagrams = {},
-      }
-      vim.g.mkdp_markdown_css = ""
-      vim.g.mkdp_highlight_css = ""
-      vim.g.mkdp_page_title = "${name}"
     end,
   },
-  -- PlantUML syntax highlighting
-  { "aklt/plantuml-syntax" },
-  -- provides support to mermaid syntax files (e.g. *.mmd, *.mermaid)
-  { "mracos/mermaid.vim" },
 }
