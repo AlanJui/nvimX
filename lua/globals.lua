@@ -27,7 +27,9 @@ local function which_os()
 end
 
 local function tprint(tbl, indent)
-  if not indent then indent = 0 end
+  if not indent then
+    indent = 0
+  end
   local toprint = string.rep(" ", indent) .. "{\n"
   indent = indent + 2
   for k, v in pairs(tbl) do
@@ -130,7 +132,9 @@ function _G.check_python_project()
       python_path = venv_dir_path .. "/bin/python"
     else
       local pyenv_virtual_env = os.getenv("VIRTUAL_ENV") or ""
-      if pyenv_virtual_env ~= "" then python_path = pyenv_virtual_env .. "/bin/python" end
+      if pyenv_virtual_env ~= "" then
+        python_path = pyenv_virtual_env .. "/bin/python"
+      end
     end
 
     -- 返回結果
@@ -154,7 +158,9 @@ local debugpy_path = runtime_dir .. "/mason/packages/debugpy/venv/bin/python"
 -----------------------------------------------------------
 local pyenv_python_path = ""
 local pyenv_virtual_env = os.getenv("VIRTUAL_ENV") or ""
-if pyenv_virtual_env ~= "" then pyenv_python_path = pyenv_virtual_env .. "/bin/python" end
+if pyenv_virtual_env ~= "" then
+  pyenv_python_path = pyenv_virtual_env .. "/bin/python"
+end
 local workspace_folder = vim.fn.getcwd()
 
 local get_venv_python_path = function()
@@ -282,13 +288,17 @@ function _G.print_table(node)
         end
       else
         -- close the table
-        if cur_index == size then output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}" end
+        if cur_index == size then
+          output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}"
+        end
       end
 
       cur_index = cur_index + 1
     end
 
-    if size == 0 then output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}" end
+    if size == 0 then
+      output_str = output_str .. "\n" .. string.rep("\t", depth - 1) .. "}"
+    end
 
     if #stack > 0 then
       node = stack[#stack]
@@ -312,9 +322,13 @@ function _G.DumpTable(table)
   end
 end
 
-function _G.PrintTableWithIndent(table, indent_size) print(tprint(table, indent_size)) end
+function _G.PrintTableWithIndent(table, indent_size)
+  print(tprint(table, indent_size))
+end
 
-function _G.PrintTable(table) _G.print_table(table) end
+function _G.PrintTable(table)
+  _G.print_table(table)
+end
 
 function _G.IsDirNotExist(dir_path)
   if file_exists(dir_path) == true then
@@ -334,11 +348,15 @@ end
 
 function _G.Is_packer_nvim_installed()
   local installed = false
-  if vim.fn.empty(vim.fn.glob(install_path)) == 0 then installed = true end
+  if vim.fn.empty(vim.fn.glob(install_path)) == 0 then
+    installed = true
+  end
   return installed
 end
 
-function _G.is_empty(str) return str == nil or str == "" end
+function _G.is_empty(str)
+  return str == nil or str == ""
+end
 
 -----------------------------------------------------------------------------
 -- Exampe: JoinPaths("a", "b", "c") => "a/b/c"
@@ -348,15 +366,25 @@ function _G.JoinPaths(...)
   return result
 end
 
-function _G.is_git_dir() return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1") end
+function _G.is_git_dir()
+  return os.execute("git rev-parse --is-inside-work-tree >> /dev/null 2>&1")
+end
 
-function _G.get_home_dir() return os.getenv("HOME") end
+function _G.get_home_dir()
+  return os.getenv("HOME")
+end
 
-function _G.GetHomeDir() return os.getenv("HOME") end
+function _G.GetHomeDir()
+  return os.getenv("HOME")
+end
 
-function _G.P(cmd) print(vim.inspect(cmd)) end
+function _G.P(cmd)
+  print(vim.inspect(cmd))
+end
 
-function _G.get_rtp() print(string.format("rtp = %s", vim.opt.rtp["_value"])) end
+function _G.get_rtp()
+  print(string.format("rtp = %s", vim.opt.rtp["_value"]))
+end
 
 function _G.safe_require(module)
   local ok, result = pcall(require, module)
@@ -376,3 +404,18 @@ function _G.ShowNodejsDAP()
   print("dap.configurations.typescript = \n")
   _G.PrintTable(dap.configurations.typescript)
 end
+
+-- 啟用／關閉：顯示 Tab 控制字元
+function _G.toggle_tab_chars()
+  if vim.opt.list:get() then
+    vim.opt.list = false
+  else
+    vim.opt.list = true
+  end
+end
+
+vim.cmd([[
+  set listchars=tab:>-
+  set list
+]])
+vim.cmd("command! ToggleTabDisplay lua toggle_tab_chars()")

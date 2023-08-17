@@ -1,6 +1,8 @@
 local null_ls = _G.safe_require("null-ls")
 local mason_null_ls = _G.safe_require("mason-null-ls")
-if not null_ls or not mason_null_ls then return end
+if not null_ls or not mason_null_ls then
+  return
+end
 
 local lsp_format_augroup = _G.LspFormattingAugroup
 
@@ -114,7 +116,7 @@ local function mason_null_ls_setup()
             "vue",
             "json",
             "jsonc",
-            "yaml",
+            -- "yaml",
             "markdown",
             "handlebars",
           },
