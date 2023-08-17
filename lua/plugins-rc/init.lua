@@ -13,7 +13,7 @@ require("debugger")
 require("unit-test")
 
 -- AI tools
-require("plugins-rc/ChatGPT-rc")
+-- require("plugins-rc/ChatGPT-rc")
 
 -- status line
 require("plugins-rc/lualine-material")
