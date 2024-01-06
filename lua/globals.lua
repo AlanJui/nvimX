@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 local path_sep = vim.loop.os_uname().version:match("Windows") and "\\" or "/"
 
 local function file_exists(name)
@@ -353,6 +355,10 @@ function _G.is_git_dir() return os.execute("git rev-parse --is-inside-work-tree 
 function _G.get_home_dir() return os.getenv("HOME") end
 
 function _G.GetHomeDir() return os.getenv("HOME") end
+
+function _G.get_snippets_dir()
+  return snippets_path
+end
 
 function _G.P(cmd) print(vim.inspect(cmd)) end
 

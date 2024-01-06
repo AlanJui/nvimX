@@ -7,12 +7,13 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
-        -- require("luasnip.loaders.from_vscode").lazy_load()
-
         local luasnip = require("luasnip")
         -- Load your own custom vscode style snippets
         require("luasnip.loaders.from_vscode").lazy_load({
-          paths = nvim_config["snippets"],
+          paths = {
+            vim.fn.stdpath("config") .. "/my-snippets",
+            vim.fn.stdpath("data") .. "/lazy/friendly-snippets",
+          },
         })
         -- extends filetypes supported by snippets
         luasnip.filetype_extend("vimwik", { "markdown" })
@@ -50,20 +51,6 @@ return {
       },
     },
   },
-  -- Add snippets
-  {
-    "rafamadriz/friendly-snippets",
-    config = function()
-      -- require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_vscode").lazy_load({
-        paths = {
-          vim.fn.stdpath("config") .. "/my-snippets",
-          vim.fn.stdpath("data") .. "/lazy/friendly-snippets",
-        },
-      })
-    end,
-  },
-
   -- auto completion
   {
     "hrsh7th/nvim-cmp",
@@ -130,7 +117,7 @@ return {
         }),
         formatting = {
           format = function(_, item)
-            local icons = require("lazyvim.config").icons.kinds
+            local icons = require("config.icons").kind
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end

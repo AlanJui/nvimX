@@ -34,10 +34,10 @@ return {
     end,
   },
   -- Live server
-  {
-    "turbio/bracey.vim",
-    build = "npm install --prefix server",
-  },
+  -- {
+  --   "turbio/bracey.vim",
+  --   build = "npm install --prefix server",
+  -- },
   -- Preview markdown file
   {
     "iamcco/markdown-preview.nvim",

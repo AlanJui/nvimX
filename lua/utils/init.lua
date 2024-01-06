@@ -5,6 +5,12 @@ local function default_on_open(term)
   vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
 end
 
+function M.get_root()
+  local root_patterns = { ".git", ".clang-format", "pyproject.toml", "setup.py" }
+  local root_dir = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
+  return root_dir
+end
+
 function M.open_term(cmd, opts)
   opts = opts or {}
   opts.size = opts.size or vim.o.columns * 0.5

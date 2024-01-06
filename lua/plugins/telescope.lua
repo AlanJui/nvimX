@@ -5,10 +5,9 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-project.nvim",
-      "nvim-telescope/telescope-dap.nvim",
+      -- "nvim-telescope/telescope-dap.nvim",
       "ahmedkhalf/project.nvim",
       "cljoly/telescope-repo.nvim",
-      "stevearc/aerial.nvim",
       "nvim-telescope/telescope-frecency.nvim",
       "kkharji/sqlite.lua",
       "aaronhallaert/advanced-git-search.nvim",
@@ -39,7 +38,6 @@ return {
       { "<leader>bf", "<cmd>lua require('telescope.builtin').buffers()<cr>", desc = "Buffers" },
       -- code
       { "<leader>cD", "<cmd>Telescope dap configurations<cr>", desc = "DAP Config Picker" },
-      { "<leader>co", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
       {
         "<leader>cs",
         function()
@@ -110,7 +108,7 @@ return {
         end,
         desc = "Find Files (cwd)",
       },
-      { "<leader>fB", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
+      { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
       { "<leader>fr", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
       { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
       -- git
@@ -127,7 +125,7 @@ return {
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
       { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
       {
-        "<leader>sg",
+        "<leader>fg",
         function()
           -- require("telescope.builtin").live_grep()
           require("telescope").extensions.live_grep_args.live_grep_args()
@@ -135,7 +133,7 @@ return {
         desc = "Grep (root dir)",
       },
       {
-        "<leader>sG",
+        "<leader>fG",
         function()
           -- require("telescope.builtin").live_grep({ cwd = false })
           require("telescope").extensions.live_grep_args.live_grep_args({ cwd = false })
@@ -143,14 +141,14 @@ return {
         desc = "Grep (cwd)",
       },
       {
-        "<leader>sw",
+        "<leader>fw",
         function()
           require("telescope.builtin").telescope("grep_string")
         end,
         desc = "Word (root dir)",
       },
       {
-        "<leader>sW",
+        "<leader>fW",
         function()
           require("telescope.builtin").telescope("grep_string", { cwd = false })
         end,
@@ -310,22 +308,18 @@ return {
         },
       }
       telescope.setup(opts)
-      telescope.load_extension("fzf")
+      -- telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
       telescope.load_extension("project")
       telescope.load_extension("projects")
-      telescope.load_extension("aerial")
-      telescope.load_extension("dap")
+      -- telescope.load_extension("aerial")
+      -- telescope.load_extension("dap")
       telescope.load_extension("frecency")
       telescope.load_extension("luasnip")
       telescope.load_extension("live_grep_args")
       telescope.load_extension("conventional_commits")
       telescope.load_extension("lazy")
     end,
-  },
-  {
-    "stevearc/aerial.nvim",
-    config = true,
   },
   {
     "ahmedkhalf/project.nvim",
