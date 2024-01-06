@@ -1,7 +1,7 @@
 ------------------------------------------------
 -- Neovim global options
 ------------------------------------------------
-require('config.options')
+require("config.options")
 require("globals")
 local nvim_config = _G.GetConfig()
 vim.g.loaded_python2_provider = 0
@@ -16,7 +16,7 @@ vim.g.loaded_perl_provider = 0
 require("config.lazy")
 
 -- Short cut keymaps
-require('config.keymaps')
+require("config.keymaps")
 
 ------------------------------------------------
 -- Debug Tools
