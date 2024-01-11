@@ -24,6 +24,7 @@ return {
         },
         -- ensure these language parsers are installed
         ensure_installed = {
+          "python",
           "json",
           "javascript",
           "typescript",
@@ -55,8 +56,7 @@ return {
       })
 
       -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-      require('ts_context_commentstring').setup {}
+      require("ts_context_commentstring").setup({})
     end,
   },
 }
-
