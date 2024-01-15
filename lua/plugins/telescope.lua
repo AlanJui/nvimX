@@ -5,7 +5,7 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-project.nvim",
-      -- "nvim-telescope/telescope-dap.nvim",
+      "nvim-telescope/telescope-dap.nvim",
       "ahmedkhalf/project.nvim",
       "cljoly/telescope-repo.nvim",
       "nvim-telescope/telescope-frecency.nvim",
@@ -37,7 +37,7 @@ return {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>bf", "<cmd>lua require('telescope.builtin').buffers()<cr>", desc = "Buffers" },
       -- code
-      { "<leader>cD", "<cmd>Telescope dap configurations<cr>", desc = "DAP Config Picker" },
+      { "<leader>cd", "<cmd>Telescope dap configurations<cr>", desc = "DAP Config Picker" },
       {
         "<leader>cs",
         function()
@@ -189,6 +189,7 @@ return {
       -- local icons = require("config.icons")
       ------------------------------------------------------------------------------
       local telescope = require("telescope")
+      local trouble = require("trouble.providers.telescope")
       local actions = require("telescope.actions")
       local actions_layout = require("telescope.actions.layout")
       local lga_actions = require("telescope-live-grep-args.actions")
@@ -246,10 +247,12 @@ return {
           ["?"] = actions_layout.toggle_preview,
           ["<C-s>"] = custom_actions.visidata,
           ["<A-f>"] = custom_actions.file_browser,
+          ["<C-x>"] = trouble.open_with_trouble,
         },
         n = {
           ["s"] = custom_actions.visidata,
           ["<A-f>"] = custom_actions.file_browser,
+          ["<C-x>"] = trouble.open_with_trouble,
         },
       }
 
@@ -312,8 +315,8 @@ return {
       telescope.load_extension("file_browser")
       telescope.load_extension("project")
       telescope.load_extension("projects")
-      -- telescope.load_extension("aerial")
-      -- telescope.load_extension("dap")
+      telescope.load_extension("aerial")
+      telescope.load_extension("dap")
       telescope.load_extension("frecency")
       telescope.load_extension("luasnip")
       telescope.load_extension("live_grep_args")
