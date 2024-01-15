@@ -30,6 +30,7 @@ return {
           "typescript",
           "tsx",
           "yaml",
+          "toml",
           "html",
           "css",
           "prisma",
