@@ -1,7 +1,19 @@
 return {
   {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      {
+        "antosha417/nvim-lsp-file-operations",
+        config = true,
+      },
+    },
+  },
+  {
     "williamboman/mason.nvim",
     dependencies = {
+      "neovim/nvim-lspconfig",
       "williamboman/mason-lspconfig.nvim",
       "jay-babu/mason-null-ls.nvim",
       {
@@ -137,8 +149,15 @@ return {
         -- The first entry (without a key) will be the default handler
         -- and will be called for each installed server that doesn't have
         -- a dedicated handler.
+        -- Note:
+        --     If you use this approach, make sure you don't also manually set up servers
+        --     directly via `lspconfig` as this will cause servers to be set up more than
+        --     once.
         function(server_name) -- default handler (optional)
-          require("lspconfig")[server_name].setup({})
+          require("lspconfig")[server_name].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+          })
         end,
         -- Next, you can provide a dedicated handler for specific servers.
         -- For example, a handler override for the `rust_analyzer`:
@@ -166,18 +185,31 @@ return {
             },
           })
         end,
-        -- ["pylsp"] = function()
-        --   require("lspconfig")["pylsp"].setup({
-        --     settings = {
-        --       pylsp = {
-        --         pycodestyle = {
-        --           ignore = { "W391" },
-        --           maxLineLength = 100,
-        --         },
-        --       },
-        --     },
-        --   })
-        -- end,
+        ["pyright"] = function()
+          require("lspconfig")["pyright"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+          })
+        end,
+        ["emmet_ls"] = function()
+          require("lspconfig")["pyright"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+          })
+        end,
+        ["pylsp"] = function()
+          require("lspconfig")["pylsp"].setup({
+            settings = {
+              pylsp = {
+                pycodestyle = {
+                  ignore = { "W391" },
+                  maxLineLength = 100,
+                },
+              },
+            },
+          })
+        end,
       })
 
       require("mason-nvim-dap").setup({
