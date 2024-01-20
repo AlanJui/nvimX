@@ -6,10 +6,12 @@ local opt = vim.opt
 -- line numbers
 opt.relativenumber = true -- show relative line numbers
 opt.number = true -- shows absolute line number on cursor line (when relative number is on)
+
 -- Disable swap file
 opt.swapfile = false
 opt.backup = false
 opt.writebackup = false
+
 -- Folding
 opt.foldcolumn = "1"
 opt.foldlevel = 99 --- Using ufo provider need a large value
@@ -25,3 +27,9 @@ opt.expandtab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
+
+-- System Clipboard support
+-- vim.cmd [[
+--   set clipboard+=unnamedplus
+-- ]]
+vim.o.clipboard = "unnamedplus"

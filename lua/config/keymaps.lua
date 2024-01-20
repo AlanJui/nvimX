@@ -157,9 +157,15 @@ keymap("n", "<M-Right>", "<cmd>wincmd ><CR>")
 --------------------------------------------------------------------
 
 -- Tab navigation
--- keymap("n", "to", ":tabnew<CR>") -- open new tab
--- keymap("n", "tx", ":tabclose<CR>") -- close current tab
--- keymap("n", "tn", ":tabn<CR>") --  go to next tab
--- keymap("n", "tp", ":tabp<CR>") --  go to previous tab
+keymap("n", "to", ":tabnew<CR>") -- open new tab
+keymap("n", "tx", ":tabclose<CR>") -- close current tab
+keymap("n", "tn", ":tabn<CR>") --  go to next tab
+keymap("n", "tp", ":tabp<CR>") --  go to previous tab
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+
+--------------------------------------------------------------------
+-- System Clipboard
+--------------------------------------------------------------------
+keymap("n", "<localleader>y", '"*y')
+keymap("n", "<localleader>p", '"*p')
