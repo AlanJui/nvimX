@@ -1,5 +1,9 @@
+-- 2024/1/23 停用
+if true then return {} end
+
 return {
   "nvimtools/none-ls.nvim", -- configure formatters & linters
+  enabled = false,  
   lazy = true,
   -- event = { "BufReadPre", "BufNewFile" }, -- to enable uncomment this
   -- dependencies = {
