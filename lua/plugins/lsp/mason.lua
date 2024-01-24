@@ -25,13 +25,22 @@ return {
       -- list of servers for mason to install
       ensure_installed = {
         "lua_ls",
-        "pyright",
-        -- "pylsp",
+        "rust_analyzer",
+        -- "pyright",
+        -- "pylsp", -- "python-lsp-server"
+        "ruff_lsp",
         "tsserver",
+        "vuels",
         "html",
         "cssls",
         "tailwindcss",
         "emmet_ls",
+        "jsonls",
+        "lemminx", -- xml ls
+        "yamlls",
+        "taplo", -- toml ls
+        "marksman", -- markdown ls
+        "dockerls", -- docker ls
         -- "graphql",
         -- "prismals",
         -- "svelte",

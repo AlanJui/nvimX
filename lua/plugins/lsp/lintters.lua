@@ -8,7 +8,8 @@ return {
       javascriptreact = { "eslint_d" },
       typescript = { "eslint_d" },
       typescriptreact = { "eslint_d" },
-      python = { "pylint", "ruff", "mypy" },
+      python = { "ruff", "pylint", "mypy", "djlint" },
+      yaml = { "yamllint" },
     }
 
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

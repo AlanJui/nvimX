@@ -7,19 +7,19 @@ return {
 
     conform.setup({
       formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "isort", "black", "djlint" },
         javascript = { "prettier" },
-        typescript = { "prettier" },
         javascriptreact = { "prettier" },
+        typescript = { "prettier" },
         typescriptreact = { "prettier" },
-        svelte = { "prettier" },
-        css = { "prettier" },
         html = { "prettier" },
+        css = { "prettier" },
         json = { "prettier" },
         yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
-        lua = { "stylua" },
-        python = { "isort", "black" },
+        svelte = { "prettier" },
       },
       format_on_save = {
         lsp_fallback = true,
