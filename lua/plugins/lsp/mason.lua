@@ -2,14 +2,39 @@ return {
   "williamboman/mason.nvim",
   dependencies = {
     "neovim/nvim-lspconfig",
-    "williamboman/mason-lspconfig.nvim",
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    {
-      "jay-babu/mason-nvim-dap.nvim",
-      cmd = { "DapInstall", "DapUninstall" },
-    },
   },
   config = function()
+    local mason_list = {
+      "lua-language-server", -- Lua LSP Server
+      "stylua",
+      "rust-analyzer", -- Rust LSP Server
+      -- "pyright", -- Python LSP Server
+      -- "python-lsp-server", -- Python LSP Server
+      "ruff-lsp", -- Python LSP Server
+      "debugpy", -- python
+      "ruff", -- Linter
+      "pylint", -- Linter
+      "isort", -- Formatter
+      "black", -- Formatter
+      "mypy", -- Type checker
+      "typescript-language-server", -- JavaScript LSP Server
+      "vue-language-server",
+      "js-debug-adapter", -- Javascript DAP
+      "emmet-ls",
+      "html-lsp",
+      "css-lsp",
+      "tailwindcss-language-server",
+      "eslint_d", -- JavaScript Linter
+      "prettier", -- Formatter
+      "json-lsp",
+      "lemminx", -- XML LSP Server
+      "yaml-language-server",
+      "taplo", -- TOML Lsp Server
+      "marksman", -- Markdown LSP Server
+      "dockerfile-language-server", -- Docker LSP Server
+      "clang-format", -- Formatter
+    }
+
     -- enable mason and configure icons
     require("mason").setup({
       ui = {
@@ -19,78 +44,14 @@ return {
           package_uninstalled = "✗",
         },
       },
+      -- ensure_installed = mason_list,
     })
 
-    require("mason-lspconfig").setup({
-      -- list of servers for mason to install
-      ensure_installed = {
-        "lua_ls",
-        "rust_analyzer",
-        -- "pyright",
-        -- "pylsp", -- "python-lsp-server"
-        "ruff_lsp",
-        "tsserver",
-        "vuels",
-        "html",
-        "cssls",
-        "tailwindcss",
-        "emmet_ls",
-        "jsonls",
-        "lemminx", -- xml ls
-        "yamlls",
-        "taplo", -- toml ls
-        "marksman", -- markdown ls
-        "dockerls", -- docker ls
-        -- "graphql",
-        -- "prismals",
-        -- "svelte",
-      },
-      -- auto-install configured servers (with lspconfig)
-      automatic_installation = true, -- not the same as ensure_installed
-    })
-
-    -- Linters and Formatters
-    require("mason-tool-installer").setup({
-      ensure_installed = {
-        -- lua stuff
-        "stylua",
-        -- web dev stuff
-        "prettier", -- Formatter
-        "eslint_d", -- JavaScript Linter
-        -- c/cpp stuff
-        "clang-format", -- Formatter
-        -- Python
-        "isort", -- Formatter
-        "black", -- Formatter
-        "pylint", -- Linter
-        "ruff", -- Linter
-        "mypy", -- Type checker
-      },
-    })
-
-    -- Debuggers
-    require("mason-nvim-dap").setup({
-      -- A list of adapters to install if they're not already installed.
-      -- This setting has no relation with the `automatic_installation` setting.
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        "python",
-        "js",
-        "node2",
-      },
-
-      -- NOTE: this is left here for future porting in case needed
-      -- Whether adapters that are set up (via dap) should be automatically installed if they're not already installed.
-      -- This setting has no relation with the `ensure_installed` setting.
-      -- Can either be:
-      --   - false: Daps are not automatically installed.
-      --   - true: All adapters set up via dap are automatically installed.
-      --   - { exclude: string[] }: All adapters set up via mason-nvim-dap, except the ones provided in the list, are automatically installed.
-      --       Example: automatic_installation = { exclude = { "python", "delve" } }
-      automatic_installation = true,
-
-      -- See below on usage
-      handlers = nil,
-    })
+    -- Install all bianries that mason supported
+    vim.api.nvim_create_user_command("MasonInstallAll", function()
+      if mason_list and #mason_list > 0 then
+        vim.cmd("MasonInstall " .. table.concat(mason_list, " "))
+      end
+    end, {})
   end,
 }

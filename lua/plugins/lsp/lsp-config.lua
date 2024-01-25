@@ -70,6 +70,23 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+    ---------------------------------------------------------------------
+    -- Configure LSP servers with default configration
+    ---------------------------------------------------------------------
+    local servers = {
+      "cssls", -- css-lsp
+      "tailwindcss", -- tailwindcss-lsp
+      "eslint", -- eslint-lsp
+      "taplo", -- toml-lsp
+      "dockerls", -- docker-lsp
+    }
+    for _, lsp in ipairs(servers) do
+      lspconfig[lsp].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+    end
+
     -- configure lua server (with special settings)
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
@@ -222,18 +239,6 @@ return {
       },
     })
 
-    -- configure toml server
-    lspconfig["taplo"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure docker server
-    lspconfig["dockerls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
     -- configure markdown server
     lspconfig["marksman"].setup({
       capabilities = capabilities,
@@ -243,35 +248,5 @@ return {
         "markdown.mdx",
       },
     })
-
-    -- configure svelte server
-    -- lspconfig["svelte"].setup({
-    --   capabilities = capabilities,
-    --   on_attach = function(client, bufnr)
-    --     on_attach(client, bufnr)
-    --
-    --     vim.api.nvim_create_autocmd("BufWritePost", {
-    --       pattern = { "*.js", "*.ts" },
-    --       callback = function(ctx)
-    --         if client.name == "svelte" then
-    --           client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-    --         end
-    --       end,
-    --     })
-    --   end,
-    -- })
-
-    -- configure prisma orm server
-    -- lspconfig["prismals"].setup({
-    --   capabilities = capabilities,
-    --   on_attach = on_attach,
-    -- })
-
-    -- configure graphql language server
-    -- lspconfig["graphql"].setup({
-    --   capabilities = capabilities,
-    --   on_attach = on_attach,
-    --   filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-    -- })
   end,
 }
