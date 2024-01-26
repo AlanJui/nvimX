@@ -8,7 +8,8 @@ return {
       javascriptreact = { "eslint_d" },
       typescript = { "eslint_d" },
       typescriptreact = { "eslint_d" },
-      python = { "ruff", "pylint", "mypy", "djlint" },
+      -- python = { "ruff", "pylint", "mypy", "djlint" },
+      python = { "ruff", "pylint", "mypy" },
       yaml = { "yamllint" },
     }
 
