@@ -1,9 +1,15 @@
+-- Only load whichkey after all the gui
 return {
   "folke/which-key.nvim",
-  event = "VeryLazy",
-  opts = {
-    plugins = { spelling = true },
-    defaults = {
+  keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+  init = function()
+    require("utils").load_mappings("whichkey")
+  end,
+  cmd = "WhichKey",
+  config = function(_, opts)
+    local wk = require("which-key")
+    wk.setup(opts)
+    wk.register({
       mode = { "n", "v" },
       ["g"] = { name = "+goto" },
       ["gz"] = { name = "+surround" },
@@ -13,7 +19,6 @@ return {
       ["<leader>b"] = { name = "+buffer" },
       ["<leader>c"] = { name = "+code" },
       ["<leader>d"] = { name = "+debug" },
-      -- ["<leader>da"] = { name = "+adapters" },
       ["<leader>f"] = { name = "+file/find" },
       ["<leader>g"] = { name = "+git" },
       ["<leader>gh"] = { name = "+hunks" },
@@ -28,11 +33,6 @@ return {
       ["<leader>w"] = { name = "+windows" },
       ["<leader>x"] = { name = "+diagnostics/quickfix" },
       ["<leader>z"] = { name = "+system" },
-    },
-  },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-    wk.register(opts.defaults)
+    })
   end,
 }

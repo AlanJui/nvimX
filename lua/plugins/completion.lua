@@ -1,9 +1,9 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
-        and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
+    -- build = (not jit.os:find("Windows"))
+    --     and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
+    --   or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
@@ -64,7 +64,7 @@ return {
       "hrsh7th/cmp-emoji",
       "zbirenbaum/copilot-cmp",
     },
-    opts = function(_, opts)
+    opts = function(_, _)
       local cmp = require("cmp")
       local luasnip = require("luasnip")
 
