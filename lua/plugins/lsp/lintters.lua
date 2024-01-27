@@ -9,7 +9,7 @@ return {
       typescript = { "eslint_d" },
       typescriptreact = { "eslint_d" },
       -- python = { "ruff", "pylint", "mypy", "djlint" },
-      python = { "ruff", "pylint", "mypy" },
+      python = { "ruff", "pydocstyle", "mypy" },
       yaml = { "yamllint" },
     }
 

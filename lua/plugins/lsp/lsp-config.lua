@@ -91,7 +91,20 @@ return {
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = require("plugins.lsp.configs.lua_ls"),
+      -- mason = false, -- set to false if you don't want this server to be installed with mason
+      settings = {
+        Lua = {
+          workspace = {
+            checkThirdParty = false,
+          },
+          completion = {
+            callSnippet = "Replace",
+          },
+          diagnostics = {
+            globals = { "vim", "hs" },
+          },
+        },
+      },
     })
 
     -- configure rust server with plugin
@@ -108,33 +121,32 @@ return {
     })
 
     -- configure python server with plugin
-    lspconfig["ruff_lsp"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      init_options = {
-        settings = {
-          -- Any extra CLI arguments for `ruff` go here.
-          args = {},
+    lspconfig["pylsp"].setup({
+      settings = {
+        pylsp = {
+          pycodestyle = {
+            ignore = { "W391" },
+            maxLineLength = 100,
+          },
         },
       },
     })
+
+    -- lspconfig["ruff_lsp"].setup({
+    --   capabilities = capabilities,
+    --   on_attach = on_attach,
+    --   init_options = {
+    --     settings = {
+    --       -- Any extra CLI arguments for `ruff` go here.
+    --       args = {},
+    --     },
+    --   },
+    -- })
 
     -- configure python server
     -- lspconfig["pyright"].setup({
     --   capabilities = capabilities,
     --   on_attach = on_attach,
-    -- })
-
-    -- configure python server with plugin
-    -- lspconfig["pylsp"].setup({
-    --   settings = {
-    --     pylsp = {
-    --       pycodestyle = {
-    --         ignore = { "W391" },
-    --         maxLineLength = 100,
-    --       },
-    --     },
-    --   },
     -- })
 
     -- configure typescript server with plugin
