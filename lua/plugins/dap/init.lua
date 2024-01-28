@@ -1,48 +1,47 @@
 return {
-  -- Neovim DAP
+  {
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = "mfussenegger/nvim-dap",
+    keys = {
+      {
+        "<leader>du",
+        function()
+          require("dapui").toggle({})
+        end,
+        desc = "Dap UI",
+      },
+      {
+        "<leader>de",
+        function()
+          require("dapui").eval()
+        end,
+        desc = "Eval",
+        mode = { "n", "v" },
+      },
+    },
+    config = function()
+      local dap = require("dap")
+      local dapui = require("dapui")
+      require("dapui").setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        -- dapui.open { reset = true }
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+    end,
+  },
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      -- fancy UI for the debugger
-      {
-        "rcarriga/nvim-dap-ui",
-        -- stylua: ignore
-        keys = {
-          { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-          { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
-        },
-        opts = {},
-        config = function(_, opts)
-          local dap = require("dap")
-          local dapui = require("dapui")
-          dapui.setup(opts)
-          dap.listeners.after.event_initialized["dapui_config"] = function()
-            dapui.open({})
-          end
-          dap.listeners.before.event_terminated["dapui_config"] = function()
-            dapui.close({})
-          end
-          dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close({})
-          end
-        end,
-      },
-      -- virtual text for the debugger
-      {
-        "theHamsta/nvim-dap-virtual-text",
-      },
-      -- Lua DAP
-      {
-        "jbyuki/one-small-step-for-vimkind",
-      },
-      -- Python DAP
-      {
-        "mfussenegger/nvim-dap-python",
-      },
-      -- JavaScript DAP
-      {
-        "mxsdev/nvim-dap-vscode-js",
-      },
+      "jbyuki/one-small-step-for-vimkind",
+      "mfussenegger/nvim-dap-python",
+      "mxsdev/nvim-dap-vscode-js",
     },
     keys = {
       {
@@ -172,23 +171,44 @@ return {
         end,
         desc = "Start Lua Debugging",
       },
+      -- Python adapter
+      {
+        "<leader>daP",
+        function()
+          require("dap-python").test_method()
+          require("core.utils").load_mappings("dap_python")
+        end,
+        desc = "Start Python Debugger Server",
+      },
+      {
+        "<leader>dap",
+        function()
+          require("dap-python").test_class()
+        end,
+        desc = "Launch Python Code",
+      },
     },
     config = function()
-      local Config = require("config.icons")
+      -- Setup DAP Environment
+      local icons = require("config.icons").icons
       vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
-      for name, sign in pairs(Config.icons.dap) do
+      for name, sign in pairs(icons.dap) do
         sign = type(sign) == "table" and sign or { sign }
-        vim.fn.sign_define(
-          "Dap" .. name,
-          { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
-        )
+        vim.fn.sign_define("Dap" .. name, {
+          text = sign[1],
+          texthl = sign[2] or "DiagnosticInfo",
+          linehl = sign[3],
+          numhl = sign[3],
+        })
       end
 
-      local dap = require("dap")
-      require("plugins.dap.lua").setup(dap)
-      require("plugins.dap.python").setup(dap)
-      require("plugins.dap.javascript").setup(dap)
+      -- Setup DAP for JS/TS
+      require("plugins.dap.adapters.javascript")
+      -- DAP for Lua work in Neovim
+      require("plugins.dap.adapters.lua")
+      -- DAP for Python
+      require("plugins.dap.adapters.python")
     end,
   },
 }
