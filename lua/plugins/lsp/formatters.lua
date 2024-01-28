@@ -1,6 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  lazy = true,
+  -- lazy = true,
   event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
   config = function()
     local conform = require("conform")
@@ -8,14 +8,22 @@ return {
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black", "djlint" },
-        javascript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescript = { "prettier" },
-        typescriptreact = { "prettier" },
+        -- python = { "isort", "black", "djlint" },
+        python = function(bufnr)
+          if conform.get_formatter_info("ruff_format", bufnr).available then
+            return { "ruff_format" }
+          else
+            return { "isort", "black" }
+          end
+        end,
+        javascript = { { "prettierd", "prettier" } },
+        typescript = { { "prettierd", "prettier" } },
+        javascriptreact = { { "prettierd", "prettier" } },
+        typescriptreact = { { "prettierd", "prettier" } },
+        json = { { "prettierd", "prettier" } },
+        jsonc = { { "prettierd", "prettier" } },
         html = { "prettier" },
         css = { "prettier" },
-        json = { "prettier" },
         yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
@@ -23,15 +31,20 @@ return {
       },
       format_on_save = {
         lsp_fallback = true,
-        async = false,
         timeout_ms = 1000,
       },
     })
 
-    vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*",
+      callback = function(args)
+        conform.format({ bufnr = args.buf })
+      end,
+    })
+
+    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
       conform.format({
         lsp_fallback = true,
-        async = false,
         timeout_ms = 1000,
       })
     end, { desc = "Format file or range (in visual mode)" })
