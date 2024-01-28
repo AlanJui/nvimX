@@ -89,7 +89,8 @@ keymap("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
 -- toggle options
 -- quit
-keymap("n", "<leader>sq", "<cmd>qa<cr>", { desc = "Quit all" })
+keymap("n", "<leader>bq", "<cmd>qa<cr>", { desc = "Quit All" })
+keymap("n", "<leader>bQ", "<cmd>qa!<cr>", { desc = "Discard All and Quit" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then

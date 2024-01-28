@@ -6,10 +6,13 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     build = ":Copilot auth",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
+    config = function()
+      local opts = {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      }
+      require("copilot").setup(opts)
+    end,
   },
   {
     "zbirenbaum/copilot-cmp",

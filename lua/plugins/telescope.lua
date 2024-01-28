@@ -2,326 +2,101 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope-dap.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
+      -- "nvim-telescope/telescope-frecency.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-project.nvim",
-      "nvim-telescope/telescope-dap.nvim",
-      "ahmedkhalf/project.nvim",
-      "cljoly/telescope-repo.nvim",
-      "nvim-telescope/telescope-frecency.nvim",
-      "kkharji/sqlite.lua",
+      "nvim-telescope/telescope-ui-select.nvim",
       "aaronhallaert/advanced-git-search.nvim",
+      "andrew-george/telescope-themes",
+      "ahmedkhalf/project.nvim",
       "benfowler/telescope-luasnip.nvim",
+      "cljoly/telescope-repo.nvim",
       "olacin/telescope-cc.nvim",
+      "stevearc/aerial.nvim",
       "tsakirist/telescope-lazy.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function()
-          require("telescope").load_extension("fzf")
-        end,
-      },
     },
     cmd = "Telescope",
-    version = false, -- telescope did only one release, so use HEAD for now
-    keys = {
-      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      -- buffers
-      {
-        "<leader>/",
-        function()
-          require("lazyvim.util").telescope("live_grep")
-        end,
-        desc = "Grep (root dir)",
-      },
-      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-      { "<leader>bf", "<cmd>lua require('telescope.builtin').buffers()<cr>", desc = "Buffers" },
-      -- code
-      { "<leader>cd", "<cmd>Telescope dap configurations<cr>", desc = "DAP Config Picker" },
-      {
-        "<leader>cs",
-        function()
-          require("lazyvim.util").telescope("lsp_document_symbols", {
-            symbols = {
-              "Class",
-              "Function",
-              "Method",
-              "Constructor",
-              "Interface",
-              "Module",
-              "Struct",
-              "Trait",
-              "Field",
-              "Property",
-            },
-          })
-        end,
-        desc = "Goto Symbol",
-      },
-      {
-        "<leader>cS",
-        function()
-          require("lazyvim.util").telescope("lsp_workspace_symbols", {
-            symbols = {
-              "Class",
-              "Function",
-              "Method",
-              "Constructor",
-              "Interface",
-              "Module",
-              "Struct",
-              "Trait",
-              "Field",
-              "Property",
-            },
-          })
-        end,
-        desc = "Goto Symbol (Workspace)",
-      },
-      -- find
-      {
-        "<leader><space>",
-        function()
-          require("telescope.builtin").find_files({
-            theme = "dropdown",
-          })
-        end,
-        desc = "Find Files",
-      },
-      {
-        "<leader>ff",
-        "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<cr>",
-        desc = "Find Files (root dir)",
-      },
-      {
-        "<leader>fF",
-        function()
-          -- require("telescope.builtin").find_files({ cmd = false })
-          require("telescope.builtin").find_files({
-            cwd = false,
-            previewer = true,
-            -- layout_strategy = "vertical",
-            -- layout_config = {
-            --   width = 0.8,
-            -- },
-          })
-        end,
-        desc = "Find Files (cwd)",
-      },
-      { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
-      { "<leader>fr", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
-      { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
-      -- git
-      { "<leader>gr", "<cmd>Telescope repo list<cr>", desc = "List Git Repo" },
-      { "<leader>gC", "<cmd>Telescope conventional_commits<cr>", desc = "Conventional Commits" },
-      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
-      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
-      -- search
-      { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Current Buffer Fuzzy Find" },
-      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-      {
-        "<leader>fg",
-        function()
-          -- require("telescope.builtin").live_grep()
-          require("telescope").extensions.live_grep_args.live_grep_args()
-        end,
-        desc = "Grep (root dir)",
-      },
-      {
-        "<leader>fG",
-        function()
-          -- require("telescope.builtin").live_grep({ cwd = false })
-          require("telescope").extensions.live_grep_args.live_grep_args({ cwd = false })
-        end,
-        desc = "Grep (cwd)",
-      },
-      {
-        "<leader>fw",
-        function()
-          require("telescope.builtin").telescope("grep_string")
-        end,
-        desc = "Word (root dir)",
-      },
-      {
-        "<leader>fW",
-        function()
-          require("telescope.builtin").telescope("grep_string", { cwd = false })
-        end,
-        desc = "Word (cwd)",
-      },
-      -- trouble
-      { "<leader>xx", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
-      { "<leader>xX", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
-      -- utility
-      {
-        "<leader>up",
-        function()
-          require("telescope").extensions.project.project({ display_type = "minimal" })
-        end,
-        desc = "List",
-      },
-      -- System
-      { "<leader>zh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "Help" },
-      { "<leader>zc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-      { "<leader>zC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader>zk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-      { "<leader>zo", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-      { "<leader>zp", "<cmd>Telescope lazy<cr>", desc = "Plugins" },
-      { "<leader>zP", "<cmd>lua require'telescope.builtin'.planets{}<cr>", desc = "Pickers" },
-      { "<leader>zs", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
-      {
-        "<leader>zS",
-        function()
-          require("telescope.builtin").colorscheme({ enable_preview = true })
-        end,
-        desc = "Colorscheme with preview",
-      },
-    },
-    opts = {},
-    ---------------------------------------------------------------------------
-    config = function()
-      -- local Util = require("lazyvim.util")
-      -- local icons = require("config.icons")
-      ------------------------------------------------------------------------------
-      local telescope = require("telescope")
-      local trouble = require("trouble.providers.telescope")
-      local actions = require("telescope.actions")
-      local actions_layout = require("telescope.actions.layout")
-      local lga_actions = require("telescope-live-grep-args.actions")
-      local transform_mod = require("telescope.actions.mt").transform_mod
-      local custom_actions = transform_mod({
-        -- VisiData
-        visidata = function(prompt_bufnr)
-          -- Get the full path
-          local content = require("telescope.actions.state").get_selected_entry()
-          if content == nil then
-            return
-          end
-          local full_path = content.cwd .. require("plenary.path").path.sep .. content.value
-
-          -- Close the Telescope window
-          require("telescope.actions").close(prompt_bufnr)
-
-          -- Open the file with VisiData
-          local utils = require("utils")
-          utils.open_term("vd " .. full_path, { direction = "float" })
-        end,
-
-        -- File browser
-        file_browser = function(prompt_bufnr)
-          local content = require("telescope.actions.state").get_selected_entry()
-          if content == nil then
-            return
-          end
-
-          local full_path = content.cwd
-          if content.filename then
-            full_path = content.filename
-          elseif content.value then
-            full_path = full_path .. require("plenary.path").path.sep .. content.value
-          end
-
-          -- Close the Telescope window
-          require("telescope.actions").close(prompt_bufnr)
-
-          -- Open file browser
-          -- vim.cmd("Telescope file_browser select_buffer=true path=" .. vim.fs.dirname(full_path))
-          require("telescope").extensions.file_browser.file_browser({
-            select_buffer = true,
-            path = vim.fs.dirname(full_path),
-          })
-        end,
-      })
-
-      local mappings = {
-        i = {
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<C-n>"] = actions.cycle_history_next,
-          ["<C-p>"] = actions.cycle_history_prev,
-          ["?"] = actions_layout.toggle_preview,
-          ["<C-s>"] = custom_actions.visidata,
-          ["<A-f>"] = custom_actions.file_browser,
-          ["<C-x>"] = trouble.open_with_trouble,
-        },
-        n = {
-          ["s"] = custom_actions.visidata,
-          ["<A-f>"] = custom_actions.file_browser,
-          ["<C-x>"] = trouble.open_with_trouble,
-        },
-      }
-
-      local opts = {
+    init = function()
+      require("utils").load_mappings("telescope")
+    end,
+    opts = function()
+      return {
         defaults = {
-          -- prompt_prefix = icons.ui.Telescope .. " ",
-          -- selection_caret = icons.ui.Forward .. " ",
-          prompt_prefix = " ",
-          selection_caret = " ",
-          mappings = mappings,
+          vimgrep_arguments = {
+            "rg",
+            "-L",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+          },
+          prompt_prefix = "   ",
+          selection_caret = "  ",
+          entry_prefix = "  ",
+          initial_mode = "insert",
+          selection_strategy = "reset",
+          sorting_strategy = "ascending",
+          layout_strategy = "horizontal",
+          layout_config = {
+            horizontal = {
+              prompt_position = "top",
+              preview_width = 0.55,
+              results_width = 0.8,
+            },
+            vertical = {
+              mirror = false,
+            },
+            width = 0.87,
+            height = 0.80,
+            preview_cutoff = 120,
+          },
+          file_sorter = require("telescope.sorters").get_fuzzy_file,
+          file_ignore_patterns = { "node_modules" },
+          generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+          path_display = { "truncate" },
+          winblend = 0,
           border = {},
           borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
           color_devicons = true,
-        },
-        pickers = {
-          find_files = {
-            theme = "dropdown",
-            previewer = false,
-            hidden = true,
-            find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
-          },
-          git_files = {
-            theme = "dropdown",
-            previewer = false,
-          },
-          buffers = {
-            theme = "dropdown",
-            previewer = false,
+          set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+          file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+          grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+          qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+          -- Developer configurations: Not meant for general override
+          buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+          mappings = {
+            n = { ["q"] = require("telescope.actions").close },
           },
         },
-        extensions = {
-          file_browser = {
-            theme = "dropdown",
-            previewer = false,
-            hijack_netrw = true,
-            mappings = mappings,
-          },
-          project = {
-            hidden_files = false,
-            theme = "dropdown",
-          },
-          live_grep_args = {
-            auto_quoting = true, -- enable/disable auto-quoting
-            -- define mappings, e.g.
-            mappings = { -- extend mappings
-              i = {
-                ["<C-k>"] = lga_actions.quote_prompt(),
-                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-              },
-            },
-            -- ... also accepts theme settings, for example:
-            -- theme = "dropdown", -- use dropdown theme
-            -- theme = { }, -- use own theme spec
-            -- layout_config = { mirror=true }, -- mirror preview pane
-          },
+
+        extensions_list = {
+          "themes",
+          "luasnip",
+          "file_browser",
+          "ui-select",
+          "project",
+          "aerial",
+          -- "frecency",
+          "live_grep_args",
+          "conventional_commits",
+          "lazy",
+          "yabs",
         },
       }
+    end,
+    config = function(_, opts)
+      local telescope = require("telescope")
       telescope.setup(opts)
-      -- telescope.load_extension("fzf")
-      telescope.load_extension("file_browser")
-      telescope.load_extension("project")
-      telescope.load_extension("projects")
-      telescope.load_extension("aerial")
-      telescope.load_extension("dap")
-      telescope.load_extension("frecency")
-      telescope.load_extension("luasnip")
-      telescope.load_extension("live_grep_args")
-      telescope.load_extension("conventional_commits")
-      telescope.load_extension("lazy")
+
+      -- load extensions
+      for _, ext in ipairs(opts.extensions_list) do
+        telescope.load_extension(ext)
+      end
     end,
   },
   {

@@ -97,8 +97,7 @@ return {
     },
     cmd = { "PlantumlOpen", "PlantumlSave", "PlantumlToggle" },
     keys = {
-      { "<leader>uP", "<cmd>PlantumlToggle<cr>", desc = "Toggle PUML Previewer" },
-      { "<leader>UP", "<cmd>PlantumlToggle<cr>", desc = "Toggle PUML Previewer" },
+      { "<leader>up", "<cmd>PlantumlToggle<cr>", desc = "Toggle PUML Previewer" },
     },
     config = function()
       vim.g.my_jar_path = vim.fn.stdpath("data") .. "/lazy/plantuml-previewer.vim/lib/plantuml.jar"
