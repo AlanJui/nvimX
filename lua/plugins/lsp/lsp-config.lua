@@ -20,14 +20,11 @@ return {
     -- import lspconfig plugin
     local lspconfig = require("lspconfig")
 
-    -- import cmp-nvim-lsp plugin
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    -- used to enable autocompletion (assign to every lsp server config)
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
     local keymap = vim.keymap -- for conciseness
     local opts = { noremap = true, silent = true }
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
 
     local servers = {
       "cssls", -- css-lsp
