@@ -45,13 +45,6 @@ M.general = {
     -- new buffer
     ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
     ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
-
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format({ async = true })
-      end,
-      "LSP formatting",
-    },
   },
 
   t = {
@@ -124,135 +117,6 @@ M.comment = {
   },
 }
 
-M.lspconfig = {
-  plugin = true,
-
-  -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
-
-  n = {
-    ["gD"] = {
-      function()
-        vim.lsp.buf.declaration()
-      end,
-      "LSP declaration",
-    },
-
-    ["gd"] = {
-      function()
-        vim.lsp.buf.definition()
-      end,
-      "LSP definition",
-    },
-
-    ["K"] = {
-      function()
-        vim.lsp.buf.hover()
-      end,
-      "LSP hover",
-    },
-
-    ["gi"] = {
-      function()
-        vim.lsp.buf.implementation()
-      end,
-      "LSP implementation",
-    },
-
-    ["<leader>cls"] = {
-      function()
-        vim.lsp.buf.signature_help()
-      end,
-      "LSP signature help",
-    },
-
-    ["<leader>cD"] = {
-      function()
-        vim.lsp.buf.type_definition()
-      end,
-      "LSP definition type",
-    },
-
-    ["<leader>cra"] = {
-      function()
-        -- require("nvchad.renamer").open()
-      end,
-      "LSP rename",
-    },
-
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
-
-    ["gr"] = {
-      function()
-        vim.lsp.buf.references()
-      end,
-      "LSP references",
-    },
-
-    ["<leader>clf"] = {
-      function()
-        vim.diagnostic.open_float({ border = "rounded" })
-      end,
-      "Floating diagnostic",
-    },
-
-    ["[d"] = {
-      function()
-        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
-      end,
-      "Goto prev",
-    },
-
-    ["]d"] = {
-      function()
-        vim.diagnostic.goto_next({ float = { border = "rounded" } })
-      end,
-      "Goto next",
-    },
-
-    ["<leader>cq"] = {
-      function()
-        vim.diagnostic.setloclist()
-      end,
-      "Diagnostic setloclist",
-    },
-
-    ["<leader>cwa"] = {
-      function()
-        vim.lsp.buf.add_workspace_folder()
-      end,
-      "Add workspace folder",
-    },
-
-    ["<leader>cwr"] = {
-      function()
-        vim.lsp.buf.remove_workspace_folder()
-      end,
-      "Remove workspace folder",
-    },
-
-    ["<leader>cwl"] = {
-      function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end,
-      "List workspace folders",
-    },
-  },
-
-  v = {
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
-  },
-}
-
 M.telescope = {
   plugin = true,
 
@@ -306,7 +170,7 @@ M.blankline = {
   n = {
     ["<leader>cc"] = {
       function()
-        local ok, start = require("indent_blankline.utils").get_current_context(
+        local ok, start = require("ibl.utils").get_current_context(
           vim.g.indent_blankline_context_patterns,
           vim.g.indent_blankline_use_treesitter_scope
         )

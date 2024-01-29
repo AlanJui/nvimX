@@ -11,13 +11,20 @@ return {
     wk.setup(opts)
     wk.register({
       mode = { "n", "v" },
-      ["g"] = { name = "+goto" },
-      ["gz"] = { name = "+surround" },
       ["]"] = { name = "+next" },
       ["["] = { name = "+prev" },
+      ["g"] = { name = "+goto" },
+      ["gz"] = { name = "+surround" },
       ["<leader><tab>"] = { name = "+tabs" },
       ["<leader>b"] = { name = "+buffer" },
       ["<leader>c"] = { name = "+code" },
+      ["<leader>cf"] = { name = "+find" },
+      ["<leader>cw"] = { name = "+workspace" },
+      -- ["<leader>c"] = {
+      --   name = "+code",
+      --   ["f"] = { name = "+find" },
+      --   ["w"] = { name = "+workspace" },
+      -- },
       ["<leader>d"] = { name = "+debug" },
       ["<leader>f"] = { name = "+file/find" },
       ["<leader>g"] = { name = "+git" },
