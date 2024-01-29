@@ -21,7 +21,9 @@ return {
     local lspconfig = require("lspconfig")
 
     -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     local keymap = vim.keymap -- for conciseness
     local opts = { noremap = true, silent = true }
