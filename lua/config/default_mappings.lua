@@ -250,4 +250,38 @@ M.gitsigns = {
   },
 }
 
+M.dap = {
+  plugin = true,
+  n = {
+    ["<leader>db"] = { "<cmd> DapToggleBreakpoing <CR>", "Toggle breakpoint" },
+    ["<leader>dc"] = { "<cmd> DapContinue <CR>", "Continue" },
+    ["<leader>dr"] = { "<cmd> DapRestart <CR>", "Restart" },
+    ["<leader>do"] = { "<cmd> DapStepOut <CR>", "Step out" },
+    ["<leader>di"] = { "<cmd> DapStepInto <CR>", "Step into" },
+    ["<leader>dn"] = { "<cmd> DapNext <CR>", "Next" },
+    ["<leader>dp"] = { "<cmd> DapPause <CR>", "Pause" },
+    ["<leader>du"] = { "<cmd> DapUp <CR>", "Up" },
+    ["<leader>dd"] = { "<cmd> DapDown <CR>", "Down" },
+    ["<leader>dl"] = { "<cmd> DapListBreakpoints <CR>", "List breakpoints" },
+    ["<leader>dI"] = { "<cmd> DapUI <CR>", "Dap UI" },
+    ["<leader>daL"] = {
+      function()
+        require("osv").launch({ port = 8086 })
+      end,
+      desc = "Start Lua Debugger Server",
+    },
+    ["<leader>dal"] = {
+      function()
+        require("osv").run_this()
+      end,
+      desc = "Launch Lua Code",
+    },
+    ["<leader>dpr"] = {
+      function()
+        require("dap-python").test_method()
+      end,
+    },
+  },
+}
+
 return M

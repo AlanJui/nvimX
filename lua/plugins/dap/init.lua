@@ -209,6 +209,8 @@ return {
       require("plugins.dap.adapters.lua")
       -- DAP for Python
       require("plugins.dap.adapters.python")
+      -- DAP for C++
+      require("plugins.dap.adapters.cpp")
     end,
   },
 }

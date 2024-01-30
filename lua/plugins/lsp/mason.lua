@@ -1,7 +1,6 @@
 local mason_list = {
   "lua-language-server", -- Lua LSP Server
   "stylua",
-  "rust-analyzer", -- Rust LSP Server
   -- "pyright", -- Python LSP Server
   -- "pylint", -- Linter
   -- "ruff-lsp", -- Python LSP Server
@@ -9,7 +8,6 @@ local mason_list = {
   "debugpy", -- python
   "black", -- Formatter
   "isort", -- Formatter
-  -- "yapf",
   "ruff", -- Linter
   "mypy", -- Type checker
   "pydocstyle", -- Docstring style checker
@@ -29,6 +27,9 @@ local mason_list = {
   "taplo", -- TOML Lsp Server
   "marksman", -- Markdown LSP Server
   "dockerfile-language-server", -- Docker LSP Server
+  "rust-analyzer", -- Rust LSP Server
+  "clangd", -- C/C++ LSP Server
+  "codelldb", -- C/C++ DAP
   "clang-format", -- Formatter
 }
 
