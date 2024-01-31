@@ -1,10 +1,12 @@
 return {
   "stevearc/aerial.nvim",
-  opts = {},
   -- Optional dependencies
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
     "nvim-tree/nvim-web-devicons",
+  },
+  keys = {
+    { "<leader>ct", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
   },
   config = function()
     require("aerial").setup({
@@ -15,7 +17,8 @@ return {
         vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
       end,
     })
-    -- You probably also want to set a keymap to toggle aerial
-    vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+    -- local opts = { noremap = true, silent = true }
+    -- opts.desc = "Toggle code outline window"
+    -- vim.keymap.set("n", "<leader>ct", "<cmd>AerialToggle!<CR>", opts)
   end,
 }
