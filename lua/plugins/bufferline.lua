@@ -30,6 +30,7 @@ return {
       },
     }
     require("bufferline").setup(opts)
-    --   require("utils").load_mapping("bufferline")
+    -- local key_maps = require("config.default_mappings").bufferline
+    -- require("utils").load_mappings("bufferline", key_maps)
   end,
 }

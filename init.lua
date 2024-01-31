@@ -4,7 +4,7 @@
 require("config.options")
 require("globals")
 
-local home_dir = os.getenv "HOME"
+local home_dir = os.getenv("HOME")
 local PYTHON_VERSION = "3.12.1"
 
 vim.g.loaded_python2_provider = 0
@@ -27,3 +27,8 @@ require("config.keymaps")
 -- 除錯用工具
 ------------------------------------------------
 -- require("myTest")
+
+-- local key_maps = require("utils").load_mappings("general")
+-- local key_maps = require("config.default_mappings").bufferline
+-- vim.inspect(key_maps)
+-- _G.PrintTable(key_maps)
