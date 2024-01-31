@@ -1,5 +1,30 @@
 return {
   {
+    "jbyuki/one-small-step-for-vimkind",
+    dependencies = "mfussenegger/nvim-dap",
+    lazy = false,
+    keys = {
+      {
+        "<leader>daL",
+        function()
+          require("osv").launch({ port = 8086 })
+        end,
+        desc = "Start Lua Language Server",
+      },
+      {
+        "<leader>dal",
+        function()
+          require("osv").run_this()
+        end,
+        desc = "Start Lua Debugging",
+      },
+    },
+    config = function()
+      -- DAP for Lua work in Neovim
+      require("plugins.dap.adapters.lua")
+    end,
+  },
+  {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
     dependencies = "mfussenegger/nvim-dap",
@@ -156,21 +181,6 @@ return {
         end,
         desc = "Widgets",
       },
-      -- Lua adapter
-      {
-        "<leader>daL",
-        function()
-          require("osv").launch({ port = 8086 })
-        end,
-        desc = "Start Lua Language Server",
-      },
-      {
-        "<leader>dal",
-        function()
-          require("osv").run_this()
-        end,
-        desc = "Start Lua Debugging",
-      },
       -- Python adapter
       {
         "<leader>daP",
@@ -205,8 +215,6 @@ return {
 
       -- Setup DAP for JS/TS
       require("plugins.dap.adapters.javascript")
-      -- DAP for Lua work in Neovim
-      require("plugins.dap.adapters.lua")
       -- DAP for Python
       require("plugins.dap.adapters.python")
       -- DAP for C++
