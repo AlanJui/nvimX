@@ -7,6 +7,10 @@ local keymap = vim.keymap.set
 keymap("i", "jj", "<Esc>")
 keymap("i", "jk", "<Esc>")
 
+-- Newline in insert mode
+keymap("i", "<A-k>", "<C-o>O")
+keymap("i", "<A-j>", "<C-o>o")
+
 -- Add undo break-points
 keymap("i", ",", ",<c-g>u")
 keymap("i", ".", ".<c-g>u")
