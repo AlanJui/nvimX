@@ -2,13 +2,14 @@
 return {
   "folke/which-key.nvim",
   keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+  cmd = "WhichKey",
   init = function()
     require("utils").load_mappings("whichkey")
   end,
-  cmd = "WhichKey",
   config = function(_, opts)
     local wk = require("which-key")
     wk.setup(opts)
+    -- wk.setup(opts)
     wk.register({
       mode = { "n", "v" },
       ["]"] = { name = "+next" },

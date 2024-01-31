@@ -4,6 +4,13 @@ local M = {}
 
 M.general = {
   i = {
+    ["jj"] = { "<ESC>", "escape insert mode", opts = { nowait = true } },
+    ["kj"] = { "<ESC>", "escape insert mode", opts = { nowait = true } },
+    ["<A-o>"] = { "<Esc>o", "Add a blank line below the cursor position" },
+    ["<A-O>"] = { "<Esc>O", "Add a blank line above the cursor position" },
+    ["<S-Down>"] = { "<Esc>:m .+1<CR>", "Move line down", opts = { nowait = true } },
+    ["<S-Up>"] = { "<Esc>:m .-2<CR>", "Move line up", opts = { nowait = true } },
+
     -- go to  beginning and end
     ["<C-b>"] = { "<ESC>^i", "Beginning of line" },
     ["<C-e>"] = { "<End>", "End of line" },
@@ -67,31 +74,25 @@ M.general = {
   },
 }
 
-M.tabufline = {
+M.bufferline = {
   plugin = true,
 
   n = {
-    -- cycle through buffers
     ["<tab>"] = {
-      function()
-        require("nvchad.tabufline").tabuflineNext()
-      end,
+      "<Cmd>BufferLineMoveNext<CR>",
       "Goto next buffer",
     },
-
     ["<S-tab>"] = {
-      function()
-        require("nvchad.tabufline").tabuflinePrev()
-      end,
+      "<Cmd>BufferLineMovePrev<CR>",
       "Goto prev buffer",
     },
-
-    -- close buffer + hide terminal buffer
-    ["<leader>x"] = {
-      function()
-        require("nvchad.tabufline").close_buffer()
-      end,
-      "Close buffer",
+    ["<leader>bp"] = {
+      "<Cmd>BufferLineTogglePin<CR>",
+      "Toggle pin",
+    },
+    ["<leader>bP"] = {
+      "<Cmd>BufferLineGroupClose ungrouped<CR>",
+      "Delete non-pinned buffers",
     },
   },
 }
