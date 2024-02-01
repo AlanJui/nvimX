@@ -462,5 +462,38 @@ return {
       },
     }
     wk.register(normal_keymap, n_opts)
+
+    local v_opts = { mode = "v", prefix = "<leader>" }
+    local visual_keymap = {
+      g = {
+        name = "Git",
+        Y = {
+          "<cmd>lua require'gitlinker'.get_buf_range_url('v', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
+          "Open permalinks of selected area",
+        },
+      },
+      r = {
+        name = "Refactor",
+      },
+    }
+    wk.register(visual_keymap, v_opts)
+
+    local g_opts = { mode = "n", prefix = "g" }
+    local global_keymap = {
+      o = {
+        name = "Go with go.nvim",
+        a = { "<cmd>GoAlt<CR>", "Alternate impl and test" },
+        i = { "<cmd>GoInstall<CR>", "Go install" },
+        b = { "<cmd>GoBuild<CR>", "Go build" },
+        d = { "<cmd>GoDoc<CR>", "Go doc" },
+        f = { "<cmd>GoFmt<cr>", "Formatting code" },
+        r = { "<cmd>!go run %:.<CR>", "Go run current file" },
+        e = { "<cmd>GoIfErr<CR>", "Add if err" },
+        w = { "<cmd>GoFillSwitch<CR>", "Fill switch" },
+        g = { "<cmd>GoAddTag<CR>", "Add json tag" },
+        c = { "<cmd>lua require('go.comment').gen()<CR>", "Comment current func" },
+      },
+    }
+    wk.register(global_keymap, g_opts)
   end,
 }
