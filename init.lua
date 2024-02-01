@@ -1,20 +1,20 @@
 ------------------------------------------------
 -- Neovim global options
 ------------------------------------------------
+vim.g.mapleader = " "
 require("config.options")
-require("globals")
-
-local home_dir = os.getenv("HOME")
-local PYTHON_VERSION = "3.12.1"
 
 vim.g.loaded_python2_provider = 0
 vim.g.loaded_python3_provider = 1
-vim.g.python3_host_prog = home_dir .. "/.pyenv/versions/" .. PYTHON_VERSION .. "/bin/python"
+vim.g.python3_host_prog = require("utils.python").get_python_path()
 
-vim.g.node_host_prog = home_dir .. "/n/bin/neovim-node-host"
+vim.g.node_host_prog = os.getenv("HOME") .. "/n/bin/neovim-node-host"
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
+
+-- Load Keymaps
+-- require("utils").load_mappings()
 
 -- Load plugins
 require("config.lazy")
@@ -28,7 +28,12 @@ require("config.keymaps")
 ------------------------------------------------
 -- require("myTest")
 
--- local key_maps = require("utils").load_mappings("general")
--- local key_maps = require("config.default_mappings").bufferline
+-- require("utils").load_mappings("general")
 -- vim.inspect(key_maps)
 -- _G.PrintTable(key_maps)
+-- local util = require("utils.table")
+-- local key_maps = require("config.default_mappings").bufferline
+-- util.print_table(key_maps)
+-- local mappings = require("config.default_mappings")
+-- local mappings = require("utils").load_config().mappings
+-- require("utils.table").print_table(mappings)
