@@ -109,6 +109,8 @@ M.load_mappings = function(section, mapping_opt)
 
     -- 從 core.utils 模塊中加載映射配置
     local mappings = require("utils").load_config().mappings
+    -- local mappings = require("config.default_mappings")
+    -- require("utils.table").print_table(mappings)
 
     -- 如果 section 是字符串，則將映射配置中的 "plugin" 移除，並將配置轉換為一個數組（table）
     if type(section) == "string" then
@@ -127,7 +129,7 @@ M.lazy_load = function(plugin)
   vim.api.nvim_create_autocmd({ "BufRead", "BufWinEnter", "BufNewFile" }, {
     group = vim.api.nvim_create_augroup("BeLazyOnFileOpen" .. plugin, {}),
     callback = function()
-      local file = vim.fn.expand "%"
+      local file = vim.fn.expand("%")
       local condition = file ~= "NvimTree_1" and file ~= "[lazy]" and file ~= ""
 
       if condition then
@@ -137,19 +139,18 @@ M.lazy_load = function(plugin)
         -- This deferring only happens only when we do "nvim filename"
         if plugin ~= "nvim-treesitter" then
           vim.schedule(function()
-            require("lazy").load { plugins = plugin }
+            require("lazy").load({ plugins = plugin })
 
             if plugin == "nvim-lspconfig" then
-              vim.cmd "silent! do FileType"
+              vim.cmd("silent! do FileType")
             end
           end, 0)
         else
-          require("lazy").load { plugins = plugin }
+          require("lazy").load({ plugins = plugin })
         end
       end
     end,
   })
 end
-
 
 return M

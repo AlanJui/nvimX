@@ -2,16 +2,14 @@
 return {
   "folke/which-key.nvim",
   keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-  cmd = "WhichKey",
   init = function()
     require("utils").load_mappings("whichkey")
   end,
+  cmd = "WhichKey",
   config = function(_, opts)
     local wk = require("which-key")
     wk.setup(opts)
-    -- wk.setup(opts)
     wk.register({
-      mode = { "n", "v" },
       ["]"] = { name = "+next" },
       ["["] = { name = "+prev" },
       ["g"] = { name = "+goto" },
@@ -21,11 +19,6 @@ return {
       ["<leader>c"] = { name = "+code" },
       ["<leader>cf"] = { name = "+find" },
       ["<leader>cw"] = { name = "+workspace" },
-      -- ["<leader>c"] = {
-      --   name = "+code",
-      --   ["f"] = { name = "+find" },
-      --   ["w"] = { name = "+workspace" },
-      -- },
       ["<leader>d"] = { name = "+debug" },
       ["<leader>f"] = { name = "+file/find" },
       ["<leader>g"] = { name = "+git" },
@@ -41,6 +34,9 @@ return {
       ["<leader>w"] = { name = "+windows" },
       ["<leader>x"] = { name = "+diagnostics/quickfix" },
       ["<leader>z"] = { name = "+system" },
+    }, {
+      mode = "n",
+      prefix = "<leader>",
     })
   end,
 }
