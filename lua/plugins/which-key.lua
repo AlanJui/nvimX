@@ -36,7 +36,6 @@ return {
       f = {
         name = "Find/Search",
         b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
-        o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
         g = { "<cmd>Telescope live_grep<cr>", "Grep text" },
         f = { "<cmd>Telescope find_files<cr>", "Find Files" },
         F = {
@@ -100,16 +99,15 @@ return {
       -- code
       c = {
         name = "Code",
-        -- f = { name = "+find" },
         F = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
         b = {
           name = "Splitting/Joining blocks of code",
-          t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
-          s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
           j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
+          s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
         },
-        s = { name = "+surround" },
-        w = { name = "+workspace" },
+        s = { name = "Surround" },
+        t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+        -- w = { name = "Workspace" },
       },
       -- Debugging
       d = {
@@ -122,7 +120,7 @@ return {
         },
       },
       -- Execute/Build
-      e = {
+      E = {
         name = "Execute",
         b = {
           name = "Build",

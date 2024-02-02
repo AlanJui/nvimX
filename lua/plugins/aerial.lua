@@ -7,8 +7,6 @@ return {
   },
   keys = {
     { "<leader>co", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
-    -- { "{", "<cmd>AerialPrev<CR>", desc = "Jump backwards" },
-    -- { "}", "<cmd>AerialNext<CR>", desc = "Jump forwards" },
   },
   config = function()
     require("aerial").setup({

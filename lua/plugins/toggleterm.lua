@@ -7,21 +7,6 @@ return {
       "<cmd>2ToggleTerm<cr>",
       desc = "Terminal #2",
     },
-    {
-      "<leader>gg",
-      "<cmd>lua _G.lazygit_toggle()<cr>",
-      desc = "LazyGit",
-    },
-    {
-      "<leader>fv",
-      "<cmd>Vifm<cr>",
-      desc = "ViFm",
-    },
-    {
-      "<leader>gS",
-      ":2TermExec cmd='git status'<cr>",
-      desc = "git status",
-    },
   },
   cmd = { "ToggleTerm", "TermExec" },
   opts = {

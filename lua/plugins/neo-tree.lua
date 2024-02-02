@@ -28,29 +28,11 @@ return {
   },
   cmd = "Neotree",
   keys = {
-    {
-      "<leader>fe",
-      function()
-        require("neo-tree.command").execute({
-          toggle = true,
-          dir = require("utils").get_root(),
-        })
-      end,
-      desc = "Explorer NeoTree (root dir)",
-    },
-    {
-      "<leader>fE",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-      end,
-      desc = "Explorer NeoTree (cwd)",
-    },
-    { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-    { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+    { "<leader>e", ":Neotree<CR>", desc = "Explorer NeoTree" },
   },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
+  -- deactivate = function()
+  --   vim.cmd([[Neotree close]])
+  -- end,
   init = function()
     vim.g.neo_tree_remove_legacy_commands = 1
     if vim.fn.argc() == 1 then

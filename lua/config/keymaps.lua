@@ -56,17 +56,17 @@ keymap("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 --------------------------------------------------------------------
 -- Tab navigation
 --------------------------------------------------------------------
-keymap("n", "to", ":tabnew<CR>") -- open new tab
-keymap("n", "tx", ":tabclose<CR>") -- close current tab
-keymap("n", "tn", ":tabn<CR>") --  go to next tab
-keymap("n", "tp", ":tabp<CR>") --  go to previous tab
-
-keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+-- keymap("n", "to", ":tabnew<CR>") -- open new tab
+-- keymap("n", "tx", ":tabclose<CR>") -- close current tab
+-- keymap("n", "tn", ":tabn<CR>") --  go to next tab
+-- keymap("n", "tp", ":tabp<CR>") --  go to previous tab
+--
+-- keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+-- keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+-- keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+-- keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+-- keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+-- keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- Clear search with <esc>
 keymap({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
