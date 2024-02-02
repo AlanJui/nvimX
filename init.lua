@@ -13,9 +13,6 @@ vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- Load Keymaps
--- require("utils").load_mappings()
-
 -- Load plugins
 require("config.lazy")
 
@@ -28,12 +25,6 @@ require("config.keymaps")
 ------------------------------------------------
 -- require("myTest")
 
--- require("utils").load_mappings("general")
--- vim.inspect(key_maps)
--- _G.PrintTable(key_maps)
 -- local util = require("utils.table")
 -- local key_maps = require("config.default_mappings").bufferline
 -- util.print_table(key_maps)
--- local mappings = require("config.default_mappings")
--- local mappings = require("utils").load_config().mappings
--- require("utils.table").print_table(mappings)

@@ -20,7 +20,8 @@ return {
       ["<Space>"] = { "<c-^>", "Quick Switch 2 Buffers" }, -- Switch between 2 buffers
       ["\\"] = { "<cmd>Telescope live_grep<cr>", "Grep text" },
       [","] = { ":Telescope buffers<CR>", "Show buffers" },
-      ["."] = { "<cmd>Alpha<cr>", "Dashboard" },
+      ["L"] = { "<cmd>Lazy<cr>", "Run Lazy" },
+      ["v"] = { ":Vifm<CR>", "ViFm" },
       -- Actions
       a = {
         name = "Actions",
@@ -30,20 +31,15 @@ return {
         n = { ":set nonumber!<CR>", "on/off line-numbers" },
         N = { ":set norelativenumber!<CR>", "on/off relative line-numbers" },
         w = { ":set wrap!<CR>", "on/off line wrap" },
-        -- Editing Tools
-        t = { "<cmd>AerialToggle<cr>", "Toggle code outline window" }, -- aerial.nvim plugin
-        T = { "<cmd>TSJToggle<CR>", "Split/Join Tree Node" },
       },
-      k = { "<Plug>DashSearch", "Search word in Dash" }, -- dash.vim plugin
-      L = { "<cmd>Lazy<cr>", "open lazy.nvim plugins window" },
       -- Find/Search
       f = {
         name = "Find/Search",
         b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
         o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
-        s = { "<cmd>Telescope find_files<cr>", "Find Files" },
         g = { "<cmd>Telescope live_grep<cr>", "Grep text" },
-        f = {
+        f = { "<cmd>Telescope find_files<cr>", "Find Files" },
+        F = {
           name = "Search by File Name",
           a = { "<cmd>Telescope telescope-alternate alternate_file<cr>", "Alternate file" },
           b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
@@ -85,53 +81,35 @@ return {
           t = { "<cmd>TodoTelescope keywords=TODO,FIX<cr>", "Find TODOs and FIXMEs" },
         },
       },
-
+      -- Replace
+      r = {
+        name = "Replace",
+        -- Spectre
+        r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
+        f = { [[viw:lua require('spectre').open_file_search()<cr>]], "Replace in current file" },
+        o = { [[<cmd>lua require('spectre').open()<CR>]], "Open spectre" },
+      },
       -- Buffer
       b = {
         name = "Buffer",
         b = { "<c-^>", "Quick Switch 2 Buffers" }, -- Switch between 2 buffers
         q = { ":q!<cr>", "Quit without saving" },
         Q = { ":qa!<cr>", "Quit all windows without saving" },
-        c = {
-          function()
-            require("utils.bot").cht()
-          end,
-          "Cheatsheet(cht.sh)",
-        },
-        S = {
-          function()
-            require("utils.bot").stack_overflow()
-          end,
-          "Stack Overflow",
-        },
         x = { "bdelete", "Close File (Delete buffer)" },
       },
       -- code
       c = {
         name = "Code",
-        ["f"] = { name = "+find" },
-        ["F"] = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
-        ["w"] = { name = "+workspace" },
-        j = {
+        -- f = { name = "+find" },
+        F = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
+        b = {
           name = "Splitting/Joining blocks of code",
           t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
           s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
           j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
         },
-        s = {
-          name = "+surround",
-        },
-        o = {
-          name = "Outline",
-          t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
-          o = { "<cmd>AerialOpen<cr>", "Open outline window" },
-          n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
-          p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
-        },
-        -- Build/Run
-        b = {
-          name = "Build",
-        },
+        s = { name = "+surround" },
+        w = { name = "+workspace" },
       },
       -- Debugging
       d = {
@@ -139,10 +117,16 @@ return {
         a = {
           name = "Adapter",
         },
+        t = {
+          name = "Test",
+        },
       },
-      -- Run
-      r = {
-        name = "Run Code",
+      -- Execute/Build
+      e = {
+        name = "Execute",
+        b = {
+          name = "Build",
+        },
         p = {
           name = "Python",
           p = {
@@ -157,7 +141,6 @@ return {
         d = {
           name = "Django",
           k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
-          g = { ":2TermExec cmd='git status'<CR>", "git status" },
           r = { ":TermExec cmd='poetry run python manage.py runserver'<CR>", "Runserver" },
           R = {
             ":TermExec cmd='poetry run python manage.py runserver --noreload'<CR>",
@@ -179,20 +162,13 @@ return {
           M = { ":2TermExec cmd='poetry run python manage.py migrate'<CR>", "Migrate DB" },
         },
       },
-      -- Editing
-      R = {
-        name = "Replace",
-        -- Spectre
-        r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
-        f = { [[viw:lua require('spectre').open_file_search()<cr>]], "Replace in current file" },
-        o = { [[<cmd>lua require('spectre').open()<CR>]], "Open spectre" },
-      },
-      -- git
+      -- Git
       g = {
         name = "Git",
         -- telescope
         l = { "<cmd>Telescope git_status<cr>", "Changed files" },
         -- vim-fugitive plugin
+        -- S = { ":2TermExec cmd='git status'<CR>", "git status" },
         s = { "<cmd>Git<cr>", "Status" },
         -- d = { "<cmd>Gdiff<cr>", "Diff" },
         r = { "<cmd>Gread<cr>", "Read" },
@@ -236,12 +212,6 @@ return {
         -- diagnostics
         d = {
           name = "Diagnostics",
-          l = {
-            name = "LspSaga",
-            b = { "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show buffer diagnostics" },
-            c = { "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show cursor diagnostics" },
-            l = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show line diagnostics" },
-          },
           w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
           c = {
             ":Telescope diagnostics bufnr=0<CR>",
@@ -260,7 +230,6 @@ return {
             "Goto next diagnostics",
           },
         },
-
         f = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
         k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
         g = {
@@ -297,66 +266,36 @@ return {
         },
       },
       -- Project
-      p = {
-        name = "Project",
-        q = { "<cmd>TodoQuickFix<cr>", "List all TODOs in project quickfix list" },
-        l = { "<cmd>TodoLocList<cr>", "List all TODOs in project" },
-        t = { "<cmd>TodoTrouble<cr>", "List all TODOs in project with trouble" },
-        s = { "<cmd>TodoTelescope<cr>", "Search through all project TODOs with Telescope" },
-      },
-      -- run code
-      S = {
-        name = "Session",
-        -- session
-        a = { "<cmd>SaveSession<cr>", "Add auto session" },
-        l = { "<cmd>RestoreSession<cr>", "Load auto session" },
-        d = { "<cmd>DeleteSession<cr>", "Delete auto session" },
-        f = { "<cmd>SearchSession<cr>", "Search auto session" },
-      },
-      -- T = {
-      --   name = "Test",
-      --   -- vim-test plugin
+      -- p = {
+      --   name = "Project",
+      --   q = { "<cmd>TodoQuickFix<cr>", "List all TODOs in project quickfix list" },
+      --   l = { "<cmd>TodoLocList<cr>", "List all TODOs in project" },
+      --   t = { "<cmd>TodoTrouble<cr>", "List all TODOs in project with trouble" },
+      --   s = { "<cmd>TodoTelescope<cr>", "Search through all project TODOs with Telescope" },
+      -- },
+      -- s = {
+      --   name = "Session",
+      --   -- session
+      --   a = { "<cmd>SaveSession<cr>", "Add auto session" },
+      --   l = { "<cmd>RestoreSession<cr>", "Load auto session" },
+      --   d = { "<cmd>DeleteSession<cr>", "Delete auto session" },
+      --   f = { "<cmd>SearchSession<cr>", "Search auto session" },
       -- },
       -- Toggle options
-      t = {
-        name = "Toggle option",
-        -- toggle options
-        f = {
-          function()
-            require("plugins.lsp.format").toggle()
-          end,
-          "Toggle format on Save",
-        },
-        w = {
-          function()
-            Util.toggle("wrap")
-          end,
-          "Toggle Word Wrap",
-        },
-        s = {
-          function()
-            Util.toggle("spell")
-          end,
-          "Toggle Spelling",
-        },
-        n = {
-          function()
-            Util.toggle("relativenumber")
-          end,
-          "Toggle Line Numbers",
-        },
-        d = {
-          function()
-            Util.toggle_diagnostics()
-          end,
-          "Toggle Diagnostics",
-        },
-      },
+      -- t = {
+      --   name = "Toggle option",
+      -- },
       -- utilities
       u = {
         name = "Utilities",
+        -- l = {
+        --   name = "LiveServer",
+        --   l = { ":Bracey<CR>", "start live server" },
+        --   L = { ":BraceyStop<CR>", "stop live server" },
+        --   r = { ":BraceyReload<CR>", "web page to be reloaded" },
+        -- },
         t = {
-          name = "terminal",
+          name = "Terminal",
           d = { "TermExec python manage.py shell<CR>", "Django-admin Shell" },
           p = { "TermExec python<CR>", "Python shell" },
           n = { "TermExec node<CR>", "Node.js shell" },
@@ -364,12 +303,6 @@ return {
             "TermExec --wintype='vsplit' --position='right'<CR>",
             "Debug Term...",
           },
-        },
-        l = {
-          name = "LiveServer",
-          l = { ":Bracey<CR>", "start live server" },
-          L = { ":BraceyStop<CR>", "stop live server" },
-          r = { ":BraceyReload<CR>", "web page to be reloaded" },
         },
         m = {
           name = "Markdown",
@@ -384,14 +317,6 @@ return {
             "export PlantUML diagram",
           },
         },
-        f = {
-          "TermExec --height=0.7 --width=0.9 --wintype=float vifm<CR>",
-          "ViFm",
-        },
-        r = {
-          "TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
-          "Ranger",
-        },
       },
       x = {
         name = "Trouble",
@@ -399,13 +324,6 @@ return {
         w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace diagnostics" },
         d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
-        n = { "<cmd>Noice<cr>", "Noice" },
-        l = {
-          function()
-            require("noice").cmd("last")
-          end,
-          "Noice Last Message",
-        },
       },
       -- Windows
       w = {
@@ -418,33 +336,6 @@ return {
         ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
         ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
         c = { ":close<CR>", "Close window" },
-        -- Diagnosticls
-        d = {
-          name = "Diagnostics",
-          l = {
-            name = "LspSaga",
-            b = { "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show buffer diagnostics" },
-            c = { "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show cursor diagnostics" },
-            l = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show line diagnostics" },
-          },
-          w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
-          c = {
-            ":Telescope diagnostics bufnr=0<CR>",
-            "List diagnostics current file",
-          },
-          f = {
-            "<cmd>lua vim.diagnostic.open_float()<CR>",
-            "Open diagnostics floating",
-          },
-          p = {
-            "<cmd>lua vim.diagnostic.goto_prev()<CR>",
-            "Goto prev diagnostics",
-          },
-          n = {
-            "<cmd>lua vim.diagnostic.goto_next()<CR>",
-            "Goto next diagnostics",
-          },
-        },
         k = { "<C-w>k", "Up window" },
         j = { "<C-w>j", "Down window" },
         h = { "<C-w>h", "Left window" },

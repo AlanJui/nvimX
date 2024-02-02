@@ -6,7 +6,9 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   keys = {
-    { "<leader>ct", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
+    { "<leader>co", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
+    -- { "{", "<cmd>AerialPrev<CR>", desc = "Jump backwards" },
+    -- { "}", "<cmd>AerialNext<CR>", desc = "Jump forwards" },
   },
   config = function()
     require("aerial").setup({
@@ -17,8 +19,5 @@ return {
         vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
       end,
     })
-    -- local opts = { noremap = true, silent = true }
-    -- opts.desc = "Toggle code outline window"
-    -- vim.keymap.set("n", "<leader>ct", "<cmd>AerialToggle!<CR>", opts)
   end,
 }
