@@ -81,7 +81,7 @@ return {
         },
       },
       -- Replace
-      r = {
+      R = {
         name = "Replace",
         -- Spectre
         r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
@@ -96,7 +96,7 @@ return {
         Q = { ":qa!<cr>", "Quit all windows without saving" },
         x = { "bdelete", "Close File (Delete buffer)" },
       },
-      -- code
+      -- Code
       c = {
         name = "Code",
         F = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
@@ -106,7 +106,6 @@ return {
           s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
         },
         s = { name = "Surround" },
-        t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
         -- w = { name = "Workspace" },
       },
       -- Debugging
@@ -119,46 +118,13 @@ return {
           name = "Test",
         },
       },
-      -- Execute/Build
-      E = {
-        name = "Execute",
-        b = {
-          name = "Build",
-        },
-        p = {
-          name = "Python",
-          p = {
-            ":TermExec direction=horizontal cmd='python %'<CR>",
-            "Run current file",
-          },
-          l = {
-            ":TermExec direction=horizontal cmd='pylint %'<CR>",
-            "Lint current file",
-          },
-        },
-        d = {
-          name = "Django",
-          k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
-          r = { ":TermExec cmd='poetry run python manage.py runserver'<CR>", "Runserver" },
-          R = {
-            ":TermExec cmd='poetry run python manage.py runserver --noreload'<CR>",
-            "Runserver --noreload",
-          },
-          S = { ":2TermExec cmd='poetry run python manage.py shell'<CR>", "Django Shell" },
-          s = {
-            ":2TermExec cmd='poetry run python manage.py createsuperuser'<CR>",
-            "Create super user",
-          },
-          c = {
-            ":2TermExec cmd='echo yes | poetry run python manage.py collectstatic --noinput'<CR>",
-            "Collect all static files",
-          },
-          m = {
-            ":2TermExec cmd='poetry run python manage.py makemigrations'<CR>",
-            "Update DB schema",
-          },
-          M = { ":2TermExec cmd='poetry run python manage.py migrate'<CR>", "Migrate DB" },
-        },
+      -- Run/Build
+      r = {
+        name = "Build and Run",
+        c = { name = "C" },
+        C = { name = "C++" },
+        p = { name = "Python" },
+        d = { name = "Django" },
       },
       -- Git
       g = {

@@ -8,7 +8,7 @@ return {
   keys = {
     { "<leader>cs", "<cmd>TSJSplit<CR>", desc = "Split node under cursor" },
     { "<leader>cj", "<cmd>TSJJoin<CR>", desc = "Join node under cursor" },
-    { "<leader>J", "<cmd>TSJToggle<CR>", desc = "Toggle Join/Split" },
+    { "<leader>ct", "<cmd>TSJToggle<CR>", desc = "Toggle Join/Split" },
   },
   config = function()
     require("treesj").setup({
@@ -18,7 +18,7 @@ return {
     -- For use default preset and it work with dot
     -- vim.keymap.set("n", "<leader>cm", require("treesj").toggle, { desc = "Toggle block(Split/Join)" })
     -- For extending default preset with `recursive = true`, but this doesn't work with dot
-    vim.keymap.set("n", "<leader>cm", function()
+    vim.keymap.set("n", "<leader>cT", function()
       require("treesj").toggle({ split = { recursive = true } })
     end, { desc = "Toggle blocks recursivly (Split/Join)" })
   end,
