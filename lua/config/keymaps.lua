@@ -25,6 +25,9 @@ keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move Lines
+keymap("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move down" })
+keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move up" })
+
 keymap("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
 keymap("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
 keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
