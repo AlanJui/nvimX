@@ -85,7 +85,6 @@ return {
           "live_grep_args",
           "conventional_commits",
           "lazy",
-          "yabs",
         },
       }
     end,
