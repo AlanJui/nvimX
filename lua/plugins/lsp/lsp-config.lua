@@ -117,15 +117,15 @@ return {
       },
     })
 
-    -- configure css server
-    lspconfig["cssls"].setup({
-      capabilities = capabilities,
-    })
-
-    -- configure tailwindcss server
-    lspconfig["tailwindcss"].setup({
-      capabilities = capabilities,
-    })
+    -- -- configure css server
+    -- lspconfig["cssls"].setup({
+    --   capabilities = capabilities,
+    -- })
+    --
+    -- -- configure tailwindcss server
+    -- lspconfig["tailwindcss"].setup({
+    --   capabilities = capabilities,
+    -- })
 
     -- configure json server
     lspconfig["jsonls"].setup({

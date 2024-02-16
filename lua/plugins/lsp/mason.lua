@@ -12,6 +12,7 @@ local mason_list = {
   "mypy", -- Type checker
   "pydocstyle", -- Docstring style checker
   "pyflakes", -- Linter
+  "djlint", -- Linter
   "typescript-language-server", -- JavaScript LSP Server
   "vue-language-server",
   "js-debug-adapter", -- Javascript DAP
