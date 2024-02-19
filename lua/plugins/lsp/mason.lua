@@ -22,16 +22,21 @@ local mason_list = {
   "tailwindcss-language-server",
   "eslint_d", -- JavaScript Linter
   "prettier", -- Formatter
-  "json-lsp",
+  "json-lsp", -- JSON LSP Server
+  "jsonlint", -- JSON Linter
   "lemminx", -- XML LSP Server
   "yaml-language-server",
+  "yamllint", -- YAML Linter
   "taplo", -- TOML Lsp Server
   "marksman", -- Markdown LSP Server
+  "markdownlint", -- Markdown Linter
   "dockerfile-language-server", -- Docker LSP Server
   "rust-analyzer", -- Rust LSP Server
   "clangd", -- C/C++ LSP Server
   "codelldb", -- C/C++ DAP
   "clang-format", -- Formatter
+  "dockerfile-language-server", -- Dockerfile LSP Server
+  "docker-compose-language-service", -- Docker Compose LSP Server
 }
 
 return {

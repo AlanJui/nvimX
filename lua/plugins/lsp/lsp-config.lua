@@ -33,7 +33,8 @@ return {
       "tailwindcss", -- tailwindcss-lsp
       "eslint", -- eslint-lsp
       "taplo", -- toml-lsp
-      "dockerls", -- docker-lsp
+      "dockerls", -- docker-lsp (dockerfile-language-server)
+      "docker_compose_language_service", -- docker-compose-lsp (docker-compose-language-service)
     }
     for _, lsp in ipairs(servers) do
       lspconfig[lsp].setup({

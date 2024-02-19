@@ -134,18 +134,19 @@ return {
         sources = cmp.config.sources({
           { name = "copilot" },
           { name = "nvim_lsp" },
+          { name = "path" },
           { name = "luasnip" },
           { name = "buffer" },
-          { name = "path" },
           { name = "emoji" },
         }),
         formatting = {
-          format = function(_, item)
+          format = function(_, vim_item)
+            -- vim_item.kind = "Array"
             local icons = require("config.icons").kind
-            if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
+            if icons[vim_item.kind] then
+              vim_item.kind = (icons[vim_item.kind] or "Foo") .. " " .. vim_item.kind
             end
-            return item
+            return vim_item
           end,
         },
         experimental = {

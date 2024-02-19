@@ -9,21 +9,14 @@ return {
       javascriptreact = { "eslint_d" },
       typescriptreact = { "eslint_d" },
       python = { "pydocstyle", "ruff", "mypy", "djlint" },
+      json = { "jsonlint" },
+      jsonc = { "jsonlint" },
       yaml = { "yamllint" },
+      toml = { "taplo" },
+      markdown = { "markdownlint" },
     }
 
-    -- local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-    -- vim.api.nvim_create_autocmd({
-    --   "BufWritePost",
-    --   "BufEnter",
-    --   "InsertLeave",
-    -- }, {
-    --   group = lint_augroup,
-    --   callback = function()
-    --     require("lint").try_lint()
-    --   end,
-    -- })
-
+    -- autocommand BufWritePost * lua require("lint").try_lint()
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       callback = function()
         require("lint").try_lint()
