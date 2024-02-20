@@ -24,27 +24,39 @@ return {
         },
         -- ensure these language parsers are installed
         ensure_installed = {
+          -- defaults
+          "vim",
+          "lua",
+          "vimdoc",
+          -- python
           "python",
-          "json",
+          -- web dev
+          "html",
+          "http",
+          "css",
+          "scss",
           "javascript",
           "typescript",
           "tsx",
-          "yaml",
+          "vue",
+          "jsdoc",
+          -- configuration
+          "json",
           "toml",
-          "html",
-          "css",
-          "prisma",
-          "markdown",
-          "markdown_inline",
-          "svelte",
-          "graphql",
+          "yaml",
+          "xml",
+          -- low level
+          "c",
+          "cpp",
+          "cmake",
+          -- others
           "bash",
-          "lua",
-          "vim",
-          "vimdoc",
+          "diff",
           "dockerfile",
           "gitignore",
-          "query",
+          "markdown",
+          "markdown_inline",
+          "sql",
         },
         incremental_selection = {
           enable = true,
