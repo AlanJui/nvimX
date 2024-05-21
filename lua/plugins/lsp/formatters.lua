@@ -26,7 +26,7 @@ return {
         jsonc = { { "prettierd", "prettier" } },
         html = { "prettier" },
         -- css = { "prettier" },
-        yaml = { "prettier" },
+        -- yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
         svelte = { "prettier" },
@@ -45,12 +45,12 @@ return {
       },
     })
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      callback = function(args)
-        conform.format({ bufnr = args.buf })
-      end,
-    })
+    -- vim.api.nvim_create_autocmd("BufWritePre", {
+    --   pattern = "*",
+    --   callback = function(args)
+    --     conform.format({ bufnr = args.buf })
+    --   end,
+    -- })
 
     vim.keymap.set({ "n", "v" }, "<leader>cf", function()
       conform.format({

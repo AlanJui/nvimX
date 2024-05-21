@@ -11,7 +11,7 @@ return {
       python = { "pydocstyle", "ruff", "mypy", "djlint" },
       json = { "jsonlint" },
       jsonc = { "jsonlint" },
-      yaml = { "yamllint" },
+      -- yaml = { "yamllint" },
       toml = { "taplo" },
       markdown = { "markdownlint" },
     }

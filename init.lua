@@ -2,6 +2,7 @@
 -- Neovim global options
 ------------------------------------------------
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 require("config.options")
 
 vim.g.loaded_python2_provider = 0
@@ -78,3 +79,5 @@ require("catppuccin").setup({
 
 -- setup must be called before loading
 vim.cmd.colorscheme("catppuccin")
+vim.opt.list = true
+vim.opt.listchars = { tab = "▸ ", trail = "·" }
