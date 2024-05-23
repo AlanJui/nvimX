@@ -81,3 +81,11 @@ require("catppuccin").setup({
 vim.cmd.colorscheme("catppuccin")
 vim.opt.list = true
 vim.opt.listchars = { tab = "▸ ", trail = "·" }
+
+-- 設定字體為 JetBrains Mono 12
+-- vim.opt.guifont = "JetBrains Mono:h12"
+-- if vim.fn.has("gui_running") == 1 then
+--   vim.opt.guifont = "LXGW WenKai Mono:h18"
+-- end
+-- vim.opt.guifont = "LXGW WenKai Mono:h18"
+vim.opt.guifont = "Microsoft JhengHei:h18"
