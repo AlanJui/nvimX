@@ -26,7 +26,7 @@ return {
         jsonc = { { "prettierd", "prettier" } },
         html = { "prettier" },
         -- css = { "prettier" },
-        -- yaml = { "prettier" },
+        yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
         svelte = { "prettier" },
@@ -40,8 +40,9 @@ return {
         ["_"] = { "trim_whitespace" },
       },
       format_on_save = {
-        lsp_fallback = true,
-        timeout_ms = 1000,
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_format = "fallback",
       },
     })
 
