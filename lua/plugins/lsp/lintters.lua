@@ -11,9 +11,9 @@ return {
       python = { "pydocstyle", "ruff", "mypy", "djlint" },
       json = { "jsonlint" },
       jsonc = { "jsonlint" },
-      -- yaml = { "yamllint" },
       toml = { "taplo" },
       markdown = { "markdownlint" },
+      -- yaml = { "yamllint" },
     }
 
     -- autocommand BufWritePost * lua require("lint").try_lint()

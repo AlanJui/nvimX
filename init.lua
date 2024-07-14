@@ -102,3 +102,17 @@ vim.o.foldenable = true
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+
+-- 支援 WSL 的剪貼簿
+-- vim.g.clipboard = {
+--   name = "win32yank-wsl",
+--   copy = {
+--     ["+"] = "win32yank.exe -i --crlf",
+--     ["*"] = "win32yank.exe -i --crlf",
+--   },
+--   paste = {
+--     ["+"] = "win32yank.exe -o --lf",
+--     ["*"] = "win32yank.exe -o --lf",
+--   },
+--   cache_enabled = 0,
+-- }
