@@ -41,45 +41,51 @@ return {
   -- Preview markdown file
   {
     "iamcco/markdown-preview.nvim",
-    enabled = true,
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = { "markdown" },
-    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     keys = {
       { "<leader>um", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle Markdown Previewer" },
     },
-    setup = function()
-      vim.cmd([[
-        let g:mkdp_filetypes = { "markdown" }
-        let g:mkdp_auto_start = 0
-        let g:mkdp_auto_close = 1
-        let g:mkdp_command_for_global = 0
-        let g:mkdp_open_to_the_world = 0
-        let g:mkdp_open_ip = "127.0.0.1"
-        let g:mkdp_port = "9999"
-        let g:mkdp_filetypes = { "markdown" }
-        let g:mkdp_browserfunc = ""
-        let g:mkdp_preview_options = {
-            \ 'mkit': {},
-            \ 'katex': {},
-            \ 'uml': {},
-            \ 'maid': {},
-            \ 'disable_sync_scroll': 0,
-            \ 'sync_scroll_type': 'middle',
-            \ 'hide_yaml_meta': 1,
-            \ 'sequence_diagrams': {},
-            \ 'flowchart_diagrams': {},
-            \ 'content_editable': v:false,
-            \ 'disable_filename': 0,
-            \ 'toc': {}
-            \ }
-        let g:mkdp_markdown_css = ""
-        let g:mkdp_highlight_css = ""
-        let g:mkdp_page_title = "${name}"
-      ]])
+    -- build = function() vim.fn["mkdp#util#install"]() end,
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_auto_start = 0
+      vim.g.mkdp_auto_close = 1
+      vim.g.mkdp_command_for_global = 0
+      vim.g.mkdp_open_to_the_world = 0
+      vim.g.mkdp_open_ip = "127.0.0.1"
+      vim.g.mkdp_port = "9999"
     end,
+    ft = { "markdown" },
+    -- setup = function()
+    --   vim.cmd([[
+    --     let g:mkdp_filetypes = { "markdown" }
+    --     let g:mkdp_auto_start = 0
+    --     let g:mkdp_auto_close = 1
+    --     let g:mkdp_command_for_global = 0
+    --     let g:mkdp_open_to_the_world = 0
+    --     let g:mkdp_open_ip = "127.0.0.1"
+    --     let g:mkdp_port = "9999"
+    --     let g:mkdp_filetypes = { "markdown" }
+    --     let g:mkdp_browserfunc = ""
+    --     let g:mkdp_preview_options = {
+    --         \ 'mkit': {},
+    --         \ 'katex': {},
+    --         \ 'uml': {},
+    --         \ 'maid': {},
+    --         \ 'disable_sync_scroll': 0,
+    --         \ 'sync_scroll_type': 'middle',
+    --         \ 'hide_yaml_meta': 1,
+    --         \ 'sequence_diagrams': {},
+    --         \ 'flowchart_diagrams': {},
+    --         \ 'content_editable': v:false,
+    --         \ 'disable_filename': 0,
+    --         \ 'toc': {}
+    --         \ }
+    --     let g:mkdp_markdown_css = ""
+    --     let g:mkdp_highlight_css = ""
+    --     let g:mkdp_page_title = "${name}"
+    --   ]])
+    -- end,
   },
   -- PlantUML
   {
